@@ -12,10 +12,6 @@ showAlertDialog(BuildContext context) {
             child: Padding(
               padding: const EdgeInsets.all(12.0),
               child: Stack(
-                //mainAxisAlignment: MainAxisAlignment.center,
-//                crossAxisAlignment: CrossAxisAlignment.start,
-//                crossAxisAlignment: CrossAxisAlignment.center,
-//                mainAxisSize: MainAxisSize.max,
                 children: [
                   Align(
                       alignment: Alignment.topCenter,

@@ -7,7 +7,7 @@ import 'package:app/components/RandonautMap.dart';
 import 'package:app/components/StartOverButton.dart';
 import 'package:app/components/TopBar.dart';
 import 'package:app/components/ButtonsRowMainPage.dart';
-import 'package:app/helpers/OpenMaps.dart';
+import 'package:app/helpers/OpenGoogleMaps.dart';
 import 'package:app/helpers/storage/TripsDatabase.dart';
 import 'package:app/models/UnloggedTrip.dart';
 import 'package:app/models/map_pin_pill.dart';
@@ -93,7 +93,6 @@ class RandonautState extends State<Randonaut> {
   @override
   void initState() {
     super.initState();
-    SizeConfig().init(context);
 
     // create an instance of Location
     location = new Location();
@@ -170,6 +169,8 @@ class RandonautState extends State<Randonaut> {
           tilt: CAMERA_TILT,
           bearing: CAMERA_BEARING);
     }
+    SizeConfig().init(context);
+
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       extendBodyBehindAppBar: true,
@@ -181,14 +182,12 @@ class RandonautState extends State<Randonaut> {
                   end: Alignment.bottomCenter,
                   stops: [0, 100],
                   colors: [Color(0xff5A87E4), Color(0xff37CDDC)])),
-          child: Center(
-            child: Column(
+          child:  Column(
               children: <Widget>[
                 TopBar(),
-                Center(
-                  child: Container(
-                    height: 410,
-                    width: 300,
+                Container(
+                    height: SizeConfig.blockSizeVertical * 70, ///This is 70% of the Vertical / Height for this container in this class
+                    width: SizeConfig.blockSizeHorizontal * 80, ///This is 80% of the Horizontal / Width for this container in this class
                     child: Stack(
                       alignment: Alignment.bottomCenter,
                       children: <Widget>[
@@ -233,14 +232,12 @@ class RandonautState extends State<Randonaut> {
                               ],
                             ),
                           ),
-                          height: 500,
-                          width: 500,
+
                         ),
                         ButtonGoMainPage(this.callback, pressGoButton),
                       ],
                     ),
                   ),
-                ),
                 SizedBox(height: 20),
                 (pressGoButton //TODO MOVE TO ButtonGoMainPage
                     ? Row(
@@ -255,34 +252,35 @@ class RandonautState extends State<Randonaut> {
                           ),
                           Column(
                             children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Address of Point',
-                                    textAlign: TextAlign.center,
-                                    overflow: TextOverflow.ellipsis,
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
-                                  ),
-                                  Text(
-                                    'POINT TYPE',
-                                    textAlign: TextAlign.center,
-                                    overflow: TextOverflow.ellipsis,
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
-                                  )
-                                ],
-                              ),
+//                              Column(
+//                                crossAxisAlignment: CrossAxisAlignment.start,
+//                                children: [
+//                                  Text(
+//                                    'Address of Point',
+//                                    textAlign: TextAlign.center,
+//                                    overflow: TextOverflow.ellipsis,
+//                                    style:
+//                                        TextStyle(fontWeight: FontWeight.bold),
+//                                  ),
+//                                  Text(
+//                                    'POINT TYPE',
+//                                    textAlign: TextAlign.center,
+//                                    overflow: TextOverflow.ellipsis,
+//                                    style:
+//                                        TextStyle(fontWeight: FontWeight.bold),
+//                                  )
+//                                ],
+//                              ),
                               Row(children: [
                                 //Buttons
-                                ButtonsRowMainPage('see_route'),
+                                //ButtonsRowMainPage('see_route'),
+                                StartOverButton(this.callbackStartOver, pressStartOverButton),
                                 OpenMapsButton(this.callbackOpenMaps, pressOpenMapsButton),
                               ]),
-                              Row(children: [
-                                //Buttons
-                                StartOverButton(this.callbackStartOver, pressStartOverButton),
-                              ]),
+//                              Row(children: [
+//                                //Buttons
+//                                StartOverButton(this.callbackStartOver, pressStartOverButton),
+//                              ]),
                             ],
                           ),
                         ],
@@ -290,7 +288,7 @@ class RandonautState extends State<Randonaut> {
                     : SizedBox(width: 10)),
               ],
             ),
-          )),
+          ),
     );
   }
 
@@ -489,7 +487,7 @@ class RandonautState extends State<Randonaut> {
       var pinPosition =
       LatLng(currentLocation.latitude, currentLocation.longitude);
 
-      sourcePinInfo.location = pinPosition;
+    //  sourcePinInfo.location = pinPosition;
 
       // the trick is to remove the marker (by id)
       // and add it again at the updated location

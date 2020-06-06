@@ -1,6 +1,47 @@
 import 'package:app/helpers/AppLocalizations.dart';
 import 'package:flutter/material.dart';
 
+///Return slide
+returnSlide(index, context){
+    //Walkthrough 1
+  if(index == 0){
+    slideList[index].descriptionone =  AppLocalizations.of(context)
+        .translate('walktrhough_1_1')
+        .toUpperCase();
+    slideList[index].descriptiontwo =  AppLocalizations.of(context)
+        .translate('walktrhough_1_2')
+        .toUpperCase();
+    slideList[index].descriptionthree =  AppLocalizations.of(context)
+        .translate('walktrhough_1_3')
+        .toUpperCase();
+    //Walkthrough 2
+  } else if(index == 1){
+    slideList[index].descriptionone =  AppLocalizations.of(context)
+        .translate('walktrhough_2_1')
+        .toUpperCase();
+    slideList[index].descriptiontwo =  AppLocalizations.of(context)
+        .translate('walktrhough_2_2')
+        .toUpperCase();
+    slideList[index].descriptionthree =  AppLocalizations.of(context)
+        .translate('walktrhough_2_3')
+        .toUpperCase();
+    //Walkthrough 3
+  } else if(index == 2){
+    slideList[index].descriptionone =  AppLocalizations.of(context)
+        .translate('walktrhough_3_1')
+        .toUpperCase();
+    slideList[index].descriptiontwo =  AppLocalizations.of(context)
+        .translate('walktrhough_3_2')
+        .toUpperCase();
+    slideList[index].descriptionthree =  AppLocalizations.of(context)
+        .translate('walktrhough_3_3')
+        .toUpperCase();
+  }
+
+  //Return list
+  return slideList[index];
+}
+
 class Slide {
   final String imageUrl;
   final String title;
@@ -16,45 +57,6 @@ class Slide {
     @required this.descriptionthree,
   });
 }
-///Return slide
-returnSlide(index, context){
-
-  if(index == 0){
-    slideList[index].descriptionone =  AppLocalizations.of(context)
-        .translate('walktrhough_1_1')
-        .toUpperCase();
-    slideList[index].descriptiontwo =  AppLocalizations.of(context)
-        .translate('walktrhough_1_2')
-        .toUpperCase();
-    slideList[index].descriptionthree =  AppLocalizations.of(context)
-        .translate('walktrhough_1_3')
-        .toUpperCase();
-  } else if(index == 1){
-      slideList[index].descriptionone =  AppLocalizations.of(context)
-          .translate('walktrhough_2_1')
-          .toUpperCase();
-      slideList[index].descriptiontwo =  AppLocalizations.of(context)
-          .translate('walktrhough_2_2')
-          .toUpperCase();
-      slideList[index].descriptionthree =  AppLocalizations.of(context)
-          .translate('walktrhough_2_3')
-          .toUpperCase();
-  } else if(index == 2){
-    slideList[index].descriptionone =  AppLocalizations.of(context)
-        .translate('walktrhough_3_1')
-        .toUpperCase();
-    slideList[index].descriptiontwo =  AppLocalizations.of(context)
-        .translate('walktrhough_3_2')
-        .toUpperCase();
-    slideList[index].descriptionthree =  AppLocalizations.of(context)
-        .translate('walktrhough_3_3')
-        .toUpperCase();
-  }
-
-
-  return slideList[index];
-}
-
 
 final slideList = [
   Slide(

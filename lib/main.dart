@@ -1,11 +1,6 @@
-import 'package:app/helpers/storage/TripsDatabase.dart';
 import 'package:app/pages/Lab.dart';
-import 'package:app/pages/News.dart';
 import 'package:app/pages/MyList.dart';
-import 'package:app/pages/MyListDetails.dart';
-import 'package:app/pages/Profile.dart';
 import 'package:app/pages/TripFeed.dart';
-import 'package:app/pages/start/Loading.dart';
 import 'package:app/pages/walkthrough/Walkthrough.dart';
 import 'package:flutter/services.dart';
 
@@ -18,21 +13,7 @@ import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'helpers/AppLocalizations.dart';
 import 'models/UnloggedTrip.dart';
 import 'pages/Randonaut.dart';
-import 'package:app/models/map_pin_pill.dart';
-import 'package:app/models/pin_pill_info.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_polyline_points/flutter_polyline_points.dart';
-import 'package:geolocator/geolocator.dart' as geo;
-import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:location/location.dart';
-
-
-const double CAMERA_ZOOM = 16;
-const double CAMERA_TILT = 0;
-const double CAMERA_BEARING = 0;
-const LatLng SOURCE_LOCATION = LatLng(42.747932, -71.167889);
-const LatLng DEST_LOCATION = LatLng(37.422, -122.084);
 
 void main() {
 
@@ -112,9 +93,9 @@ class Randonautica extends StatelessWidget {
         //Home Page
         home:
             ///ENABLE LOADING HERE
-        // Walkthrough()
+            Walkthrough()
        // Loading()
-        HomePage(title: 'Randonautica'),
+        //HomePage(title: 'Randonautica'),
       ),
     );
   }
@@ -137,6 +118,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+
     SystemChrome.setEnabledSystemUIOverlays([]);
     // Create a Dog and add it to the dogs table.
     final fido = UnloggedTrip(
@@ -167,25 +149,22 @@ class _HomePageState extends State<HomePage> {
           children: <Widget>[
             IndexedStack(
               children: <Widget>[
-                //News(),
-                Walkthrough(),
                 Randonaut(),
-
                 TripFeed(),
-
-                //MyCommunities(),
-               // CreateAccount(),
-           //     Invite(),
-               // Login(),
-            //    Walkthrough(),
-            //    Loading(),
                 MyList(),
-            //  Detail(),
                 Lab()
+              // News(),
+              // Walkthrough(),
+              // MyCommunities(),
+              // CreateAccount(),
+              // Invite(),
+              // Login(),
+              // Walkthrough(),
+              // Loading(),
+              // Detail(),
               ],
               index: selectedNavigationIndex,
             ),
-
           BottomBar(this.callback, selectedNavigationIndex)
           ],
         ),

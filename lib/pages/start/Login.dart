@@ -2,6 +2,7 @@ import 'package:app/components/SignInAccountButton.dart';
 import 'package:app/components/SignInFacebookAccountButton.dart';
 import 'package:app/components/SignInGoogleAccountButton.dart';
 import 'package:app/helpers/AppLocalizations.dart';
+import 'package:app/pages/start/Invite.dart';
 import 'package:flutter/material.dart';
 
 class Login extends StatefulWidget {
@@ -71,13 +72,21 @@ class LoginState extends State<Login> {
                       color: Colors.white,
                       fontWeight: FontWeight.bold)),
               SizedBox(height: 45),
-              Text(
-                  AppLocalizations.of(context)
-                      .translate('continue_without_registering'),
-                  style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold)),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Invite()),
+                  );
+                },
+                child: new Text(
+                    AppLocalizations.of(context)
+                        .translate('continue_without_registering'),
+                    style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold)),
+              ),
               Icon(
                 Icons.arrow_forward,
                 color: Colors.white,
