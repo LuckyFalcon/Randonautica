@@ -59,10 +59,9 @@ class _EnterRandonauticaButton extends State<EnterRandonauticaButton> {
             ),
           ),
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => Login()),
-            );
+            Navigator.of(context, rootNavigator: true)
+                .push(new CupertinoPageRoute<bool>(
+                builder: (BuildContext context) => new Login()));
           },
           color: Color(0xff5D7FE0),
         ));

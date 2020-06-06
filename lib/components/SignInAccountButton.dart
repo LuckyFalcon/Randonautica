@@ -43,9 +43,9 @@ class _SignInCreateAccountButtonState extends State<SignInCreateAccountButton> {
             ),
           ),
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => CreateAccount()),
+            Navigator.of(context, rootNavigator: true)
+                .push(new CupertinoPageRoute<bool>(
+                builder: (BuildContext context) => new CreateAccount()),
             );
           },
           color: Color(0xff43CCDB),

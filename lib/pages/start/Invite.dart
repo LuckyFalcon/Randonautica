@@ -111,9 +111,11 @@ class InviteState extends State<Invite> {
                         ),
                       ),
                       onPressed: () {
-                        Navigator.push(
+                        ///Todo at this point remove previous navigation items
+                        Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(builder: (context) => HomePage()),
+                            ModalRoute.withName("/Home")
                         );
                       },
                       color: Colors.white,

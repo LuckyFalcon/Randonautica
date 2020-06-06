@@ -1,4 +1,5 @@
 import 'package:app/helpers/AppLocalizations.dart';
+import 'package:app/main.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:share/share.dart';
 
@@ -20,5 +21,12 @@ void inviteFriends(BuildContext context) {
     shareDescription,
     subject: shareSubject,
     sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size,
-  );
+  ).then((value) =>
+  //Share successfull
+  ///Todo at this point remove previous navigation items
+  Navigator.pushAndRemoveUntil(
+      context,
+      CupertinoPageRoute<bool>(builder: (context) => HomePage()),
+      ModalRoute.withName("/Home")
+  ));
 }

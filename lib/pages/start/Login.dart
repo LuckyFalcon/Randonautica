@@ -3,6 +3,7 @@ import 'package:app/components/SignInFacebookAccountButton.dart';
 import 'package:app/components/SignInGoogleAccountButton.dart';
 import 'package:app/helpers/AppLocalizations.dart';
 import 'package:app/pages/start/Invite.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Login extends StatefulWidget {
@@ -74,10 +75,9 @@ class LoginState extends State<Login> {
               SizedBox(height: 45),
               GestureDetector(
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => Invite()),
-                  );
+                  Navigator.of(context, rootNavigator: true)
+                      .push(new CupertinoPageRoute<bool>(
+                      builder: (BuildContext context) => new Invite()));
                 },
                 child: new Text(
                     AppLocalizations.of(context)
@@ -95,10 +95,9 @@ class LoginState extends State<Login> {
                 ),
                 tooltip: 'Increase volume by 10',
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => Invite()),
-                  );
+                  Navigator.of(context, rootNavigator: true)
+                      .push(new CupertinoPageRoute<bool>(
+                      builder: (BuildContext context) => new Invite()));
                 },
               ),
 
