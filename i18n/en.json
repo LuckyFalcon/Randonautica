@@ -1,5 +1,6 @@
 {
   "title": "randonautica",
+  "enter_randonautica": "enter randonautica",
   "welcome_randonaut": "Welcome, Randonaut",
   "sign_in_with_google": "sign in with google",
   "sign_in_with_facebook": "sign in with facebook",
@@ -50,7 +51,11 @@
   "walktrhough_1_1": "You are about to embark on a journey that allows your imagination to collide with the universe.",
   "walktrhough_1_2": "As a randonaut, you can create your own legend in real time as you venture to a quantumly generated random coordinate.",
   "walktrhough_1_3": "Set your mind out for adventure, what comes next is sure to be magical...",
-  "walktrhough_2": "Through the research of the fatum project, randonautica explores the idea that mind and matter (the world around you) are connected in an enchanting way. randonauting can heighten your awareness, train your brain for unpredictability, and most importantly, break you out of your probability tunnel....",
-  "walktrhough_3": "Through the research of the fatum project, randonautica explores the idea that mind and matter (the world around you) are connected in an enchanting way. randonauting can heighten your awareness, train your brain for unpredictability, and most importantly, break you out of your probability tunnel...."
+  "walktrhough_2_1": "Through the research of the fatum project, randonautica explores the idea that mind and matter (the world around you) are connected in an enchanting way.",
+  "walktrhough_2_2": "randonauting can heighten your awareness, train your brain for unpredictability, and most importantly, break you out of your probability tunnel....",
+  "walktrhough_2_3": "",
+  "walktrhough_3_1": "you are about to deviate off the path you were predetermined to be on.",
+  "walktrhough_3_2": "as you venture into the quantum randomness or \"genesis field\", keep your senses open as the story unfolds around you",
+  "walktrhough_3_3": "you were never supposed to be in this place at this time. you're writing the story now."
 
 }

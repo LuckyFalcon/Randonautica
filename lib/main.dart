@@ -3,8 +3,10 @@ import 'package:app/pages/Lab.dart';
 import 'package:app/pages/News.dart';
 import 'package:app/pages/MyList.dart';
 import 'package:app/pages/MyListDetails.dart';
+import 'package:app/pages/Profile.dart';
 import 'package:app/pages/TripFeed.dart';
 import 'package:app/pages/start/Loading.dart';
+import 'package:app/pages/walkthrough/Walkthrough.dart';
 import 'package:flutter/services.dart';
 
 import 'components/BottomBar.dart';
@@ -61,17 +63,20 @@ class Randonautica extends StatelessWidget {
     );
 
     //Set platform manually
-    final initialPlatform = TargetPlatform.android; //TODO uncomment
+    /// It can be set to IOS to force cupertino transistions or be changed later, check the link for more info.
+    /// https://stackoverflow.com/questions/51663793/how-to-use-cupertinopageroute-and-named-routes-in-flutter
+    /// it can be either set to IOS/Android or neither and let it decide for itself which platform it is on.
+    final initialPlatform = TargetPlatform.iOS; //TODO uncomment
 
     return PlatformProvider(
 
       //TODO Uncomment this to set the platform manually
-//      initialPlatform: initialPlatform,
-//       settings: PlatformSettingsData(
-//         platformStyle: PlatformStyleData(
-//           android: PlatformStyle.Cupertino,
-//         ),
-//       ),
+      initialPlatform: initialPlatform,
+       settings: PlatformSettingsData(
+         platformStyle: PlatformStyleData(
+           android: PlatformStyle.Cupertino,
+         ),
+       ),
       builder: (context) => PlatformApp(
 
         //Title
@@ -82,10 +87,12 @@ class Randonautica extends StatelessWidget {
           return new MaterialAppData(
             theme: materialTheme,
             darkTheme: materialDarkTheme,
+
             themeMode: brightness == Brightness.light
                 ? ThemeMode.light
                 : ThemeMode.dark,
           );
+
         },
         ios: (_) => new CupertinoAppData(
           theme: cupertinoTheme,
@@ -105,6 +112,7 @@ class Randonautica extends StatelessWidget {
         //Home Page
         home:
             ///ENABLE LOADING HERE
+        // Walkthrough()
        // Loading()
         HomePage(title: 'Randonautica'),
       ),
@@ -160,6 +168,7 @@ class _HomePageState extends State<HomePage> {
             IndexedStack(
               children: <Widget>[
                 //News(),
+                Walkthrough(),
                 Randonaut(),
 
                 TripFeed(),
@@ -176,6 +185,7 @@ class _HomePageState extends State<HomePage> {
               ],
               index: selectedNavigationIndex,
             ),
+
           BottomBar(this.callback, selectedNavigationIndex)
           ],
         ),

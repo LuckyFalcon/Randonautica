@@ -94,8 +94,8 @@ class TripFeedState extends State<TripFeed> {
           decoration: BoxDecoration(
               gradient: LinearGradient(
                   begin: Alignment.topCenter,
-                  end: Alignment.bottomRight,
-                  stops: [0, 1],
+                  end: Alignment.bottomCenter,
+                  stops: [0, 100],
                   colors: [Color(0xff6081E3), Color(0xff44CBDB)])),
           child: new Center(
             child: Column(

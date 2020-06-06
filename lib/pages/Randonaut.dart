@@ -12,6 +12,7 @@ import 'package:app/helpers/storage/TripsDatabase.dart';
 import 'package:app/models/UnloggedTrip.dart';
 import 'package:app/models/map_pin_pill.dart';
 import 'package:app/models/pin_pill_info.dart';
+import 'package:app/utils/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -92,6 +93,7 @@ class RandonautState extends State<Randonaut> {
   @override
   void initState() {
     super.initState();
+    SizeConfig().init(context);
 
     // create an instance of Location
     location = new Location();
@@ -176,9 +178,9 @@ class RandonautState extends State<Randonaut> {
           decoration: BoxDecoration(
               gradient: LinearGradient(
                   begin: Alignment.topCenter,
-                  end: Alignment.bottomRight,
-                  stops: [0, 1],
-                  colors: [Color(0xff6081E3), Color(0xff44CBDB)])),
+                  end: Alignment.bottomCenter,
+                  stops: [0, 100],
+                  colors: [Color(0xff5A87E4), Color(0xff37CDDC)])),
           child: Center(
             child: Column(
               children: <Widget>[
@@ -285,70 +287,7 @@ class RandonautState extends State<Randonaut> {
                           ),
                         ],
                       )
-                    : Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Column(
-                            children: [
-                              ButtonsRowMainPage('anomaly'),
-                              SizedBox(height: 7),
-                              ButtonsRowMainPage('attractor'),
-                              SizedBox(height: 7),
-                              ButtonsRowMainPage('void'),
-                            ],
-                          ),
-                          SizedBox(width: 10),
-                          SizedBox(
-                            width: 60,
-                            child: Column(
-                              children: [
-                                Text(
-                                  'Radius',
-                                  textAlign: TextAlign.center,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white
-                                  ),
-                                ),
-                                Text(
-                                  '20',
-                                  textAlign: TextAlign.center,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 30,
-                                      color: Colors.white
-                                  ),
-                                ),
-                                Text(
-                                  'MILES',
-                                  textAlign: TextAlign.center,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 12,
-                                      color: Colors.white
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                          SizedBox(width: 10),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              ButtonsRowMainPage('1_point'),
-                              SizedBox(height: 10),
-                              ButtonsRowMainPage('2_point'),
-                              SizedBox(height: 10),
-                              ButtonsRowMainPage('3_point'),
-                            ],
-                          ),
-                        ],
-                      )),
+                    : SizedBox(width: 10)),
               ],
             ),
           )),

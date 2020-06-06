@@ -1,109 +1,111 @@
-//import 'package:app/models/page_decoration.dart';
-//import 'package:app/models/page_view_model.dart';
-//import 'package:app/pages/Randonaut.dart';
-//import 'package:dots_indicator/dots_indicator.dart';
-//
-//import 'package:app/helpers/AppLocalizations.dart';
-//import 'package:flutter/material.dart';
-//
-//import '../../introduction_screen.dart';
-//
-//class Walkthrough extends StatefulWidget {
-//  @override
-//  State<Walkthrough> createState() => WalkthroughState();
-//}
-//
-//class WalkthroughState extends State<Walkthrough> {
-//  final introKey = GlobalKey<IntroductionScreenState>();
-//
-//  void _onIntroEnd(context) {
-//    Navigator.of(context).push(
-//      MaterialPageRoute(builder: (_) => Randonaut()),
-//    );
-//  }
-//
-//  Widget _buildImage(String assetName) {
-//    return Align(
-//      child: Image.asset('assets/$assetName.jpg', width: 350.0),
-//      alignment: Alignment.bottomCenter,
-//    );
-//  }
-//
-//  @override
-//  void initState() {
-//    super.initState();
-//  }
-//
-//  @override
-//  Widget build(BuildContext context) {
-//    const bodyStyle = TextStyle(fontSize: 19.0);
-//    const pageDecoration = const PageDecoration(
-//      titleTextStyle: TextStyle(fontSize: 28.0, fontWeight: FontWeight.w700),
-//      bodyTextStyle: bodyStyle,
-//      descriptionPadding: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 16.0),
-//      pageColor: Colors.white,
-//      imagePadding: EdgeInsets.zero,
-//    );
-//    return IntroductionScreen(
-//      key: introKey,
-//      decoration: BoxDecoration(
-//          gradient: LinearGradient(
-//              begin: Alignment.topCenter,
-//              end: Alignment.center,
-//              stops: [0, 1],
-//              colors: [Color(0xff6081E3), Color(0xff44CBDB)])),
-//      pages: [
-//        PageViewModel(
-//          gradientDecoration: BoxDecoration(
-//              gradient: LinearGradient(
-//                  begin: Alignment.topCenter,
-//                  end: Alignment.bottomRight,
-//                  stops: [0, 1],
-//                  colors: [Color(0xff6081E3), Color(0xff44CBDB)])),
-//          title: "Fractional shares",
-//          column: Column(
-//            children: <Widget>[
-//              Text(
-//                  AppLocalizations.of(context)
-//                      .translate('walktrhough_1_1'),
-//                  textAlign: TextAlign.center,
-//                  style: TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold)),
-//              SizedBox(height: 20),
-//              Text(
-//                  AppLocalizations.of(context)
-//                      .translate('walktrhough_1_2'),
-//                  textAlign: TextAlign.center,
-//                  style: TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold)),
-//              SizedBox(height: 20),
-//              Text(
-//                  AppLocalizations.of(context)
-//                      .translate('walktrhough_1_3'),
-//                  textAlign: TextAlign.center,
-//                  style: TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold)),
-//            ],
-//          ),
-//          image: _buildImage('img1'),
-//          decoration: pageDecoration,
-//        ),
-//      ],
-//      onDone: () => _onIntroEnd(context),
-//      //onSkip: () => _onIntroEnd(context), // You can override onSkip callback
-//      showSkipButton: false,
-//      showNextButton: false,
-//      skipFlex: 0,
-//      nextFlex: 0,
-//      skip: const Text('Skip'),
-//      next: const Icon(Icons.arrow_forward),
-//      done: const Text('', style: TextStyle(fontWeight: FontWeight.w600)),
-//      dotsDecorator: const DotsDecorator(
-//        size: Size(10.0, 10.0),
-//        color: Color(0xFFBDBDBD),
-//        activeSize: Size(22.0, 10.0),
-//        activeShape: RoundedRectangleBorder(
-//          borderRadius: BorderRadius.all(Radius.circular(25.0)),
-//        ),
-//      ),
-//    );
-//  }
-////Functions
-//}
+import 'dart:async';
+
+import 'package:app/components/EnterRandonauticaButton.dart';
+import 'package:app/components/slide_dots.dart';
+import 'package:app/components/slide_item.dart';
+import 'package:app/models/slide.dart';
+import 'package:flutter/material.dart';
+
+class Walkthrough extends StatefulWidget {
+  @override
+  _WalkthroughState createState() => _WalkthroughState();
+}
+
+class _WalkthroughState extends State<Walkthrough> {
+  int _currentPage = 0;
+  final PageController _pageController = PageController(initialPage: 0);
+
+  @override
+  void initState() {
+    super.initState();
+    Timer.periodic(Duration(seconds: 10), (Timer timer) {
+      if (_currentPage < 2) {
+        _currentPage++;
+      } else {
+        _currentPage = 0;
+      }
+
+      _pageController.animateToPage(
+        _currentPage,
+        duration: Duration(milliseconds: 1000),
+        curve: Curves.easeIn,
+      );
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _pageController.dispose();
+  }
+
+  _onPageChanged(int index) {
+    setState(() {
+      _currentPage = index;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      resizeToAvoidBottomPadding: false,
+      extendBodyBehindAppBar: true,
+      extendBody:true,
+      body: Container(
+        decoration: BoxDecoration(
+            gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomRight,
+                stops: [0, 1],
+                colors: [Color(0xff383B46), Color(0xff5E80E0)])),
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            children: <Widget>[
+              ImageIcon(AssetImage('assets/img/Owl.png'),
+                  color: Colors.white, size: 64),
+              Expanded(
+                child: Stack(
+                  alignment: AlignmentDirectional.bottomCenter,
+                  children: <Widget>[
+                    PageView.builder(
+                      scrollDirection: Axis.horizontal,
+                      controller: _pageController,
+                      onPageChanged: _onPageChanged,
+                      itemCount: slideList.length,
+                      itemBuilder: (ctx, i) => SlideItem(i),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(bottom: 30),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    for (int i = 0; i < slideList.length; i++)
+                      if (i == _currentPage)
+                        SlideDots(true)
+                      else
+                        SlideDots(false)
+                  ],
+                ),
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  EnterRandonauticaButton(),
+                ],
+              ),
+              SizedBox(
+                height: 50,
+              ),
+
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

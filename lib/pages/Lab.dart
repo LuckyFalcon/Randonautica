@@ -34,8 +34,8 @@ class LabState extends State<Lab> {
           decoration: BoxDecoration(
               gradient: LinearGradient(
                   begin: Alignment.topCenter,
-                  end: Alignment.bottomRight,
-                  stops: [0, 1],
+                  end: Alignment.bottomCenter,
+                  stops: [0, 6.0],
                   colors: [Color(0xff383B46), Color(0xff5E80E0)])),
           child: Center(
             child: Column(

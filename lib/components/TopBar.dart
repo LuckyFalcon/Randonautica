@@ -1,5 +1,6 @@
 import 'package:app/pages/News.dart';
 import 'package:app/pages/Profile.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class TopBar extends StatelessWidget {
@@ -18,7 +19,10 @@ class TopBar extends StatelessWidget {
                 color: Colors.white,
               ),
               onPressed: () {
-                Navigator.of(context).push(_createProfileRoute());
+                Navigator.of(context, rootNavigator: true)
+                    .push(new CupertinoPageRoute<bool>(
+                  builder: (BuildContext context) => new profile(),
+                ));
               },
             ),
           ),
@@ -33,8 +37,7 @@ class TopBar extends StatelessWidget {
                 AssetImage('assets/img/Owl.png'),
                 color: Colors.white,
               ),
-              onPressed: () {
-              },
+              onPressed: () {},
             ),
           ),
         ),
@@ -47,42 +50,55 @@ class TopBar extends StatelessWidget {
               icon: ImageIcon(AssetImage('assets/img/pods.png'),
                   size: 64.0, color: Colors.white),
               onPressed: () {
-                Navigator.of(context).push(_createInboxRoute());
+                Navigator.of(context, rootNavigator: true)
+                    .push(new CupertinoPageRoute<bool>(
+                  builder: (BuildContext context) => new News(),
+                ));
               },
             ),
           ),
         ),
-
       ]),
     );
   }
 }
 
-//Create route to profile
-Route _createProfileRoute() {
-  return PageRouteBuilder(
-    transitionDuration: Duration(milliseconds: 500),
-    pageBuilder: (context, animation, secondaryAnimation) => profile(),
-    transitionsBuilder: (context, animation, secondaryAnimation, child) {
-      var begin = Offset(0.0, 1.0);
-      var end = Offset.zero;
-      var curve = Curves.ease;
-      var tween = Tween(begin: begin, end: end);
-      var curvedAnimation = CurvedAnimation(
-        parent: animation,
-        curve: curve,
-      );
+class SecondPageRoute extends CupertinoPageRoute {
+  SecondPageRoute() : super(builder: (BuildContext context) => new profile());
 
-      return SlideTransition(
-        position: Tween<Offset>(
-          begin: const Offset(-1, 0),
-          end: Offset.zero,
-        ).animate(animation),
-        child: child,
-      );
-    },
-  );
+  // OPTIONAL IF YOU WISH TO HAVE SOME EXTRA ANIMATION WHILE ROUTING
+  @override
+  Widget buildPage(BuildContext context, Animation<double> animation,
+      Animation<double> secondaryAnimation) {
+    return new FadeTransition(opacity: animation, child: new profile());
+  }
 }
+
+////Create route to profile
+//Route _createProfileRoute() {
+//  return PageRouteBuilder(
+//    transitionDuration: Duration(milliseconds: 500),
+//    pageBuilder: (context, animation, secondaryAnimation) => profile(),
+//    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+//      var begin = Offset(0.0, 1.0);
+//      var end = Offset.zero;
+//      var curve = Curves.ease;
+//      var tween = Tween(begin: begin, end: end);
+//      var curvedAnimation = CurvedAnimation(
+//        parent: animation,
+//        curve: curve,
+//      );
+//
+//      return SlideTransition(
+//        position: Tween<Offset>(
+//          begin: const Offset(-1, 0),
+//          end: Offset.zero,
+//        ).animate(animation),
+//        child: child,
+//      );
+//    },
+//  );
+//}
 
 //Create route to profile
 Route _createInboxRoute() {
