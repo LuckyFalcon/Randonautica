@@ -28,8 +28,8 @@ class LoginState extends State<Login> {
               gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomRight,
-                  stops: [0, 1],
-                  colors: [Color(0xff6081E3), Color(0xff44CBDB)])),
+                  stops: [0, 100],
+                  colors: [Color(0xff5A87E4), Color(0xff37CDDC)])),
           child: Center(
             child: Column(children: <Widget>[
               SizedBox(height: 50),
@@ -87,11 +87,21 @@ class LoginState extends State<Login> {
                         color: Colors.white,
                         fontWeight: FontWeight.bold)),
               ),
-              Icon(
-                Icons.arrow_forward,
-                color: Colors.white,
-                size: 40.0,
+              IconButton(
+                icon:  Icon(
+                  Icons.arrow_forward,
+                  color: Colors.white,
+                  size: 40.0,
+                ),
+                tooltip: 'Increase volume by 10',
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Invite()),
+                  );
+                },
               ),
+
             ]),
           )),
     );

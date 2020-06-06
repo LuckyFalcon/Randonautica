@@ -10,8 +10,8 @@ class profile extends StatelessWidget {
               gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomRight,
-                  stops: [0, 1],
-                  colors: [Color(0xff6081E3), Color(0xff44CBDB)])),
+                  stops: [0, 100],
+                  colors: [Color(0xff5A87E4), Color(0xff37CDDC)])),
           child: Center(
             child: Column(
               children: <Widget>[
