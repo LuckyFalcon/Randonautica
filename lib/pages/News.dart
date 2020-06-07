@@ -89,8 +89,17 @@ class News extends StatelessWidget {
                         padding: const EdgeInsets.only(top: 20, left: 20),
                         child: Column(
                           children: <Widget>[
-                            ListView.builder(
+                            ListView.separated(
                                 shrinkWrap: true,
+                                separatorBuilder: (context, index) {
+                                  return Divider(
+                                    color: Colors.white,
+                                    height: 20,
+                                    thickness: 2,
+                                    indent: 20,
+                                    endIndent: 20,
+                                  );
+                                },
                                 physics: ScrollPhysics(),
                                 itemCount: 2,
                                 itemBuilder: (BuildContext context, int index) {
@@ -99,14 +108,7 @@ class News extends StatelessWidget {
                                     lastName: userdetails[index]['last_name'],
                                     imageURL: userdetails[index]['image_url'],
                                   );
-                                }),
-                            Divider(
-                              color: Colors.white,
-                              height: 20,
-                              thickness: 4,
-                              indent: 20,
-                              endIndent: 20,
-                            ),
+                                })
                           ],
                         )))
               ],

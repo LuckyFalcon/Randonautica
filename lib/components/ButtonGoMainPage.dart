@@ -28,11 +28,11 @@ class _ButtonGoMainPage extends State<ButtonGoMainPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        width: 100,
-        height: 60,
+        width: 130,
+        height: 78,
         decoration: BoxDecoration(
             color: Color(0xff5D7FE0),
-            borderRadius: BorderRadius.circular(30),
+            borderRadius: BorderRadius.circular(90),
             boxShadow: [
               BoxShadow(
                   blurRadius: 8,
@@ -42,7 +42,7 @@ class _ButtonGoMainPage extends State<ButtonGoMainPage> {
             ]),
         child: RaisedButton(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30.0),
+            borderRadius: BorderRadius.circular(90.0),
           ),
           padding: EdgeInsets.zero,
           child: Center(
@@ -54,7 +54,7 @@ class _ButtonGoMainPage extends State<ButtonGoMainPage> {
                         .translate('go')
                         .toUpperCase(),
                     style: TextStyle(
-                        fontSize: 28,
+                        fontSize: 40,
                         color: Colors.white,
                         fontWeight: FontWeight.bold)),
 

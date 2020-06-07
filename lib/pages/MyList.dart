@@ -1,3 +1,4 @@
+import 'package:app/components/NoTripsFound.dart';
 import 'package:app/components/TopBar.dart';
 import 'package:app/components/TripRow.dart';
 import 'package:app/helpers/storage/TripsDatabase.dart';
@@ -34,111 +35,137 @@ class MyListState extends State<MyList> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        resizeToAvoidBottomPadding: false,
-        extendBodyBehindAppBar: true,
-        extendBody: true,
-        body: Container(
-          decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  stops: [0, 100],
-                  colors: [Color(0xff5A87E4), Color(0xff37CDDC)])),
-          child: new Container(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Expanded(
-                  child: ListView(
-                    physics: ScrollPhysics(),
-                    shrinkWrap: true,
-                    padding: const EdgeInsets.all(8),
-                    children: <Widget>[
-                      TopBar(),
-                      Text(
-                          AppLocalizations.of(context)
-                              .translate('recently_viewed_trips')
-                              .toUpperCase(),
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 16, color: Colors.white)),
-                      TripRow(),
-                      Text(
-                          AppLocalizations.of(context)
-                              .translate('recently_viewed_trips')
-                              .toUpperCase(),
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 16, color: Colors.white)),
-                      TripRow(),
-                      Text(
-                          AppLocalizations.of(context)
-                              .translate('your_trip_log')
-                              .toUpperCase(),
-                          textAlign: TextAlign.start,
-                          style: TextStyle(fontSize: 28, color: Colors.white)),
-                      ListView.separated(
-                          shrinkWrap: true,
-                          separatorBuilder: (context, index) {
-                            return Divider(
-                              color: Colors.white,
-                              height: 20,
-                              thickness: 2,
-                              indent: 20,
-                              endIndent: 20,
-                            );
-                          },
-                          physics: ScrollPhysics(),
-                          itemCount: 2,
-                          itemBuilder: (BuildContext context, int index) {
-                            return new UserWidget(
-                              firstName: userdetails[index]['first_name'],
-                              lastName: userdetails[index]['last_name'],
-                              imageURL: userdetails[index]['image_url'],
-                            );
-                          }),
-                      Text(
-                          AppLocalizations.of(context)
-                              .translate('your_trip_log')
-                              .toUpperCase(),
-                          textAlign: TextAlign.start,
-                          style: TextStyle(fontSize: 28, color: Colors.white)),
-                      ListView.separated(
-                          shrinkWrap: true,
-                          separatorBuilder: (context, index) {
-                            return Divider(
-                              color: Colors.white,
-                              height: 20,
-                              thickness: 2,
-                              indent: 20,
-                              endIndent: 20,
-                            );
-                          },
-                          physics: ScrollPhysics(),
-                          itemCount: 2,
-                          itemBuilder: (BuildContext context, int index) {
-                            return new FutureBuilder<List<UnloggedTrip>>(
-                              future: RetrieveUnloggedTrips(),
-                              builder: (context, snapshot) {
-                                if (snapshot.hasData) {
-                                  return listWidget(
-                                    location: snapshot.data[0].location,
-                                    dateTime: snapshot.data[0].dateTime,
-                                  );
-                                } else {
-                                  return Center(
-                                    child: CircularProgressIndicator(),
-                                  );
-                                }
+    return (userdetails.length < 0
+        ? Scaffold(
+            resizeToAvoidBottomPadding: false,
+            extendBodyBehindAppBar: true,
+            extendBody: true,
+            body: Container(
+              decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      stops: [0, 100],
+                      colors: [Color(0xff5A87E4), Color(0xff37CDDC)])),
+              child: new Container(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Expanded(
+                      child: ListView(
+                        physics: ScrollPhysics(),
+                        shrinkWrap: true,
+                        padding: const EdgeInsets.all(8),
+                        children: <Widget>[
+                          TopBar(),
+                          Text(
+                              AppLocalizations.of(context)
+                                  .translate('recently_viewed_trips')
+                                  .toUpperCase(),
+                              textAlign: TextAlign.center,
+                              style:
+                                  TextStyle(fontSize: 16, color: Colors.white)),
+                          TripRow(),
+                          Text(
+                              AppLocalizations.of(context)
+                                  .translate('recently_viewed_trips')
+                                  .toUpperCase(),
+                              textAlign: TextAlign.center,
+                              style:
+                                  TextStyle(fontSize: 16, color: Colors.white)),
+                          TripRow(),
+                          (userdetails.length < 0
+                              ? Text(
+                                  AppLocalizations.of(context)
+                                      .translate('your_trip_log')
+                                      .toUpperCase(),
+                                  textAlign: TextAlign.start,
+                                  style: TextStyle(
+                                      fontSize: 28, color: Colors.white))
+                              : Text(
+                                  AppLocalizations.of(context)
+                                      .translate('your_trip_log')
+
+                                      ///Set to empty
+                                      .toUpperCase(),
+                                  textAlign: TextAlign.start,
+                                  style: TextStyle(
+                                      fontSize: 28, color: Colors.white))),
+                          ListView.separated(
+                              shrinkWrap: true,
+                              separatorBuilder: (context, index) {
+                                return Divider(
+                                  color: Colors.white,
+                                  height: 20,
+                                  thickness: 2,
+                                  indent: 20,
+                                  endIndent: 20,
+                                );
                               },
-                            );
-                          })
-                    ],
-                  ),
+                              physics: ScrollPhysics(),
+                              itemCount: 2,
+                              itemBuilder: (BuildContext context, int index) {
+                                return new UserWidget(
+                                  firstName: userdetails[index]['first_name'],
+                                  lastName: userdetails[index]['last_name'],
+                                  imageURL: userdetails[index]['image_url'],
+                                );
+                              }),
+                          (userdetails.length < 0
+                              ? Text(
+                                  AppLocalizations.of(context)
+                                      .translate('your_trip_log')
+                                      .toUpperCase(),
+                                  textAlign: TextAlign.start,
+                                  style: TextStyle(
+                                      fontSize: 28, color: Colors.white))
+                              : Text(
+                                  AppLocalizations.of(context)
+                                      .translate('your_trip_log')
+
+                                      ///Set to empty
+                                      .toUpperCase(),
+                                  textAlign: TextAlign.start,
+                                  style: TextStyle(
+                                      fontSize: 28, color: Colors.white))),
+                          ListView.separated(
+                              shrinkWrap: true,
+                              separatorBuilder: (context, index) {
+                                return Divider(
+                                  color: Colors.white,
+                                  height: 20,
+                                  thickness: 2,
+                                  indent: 20,
+                                  endIndent: 20,
+                                );
+                              },
+                              physics: ScrollPhysics(),
+                              itemCount: 2,
+                              itemBuilder: (BuildContext context, int index) {
+                                return new FutureBuilder<List<UnloggedTrip>>(
+                                  future: RetrieveUnloggedTrips(),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.hasData) {
+                                      return listWidget(
+                                        location: snapshot.data[0].location,
+                                        dateTime: snapshot.data[0].dateTime,
+                                      );
+                                    } else {
+                                      return Center(
+                                        child: CircularProgressIndicator(),
+                                      );
+                                    }
+                                  },
+                                );
+                              })
+                        ],
+                      ),
+                    )
+                  ],
                 ),
-              ],
-            ),
-          ),
-        ));
+              ),
+            ))
+        : NoTripsFound());
   } //Functions
 }
 
@@ -198,7 +225,8 @@ class listWidget extends StatelessWidget {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => Detail(location,dateTime)),
+              MaterialPageRoute(
+                  builder: (context) => Detail(location, dateTime)),
             );
           }),
     ]));

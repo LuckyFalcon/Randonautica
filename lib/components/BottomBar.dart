@@ -23,16 +23,16 @@ class _BottomBarState extends State<BottomBar> {
     return Align(
         alignment: Alignment.bottomCenter,
         child: Container(
-            height: 90,
+            height: 110,
             padding: EdgeInsets.only(bottom: 25, left: 45, right: 45),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(30),
                 boxShadow: [
                   BoxShadow(
-                      blurRadius: 20,
-                      offset: Offset(5, 5),
-                      color: Colors.black.withOpacity(.6),
-                      spreadRadius: -65)
+                      blurRadius: 40,
+                      offset: Offset(1, 3),
+                      color: Colors.black,
+                      spreadRadius: -40)
                 ]),
             child: ClipRRect(
                 borderRadius: BorderRadius.only(
@@ -83,7 +83,7 @@ class _BottomBarState extends State<BottomBar> {
 
   Widget _individualTab(String imagePath) {
     return Container(
-      height: 50 + MediaQuery.of(context).padding.bottom,
+      height: 75 + MediaQuery.of(context).padding.bottom,
       padding: EdgeInsets.all(0),
       width: double.infinity,
       decoration: BoxDecoration(
@@ -97,7 +97,6 @@ class _BottomBarState extends State<BottomBar> {
           fit: BoxFit.scaleDown,
           alignment: Alignment.center,
         ),
-
       ),
     );
   }

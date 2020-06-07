@@ -1,3 +1,4 @@
+import 'package:app/pages/NewsItemDetails.dart';
 import 'package:flutter/material.dart';
 
 class NewsItem extends StatelessWidget {
@@ -10,24 +11,134 @@ class NewsItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: <Widget>[
-      Divider(
-        color: Colors.white,
-        height: 20,
-        thickness: 4,
-        indent: 20,
-        endIndent: 20,
-      ),
-      Container(
-        child: new ListTile(
-          leading: new FadeInImage(
-            placeholder: new AssetImage('assets/me.jpg'),
-            image: new NetworkImage(imageURL),
+    return new Stack(
+      children: <Widget>[
+        Container(
+          height: 100,
+          width: 350,
+          child: Row(
+            children: <Widget>[
+              Positioned(
+                top: 0,
+                left: 50,
+                child: IconButton(
+                    icon: new Image.asset('assets/img/inboxicon.png'),
+                    iconSize: 80,
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                NewsItemDetails('now', 'ámsterdam')),
+                      );
+                    }),
+              ),
+              Align(
+                  alignment: Alignment.topLeft,
+                  child: Column(
+                    children: <Widget>[
+                      Text(
+                        'Sender name',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                      Text(
+                        'A svt, or in a pod',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
+                  )),
+            ],
           ),
-          title: new Text("First Name : " + firstName),
-          subtitle: new Text("Last Name : " + lastName),
         ),
-      ),
-    ]);
+        Positioned(
+          top: 0,
+          right: 50,
+          child: Align(
+            alignment: Alignment.topRight,
+            child: Text(
+              'Sender name',
+              style: TextStyle(
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+//Container(
+//        height: 100,
+//        width: 350,
+//        child: Column(
+//          children: <Widget>[
+//            Row(
+//              children: <Widget>[
+//                IconButton(
+//                    icon: new Image.asset('assets/img/inboxicon.png'),
+//                    iconSize: 80,
+//                    onPressed: () {
+//                      Navigator.push(
+//                        context,
+//                        MaterialPageRoute(
+//                            builder: (context) =>
+//                                NewsItemDetails('now', 'ámsterdam')),
+//                      );
+//                    }),
+//                Text(
+//                  'Day 1',
+//                  style: TextStyle(
+//                    color: Colors.white,
+//                  ),
+//                ),
+//                IconButton(
+//                  onPressed: () {},
+//                  icon: Icon(Icons.more_vert),
+//                ),
+//              ],
+//            ),
+//          ],
+//        ),
+//      );
+
+//    Container(
+//        child:
+//
+//
+//
+//        Column(
+//      children: <Widget>[
+//        Row(
+//            children: [
+//          Container(
+//            child: Align(
+//              child: IconButton(
+//                  icon: new Image.asset('assets/img/inboxicon.png'),
+//                  iconSize: 80,
+//                  onPressed: () {
+//                    Navigator.push(
+//                      context,
+//                      MaterialPageRoute(
+//                          builder: (context) =>
+//                              NewsItemDetails('now', 'ámsterdam')),
+//                    );
+//                  }),
+//            ),
+//          ),
+//          Align(
+//            alignment: Alignment.topLeft,
+//
+//            child: Text(
+//              "ex 4:22PM",
+//              overflow: TextOverflow.ellipsis,
+//              style:
+//                  TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+//            ),
+//          ),
+//        ])
+//      ],
+//    ));
   }
 }

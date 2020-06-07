@@ -93,9 +93,9 @@ class Randonautica extends StatelessWidget {
         //Home Page
         home:
             ///ENABLE LOADING HERE
-            Walkthrough()
+          //  Walkthrough()
        // Loading()
-        //HomePage(title: 'Randonautica'),
+        HomePage(title: 'Randonautica'),
       ),
     );
   }

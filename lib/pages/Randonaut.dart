@@ -189,9 +189,9 @@ class RandonautState extends State<Randonaut> {
                     height: SizeConfig.blockSizeVertical * 70, ///This is 70% of the Vertical / Height for this container in this class
                     width: SizeConfig.blockSizeHorizontal * 80, ///This is 80% of the Horizontal / Width for this container in this class
                     child: Stack(
-                      alignment: Alignment.bottomCenter,
                       children: <Widget>[
                         Container(
+                          height: SizeConfig.blockSizeVertical * 68, ///This is 70% of the Vertical / Height for this container in this class
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.all(Radius.circular(30.0)),
                             border: Border.all(width: 15, color: Colors.white),
@@ -232,13 +232,15 @@ class RandonautState extends State<Randonaut> {
                               ],
                             ),
                           ),
-
                         ),
-                        ButtonGoMainPage(this.callback, pressGoButton),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: ButtonGoMainPage(this.callback, pressGoButton),
+                  )
                       ],
                     ),
                   ),
-                SizedBox(height: 20),
+
                 (pressGoButton //TODO MOVE TO ButtonGoMainPage
                     ? Row(
                         crossAxisAlignment: CrossAxisAlignment.center,

@@ -1,4 +1,5 @@
 import 'package:app/components/TopBar.dart';
+import 'package:app/components/TripFeedEntry.dart';
 import 'package:app/components/TripRow.dart';
 import 'package:flutter/material.dart';
 import '../helpers/AppLocalizations.dart';
@@ -9,6 +10,7 @@ class TripFeed extends StatefulWidget {
 }
 
 class TripFeedState extends State<TripFeed> {
+  bool acceptedAgreement = false;
   @override
   void initState() {
     super.initState();
@@ -86,7 +88,8 @@ class TripFeedState extends State<TripFeed> {
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return (acceptedAgreement
+      ? Scaffold(
         resizeToAvoidBottomPadding: false,
         extendBodyBehindAppBar: true,
         extendBody: true,
@@ -147,8 +150,8 @@ class TripFeedState extends State<TripFeed> {
               ],
             ),
           ),
-        ));
-
+        ))
+      : TripFeedEntry());
     //ListSearchBar();
   } //Functions
 }
