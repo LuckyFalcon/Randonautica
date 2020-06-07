@@ -1,7 +1,7 @@
 import 'package:app/pages/Lab.dart';
 import 'package:app/pages/MyList.dart';
 import 'package:app/pages/TripFeed.dart';
-import 'package:app/pages/walkthrough/Walkthrough.dart';
+import 'file:///E:/Randonautica/randonautica/lib/pages/start/Walkthrough.dart';
 import 'package:flutter/services.dart';
 
 import 'components/BottomBar.dart';

@@ -1,18 +1,63 @@
+import 'dart:convert';
+
+import 'package:app/components/SubmitReportButton.dart';
 import 'package:app/components/TopBar.dart';
 import 'package:app/helpers/AppLocalizations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_tags/flutter_tags.dart';
 
-class Detail extends StatelessWidget {
-  Detail(this.location, this.dateTime);
+class UnloggedTripDetails extends StatefulWidget {
+  UnloggedTripDetails(this.location, this.dateTime);
 
   String location;
   String dateTime;
 
   @override
+  State<UnloggedTripDetails> createState() => UnloggedTripDetailsState();
+}
+
+class UnloggedTripDetailsState extends State<UnloggedTripDetails> {
+  List _items = ['0'];
+  double _fontSize = 14;
+
+  bool _symmetry = false;
+  bool _removeButton = true;
+  bool _singleItem = false;
+  bool _startDirection = false;
+  bool _horizontalScroll = false;
+  bool _withSuggesttions = false;
+  int _count = 0;
+  int _column = 0;
+
+  String _itemCombine = 'withTextBefore';
+
+  String _onPressed = '';
+
+  List _icon = [Icons.home, Icons.language, Icons.headset];
+
+  @override
+  void initState() {
+    super.initState();
+    location = this.widget.location;
+    dateTime = this.widget.dateTime;
+
+    // if you store data on a local database (sqflite), then you could do something like this
+//    Model().getItems().then((items){
+//      _items = items;
+//    });
+  }
+
+  String location;
+  String dateTime;
+
+  var _controller = TextEditingController();
+  var _text = TextEditingController();
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
-      extendBodyBehindAppBar: true,
+      extendBodyBehindAppBar: false,
       extendBody: true,
       body: Container(
         decoration: BoxDecoration(
@@ -72,11 +117,14 @@ class Detail extends StatelessWidget {
                         color: Color(0xff7BBFFE),
                         borderRadius: BorderRadius.circular(30),
                       ),
-                      child: TextFormField(
+                      child: TextField(
+                          keyboardType: TextInputType.multiline,
+                          maxLines: null,
+                          maxLength: null,
+                          controller: _text,
                           style: TextStyle(
                             color: Colors.white,
                           ),
-                          obscureText: true,
                           decoration: InputDecoration(
                               contentPadding: const EdgeInsets.only(
                                   bottom: 10, left: 25, right: 45),
@@ -87,10 +135,114 @@ class Detail extends StatelessWidget {
                                   color: Colors.white,
                                   fontSize: 14,
                                   fontWeight: FontWeight.bold))))),
+              Container(
+                  height: 60,
+                  padding: EdgeInsets.only(bottom: 25, left: 50, right: 45),
+                  child: Container(
+                      decoration: BoxDecoration(
+                        color: Color(0xff7BBFFE),
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      child: TextFormField(
+                          controller: _controller,
+                          onFieldSubmitted: (String str) {
+                            // Add item to the data source.
+
+                            setState(() {
+                              // required
+                              _items.add(str);
+                              _controller.clear();
+                            });
+                          },
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                          obscureText: true,
+                          decoration: InputDecoration(
+                              suffixIcon: IconButton(
+                                onPressed: () => _controller.clear(),
+                                icon: Icon(Icons.clear),
+                              ),
+                              contentPadding: const EdgeInsets.all(20.0),
+                              border: InputBorder.none,
+                              labelText: AppLocalizations.of(context)
+                                  .translate('add_trip_tags'),
+                              labelStyle: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold))))),
+              Tags(
+                key: _tagStateKey,
+                symmetry: _symmetry,
+                columns: _column,
+//            textDirection: TextDirection.rtl,
+//            textField: TagsTextField(
+//
+//              textStyle: TextStyle(fontSize: _fontSize),
+//              onSubmitted: (String str) {
+//                // Add item to the data source.
+//                print('added');
+//
+//                setState(() {
+//                  print('added');
+//                  // required
+//                  _items.add(str);
+//                });
+//              },
+//            ),
+                horizontalScroll: _horizontalScroll,
+                //verticalDirection: VerticalDirection.up, textDirection: TextDirection.rtl,
+                heightHorizontalScroll: 60 * (_fontSize / 14),
+                itemCount: _items.length,
+                itemBuilder: (index) {
+                  final item = _items[index];
+                  return ItemTags(
+                    key: Key(index.toString()),
+                    index: index,
+                    title: item,
+                    pressEnabled: true,
+                    activeColor: Color(0xff6080E2),
+                    singleItem: _singleItem,
+                    splashColor: Colors.green,
+                    combine: ItemTagsCombine.withTextBefore,
+                    icon: (item == '0' || item == '1' || item == '2')
+                        ? ItemTagsIcon(
+                            icon: _icon[int.parse(item)],
+                          )
+                        : null,
+                    removeButton: _removeButton
+                        ? ItemTagsRemoveButton(
+                            onRemoved: () {
+                              setState(() {
+                                _items.removeAt(index);
+                              });
+                              return true;
+                            },
+                          )
+                        : null,
+                    textScaleFactor:
+                        utf8.encode(item.substring(0, 1)).length > 2 ? 0.8 : 1,
+                    textStyle: TextStyle(
+                      fontSize: _fontSize,
+                    ),
+                    onPressed: (item) => print(item),
+                  );
+                },
+              ),
+              SizedBox(height: 10),
+              SubmitReportButton()
             ],
           ),
         ),
       ),
     );
   }
+}
+
+final GlobalKey<TagsState> _tagStateKey = GlobalKey<TagsState>();
+// Allows you to get a list of all the ItemTags
+_getAllItem() {
+  List<Item> lst = _tagStateKey.currentState?.getAllItem;
+  if (lst != null)
+    lst.where((a) => a.active == true).forEach((a) => print(a.title));
 }

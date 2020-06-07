@@ -123,7 +123,6 @@ class RandonautState extends State<Randonaut> {
     });
   }
 
-//
  void dialog(){
    final ProgressDialog pr = ProgressDialog(context,type: ProgressDialogType.Normal, isDismissible: true, showLogs: true);
    pr.show();
@@ -296,6 +295,9 @@ class RandonautState extends State<Randonaut> {
 
   void onAddMarkerButtonPressed() {
     attractorPoint = LatLng(currentLocation.latitude, currentLocation.longitude);
+
+
+
     setState(() {
       initialCameraPosition = CameraPosition(
           target: LatLng(currentLocation.latitude, currentLocation.longitude),
@@ -320,13 +322,19 @@ class RandonautState extends State<Randonaut> {
     var future = insertUnloggedTrip(unloggedTrip);
     future.then((value) {
       print('succesfullyinserted');
+
+      ///Uncomment this for real points
 //      setState(() {
+//
 //        var future = fetchAttractors(
-//            3000, centercoordinates.latitude, centercoordinates.longitude);
+//            3000, currentLocation.latitude, currentLocation.longitude);
+//
 //        future.then((value) {
 //          final LatLng attractorCoordinates = new LatLng(
 //              value.points[0].center.point.latitude,
 //              value.points[0].center.point.longitude);
+//
+//          controller.moveCamera(CameraUpdate.newLatLngZoom(LatLng(attractorCoordinates.latitude, attractorCoordinates.longitude), 10));
 //
 //          //CAMERA_ZOOM = 1; //Change zoom
 //          _markers.add(Marker(
@@ -341,7 +349,16 @@ class RandonautState extends State<Randonaut> {
 //          ));
 //        });
 //      });
-    });
+//      UnloggedTrip unloggedTrip = new UnloggedTrip();
+//      unloggedTrip.location = 'Amsterdam';
+//      unloggedTrip.dateTime = DateTime.now().toIso8601String();
+//      var future = insertUnloggedTrip(unloggedTrip);
+//      future.then((value) {
+//        print('succesfullyinserted');
+//      });
+//    });
+
+          });
   }
 
   void setSourceAndDestinationIcons() async {
