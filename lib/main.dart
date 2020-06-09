@@ -1,7 +1,6 @@
 import 'package:app/pages/Lab.dart';
 import 'package:app/pages/MyList.dart';
 import 'package:app/pages/TripFeed.dart';
-import 'file:///E:/Randonautica/randonautica/lib/pages/start/Walkthrough.dart';
 import 'package:flutter/services.dart';
 
 import 'components/BottomBar.dart';
@@ -11,19 +10,18 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
 import 'helpers/AppLocalizations.dart';
+import 'helpers/storage/createDatabases.dart';
 import 'models/UnloggedTrip.dart';
 import 'pages/Randonaut.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 void main() {
-
   runApp(Randonautica());
 }
-
 
 class Randonautica extends StatelessWidget {
 
   Brightness brightness = Brightness.light;
+
   @override
   Widget build(BuildContext context) {
     // This widget is the root of your application.
@@ -95,17 +93,16 @@ class Randonautica extends StatelessWidget {
             ///ENABLE LOADING HERE
           //  Walkthrough()
        // Loading()
-        HomePage(title: 'Randonautica'),
+        HomePage(homePageTitle: 'Randonautica'),
       ),
     );
   }
 }
 
 class HomePage extends StatefulWidget {
-  HomePage({Key key, this.title}) : super(key: key);
+  HomePage({Key key, this.homePageTitle}) : super(key: key);
 
-  //App Title
-  final String title;
+  final String homePageTitle;
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -119,17 +116,10 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
 
+    //Remove Status & Navigation bar
     SystemChrome.setEnabledSystemUIOverlays([]);
-    // Create a Dog and add it to the dogs table.
-    final fido = UnloggedTrip(
-        location: 'Amsterdam',
-        dateTime: DateTime.now().toIso8601String()
-    );
-   // storeUnloggedTrips();
-  //  retrieveUnloggedTrips();
-//    createDatabase();
-//    insertUnloggedTrip(fido);
-//    print(RetrieveUnloggedTrips().then((value) => print(value.length))); // Prints a list that include Fido.
+
+
 
   }
 

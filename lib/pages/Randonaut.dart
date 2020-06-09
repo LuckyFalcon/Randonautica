@@ -8,7 +8,7 @@ import 'package:app/components/StartOverButton.dart';
 import 'package:app/components/TopBar.dart';
 import 'package:app/components/ButtonsRowMainPage.dart';
 import 'package:app/helpers/OpenGoogleMaps.dart';
-import 'package:app/helpers/storage/TripsDatabase.dart';
+import 'package:app/helpers/storage/unloggedTripsDatabase.dart';
 import 'package:app/models/UnloggedTrip.dart';
 import 'package:app/models/map_pin_pill.dart';
 import 'package:app/models/pin_pill_info.dart';
@@ -111,9 +111,6 @@ class RandonautState extends State<Randonaut> {
     setSourceAndDestinationIcons();
     // set the initial location
     setInitialLocation();
-
-    ///PUT this somewhere else!
-    createDatabase ();
   }
 
   void callback(bool pressGoButton) {
@@ -296,7 +293,11 @@ class RandonautState extends State<Randonaut> {
   void onAddMarkerButtonPressed() {
     attractorPoint = LatLng(currentLocation.latitude, currentLocation.longitude);
 
-
+    final fido = UnloggedTrip(
+        location: 'Amsterdam',
+       // dateTime: DateTime.now().toIso8601String()
+    );
+    // storeUnloggedTrips();
 
     setState(() {
       initialCameraPosition = CameraPosition(
@@ -317,8 +318,8 @@ class RandonautState extends State<Randonaut> {
       ));
     });
     UnloggedTrip unloggedTrip = new UnloggedTrip();
-    unloggedTrip.location = 'Amsterdam';
-    unloggedTrip.dateTime = DateTime.now().toIso8601String();
+//    unloggedTrip.location = 'Amsterdam';
+//    unloggedTrip.dateTime = DateTime.now().toIso8601String();
     var future = insertUnloggedTrip(unloggedTrip);
     future.then((value) {
       print('succesfullyinserted');
@@ -560,8 +561,5 @@ class RandonautState extends State<Randonaut> {
     int blue = Colors.blue.blue;
     return Color.fromARGB(alpha, red, green, blue);
   }
-
-
-
 
 }

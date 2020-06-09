@@ -1,7 +1,7 @@
 import 'package:app/components/NoTripsFound.dart';
 import 'package:app/components/TopBar.dart';
 import 'package:app/components/TripRow.dart';
-import 'package:app/helpers/storage/TripsDatabase.dart';
+import 'package:app/helpers/storage/unloggedTripsDatabase.dart';
 import 'package:app/models/UnloggedTrip.dart';
 import 'package:flutter/material.dart';
 import '../helpers/AppLocalizations.dart';
@@ -183,7 +183,7 @@ class MyListState extends State<MyList> {
                                     if (snapshot.hasData) {
                                       return listWidget(
                                         location: snapshot.data[0].location,
-                                        dateTime: snapshot.data[0].dateTime,
+                               //         dateTime: snapshot.data[0].dateTime,
                                       );
                                     } else {
                                       return Center(

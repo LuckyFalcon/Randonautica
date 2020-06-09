@@ -1,18 +1,23 @@
 import 'package:app/helpers/AppLocalizations.dart';
+import 'package:app/helpers/storage/createDatabases.dart';
 import 'package:app/pages/start/Login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class Loading extends StatefulWidget {
   @override
-  State<Loading> createState() => LoadingState();
+  State<Loading> createState() => _LoadingState();
 }
 
-class LoadingState extends State<Loading> {
+class _LoadingState extends State<Loading> {
 
   @override
   void initState() {
     super.initState();
+
+    ///TODO await Create Databases & check whether it already exists
+    createDatabases();
+
     Future.delayed(Duration(seconds: 4), () {
       ///Loading here or copy this to main.dart and do loading there
       Navigator.push(
