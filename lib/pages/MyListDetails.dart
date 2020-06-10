@@ -4,10 +4,12 @@ import 'dart:io';
 import 'package:app/components/SubmitReportButton.dart';
 import 'package:app/components/TopBar.dart';
 import 'package:app/helpers/AppLocalizations.dart';
+import 'package:app/helpers/storage/loggedTripsDatabase.dart';
 import 'package:app/models/LoggedTrip.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tags/flutter_tags.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart';
 
 class UnloggedTripDetails extends StatefulWidget {
 
@@ -35,6 +37,9 @@ class UnloggedTripDetailsState extends State<UnloggedTripDetails> {
   String location;
   String datetime;
 
+  bool labButtonPress = false;
+
+
   @override
   void initState() {
     super.initState();
@@ -44,24 +49,63 @@ class UnloggedTripDetailsState extends State<UnloggedTripDetails> {
 
   }
 
-  void submiteReport(){
+  void callback(bool labButtonPress) {
+    setState(() {
+      this.labButtonPress = labButtonPress;
+      print(true);
+      submiteReport();
+    });
+  }
 
+  Future<void> submiteReport() async {
+    // getting a directory path for saving
+    final Directory directory = await getApplicationDocumentsDirectory();
+
+    final String path = directory.path;
+
+    var id = new DateTime.now().millisecondsSinceEpoch;
+
+    // copy the file to a new path
+    final File newImage = await _image.copy('$path/$id.png');
+    print(newImage);
+
+    var tagsLength = _items.length;
 //    //Log trips
-//    final fido = LoggedTrip(
-//      gid: value.points[0].gID.toString(),
-//      location: location[0].administrativeArea.toString(),
-//      datetime: DateTime.now().toIso8601String(),
-//      latitude: attractorCoordinates.latitude.toString(),
-//      longitude: attractorCoordinates.longitude.toString(),
-//      radius: value.points[0].radiusM.toString(),
-//      type: value.points[0].type.toString(),
-//      power: value.points[0].radiusM.toString(),
-//      zScore: value.points[0].zScore.toString(),
-//      pseudo: 0.toString(),
-//      report: 0.toString(),
-//    );
-//    await insertUnloggedTrip(fido);
+    final fido = LoggedTrip(
+      gid: this.widget.location,
+      location: this.widget.location,
+      datetime: this.widget.location,
+      latitude: this.widget.location,
+      longitude: this.widget.location,
+      radius: this.widget.location,
+      type: this.widget.location,
+      power: this.widget.location,
+      zScore: this.widget.location,
+      pseudo: 0.toString(),
+      favorite: 1.toString(),
+      reportedtime: DateTime.now().toIso8601String(),
+      title: _title.toString(),
+      text: _text.toString(),
+      imagelocation: newImage.toString(),
+      tag1: (tagsLength > 1 ? _items[0] : null),
+      tag2: (tagsLength > 2 ? _items[1] : null),
+      tag3: (tagsLength > 3 ? _items[2] : null),
+      tag4: (tagsLength > 4 ? _items[3] : null),
+      tag5: (tagsLength > 5 ? _items[4] : null),
+      tag6: (tagsLength > 6 ? _items[5] : null),
+      tag7: (tagsLength > 7 ? _items[6] : null),
+      tag8: (tagsLength > 8 ? _items[7] : null),
+      tag9: (tagsLength > 9 ? _items[8] : null),
+      tag10: (tagsLength > 10 ? _items[9] : null),
+      tag11: (tagsLength > 11 ? _items[10] : null),
+      tag12: (tagsLength > 12 ? _items[11] : null),
+      tag13: (tagsLength > 13 ? _items[12] : null),
+      tag14: (tagsLength > 14 ? _items[13] : null),
+      tag15: (tagsLength > 15 ? _items[14] : null),
+    );
 
+    await insertLoggedTrip(fido);
+    print('success');
   }
 
   List _items = ['0'];
@@ -85,12 +129,14 @@ class UnloggedTripDetailsState extends State<UnloggedTripDetails> {
 
   var _controller = TextEditingController();
   var _text = TextEditingController();
+  var _title = TextEditingController();
 
   File _image;
   final picker = ImagePicker();
 
   Future getImage() async {
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
+
 
     setState(() {
       _image = File(pickedFile.path);
@@ -130,18 +176,16 @@ class UnloggedTripDetailsState extends State<UnloggedTripDetails> {
                   )
                 ],
               ),
-              FloatingActionButton(
+
+
+              _image == null
+                ? FloatingActionButton(
                 onPressed: getImage,
                 tooltip: 'Pick Image',
                 child: Icon(Icons.add_a_photo),
-              ),
-              GestureDetector(
-                onTap: () => getImage,
-                child: Image.asset('assets/img/add_media.png'),
-              ),
-              _image == null
-                ? Image(image: AssetImage('assets/img/add_media.png'))
-                : Image.file(_image, width: 96, height: 96),
+              )
+                : Image.file(_image, width: 128, height: 128),
+              SizedBox(height: 20),
               Container(
                   height: 60,
                   padding: EdgeInsets.only(bottom: 25, left: 50, right: 45),
@@ -151,6 +195,8 @@ class UnloggedTripDetailsState extends State<UnloggedTripDetails> {
                         borderRadius: BorderRadius.circular(30),
                       ),
                       child: TextFormField(
+
+                          controller: _title,
                           style: TextStyle(
                             color: Colors.white,
                           ),
@@ -269,7 +315,7 @@ class UnloggedTripDetailsState extends State<UnloggedTripDetails> {
                 },
               ),
               SizedBox(height: 10),
-              SubmitReportButton()
+              SubmitReportButton(this.callback, labButtonPress)
             ],
           ),
         ),

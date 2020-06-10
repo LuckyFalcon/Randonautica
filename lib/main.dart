@@ -1,6 +1,7 @@
 import 'package:app/pages/Lab.dart';
 import 'package:app/pages/MyList.dart';
 import 'package:app/pages/TripFeed.dart';
+import 'package:app/pages/start/Loading.dart';
 import 'package:flutter/services.dart';
 
 import 'components/BottomBar.dart';
@@ -91,8 +92,8 @@ class Randonautica extends StatelessWidget {
         home:
             ///ENABLE LOADING HERE
           //  Walkthrough()
-       // Loading()
-        HomePage(homePageTitle: 'Randonautica'),
+        Loading()
+      //  HomePage(homePageTitle: 'Randonautica'),
       ),
     );
   }

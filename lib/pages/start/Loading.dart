@@ -1,8 +1,10 @@
 import 'package:app/helpers/AppLocalizations.dart';
+import 'package:app/helpers/storage/setupDatabases.dart';
 import 'package:app/helpers/storage/createDatabases.dart';
 import 'package:app/pages/start/Login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:upgrader/upgrader.dart';
 
 class Loading extends StatefulWidget {
   @override
@@ -15,17 +17,20 @@ class _LoadingState extends State<Loading> {
   void initState() {
     super.initState();
 
-    ///TODO await Create Databases & check whether it already exists
-    createDatabases();
+    //Setup Databases
+    setupDatabases().then((value) =>
 
-    Future.delayed(Duration(seconds: 4), () {
-      ///Loading here or copy this to main.dart and do loading there
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => Login(),
-          ));
-    });
+        Future.delayed(Duration(seconds: 3), () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => Login(),
+              ));
+        })
+
+    );
+
+
   }
 
   @override
@@ -61,7 +66,10 @@ class _LoadingState extends State<Loading> {
                             style: TextStyle(fontSize: 40, color: Colors.white, fontWeight: FontWeight.bold)),
                         SizedBox(height: 10),
                         SizedBox(height: 20),
-                        CircularProgressIndicator()
+                        ///Todo IOS and Android combined
+                        UpgradeAlert(
+                          child: Center(child: CircularProgressIndicator()),
+                        ),
                       ])
                 ]
             ),

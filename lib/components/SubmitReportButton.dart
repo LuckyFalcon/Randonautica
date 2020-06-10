@@ -4,6 +4,11 @@ import '../helpers/AppLocalizations.dart';
 
 class SubmitReportButton extends StatelessWidget {
 
+  Function callback;
+  bool pressPurchaseKey = false;
+
+  SubmitReportButton(this.callback, this.pressPurchaseKey);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -45,7 +50,7 @@ class SubmitReportButton extends StatelessWidget {
               ],
             ),
           ),
-          onPressed: () {},
+          onPressed: () {this.callback(true);},
           color: Color(0xff44C5DB),
         ));
   }

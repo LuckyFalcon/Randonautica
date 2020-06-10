@@ -1,7 +1,7 @@
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
-void createDatabases() async {
+Future<bool> createDatabases() async {
 
   await createUnloggedTripsDatabase();
   await createLoggedTripsDatabase();

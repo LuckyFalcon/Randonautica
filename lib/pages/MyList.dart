@@ -1,7 +1,9 @@
 import 'package:app/components/NoTripsFound.dart';
 import 'package:app/components/TopBar.dart';
 import 'package:app/components/TripRow.dart';
+import 'package:app/helpers/storage/loggedTripsDatabase.dart';
 import 'package:app/helpers/storage/unloggedTripsDatabase.dart';
+import 'package:app/models/LoggedTrip.dart';
 import 'package:app/models/UnloggedTrip.dart';
 import 'package:flutter/material.dart';
 import '../helpers/AppLocalizations.dart';
@@ -16,6 +18,8 @@ class MyList extends StatefulWidget {
 
 class MyListState extends State<MyList> {
   List<UnloggedTrip> _list;
+  List<LoggedTrip> _LoggedTripList;
+
   var test;
 
   @override
@@ -26,6 +30,11 @@ class MyListState extends State<MyList> {
     _futureOfList.then((value) {
       _list = value;
       print(_list[0].datetime);
+    });
+    Future<List<LoggedTrip>> _futureOfLoggedList = RetrieveLoggedTrips();
+    _futureOfLoggedList.then((value) {
+      _LoggedTripList = value;
+      print('logged:' + _LoggedTripList[0].datetime);
     });
   }
 
@@ -100,7 +109,7 @@ class MyListState extends State<MyList> {
                           (recentlyViewdTrips.length > 0
                               ? TripRow()
                               : SizedBox(width: 10)),
-                          (loggedTrips.length > 0
+                          (_LoggedTripList.length > 0
                               ? Text(
                                   AppLocalizations.of(context)
                                       .translate('recently_viewed_trips')
@@ -109,10 +118,10 @@ class MyListState extends State<MyList> {
                                   style: TextStyle(
                                       fontSize: 16, color: Colors.white))
                               : SizedBox(width: 10)),
-                          (loggedTrips.length > 0
+                          (_LoggedTripList.length > 0
                               ? TripRow()
                               : SizedBox(width: 10)),
-                          (loggedTrips.length > 0
+                          (_LoggedTripList.length > 0
                               ? Text(
                                   AppLocalizations.of(context)
                                       .translate('your_trip_log')
@@ -129,7 +138,7 @@ class MyListState extends State<MyList> {
                                   textAlign: TextAlign.start,
                                   style: TextStyle(
                                       fontSize: 28, color: Colors.white))),
-                          (loggedTrips.length > 0
+                          (_LoggedTripList.length > 0
                               ? ListView.separated(
                                   shrinkWrap: true,
                                   separatorBuilder: (context, index) {
