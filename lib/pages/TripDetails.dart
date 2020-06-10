@@ -114,7 +114,7 @@ class TripDetailsState extends State<TripDetails> {
                                       color: Colors.white,
                                       fontSize: 14,
                                       fontWeight: FontWeight.bold))))),
-                  
+
                 ],
               ),
 
