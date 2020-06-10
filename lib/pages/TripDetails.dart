@@ -63,103 +63,62 @@ class TripDetailsState extends State<TripDetails> {
                   )
                 ],
               ),
-              Image(image: AssetImage('assets/img/add_media.png')),
-              Container(
-                  height: 60,
-                  padding: EdgeInsets.only(bottom: 25, left: 50, right: 45),
-                  child: Container(
-                      decoration: BoxDecoration(
-                        color: Color(0xff7BBFFE),
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      child: TextFormField(
-                          style: TextStyle(
-                            color: Colors.white,
+              ListView(
+                physics: ScrollPhysics(),
+                shrinkWrap: true,
+                padding: const EdgeInsets.all(8),
+                children: <Widget>[
+                  Image(image: AssetImage('assets/img/add_media.png')),
+                  Container(
+                      height: 60,
+                      padding: EdgeInsets.only(bottom: 25, left: 50, right: 45),
+                      child: Container(
+                          decoration: BoxDecoration(
+                            color: Color(0xff7BBFFE),
+                            borderRadius: BorderRadius.circular(30),
                           ),
-                          obscureText: true,
-                          decoration: InputDecoration(
-                              contentPadding: const EdgeInsets.all(20.0),
-                              border: InputBorder.none,
-                              labelText: AppLocalizations.of(context)
-                                  .translate('give_trip_a_name'),
-                              labelStyle: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold))))),
-              Container(
-                  height: 150,
-                  padding: EdgeInsets.only(bottom: 10, left: 45, right: 45),
-                  child: Container(
-                      decoration: BoxDecoration(
-                        color: Color(0xff7BBFFE),
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      child: TextFormField(
-                          style: TextStyle(
-                            color: Colors.white,
+                          child: TextFormField(
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                              obscureText: true,
+                              decoration: InputDecoration(
+                                  contentPadding: const EdgeInsets.all(20.0),
+                                  border: InputBorder.none,
+                                  labelText: AppLocalizations.of(context)
+                                      .translate('give_trip_a_name'),
+                                  labelStyle: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold))))),
+                  Container(
+                      height: 150,
+                      padding: EdgeInsets.only(bottom: 10, left: 45, right: 45),
+                      child: Container(
+                          decoration: BoxDecoration(
+                            color: Color(0xff7BBFFE),
+                            borderRadius: BorderRadius.circular(30),
                           ),
-                          obscureText: true,
-                          decoration: InputDecoration(
-                              contentPadding: const EdgeInsets.only(
-                                  bottom: 10, left: 25, right: 45),
-                              border: InputBorder.none,
-                              labelText: AppLocalizations.of(context)
-                                  .translate('tell_your_story'),
-                              labelStyle: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold))))),
-              Tags(
-            key:_tagStateKey,
-            textField: TagsTextField(
-              textStyle: TextStyle(fontSize: _fontSize),
-              constraintSuggestion: true, suggestions: [],
-              onSubmitted: (String str) {
-                // Add item to the data source.
-                setState(() {
-                  // required
-                  _items.add(str);
-                });
-              },
-            ),
-            itemCount: _items.length, // required
-            itemBuilder: (int index){
-              final item = _items[index];
+                          child: TextFormField(
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                              obscureText: true,
+                              decoration: InputDecoration(
+                                  contentPadding: const EdgeInsets.only(
+                                      bottom: 10, left: 25, right: 45),
+                                  border: InputBorder.none,
+                                  labelText: AppLocalizations.of(context)
+                                      .translate('tell_your_story'),
+                                  labelStyle: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold))))),
+                  
+                ],
+              ),
 
-              return ItemTags(
-                // Each ItemTags must contain a Key. Keys allow Flutter to
-                // uniquely identify widgets.
-                key: Key(index.toString()),
-                index: index, // required
-                title: item.title,
-                active: item.active,
-                customData: item.customData,
-                textStyle: TextStyle( fontSize: _fontSize, ),
-                combine: ItemTagsCombine.withTextBefore,
-                image: ItemTagsImage(
-                    image: AssetImage("img.jpg") // OR NetworkImage("https://...image.png")
-                ), // OR null,
-                icon: ItemTagsIcon(
-                  icon: Icons.add,
-                ), // OR null,
-                removeButton: ItemTagsRemoveButton(
-                  onRemoved: (){
-                    // Remove the item from the data source.
-                    setState(() {
-                      // required
-                      _items.removeAt(index);
-                    });
-                    //required
-                    return true;
-                  },
-                ), // OR null,
-                onPressed: (item) => print(item),
-                onLongPressed: (item) => print(item),
-              );
-
-            },
-          )
-          ],
+            ],
           ),
         ),
       ),

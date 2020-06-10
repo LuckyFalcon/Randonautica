@@ -48,8 +48,9 @@ class _LoadingState extends State<Loading> {
     //Get Latest version info from firebase config
     final RemoteConfig remoteConfig = await RemoteConfig.instance;
 
-    //Ask for permissions
-    PermissionStatus permission = await LocationPermissions().requestPermissions();
+      //Ask for permissions
+      PermissionStatus permission = await LocationPermissions()
+          .requestPermissions();
 
     try {
 

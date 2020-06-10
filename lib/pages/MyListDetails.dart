@@ -86,7 +86,7 @@ class UnloggedTripDetailsState extends State<UnloggedTripDetails> {
       reportedtime: DateTime.now().toIso8601String(),
       title: _title.toString(),
       text: _text.toString(),
-      imagelocation: newImage.toString(),
+      imagelocation: newImage.path.toString(),
       tag1: (tagsLength > 1 ? _items[0] : null),
       tag2: (tagsLength > 2 ? _items[1] : null),
       tag3: (tagsLength > 3 ? _items[2] : null),

@@ -3,6 +3,7 @@ import 'package:app/pages/MyList.dart';
 import 'package:app/pages/TripFeed.dart';
 import 'package:app/pages/start/Loading.dart';
 import 'package:flutter/services.dart';
+import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 import 'components/BottomBar.dart';
 import 'package:flutter/cupertino.dart';
@@ -19,7 +20,6 @@ void main() {
 }
 
 class Randonautica extends StatelessWidget {
-
   Brightness brightness = Brightness.light;
 
   @override
@@ -48,53 +48,51 @@ class Randonautica extends StatelessWidget {
     final initialPlatform = TargetPlatform.iOS; //TODO uncomment
 
     return PlatformProvider(
-
       //TODO Uncomment this to set the platform manually
       initialPlatform: initialPlatform,
-       settings: PlatformSettingsData(
-         platformStyle: PlatformStyleData(
-           android: PlatformStyle.Cupertino,
-         ),
-       ),
+      settings: PlatformSettingsData(
+        platformStyle: PlatformStyleData(
+          android: PlatformStyle.Cupertino,
+        ),
+      ),
       builder: (context) => PlatformApp(
 
-        //Title
-        title: 'Randonautica',
+          //Title
+          title: 'Randonautica',
 
-        //Theme Data
-        android: (_) {
-          return new MaterialAppData(
-            theme: materialTheme,
-            darkTheme: materialDarkTheme,
+          //Theme Data
+          android: (_) {
+            return new MaterialAppData(
+              theme: materialTheme,
+              darkTheme: materialDarkTheme,
+              themeMode: brightness == Brightness.light
+                  ? ThemeMode.light
+                  : ThemeMode.dark,
+            );
+          },
+          ios: (_) => new CupertinoAppData(
+                theme: cupertinoTheme,
+              ),
 
-            themeMode: brightness == Brightness.light
-                ? ThemeMode.light
-                : ThemeMode.dark,
-          );
+          //Localizations
+          supportedLocales: [
+            Locale('en', 'US'),
+            Locale('jp', ''),
+          ],
+          localizationsDelegates: [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+          ],
 
-        },
-        ios: (_) => new CupertinoAppData(
-          theme: cupertinoTheme,
-        ),
+          //Home Page
+          home:
 
-        //Localizations
-        supportedLocales: [
-          Locale('en', 'US'),
-          Locale('jp', ''),
-        ],
-        localizationsDelegates: [
-          AppLocalizations.delegate,
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-        ],
-
-        //Home Page
-        home:
-            ///ENABLE LOADING HERE
-          //  Walkthrough()
-        Loading()
-      //  HomePage(homePageTitle: 'Randonautica'),
-      ),
+              ///ENABLE LOADING HERE
+              //  Walkthrough()
+              Loading()
+           // HomePage(homePageTitle: 'Randonautica'),
+          ),
     );
   }
 }
@@ -109,13 +107,11 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   int selectedNavigationIndex = 0;
 
   @override
   void initState() {
     super.initState();
-
   }
 
   void selectedNavigationIndexCallback(int selectedNavigationIndex) {
@@ -126,6 +122,10 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    BorderRadiusGeometry radius = BorderRadius.only(
+      topLeft: Radius.circular(24.0),
+      topRight: Radius.circular(24.0),
+    );
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       body: Container(
@@ -136,20 +136,21 @@ class _HomePageState extends State<HomePage> {
                 Randonaut(),
                 TripFeed(),
                 MyList(),
-                Lab()
-              // News(),
-              // Walkthrough(),
-              // MyCommunities(),
-              // CreateAccount(),
-              // Invite(),
-              // Login(),
-              // Walkthrough(),
-              // Loading(),
-              // Detail(),
+                Lab(),
+                // News(),
+                // Walkthrough(),
+                // MyCommunities(),
+                // CreateAccount(),
+                // Invite(),
+                // Login(),
+                // Walkthrough(),
+                // Loading(),
+                // Detail(),
               ],
               index: selectedNavigationIndex,
             ),
-          BottomBar(this.selectedNavigationIndexCallback, selectedNavigationIndex)
+            BottomBar(
+                this.selectedNavigationIndexCallback, selectedNavigationIndex),
           ],
         ),
       ),

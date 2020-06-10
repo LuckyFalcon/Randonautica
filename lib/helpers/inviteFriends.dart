@@ -1,5 +1,6 @@
 import 'package:app/helpers/AppLocalizations.dart';
 import 'package:app/main.dart';
+import 'package:app/pages/start/Walkthrough.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:share/share.dart';
 
@@ -23,7 +24,7 @@ void inviteFriends(BuildContext context) {
   ///Todo at this point remove previous navigation items
   Navigator.pushAndRemoveUntil(
       context,
-      CupertinoPageRoute<bool>(builder: (context) => HomePage()),
-      ModalRoute.withName("/Home")
+      CupertinoPageRoute<bool>(builder: (context) => Walkthrough()),
+      ModalRoute.withName("/Walkthrough")
   ));
 }

@@ -1,3 +1,4 @@
+import 'package:app/components/subscriptionDialog.dart';
 import 'package:app/pages/News.dart';
 import 'package:app/pages/Profile.dart';
 import 'package:flutter/cupertino.dart';
@@ -50,6 +51,7 @@ class TopBar extends StatelessWidget {
               icon: ImageIcon(AssetImage('assets/img/pods.png'),
                   size: 64.0, color: Colors.white),
               onPressed: () {
+//                openAlertBox(context);
                 Navigator.of(context, rootNavigator: true)
                     .push(new CupertinoPageRoute<bool>(
                   builder: (BuildContext context) => new News(),
@@ -61,6 +63,8 @@ class TopBar extends StatelessWidget {
       ]),
     );
   }
+
+
 }
 
 class SecondPageRoute extends CupertinoPageRoute {

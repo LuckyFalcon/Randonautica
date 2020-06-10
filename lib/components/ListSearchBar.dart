@@ -1,8 +1,8 @@
 import 'dart:math';
 
 import 'package:app/models/Post.dart';
-import 'package:app/pages/MyListDetails.dart';
 import 'package:app/pages/TripDetails.dart';
+import 'package:app/pages/UnloggedTripDetails.dart';
 import 'package:flappy_search_bar/scaled_tile.dart';
 import 'package:flappy_search_bar/search_bar_style.dart';
 import 'package:flutter/material.dart';
