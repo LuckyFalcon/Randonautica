@@ -17,6 +17,7 @@ GoogleSignIn _googleSignIn = GoogleSignIn(
 );
 
 class SignInGoogleAccountButton extends StatefulWidget {
+
   State<StatefulWidget> createState() => new _SignInGoogleAccountButtonState();
 }
 
@@ -66,6 +67,7 @@ class _SignInGoogleAccountButtonState extends State<SignInGoogleAccountButton> {
 
     print("User Sign Out");
   }
+
   @override
   Widget build(BuildContext context) {
     return Container(

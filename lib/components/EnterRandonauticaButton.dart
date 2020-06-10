@@ -1,3 +1,4 @@
+import 'package:app/main.dart';
 import 'package:app/pages/start/Login.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -61,7 +62,7 @@ class _EnterRandonauticaButton extends State<EnterRandonauticaButton> {
           onPressed: () {
             Navigator.of(context, rootNavigator: true)
                 .push(new CupertinoPageRoute<bool>(
-                builder: (BuildContext context) => new Login()));
+                builder: (BuildContext context) => new HomePage()));
           },
           color: Color(0xff5D7FE0),
         ));

@@ -1,6 +1,7 @@
 import 'package:app/helpers/AppLocalizations.dart';
 import 'package:app/helpers/inviteFriends.dart';
 import 'package:app/main.dart';
+import 'package:app/pages/start/Walkthrough.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -114,8 +115,8 @@ class _InviteState extends State<Invite> {
                         ///Todo at this point remove previous navigation items
                         Navigator.pushAndRemoveUntil(
                             context,
-                            MaterialPageRoute(builder: (context) => HomePage()),
-                            ModalRoute.withName("/Home"));
+                            MaterialPageRoute(builder: (context) => Walkthrough()),
+                            ModalRoute.withName("/Walktrhough"));
                       },
                       color: Colors.white,
                     ))
