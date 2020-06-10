@@ -223,6 +223,7 @@ class MyListState extends State<MyList> {
                               physics: ScrollPhysics(),
                               itemCount: _LoggedTripList.length,
                               itemBuilder: (BuildContext context, int index) {
+                                
                                 return listWidget(
                                   gid: _LoggedTripList[index].gid,
                                   location: _LoggedTripList[index].location,
