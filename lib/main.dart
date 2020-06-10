@@ -11,7 +11,6 @@ import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
 import 'helpers/AppLocalizations.dart';
 import 'helpers/storage/createDatabases.dart';
-import 'models/UnloggedTrip.dart';
 import 'pages/Randonaut.dart';
 
 void main() {
@@ -119,17 +118,17 @@ class _HomePageState extends State<HomePage> {
     //Remove Status & Navigation bar
     SystemChrome.setEnabledSystemUIOverlays([]);
 
-
+    ///TODO move this to loading
+    createDatabases();
 
   }
 
-  void callback(int selectedNavigationIndex) {
+  void selectedNavigationIndexCallback(int selectedNavigationIndex) {
     setState(() {
       this.selectedNavigationIndex = selectedNavigationIndex;
     });
   }
 
-    //Selected index for BottomBar
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -155,7 +154,7 @@ class _HomePageState extends State<HomePage> {
               ],
               index: selectedNavigationIndex,
             ),
-          BottomBar(this.callback, selectedNavigationIndex)
+          BottomBar(this.selectedNavigationIndexCallback, selectedNavigationIndex)
           ],
         ),
       ),

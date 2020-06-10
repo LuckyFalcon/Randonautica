@@ -15,9 +15,12 @@ import 'package:app/models/pin_pill_info.dart';
 import 'package:app/utils/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:progress_dialog/progress_dialog.dart';
+
+import 'MyList.dart';
 
 
 const double CAMERA_TILT = 0;
@@ -31,6 +34,10 @@ class Randonaut extends StatefulWidget {
 }
 
 class RandonautState extends State<Randonaut> {
+
+  final GlobalKey<MyListState> _key = GlobalKey();
+
+
   ///Buttons
   bool pressGoButton = false;
   bool pressOpenMapsButton = false;
@@ -113,7 +120,7 @@ class RandonautState extends State<Randonaut> {
     setInitialLocation();
   }
 
-  void callback(bool pressGoButton) {
+  void callback  (bool pressGoButton) {
     setState(() {
       this.pressGoButton = pressGoButton;
       onAddMarkerButtonPressed();
@@ -147,7 +154,6 @@ class RandonautState extends State<Randonaut> {
   void callbackStartOver(bool pressStartOverButton) {
     setState(() {
       this.pressStartOverButton = pressOpenMapsButton;
-      print("test");
     });
   }
 
@@ -290,76 +296,91 @@ class RandonautState extends State<Randonaut> {
     );
   }
 
-  void onAddMarkerButtonPressed() {
-    attractorPoint = LatLng(currentLocation.latitude, currentLocation.longitude);
-
-    final fido = UnloggedTrip(
-        location: 'Amsterdam',
-       // dateTime: DateTime.now().toIso8601String()
-    );
-    // storeUnloggedTrips();
-
-    setState(() {
-      initialCameraPosition = CameraPosition(
-          target: LatLng(currentLocation.latitude, currentLocation.longitude),
-          zoom: 1,
-          tilt: CAMERA_TILT,
-          bearing: CAMERA_BEARING);
-      controller.moveCamera(CameraUpdate.newLatLngZoom(LatLng(currentLocation.latitude, currentLocation.longitude), 10));
-      _markers.add(Marker(
-        // This marker id can be anything that uniquely identifies each marker.
-        markerId: MarkerId(attractorPoint.toString()),
-        position: attractorPoint,
-        infoWindow: InfoWindow(
-          title: 'Really cool place',
-          snippet: '5 Star Rating',
-        ),
-        icon: BitmapDescriptor.defaultMarker,
-      ));
-    });
-    UnloggedTrip unloggedTrip = new UnloggedTrip();
-//    unloggedTrip.location = 'Amsterdam';
-//    unloggedTrip.dateTime = DateTime.now().toIso8601String();
-    var future = insertUnloggedTrip(unloggedTrip);
-    future.then((value) {
-      print('succesfullyinserted');
+  void onAddMarkerButtonPressed() async {
+//    attractorPoint = LatLng(currentLocation.latitude, currentLocation.longitude);
+//
+//    final fido = UnloggedTrip(
+//        location: 'Amsterdam',
+//       // dateTime: DateTime.now().toIso8601String()
+//    );
+//    // storeUnloggedTrips();
+//
+//    setState(() {
+//      initialCameraPosition = CameraPosition(
+//          target: LatLng(currentLocation.latitude, currentLocation.longitude),
+//          zoom: 1,
+//          tilt: CAMERA_TILT,
+//          bearing: CAMERA_BEARING);
+//      controller.moveCamera(CameraUpdate.newLatLngZoom(LatLng(currentLocation.latitude, currentLocation.longitude), 10));
+//      _markers.add(Marker(
+//        // This marker id can be anything that uniquely identifies each marker.
+//        markerId: MarkerId(attractorPoint.toString()),
+//        position: attractorPoint,
+//        infoWindow: InfoWindow(
+//          title: 'Really cool place',
+//          snippet: '5 Star Rating',
+//        ),
+//        icon: BitmapDescriptor.defaultMarker,
+//      ));
+//    });
+//    UnloggedTrip unloggedTrip = new UnloggedTrip();
+////    unloggedTrip.location = 'Amsterdam';
+////    unloggedTrip.dateTime = DateTime.now().toIso8601String();
+//    var future = insertUnloggedTrip(unloggedTrip);
+//    future.then((value) {
+//      print('succesfullyinserted');
 
       ///Uncomment this for real points
-//      setState(() {
-//
-//        var future = fetchAttractors(
-//            3000, currentLocation.latitude, currentLocation.longitude);
-//
-//        future.then((value) {
-//          final LatLng attractorCoordinates = new LatLng(
-//              value.points[0].center.point.latitude,
-//              value.points[0].center.point.longitude);
-//
-//          controller.moveCamera(CameraUpdate.newLatLngZoom(LatLng(attractorCoordinates.latitude, attractorCoordinates.longitude), 10));
-//
-//          //CAMERA_ZOOM = 1; //Change zoom
-//          _markers.add(Marker(
-//            // This marker id can be anything that uniquely identifies each marker.
-//            markerId: MarkerId(attractorCoordinates.toString()),
-//            position: attractorCoordinates,
-//            infoWindow: InfoWindow(
-//              title: 'Really cool place',
-//              snippet: '5 Star Rating',
-//            ),
-//            icon: BitmapDescriptor.defaultMarker,
-//          ));
-//        });
-//      });
-//      UnloggedTrip unloggedTrip = new UnloggedTrip();
-//      unloggedTrip.location = 'Amsterdam';
-//      unloggedTrip.dateTime = DateTime.now().toIso8601String();
-//      var future = insertUnloggedTrip(unloggedTrip);
-//      future.then((value) {
-//        print('succesfullyinserted');
-//      });
-//    });
+      setState(() {
 
+        var future = fetchAttractors(
+            3000, currentLocation.latitude, currentLocation.longitude);
+
+        future.then((value) async {
+          final LatLng attractorCoordinates = new LatLng(
+              value.points[0].center.point.latitude,
+              value.points[0].center.point.longitude);
+
+          ///Todo add localidentifier as optional as it doesn't pick it up somehow
+          ///https://pub.dev/packages/geolocator
+          var location = await Geolocator().placemarkFromCoordinates(value.points[0].center.point.latitude, value.points[0].center.point.longitude, localeIdentifier: "fi_FI");
+
+
+          print('location' + location[0].administrativeArea);
+
+          //Log trips
+          final fido = UnloggedTrip(
+            gid: value.points[0].gID.toString(),
+            location: location[0].administrativeArea.toString(),
+            datetime: DateTime.now().toIso8601String(),
+            latitude: attractorCoordinates.latitude.toString(),
+            longitude: attractorCoordinates.longitude.toString(),
+            radius: value.points[0].radiusM.toString(),
+            type: value.points[0].type.toString(),
+            power: value.points[0].radiusM.toString(),
+            zScore: value.points[0].zScore.toString(),
+            pseudo: 0.toString(),
+            report: 0.toString(),
+          );
+          await insertUnloggedTrip(fido);
+
+          controller.moveCamera(CameraUpdate.newLatLngZoom(LatLng(attractorCoordinates.latitude, attractorCoordinates.longitude), 10));
+
+          //CAMERA_ZOOM = 1; //Change zoom
+          _markers.add(Marker(
+            // This marker id can be anything that uniquely identifies each marker.
+            markerId: MarkerId(attractorCoordinates.toString()),
+            position: attractorCoordinates,
+            infoWindow: InfoWindow(
+              title: 'Really cool place',
+              snippet: '5 Star Rating',
+            ),
+            icon: BitmapDescriptor.defaultMarker,
+          ));
           });
+
+
+        });
   }
 
   void setSourceAndDestinationIcons() async {

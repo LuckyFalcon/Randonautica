@@ -1,22 +1,69 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:app/components/SubmitReportButton.dart';
 import 'package:app/components/TopBar.dart';
 import 'package:app/helpers/AppLocalizations.dart';
+import 'package:app/models/LoggedTrip.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tags/flutter_tags.dart';
+import 'package:image_picker/image_picker.dart';
 
 class UnloggedTripDetails extends StatefulWidget {
-  UnloggedTripDetails(this.location, this.dateTime);
 
+  String gid;
   String location;
-  String dateTime;
+  String datetime;
+  String latitude;
+  String longitude;
+  String radius;
+  String type;
+  String power;
+  String zScore;
+  String pseudo;
+  String report;
+
+  UnloggedTripDetails(this.gid, this.location, this.datetime, this.latitude,
+      this.longitude, this.radius, this.type, this.power, this.zScore,
+      this.pseudo, this.report);
 
   @override
   State<UnloggedTripDetails> createState() => UnloggedTripDetailsState();
 }
 
 class UnloggedTripDetailsState extends State<UnloggedTripDetails> {
+  String location;
+  String datetime;
+
+  @override
+  void initState() {
+    super.initState();
+    location = this.widget.location;
+    datetime = this.widget.datetime;
+
+
+  }
+
+  void submiteReport(){
+
+//    //Log trips
+//    final fido = LoggedTrip(
+//      gid: value.points[0].gID.toString(),
+//      location: location[0].administrativeArea.toString(),
+//      datetime: DateTime.now().toIso8601String(),
+//      latitude: attractorCoordinates.latitude.toString(),
+//      longitude: attractorCoordinates.longitude.toString(),
+//      radius: value.points[0].radiusM.toString(),
+//      type: value.points[0].type.toString(),
+//      power: value.points[0].radiusM.toString(),
+//      zScore: value.points[0].zScore.toString(),
+//      pseudo: 0.toString(),
+//      report: 0.toString(),
+//    );
+//    await insertUnloggedTrip(fido);
+
+  }
+
   List _items = ['0'];
   double _fontSize = 14;
 
@@ -35,23 +82,20 @@ class UnloggedTripDetailsState extends State<UnloggedTripDetails> {
 
   List _icon = [Icons.home, Icons.language, Icons.headset];
 
-  @override
-  void initState() {
-    super.initState();
-    location = this.widget.location;
-    dateTime = this.widget.dateTime;
-
-    // if you store data on a local database (sqflite), then you could do something like this
-//    Model().getItems().then((items){
-//      _items = items;
-//    });
-  }
-
-  String location;
-  String dateTime;
 
   var _controller = TextEditingController();
   var _text = TextEditingController();
+
+  File _image;
+  final picker = ImagePicker();
+
+  Future getImage() async {
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+
+    setState(() {
+      _image = File(pickedFile.path);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +122,7 @@ class UnloggedTripDetailsState extends State<UnloggedTripDetails> {
                     onPressed: () => Navigator.of(context).pop(),
                   ),
                   Text(
-                    location + ' ' + dateTime,
+                    location + ' ' + datetime,
                     textAlign: TextAlign.center,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
@@ -86,7 +130,18 @@ class UnloggedTripDetailsState extends State<UnloggedTripDetails> {
                   )
                 ],
               ),
-              Image(image: AssetImage('assets/img/add_media.png')),
+              FloatingActionButton(
+                onPressed: getImage,
+                tooltip: 'Pick Image',
+                child: Icon(Icons.add_a_photo),
+              ),
+              GestureDetector(
+                onTap: () => getImage,
+                child: Image.asset('assets/img/add_media.png'),
+              ),
+              _image == null
+                ? Image(image: AssetImage('assets/img/add_media.png'))
+                : Image.file(_image, width: 96, height: 96),
               Container(
                   height: 60,
                   padding: EdgeInsets.only(bottom: 25, left: 50, right: 45),
@@ -175,23 +230,7 @@ class UnloggedTripDetailsState extends State<UnloggedTripDetails> {
                 key: _tagStateKey,
                 symmetry: _symmetry,
                 columns: _column,
-//            textDirection: TextDirection.rtl,
-//            textField: TagsTextField(
-//
-//              textStyle: TextStyle(fontSize: _fontSize),
-//              onSubmitted: (String str) {
-//                // Add item to the data source.
-//                print('added');
-//
-//                setState(() {
-//                  print('added');
-//                  // required
-//                  _items.add(str);
-//                });
-//              },
-//            ),
                 horizontalScroll: _horizontalScroll,
-                //verticalDirection: VerticalDirection.up, textDirection: TextDirection.rtl,
                 heightHorizontalScroll: 60 * (_fontSize / 14),
                 itemCount: _items.length,
                 itemBuilder: (index) {

@@ -6,10 +6,10 @@ import 'package:flutter/material.dart';
 
 class Invite extends StatefulWidget {
   @override
-  State<Invite> createState() => InviteState();
+  State<Invite> createState() => _InviteState();
 }
 
-class InviteState extends State<Invite> {
+class _InviteState extends State<Invite> {
   @override
   void initState() {
     super.initState();
@@ -113,10 +113,9 @@ class InviteState extends State<Invite> {
                       onPressed: () {
                         ///Todo at this point remove previous navigation items
                         Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(builder: (context) => HomePage()),
-                            ModalRoute.withName("/Home")
-                        );
+                            context,
+                            MaterialPageRoute(builder: (context) => HomePage()),
+                            ModalRoute.withName("/Home"));
                       },
                       color: Colors.white,
                     ))

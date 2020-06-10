@@ -8,14 +8,25 @@ import '../helpers/AppLocalizations.dart';
 import 'MyListDetails.dart';
 
 class MyList extends StatefulWidget {
+  MyList({Key key}) : super(key: key);
+
   @override
   State<MyList> createState() => MyListState();
 }
 
 class MyListState extends State<MyList> {
+  List<UnloggedTrip> _list;
+  var test;
+
   @override
-  void initState() {
+  initState() {
     super.initState();
+
+    Future<List<UnloggedTrip>> _futureOfList = RetrieveUnloggedTrips();
+    _futureOfList.then((value) {
+      _list = value;
+      print(_list[0].datetime);
+    });
   }
 
   List unloggedTrips = [
@@ -50,13 +61,11 @@ class MyListState extends State<MyList> {
     },
   ];
 
-  List recentlyViewdTrips = [
-
-  ];
+  List recentlyViewdTrips = [];
 
   @override
   Widget build(BuildContext context) {
-    return (unloggedTrips.length > 0
+    return (_list.length > 0
         ? Scaffold(
             resizeToAvoidBottomPadding: false,
             extendBodyBehindAppBar: true,
@@ -81,12 +90,12 @@ class MyListState extends State<MyList> {
                           TopBar(),
                           (recentlyViewdTrips.length > 0
                               ? Text(
-                              AppLocalizations.of(context)
-                                  .translate('recently_viewed_trips')
-                                  .toUpperCase(),
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  fontSize: 16, color: Colors.white))
+                                  AppLocalizations.of(context)
+                                      .translate('recently_viewed_trips')
+                                      .toUpperCase(),
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontSize: 16, color: Colors.white))
                               : SizedBox(width: 10)),
                           (recentlyViewdTrips.length > 0
                               ? TripRow()
@@ -175,15 +184,24 @@ class MyListState extends State<MyList> {
                                 );
                               },
                               physics: ScrollPhysics(),
-                              itemCount: 2,
+                              itemCount: _list.length,
                               itemBuilder: (BuildContext context, int index) {
                                 return new FutureBuilder<List<UnloggedTrip>>(
                                   future: RetrieveUnloggedTrips(),
                                   builder: (context, snapshot) {
                                     if (snapshot.hasData) {
                                       return listWidget(
-                                        location: snapshot.data[0].location,
-                               //         dateTime: snapshot.data[0].dateTime,
+                                        gid: snapshot.data[index].gid,
+                                        location: snapshot.data[index].location,
+                                        datetime: snapshot.data[index].datetime,
+                                        latitude: snapshot.data[index].latitude,
+                                        longitude: snapshot.data[index].longitude,
+                                        radius: snapshot.data[index].radius,
+                                        type: snapshot.data[index].type,
+                                        power: snapshot.data[index].power,
+                                        zScore: snapshot.data[index].zScore,
+                                        pseudo: snapshot.data[index].pseudo,
+                                        report: snapshot.data[index].report,
                                       );
                                     } else {
                                       return Center(
@@ -228,17 +246,41 @@ class UserWidget extends StatelessWidget {
 }
 
 class listWidget extends StatelessWidget {
-  final String location;
-  final String dateTime;
+  String gid;
+  String location;
+  String datetime;
+  String latitude;
+  String longitude;
+  String radius;
+  String type;
+  String power;
+  String zScore;
+  String pseudo;
+  String report;
 
-  const listWidget({Key key, this.location, this.dateTime}) : super(key: key);
+  listWidget(
+      {Key key,
+      this.gid,
+      this.location,
+      this.datetime,
+      this.latitude,
+      this.longitude,
+      this.radius,
+      this.type,
+      this.power,
+      this.zScore,
+      this.pseudo,
+      this.report})
+      : super(key: key);
+
+//  const listWidget({Key key, this.location, this.dateTime}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return new Container(
         child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
       Text(
-        dateTime,
+        datetime,
         textAlign: TextAlign.center,
         overflow: TextOverflow.ellipsis,
         style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
@@ -261,8 +303,19 @@ class listWidget extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) =>
-                      UnloggedTripDetails(location, dateTime)),
+                  builder: (context) => UnloggedTripDetails(
+                        this.gid,
+                    this.location,
+                    this.datetime,
+                    this.latitude,
+                    this.longitude,
+                    this.radius,
+                    this.type,
+                    this.power,
+                    this.zScore,
+                    this.pseudo,
+                    this.report,
+                      )),
             );
           }),
     ]));

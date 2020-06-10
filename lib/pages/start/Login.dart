@@ -8,10 +8,10 @@ import 'package:flutter/material.dart';
 
 class Login extends StatefulWidget {
   @override
-  State<Login> createState() => LoginState();
+  State<Login> createState() => _LoginState();
 }
 
-class LoginState extends State<Login> {
+class _LoginState extends State<Login> {
   @override
   void initState() {
     super.initState();

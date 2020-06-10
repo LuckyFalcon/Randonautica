@@ -76,7 +76,7 @@ void createLoggedTripsDatabase() async {
   final String COL12 =   "reportedtime";
   final String COL13 =   "title";
   final String COL14 =   "text";
-  final String COL15 =   "tags";
+  final String COL15 =   "imagelocation";
   final String COL16 =   "tag1";
   final String COL17 =   "tag2";
   final String COL18 =   "tag3";

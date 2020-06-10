@@ -12,7 +12,9 @@ class Walkthrough extends StatefulWidget {
 }
 
 class _WalkthroughState extends State<Walkthrough> {
+
   int _currentPage = 0;
+
   final PageController _pageController = PageController(initialPage: 0);
 
   @override
@@ -101,7 +103,6 @@ class _WalkthroughState extends State<Walkthrough> {
               SizedBox(
                 height: 50,
               ),
-
             ],
           ),
         ),

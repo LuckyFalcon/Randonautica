@@ -4,10 +4,11 @@ import 'package:flutter/material.dart';
 
 class CreateAccount extends StatefulWidget {
   @override
-  State<CreateAccount> createState() => CreateAccountSate();
+  State<CreateAccount> createState() => _CreateAccountSate();
 }
 
-class CreateAccountSate extends State<CreateAccount> {
+class _CreateAccountSate extends State<CreateAccount> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

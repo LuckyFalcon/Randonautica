@@ -46,6 +46,7 @@ dependencies:
   location: ^2.5.3
   share: ^0.6.4+3
   flutter_tags: "^0.4.8+2"
+  image_picker: ^0.6.7+1
 
 dev_dependencies:
   flutter_test:
