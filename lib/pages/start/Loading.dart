@@ -6,6 +6,7 @@ import 'package:app/pages/start/Login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:location_permissions/location_permissions.dart';
@@ -154,6 +155,9 @@ class _LoadingState extends State<Loading> {
 
   @override
   void initState() {
+    //Remove Status & Navigation bar
+    SystemChrome.setEnabledSystemUIOverlays([]);
+
     try {
       versionCheck(context);
     } catch (e) {
@@ -169,7 +173,7 @@ class _LoadingState extends State<Loading> {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       extendBodyBehindAppBar: true,
-      extendBody: true,
+      extendBody:true,
       backgroundColor: Colors.yellow[200],
       body: Container(
           decoration: BoxDecoration(

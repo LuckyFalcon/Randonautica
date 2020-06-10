@@ -116,12 +116,6 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
 
-    //Remove Status & Navigation bar
-    SystemChrome.setEnabledSystemUIOverlays([]);
-
-    ///TODO move this to loading
-    createDatabases();
-
   }
 
   void selectedNavigationIndexCallback(int selectedNavigationIndex) {
