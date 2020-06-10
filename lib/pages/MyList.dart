@@ -1,12 +1,18 @@
 import 'dart:io';
+import 'dart:math';
 
+import 'package:app/components/ListSearchBar.dart';
 import 'package:app/components/NoTripsFound.dart';
 import 'package:app/components/TopBar.dart';
 import 'package:app/components/TripRow.dart';
 import 'package:app/helpers/storage/loggedTripsDatabase.dart';
 import 'package:app/helpers/storage/unloggedTripsDatabase.dart';
 import 'package:app/models/LoggedTrip.dart';
+import 'package:app/models/Post.dart';
 import 'package:app/models/UnloggedTrip.dart';
+import 'package:flappy_search_bar/flappy_search_bar.dart';
+import 'package:flappy_search_bar/scaled_tile.dart';
+import 'package:flappy_search_bar/search_bar_style.dart';
 import 'package:flutter/material.dart';
 import '../helpers/AppLocalizations.dart';
 import 'MyListDetails.dart';
@@ -75,6 +81,25 @@ class MyListState extends State<MyList> {
 
   List recentlyViewdTrips = [];
 
+  final SearchBarController<Post> _searchBarController = SearchBarController();
+
+  bool isReplay = false;
+
+  Future<List<Post>> _getALlPosts(String text) async {
+    await Future.delayed(Duration(seconds: text.length == 4 ? 10 : 1));
+    if (isReplay) return [Post("Replaying !", "Replaying body")];
+    if (text.length == 5) throw Error();
+    if (text.length == 6) return [];
+    List<Post> posts = [];
+
+    var random = new Random();
+    for (int i = 0; i < 10; i++) {
+      posts
+          .add(Post("$text $i", "body random number : ${random.nextInt(100)}"));
+    }
+    return posts;
+  }
+
   @override
   Widget build(BuildContext context) {
     return (_list.length > 0
@@ -93,13 +118,54 @@ class MyListState extends State<MyList> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
+                    TopBar(),
+                    Expanded(
+                      child: SizedBox(
+                        child: SearchBar<Post>(
+                          searchBarPadding:
+                          EdgeInsets.symmetric(horizontal: 10),
+                          headerPadding:
+                          EdgeInsets.symmetric(horizontal: 10),
+                          listPadding:
+                          EdgeInsets.symmetric(horizontal: 10),
+                          onSearch: _getALlPosts,
+                          searchBarController: _searchBarController,
+                          cancellationWidget: Text("Cancel"),
+                          hintText: "SEARCH",
+                          indexedScaledTileBuilder: (int index) =>
+                              ScaledTile.count(1, index.isEven ? 2 : 1),
+                          onCancelled: () {
+                            print("Cancelled triggered");
+                          },
+                          searchBarStyle: SearchBarStyle(
+                            backgroundColor: Colors.white,
+                            borderRadius: BorderRadius.circular(90),
+                          ),
+                          mainAxisSpacing: 10,
+                          crossAxisSpacing: 10,
+                          crossAxisCount: 2,
+                          onItemFound: (Post post, int index) {
+                            return ListTile(
+                              title: Text(post.title),
+                              isThreeLine: true,
+                              subtitle: Text(post.body),
+                              onTap: () {
+                                Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                        builder: (context) => TripDetails(
+                                            '123', 'amstel')));
+                              },
+                            );
+                          },
+                        ),
+                      ),
+                    ),
                     Expanded(
                       child: ListView(
                         physics: ScrollPhysics(),
                         shrinkWrap: true,
                         padding: const EdgeInsets.all(8),
                         children: <Widget>[
-                          TopBar(),
 //                          (recentlyViewdTrips.length > 0
 //                              ? Text(
 //                                  AppLocalizations.of(context)
@@ -223,8 +289,6 @@ class MyListState extends State<MyList> {
                               physics: ScrollPhysics(),
                               itemCount: _LoggedTripList.length,
                               itemBuilder: (BuildContext context, int index) {
-
-                                
                                 return listWidget(
                                   gid: _LoggedTripList[index].gid,
                                   location: _LoggedTripList[index].location,
@@ -490,13 +554,13 @@ class loggedListWidget extends StatelessWidget {
                                 ),
                                 tooltip: 'Increase volume by 10',
                                 onPressed: () {
-                                                  Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                        builder: (context) => TripDetails(
-                                                      //    this.gid,
-                                                          this.location,
-                                                          this.datetime,
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => TripDetails(
+                                              //    this.gid,
+                                              this.location,
+                                              this.datetime,
 //                                                          this.latitude,
 //                                                          this.longitude,
 //                                                          this.radius,
@@ -505,8 +569,8 @@ class loggedListWidget extends StatelessWidget {
 //                                                          this.zScore,
 //                                                          this.pseudo,
 //                                                          this.report,
-                                                        )),
-                                                  );
+                                            )),
+                                  );
                                 }),
                           ),
                         ],
