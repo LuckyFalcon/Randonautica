@@ -67,41 +67,42 @@ class _LoginState extends State<Login> {
                     ],
                   )),
               SizedBox(height: 15),
-              Text(
-                  AppLocalizations.of(context).translate('login').toUpperCase(),
-                  style: TextStyle(
-                      decoration: TextDecoration.underline,
-                      fontSize: 18,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold)),
-              SizedBox(height: 45),
-              GestureDetector(
-                onTap: () {
-                  Navigator.of(context, rootNavigator: true)
-                      .push(new CupertinoPageRoute<bool>(
-                      builder: (BuildContext context) => new Invite()));
-                },
-                child: new Text(
-                    AppLocalizations.of(context)
-                        .translate('continue_without_registering'),
-                    style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold)),
-              ),
-              IconButton(
-                icon:  Icon(
-                  Icons.arrow_forward,
-                  color: Colors.white,
-                  size: 40.0,
-                ),
-                tooltip: 'Increase volume by 10',
-                onPressed: () {
-                  Navigator.of(context, rootNavigator: true)
-                      .push(new CupertinoPageRoute<bool>(
-                      builder: (BuildContext context) => new Invite()));
-                },
-              ),
+///Uncomment for trial
+//              Text(
+//                  AppLocalizations.of(context).translate('login').toUpperCase(),
+//                  style: TextStyle(
+//                      decoration: TextDecoration.underline,
+//                      fontSize: 18,
+//                      color: Colors.white,
+//                      fontWeight: FontWeight.bold)),
+//              SizedBox(height: 45),
+//              GestureDetector(
+//                onTap: () {
+//                  Navigator.of(context, rootNavigator: true)
+//                      .push(new CupertinoPageRoute<bool>(
+//                      builder: (BuildContext context) => new Invite()));
+//                },
+//                child: new Text(
+//                    AppLocalizations.of(context)
+//                        .translate('continue_without_registering'),
+//                    style: TextStyle(
+//                        fontSize: 16,
+//                        color: Colors.white,
+//                        fontWeight: FontWeight.bold)),
+//              ),
+//              IconButton(
+//                icon:  Icon(
+//                  Icons.arrow_forward,
+//                  color: Colors.white,
+//                  size: 40.0,
+//                ),
+//                tooltip: 'Increase volume by 10',
+//                onPressed: () {
+//                  Navigator.of(context, rootNavigator: true)
+//                      .push(new CupertinoPageRoute<bool>(
+//                      builder: (BuildContext context) => new Invite()));
+//                },
+//              ),
 
             ]),
           )),
