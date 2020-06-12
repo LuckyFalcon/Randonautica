@@ -1,4 +1,4 @@
-import 'package:app/components/subscriptionDialog.dart';
+import 'file:///E:/Randonautica/randonautica/lib/components/Shop/subscriptionDialog.dart';
 import 'package:app/pages/News.dart';
 import 'package:app/pages/Profile.dart';
 import 'package:flutter/cupertino.dart';

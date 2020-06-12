@@ -1,19 +1,20 @@
 import 'package:app/pages/Lab.dart';
-import 'package:app/pages/MyList.dart';
-import 'package:app/pages/TripFeed.dart';
+import 'package:app/pages/List/TripList.dart';
+import 'package:app/utils/size_config.dart';
+import 'components/Feed/TripFeedEntry.dart';
+import 'components/TopBar.dart';
+import 'components/Trips/NoTripsFound.dart';
+import 'file:///E:/Randonautica/randonautica/lib/pages/Feed/TripFeed.dart';
 import 'package:app/pages/start/Loading.dart';
 import 'package:flutter/services.dart';
-import 'package:sliding_up_panel/sliding_up_panel.dart';
-
-import 'components/BottomBar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
-
+import 'components/BottomBar.dart';
 import 'helpers/AppLocalizations.dart';
-import 'helpers/storage/createDatabases.dart';
 import 'pages/Randonaut.dart';
+import 'utils/BackgroundColor.dart' as backgrounds;
 
 void main() {
   runApp(Randonautica());
@@ -24,10 +25,10 @@ class Randonautica extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // This widget is the root of your application.
     final materialTheme = new ThemeData(
       primarySwatch: Colors.purple,
     );
+
     final materialDarkTheme = new ThemeData(
       brightness: Brightness.dark,
       primarySwatch: Colors.teal,
@@ -45,10 +46,10 @@ class Randonautica extends StatelessWidget {
     /// It can be set to IOS to force cupertino transistions or be changed later, check the link for more info.
     /// https://stackoverflow.com/questions/51663793/how-to-use-cupertinopageroute-and-named-routes-in-flutter
     /// it can be either set to IOS/Android or neither and let it decide for itself which platform it is on.
-    final initialPlatform = TargetPlatform.iOS; //TODO uncomment
+    final initialPlatform = TargetPlatform.iOS;
 
     return PlatformProvider(
-      //TODO Uncomment this to set the platform manually
+      //Uncomment this to set the platform manually
       initialPlatform: initialPlatform,
       settings: PlatformSettingsData(
         platformStyle: PlatformStyleData(
@@ -84,15 +85,8 @@ class Randonautica extends StatelessWidget {
             GlobalMaterialLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
           ],
-
           //Home Page
-          home:
-
-              ///ENABLE LOADING HERE
-              //  Walkthrough()
-              Loading()
-           // HomePage(homePageTitle: 'Randonautica'),
-          ),
+          home: Loading()),
     );
   }
 }
@@ -109,6 +103,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int selectedNavigationIndex = 0;
 
+  final GlobalKey<TripListState> _TripListKey = GlobalKey();
+
   @override
   void initState() {
     super.initState();
@@ -120,40 +116,39 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  void updateListStateCallback() {
+    _TripListKey.currentState.updateState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    BorderRadiusGeometry radius = BorderRadius.only(
-      topLeft: Radius.circular(24.0),
-      topRight: Radius.circular(24.0),
-    );
+    SizeConfig().init(context);
+
     return Scaffold(
       resizeToAvoidBottomPadding: false,
+      extendBodyBehindAppBar: true,
+      extendBody: true,
       body: Container(
-        child: Stack(
-          children: <Widget>[
-            IndexedStack(
-              children: <Widget>[
-                Randonaut(),
-                TripFeed(),
-                MyList(),
-                Lab(),
-                // News(),
-                // Walkthrough(),
-                // MyCommunities(),
-                // CreateAccount(),
-                // Invite(),
-                // Login(),
-                // Walkthrough(),
-                // Loading(),
-                // Detail(),
-              ],
-              index: selectedNavigationIndex,
-            ),
-            BottomBar(
-                this.selectedNavigationIndexCallback, selectedNavigationIndex),
-          ],
-        ),
-      ),
+          height: SizeConfig.blockSizeVertical * 100,
+
+          ///This is 70% of the Vertical / Height for this container in this class
+          width: SizeConfig.blockSizeHorizontal * 100,
+          decoration: (selectedNavigationIndex == 3 ? backgrounds.dark : backgrounds.normal),
+          child: Column(children: <Widget>[
+            TopBar(),
+                IndexedStack(
+                  children: <Widget>[
+                    Randonaut(this.updateListStateCallback),
+                    TripFeed(),
+                    TripList(key: _TripListKey),
+                   Lab(),
+                  ],
+                  index: selectedNavigationIndex,
+                ),
+                BottomBar(this.selectedNavigationIndexCallback,
+                    selectedNavigationIndex),
+
+          ])),
     );
   }
 }

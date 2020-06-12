@@ -23,7 +23,7 @@ class _BottomBarState extends State<BottomBar> {
     return Align(
         alignment: Alignment.bottomCenter,
         child: Container(
-            height: 110,
+            height: 100,
             padding: EdgeInsets.only(bottom: 25, left: 45, right: 45),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(30),

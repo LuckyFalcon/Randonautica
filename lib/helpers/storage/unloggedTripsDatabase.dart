@@ -34,9 +34,29 @@ Future<List<UnloggedTrip>> RetrieveUnloggedTrips() async {
   // Convert the List<Map<String, dynamic> into a List<Dog>.
   return List.generate(maps.length, (i) {
     return UnloggedTrip(
+      id: maps[i]['ID'],
       location: maps[i]['location'],
       datetime: maps[i]['datetime'],
 
     );
   });
+}
+
+// A method that retrieves all the dogs from the dogs table.
+void DeleteUnloggedTrip(int id) async {
+
+  String Table = 'unloggedTrips';
+
+  // Get a reference to the database.
+  final Database db = await openDatabase(
+      join(await getDatabasesPath(), 'unloggedTrips.db'));
+
+  // Delete row from database
+  String dbQuery = ('''
+          DELETE FROM $Table
+          WHERE ID = $id;
+          ''');
+
+  // Execute the query
+  return db.execute(dbQuery);
 }

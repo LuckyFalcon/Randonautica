@@ -1,4 +1,4 @@
-import 'package:app/components/LabButton.dart';
+import 'package:app/components/Lab/LabButton.dart';
 import 'package:app/components/TopBar.dart';
 import 'package:app/helpers/AppLocalizations.dart';
 import 'package:flutter/material.dart';
@@ -25,22 +25,9 @@ class LabState extends State<Lab> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomPadding: false,
-      extendBodyBehindAppBar: true,
-      extendBody:true,
-      backgroundColor: Colors.yellow[200],
-      body: Container(
-          decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  stops: [0, 6.0],
-                  colors: [Color(0xff383B46), Color(0xff5E80E0)])),
-          child: Center(
+    return Center(
             child: Column(
               children: <Widget> [
-                TopBar(),
                 Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -70,7 +57,6 @@ class LabState extends State<Lab> {
                     ])
               ]
             ),
-          )),
-    );
+          );
   } //Functions
 }

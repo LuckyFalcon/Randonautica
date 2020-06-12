@@ -1,8 +1,8 @@
 import 'dart:math';
 
 import 'package:app/models/Post.dart';
-import 'package:app/pages/TripDetails.dart';
-import 'package:app/pages/UnloggedTripDetails.dart';
+import 'file:///E:/Randonautica/randonautica/lib/pages/List/LoggedTripDetails.dart';
+import 'file:///E:/Randonautica/randonautica/lib/pages/List/UnloggedTripDetails_old.dart';
 import 'package:flappy_search_bar/scaled_tile.dart';
 import 'package:flappy_search_bar/search_bar_style.dart';
 import 'package:flutter/material.dart';
@@ -59,8 +59,8 @@ class ListSearchBar extends StatelessWidget {
               isThreeLine: true,
               subtitle: Text(post.body),
               onTap: () {
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) => TripDetails('123', 'amstel')));
+//                Navigator.of(context)
+//                    .push(MaterialPageRoute(builder: (context) => TripDetails('123', 'amstel')));
               },
             ),
           );

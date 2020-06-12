@@ -1,5 +1,6 @@
 class UnloggedTrip {
 
+  int id;
   String gid;
   String location;
   String datetime;
@@ -14,6 +15,7 @@ class UnloggedTrip {
 
 
   UnloggedTrip({
+    this.id,
     this.gid,
     this.location,
     this.datetime,
@@ -31,6 +33,7 @@ class UnloggedTrip {
   // columns in the database.
   Map<String, dynamic> toMap() {
     return {
+      'ID': id,
       'GID': gid,
       'location': location,
       'datetime': datetime,

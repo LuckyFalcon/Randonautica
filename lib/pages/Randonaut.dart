@@ -1,28 +1,29 @@
 import 'dart:async';
 
 import 'package:app/api/getAttractors.dart';
-import 'package:app/components/ButtonGoMainPage.dart';
-import 'package:app/components/OpenMapsButton.dart';
-import 'package:app/components/RandonautMap.dart';
-import 'package:app/components/StartOverButton.dart';
+import 'package:app/components/Randonaut/ButtonGoMainPage.dart';
+import 'package:app/components/Randonaut/ButtonsRowMainPage.dart';
+import 'package:app/components/Randonaut/HelpButton.dart';
+import 'package:app/components/Randonaut/OpenMapsButton.dart';
+import 'package:app/components/Randonaut/SetRadius.dart';
+import 'package:app/components/Randonaut/SetWaterPoints.dart';
+import 'package:app/components/Randonaut/StartOverButton.dart';
+
 import 'package:app/components/TopBar.dart';
-import 'package:app/components/ButtonsRowMainPage.dart';
 import 'package:app/helpers/OpenGoogleMaps.dart';
 import 'package:app/helpers/storage/unloggedTripsDatabase.dart';
 import 'package:app/models/UnloggedTrip.dart';
 import 'package:app/models/map_pin_pill.dart';
 import 'package:app/models/pin_pill_info.dart';
 import 'package:app/utils/size_config.dart';
+import 'package:audioplayers/audio_cache.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:progress_dialog/progress_dialog.dart';
-import 'package:sliding_up_panel/sliding_up_panel.dart';
-
-import 'MyList.dart';
-
 
 const double CAMERA_TILT = 0;
 const double CAMERA_BEARING = 0;
@@ -30,13 +31,15 @@ const LatLng SOURCE_LOCATION = LatLng(42.747932, -71.167889);
 const LatLng DEST_LOCATION = LatLng(37.422, -122.084);
 
 class Randonaut extends StatefulWidget {
+  Function callback;
+
+  Randonaut(this.callback);
+
   @override
   State<Randonaut> createState() => RandonautState();
 }
 
 class RandonautState extends State<Randonaut> {
-
-  final GlobalKey<MyListState> _key = GlobalKey();
 
 
   ///Buttons
@@ -46,6 +49,7 @@ class RandonautState extends State<Randonaut> {
 
   double CAMERA_ZOOM = 16;
   CameraPosition initialCameraPosition;
+
   ///Attractor points
   LatLng attractorPoint;
 
@@ -102,6 +106,7 @@ class RandonautState extends State<Randonaut> {
   void initState() {
     super.initState();
 
+
     // create an instance of Location
     location = new Location();
     polylinePoints = PolylinePoints();
@@ -121,40 +126,42 @@ class RandonautState extends State<Randonaut> {
     setInitialLocation();
   }
 
-  void callback  (bool pressGoButton) {
+  void callback(bool pressGoButton) {
     setState(() {
       this.pressGoButton = pressGoButton;
       onAddMarkerButtonPressed();
     });
   }
 
- void dialog(){
-   final ProgressDialog pr = ProgressDialog(context,type: ProgressDialogType.Normal, isDismissible: true, showLogs: true);
-   pr.show();
-   pr.update(
-     progress: 50.0,
-     message: "Please wait...",
-     progressWidget: Container(
-         padding: EdgeInsets.all(8.0), child: CircularProgressIndicator()),
-     maxProgress: 100.0,
-     progressTextStyle: TextStyle(
-         color: Colors.black, fontSize: 13.0, fontWeight: FontWeight.w400),
-     messageTextStyle: TextStyle(
-         color: Colors.black, fontSize: 19.0, fontWeight: FontWeight.w600),
-   );
- }
+  void dialog() {
+    final ProgressDialog pr = ProgressDialog(context,
+        type: ProgressDialogType.Normal, isDismissible: true, showLogs: true);
+    pr.show();
+    pr.update(
+      progress: 50.0,
+      message: "Please wait...",
+      progressWidget: Container(
+          padding: EdgeInsets.all(8.0), child: CircularProgressIndicator()),
+      maxProgress: 100.0,
+      progressTextStyle: TextStyle(
+          color: Colors.black, fontSize: 13.0, fontWeight: FontWeight.w400),
+      messageTextStyle: TextStyle(
+          color: Colors.black, fontSize: 19.0, fontWeight: FontWeight.w600),
+    );
+  }
 
   void callbackOpenMaps(bool pressOpenMapsButton) {
     setState(() {
       this.pressOpenMapsButton = pressOpenMapsButton;
       MapUtils.openMap(attractorPoint.latitude, attractorPoint.longitude);
-
     });
   }
 
   void callbackStartOver(bool pressStartOverButton) {
     setState(() {
       this.pressStartOverButton = pressOpenMapsButton;
+      pressGoButton = false;
+      _markers = {};
     });
   }
 
@@ -174,258 +181,210 @@ class RandonautState extends State<Randonaut> {
     }
     SizeConfig().init(context);
 
-    return Scaffold(
-      resizeToAvoidBottomPadding: false,
-      extendBodyBehindAppBar: true,
-      extendBody:true,
-      body: Container(
-          decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  stops: [0, 100],
-                  colors: [Color(0xff5A87E4), Color(0xff37CDDC)])),
-          child:  Column(
-              children: <Widget>[
-                TopBar(),
-                Container(
-                    height: SizeConfig.blockSizeVertical * 70, ///This is 70% of the Vertical / Height for this container in this class
-                    width: SizeConfig.blockSizeHorizontal * 80, ///This is 80% of the Horizontal / Width for this container in this class
-                    child: Stack(
-                      children: <Widget>[
-                        Container(
-                          height: SizeConfig.blockSizeVertical * 68, ///This is 70% of the Vertical / Height for this container in this class
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(30.0)),
-                            border: Border.all(width: 15, color: Colors.white),
-                            boxShadow: [
-                              BoxShadow(
-                                ///CAST SHADOW ON BORDER
-                                color: Colors.black.withOpacity(0.2),
-                                spreadRadius: 4,
-                                blurRadius: 10,
-                                offset: Offset(0, 6), // changes position of shadow
-                              ),
-                            ],
-                          ),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.all(Radius.circular(15.0)),
-                            child: Stack(
-                              children: <Widget>[
-                                GoogleMap(
-                                    mapToolbarEnabled: false,
-                                    myLocationEnabled: true,
-                                    compassEnabled: true,
-                                    tiltGesturesEnabled: false,
-                                    markers: _markers,
-                                    polylines: _polylines,
-                                    mapType: MapType.normal,
-                                    initialCameraPosition: initialCameraPosition,
-                                    onTap: (LatLng loc) {
-                                      pinPillPosition = -100;
-                                    },
-                                    onMapCreated: (GoogleMapController controller) {
-                                      //Change this to change styles
-                                      // controller.setMapStyle(Utils.DarkStyle);
-                                      _controller.complete(controller);
-                                    }),
-                                MapPinPillComponent(
-                                    pinPillPosition: pinPillPosition,
-                                    currentlySelectedPin: currentlySelectedPin),
-                              ],
-                            ),
-                          ),
+    return  Column(
+          children: <Widget>[
+          //  TopBar(),
+            Container(
+              height: SizeConfig.blockSizeVertical * 60,
+
+              ///This is 70% of the Vertical / Height for this container in this class
+              width: SizeConfig.blockSizeHorizontal * 80,
+
+              ///This is 80% of the Horizontal / Width for this container in this class
+              child: Stack(
+                children: <Widget>[
+                  Container(
+                    height: SizeConfig.blockSizeVertical * 58,
+
+                    ///This is 70% of the Vertical / Height for this container in this class
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                      border: Border.all(width: 15, color: Colors.white),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.2),
+                          spreadRadius: 4,
+                          blurRadius: 10,
+                          offset: Offset(0, 6), // changes position of shadow
                         ),
+                      ],
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                      child: Stack(
+                        children: <Widget>[
+                          GoogleMap(
+                              mapToolbarEnabled: false,
+                              myLocationEnabled: true,
+                              compassEnabled: true,
+                              tiltGesturesEnabled: false,
+                              markers: _markers,
+                              polylines: _polylines,
+                              mapType: MapType.normal,
+                              initialCameraPosition: initialCameraPosition,
+                              onTap: (LatLng loc) {
+                                pinPillPosition = -100;
+                              },
+                              onMapCreated: (GoogleMapController controller) {
+                                //Change this to change styles
+                                // controller.setMapStyle(Utils.DarkStyle);
+                                _controller.complete(controller);
+                              }),
+                          MapPinPillComponent(
+                              pinPillPosition: pinPillPosition,
+                              currentlySelectedPin: currentlySelectedPin),
+                        ],
+                      ),
+                    ),
+                  ),
                   Align(
                     alignment: Alignment.bottomCenter,
                     child: ButtonGoMainPage(this.callback, pressGoButton),
                   )
+                ],
+              ),
+            ),
+//            SizedBox(height: 20),
+
+            (pressGoButton //TODO MOVE TO ButtonGoMainPage
+                ? Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image(
+                  image: new AssetImage('assets/img/navigate_round.png'),
+                  color: null,
+                  fit: BoxFit.scaleDown,
+                  alignment: Alignment.center,
+                ),
+                Column(
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Address of Point',
+                          textAlign: TextAlign.center,
+                          overflow: TextOverflow.ellipsis,
+                          style:
+                          TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          'POINT TYPE',
+                          textAlign: TextAlign.center,
+                          overflow: TextOverflow.ellipsis,
+                          style:
+                          TextStyle(fontWeight: FontWeight.bold),
+                        )
                       ],
                     ),
-                  ),
-
-                (pressGoButton //TODO MOVE TO ButtonGoMainPage
-                    ? Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Image(
-                            image: new AssetImage('assets/img/navigate_round.png'),
-                            color: null,
-                            fit: BoxFit.scaleDown,
-                            alignment: Alignment.center,
-                          ),
-                          Column(
-                            children: [
-//                              Column(
-//                                crossAxisAlignment: CrossAxisAlignment.start,
-//                                children: [
-//                                  Text(
-//                                    'Address of Point',
-//                                    textAlign: TextAlign.center,
-//                                    overflow: TextOverflow.ellipsis,
-//                                    style:
-//                                        TextStyle(fontWeight: FontWeight.bold),
-//                                  ),
-//                                  Text(
-//                                    'POINT TYPE',
-//                                    textAlign: TextAlign.center,
-//                                    overflow: TextOverflow.ellipsis,
-//                                    style:
-//                                        TextStyle(fontWeight: FontWeight.bold),
-//                                  )
-//                                ],
-//                              ),
-                              Row(children: [
-                                //Buttons
-                                //ButtonsRowMainPage('see_route'),
-                                StartOverButton(this.callbackStartOver, pressStartOverButton),
-                                OpenMapsButton(this.callbackOpenMaps, pressOpenMapsButton),
-                              ]),
-//                              Row(children: [
-//                                //Buttons
-//                                StartOverButton(this.callbackStartOver, pressStartOverButton),
-//                              ]),
-                            ],
-                          ),
-                        ],
-                      )
-                    : SizedBox(width: 10)),
+                    Row(children: [
+                      //Buttons
+                      ButtonsRowMainPage('see_route'),
+                      OpenMapsButton(this.callbackOpenMaps, pressOpenMapsButton),
+                    ]),
+                    Row(children: [
+                      //Buttons
+                      StartOverButton(this.callbackStartOver, pressStartOverButton),
+                    ]),
+                  ],
+                ),
               ],
-            ),
-          ),
+            )
+                : Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Column(
+                        children: [SetRadius()],
+                      ),
+                      SizedBox(width: 10),
+                      HelpButton(),
+                      SizedBox(width: 10),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [SetWaterPoints()],
+                      ),
+                    ],
+                  )),
+          ],
+
+
     );
   }
 
   void onAddMarkerButtonPressed() async {
-//    attractorPoint = LatLng(currentLocation.latitude, currentLocation.longitude);
-//
-//    final fido = UnloggedTrip(
-//        location: 'Amsterdam',
-//       // dateTime: DateTime.now().toIso8601String()
-//    );
-//    // storeUnloggedTrips();
-//
-//    setState(() {
-//      initialCameraPosition = CameraPosition(
-//          target: LatLng(currentLocation.latitude, currentLocation.longitude),
-//          zoom: 1,
-//          tilt: CAMERA_TILT,
-//          bearing: CAMERA_BEARING);
-//      controller.moveCamera(CameraUpdate.newLatLngZoom(LatLng(currentLocation.latitude, currentLocation.longitude), 10));
-//      _markers.add(Marker(
-//        // This marker id can be anything that uniquely identifies each marker.
-//        markerId: MarkerId(attractorPoint.toString()),
-//        position: attractorPoint,
-//        infoWindow: InfoWindow(
-//          title: 'Really cool place',
-//          snippet: '5 Star Rating',
-//        ),
-//        icon: BitmapDescriptor.defaultMarker,
-//      ));
-//    });
-//    UnloggedTrip unloggedTrip = new UnloggedTrip();
-////    unloggedTrip.location = 'Amsterdam';
-////    unloggedTrip.dateTime = DateTime.now().toIso8601String();
-//    var future = insertUnloggedTrip(unloggedTrip);
-//    future.then((value) {
-//      print('succesfullyinserted');
+    setState(() {
+      var future = fetchAttractors(
+          3000, currentLocation.latitude, currentLocation.longitude);
 
-      ///Uncomment this for real points
-      setState(() {
+      future.then((value) async {
+        final LatLng attractorCoordinates = new LatLng(
+            value.points[0].center.point.latitude,
+            value.points[0].center.point.longitude);
 
-        var future = fetchAttractors(
-            3000, currentLocation.latitude, currentLocation.longitude);
+        ///Todo add localidentifier as optional as it doesn't pick it up somehow
+        ///https://pub.dev/packages/geolocator
+        var location = await Geolocator().placemarkFromCoordinates(
+            value.points[0].center.point.latitude,
+            value.points[0].center.point.longitude,
+            localeIdentifier: "fi_FI");
 
-        future.then((value) async {
-          final LatLng attractorCoordinates = new LatLng(
-              value.points[0].center.point.latitude,
-              value.points[0].center.point.longitude);
+        print('location' + location[0].administrativeArea);
 
-          ///Todo add localidentifier as optional as it doesn't pick it up somehow
-          ///https://pub.dev/packages/geolocator
-          var location = await Geolocator().placemarkFromCoordinates(value.points[0].center.point.latitude, value.points[0].center.point.longitude, localeIdentifier: "fi_FI");
+        //Log trips
+        final fido = UnloggedTrip(
+          gid: value.points[0].gID.toString(),
+          location: location[0].administrativeArea.toString(),
+          datetime: DateTime.now().toIso8601String(),
+          latitude: attractorCoordinates.latitude.toString(),
+          longitude: attractorCoordinates.longitude.toString(),
+          radius: value.points[0].radiusM.toString(),
+          type: value.points[0].type.toString(),
+          power: value.points[0].radiusM.toString(),
+          zScore: value.points[0].zScore.toString(),
+          pseudo: 0.toString(),
+          report: 0.toString(),
+        );
+        await insertUnloggedTrip(fido);
 
+        controller.moveCamera(CameraUpdate.newLatLngZoom(
+            LatLng(
+                attractorCoordinates.latitude, attractorCoordinates.longitude),
+            10));
 
-          print('location' + location[0].administrativeArea);
+        //CAMERA_ZOOM = 1; //Change zoom
+        _markers.add(Marker(
+          // This marker id can be anything that uniquely identifies each marker.
+          markerId: MarkerId(attractorCoordinates.toString()),
+          position: attractorCoordinates,
+          infoWindow: InfoWindow(
+            title: 'Really cool place',
+            snippet: '5 Star Rating',
+          ),
+          icon: BitmapDescriptor.defaultMarker,
+        ));
 
-          //Log trips
-          final fido = UnloggedTrip(
-            gid: value.points[0].gID.toString(),
-            location: location[0].administrativeArea.toString(),
-            datetime: DateTime.now().toIso8601String(),
-            latitude: attractorCoordinates.latitude.toString(),
-            longitude: attractorCoordinates.longitude.toString(),
-            radius: value.points[0].radiusM.toString(),
-            type: value.points[0].type.toString(),
-            power: value.points[0].radiusM.toString(),
-            zScore: value.points[0].zScore.toString(),
-            pseudo: 0.toString(),
-            report: 0.toString(),
-          );
-          await insertUnloggedTrip(fido);
-
-          controller.moveCamera(CameraUpdate.newLatLngZoom(LatLng(attractorCoordinates.latitude, attractorCoordinates.longitude), 10));
-
-          //CAMERA_ZOOM = 1; //Change zoom
-          _markers.add(Marker(
-            // This marker id can be anything that uniquely identifies each marker.
-            markerId: MarkerId(attractorCoordinates.toString()),
-            position: attractorCoordinates,
-            infoWindow: InfoWindow(
-              title: 'Really cool place',
-              snippet: '5 Star Rating',
-            ),
-            icon: BitmapDescriptor.defaultMarker,
-          ));
-          });
-
-
-        });
+        this.widget.callback();
+      });
+    });
   }
 
   void setSourceAndDestinationIcons() async {
     BitmapDescriptor.fromAssetImage(
-        ImageConfiguration(devicePixelRatio: 2.0), 'assets/driving_pin.png')
+            ImageConfiguration(devicePixelRatio: 2.0), 'assets/driving_pin.png')
         .then((onValue) {
       sourceIcon = onValue;
     });
 
     BitmapDescriptor.fromAssetImage(ImageConfiguration(devicePixelRatio: 2.0),
-        'assets/destination_map_marker.png')
+            'assets/destination_map_marker.png')
         .then((onValue) {
       destinationIcon = onValue;
     });
   }
 
-  void _onMarkerDragEnd(MarkerId markerId, LatLng newPosition) async {
-    final Marker tappedMarker = markers[markerId];
-    if (tappedMarker != null) {
-      await showDialog<void>(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-                actions: <Widget>[
-                  FlatButton(
-                    child: const Text('OK'),
-                    onPressed: () => Navigator.of(context).pop(),
-                  )
-                ],
-                content: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 66),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        Text('Old position: ${tappedMarker.position}'),
-                        Text('New position: $newPosition'),
-                      ],
-                    )));
-          });
-    }
-  }
-
   void setInitialLocation() async {
-
     // set the initial location by pulling the user's
     // current location from the location's getLocation()
     currentLocation = await location.getLocation();
@@ -446,34 +405,14 @@ class RandonautState extends State<Randonaut> {
     controller.animateCamera(CameraUpdate.newCameraPosition(cPosition));
   }
 
-  void _onMarkerTapped(MarkerId markerId) {
-    final Marker tappedMarker = markers[markerId];
-    if (tappedMarker != null) {
-      setState(() {
-        if (markers.containsKey(selectedMarker)) {
-          final Marker resetOld = markers[selectedMarker]
-              .copyWith(iconParam: BitmapDescriptor.defaultMarker);
-          markers[selectedMarker] = resetOld;
-        }
-        selectedMarker = markerId;
-        final Marker newMarker = tappedMarker.copyWith(
-          iconParam: BitmapDescriptor.defaultMarkerWithHue(
-            BitmapDescriptor.hueGreen,
-          ),
-        );
-        markers[markerId] = newMarker;
-      });
-    }
-  }
-
   void showPinsOnMap() {
     // get a LatLng for the source location
     // from the LocationData currentLocation object
     var pinPosition =
-    LatLng(currentLocation.latitude, currentLocation.longitude);
+        LatLng(currentLocation.latitude, currentLocation.longitude);
     // get a LatLng out of the LocationData object
     var destPosition =
-    LatLng(destinationLocation.latitude, destinationLocation.longitude);
+        LatLng(destinationLocation.latitude, destinationLocation.longitude);
 
     sourcePinInfo = PinInformation(
         locationName: "Start Location",
@@ -521,15 +460,14 @@ class RandonautState extends State<Randonaut> {
     // every time the location changes, so the camera
     // follows the pin as it moves with an animation
 
-
     // do this inside the setState() so Flutter gets notified
     // that a widget update is due
     setState(() {
       // updated position
       var pinPosition =
-      LatLng(currentLocation.latitude, currentLocation.longitude);
+          LatLng(currentLocation.latitude, currentLocation.longitude);
 
-    //  sourcePinInfo.location = pinPosition;
+      //  sourcePinInfo.location = pinPosition;
 
       // the trick is to remove the marker (by id)
       // and add it again at the updated location
@@ -548,7 +486,6 @@ class RandonautState extends State<Randonaut> {
   }
 
   addPulsatingEffect(LatLng userLatlng, int radius) {
-
     int colorOutline = Colors.red.red;
     int colorInner = 0x22FF0000;
 
@@ -573,7 +510,6 @@ class RandonautState extends State<Randonaut> {
 //    }
 //    }
 //    });
-
   }
 
   adjustAlpha(int color, var factor) {
@@ -583,5 +519,4 @@ class RandonautState extends State<Randonaut> {
     int blue = Colors.blue.blue;
     return Color.fromARGB(alpha, red, green, blue);
   }
-
 }
