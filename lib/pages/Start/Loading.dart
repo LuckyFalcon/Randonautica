@@ -4,6 +4,7 @@ import 'package:app/helpers/storage/setupDatabases.dart';
 import 'package:app/helpers/storage/createDatabases.dart';
 import 'package:app/main.dart';
 import 'package:app/pages/start/Login.dart';
+import 'package:device_info/device_info.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -48,6 +49,16 @@ class _LoadingState extends State<Loading> {
 
     //Get Latest version info from firebase config
     final RemoteConfig remoteConfig = await RemoteConfig.instance;
+
+    if (Platform.isAndroid) {
+      var androidInfo = await DeviceInfoPlugin().androidInfo;
+      var release = androidInfo.version.release;
+      var sdkInt = androidInfo.version.sdkInt;
+      var manufacturer = androidInfo.manufacturer;
+      var model = androidInfo.model;
+      print('Android $release (SDK $sdkInt), $manufacturer $model');
+      // Android 9 (SDK 28), Xiaomi Redmi Note 7
+    }
 
       //Ask for permissions
       PermissionStatus permission = await LocationPermissions()

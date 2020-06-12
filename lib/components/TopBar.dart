@@ -1,13 +1,18 @@
 import 'file:///E:/Randonautica/randonautica/lib/components/Shop/subscriptionDialog.dart';
 import 'package:app/pages/News.dart';
 import 'package:app/pages/Profile.dart';
+import 'package:app/utils/size_config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class TopBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
+
     return Container(
+      height: SizeConfig.blockSizeVertical * 10,
+      width: SizeConfig.blockSizeHorizontal * 100,
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
         Padding(
           padding: const EdgeInsets.only(left: 15),

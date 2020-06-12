@@ -1,10 +1,8 @@
+import 'package:app/pages/Feed/TripFeed.dart';
 import 'package:app/pages/Lab.dart';
 import 'package:app/pages/List/TripList.dart';
 import 'package:app/utils/size_config.dart';
-import 'components/Feed/TripFeedEntry.dart';
 import 'components/TopBar.dart';
-import 'components/Trips/NoTripsFound.dart';
-import 'file:///E:/Randonautica/randonautica/lib/pages/Feed/TripFeed.dart';
 import 'package:app/pages/start/Loading.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/cupertino.dart';
@@ -130,24 +128,23 @@ class _HomePageState extends State<HomePage> {
       extendBody: true,
       body: Container(
           height: SizeConfig.blockSizeVertical * 100,
-
-          ///This is 70% of the Vertical / Height for this container in this class
           width: SizeConfig.blockSizeHorizontal * 100,
-          decoration: (selectedNavigationIndex == 3 ? backgrounds.dark : backgrounds.normal),
+          decoration: (selectedNavigationIndex == 3
+              ? backgrounds.dark
+              : backgrounds.normal),
           child: Column(children: <Widget>[
             TopBar(),
-                IndexedStack(
-                  children: <Widget>[
-                    Randonaut(this.updateListStateCallback),
-                    TripFeed(),
-                    TripList(key: _TripListKey),
-                   Lab(),
-                  ],
-                  index: selectedNavigationIndex,
-                ),
-                BottomBar(this.selectedNavigationIndexCallback,
-                    selectedNavigationIndex),
-
+            IndexedStack(
+              children: <Widget>[
+                Randonaut(this.updateListStateCallback),
+                TripFeed(),
+                TripList(key: _TripListKey),
+                Lab(),
+              ],
+              index: selectedNavigationIndex,
+            ),
+            BottomBar(
+                this.selectedNavigationIndexCallback, selectedNavigationIndex),
           ])),
     );
   }

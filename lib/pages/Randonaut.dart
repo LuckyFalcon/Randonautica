@@ -245,8 +245,11 @@ class RandonautState extends State<Randonaut> {
               ),
             ),
 //            SizedBox(height: 20),
-
-            (pressGoButton //TODO MOVE TO ButtonGoMainPage
+            Container(
+              height: SizeConfig.blockSizeVertical * 18,
+              ///This is 70% of the Vertical / Height for this container in this class
+              width: SizeConfig.blockSizeHorizontal * 100,
+            child: (pressGoButton //TODO MOVE TO ButtonGoMainPage
                 ? Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -307,6 +310,7 @@ class RandonautState extends State<Randonaut> {
                       ),
                     ],
                   )),
+            )
           ],
 
 
