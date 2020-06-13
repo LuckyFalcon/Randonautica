@@ -22,7 +22,6 @@ class _ButtonGoMainPage extends State<ButtonGoMainPage> {
   void initState() {
     super.initState();
     _audioCache = AudioCache(prefix: "audio/", fixedPlayer: AudioPlayer()..setReleaseMode(ReleaseMode.STOP));
-    print('audio'+_audioCache.toString());
   }
   void _toggleGoPressButton() {
     setState(() {

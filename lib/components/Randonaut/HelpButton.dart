@@ -1,4 +1,5 @@
 import 'package:app/helpers/Dialogs.dart';
+import 'package:app/utils/size_config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../helpers/AppLocalizations.dart';
@@ -17,12 +18,13 @@ class _HelpButton extends State<HelpButton> {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return SizedBox(
         height: 150.0,
         width: 60,
         child: Column(
           children: <Widget>[
-            SizedBox(height: 30), ///Todo Sizeconfig responsive
+            SizedBox(height: SizeConfig.blockSizeHorizontal * 5), ///Todo Sizeconfig responsive
             IconButton(
               icon: Icon(
                 Icons.help,
@@ -38,7 +40,7 @@ class _HelpButton extends State<HelpButton> {
               },
             ),
 
-            SizedBox(height: 50), ///Todo Sizeconfig responsive
+            SizedBox(height: SizeConfig.blockSizeHorizontal * 5), ///Todo Sizeconfig responsive
           ],
         ));
   }

@@ -25,7 +25,7 @@ class _BottomBarState extends State<BottomBar> {
     return Align(
         alignment: Alignment.bottomCenter,
         child: Container(
-            height: SizeConfig.blockSizeHorizontal * 20,
+            height: SizeConfig.blockSizeHorizontal * 18,
             padding: EdgeInsets.only(bottom: 0, left: 45, right: 45),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(30),
@@ -50,9 +50,10 @@ class _BottomBarState extends State<BottomBar> {
                         initialIndex: 0, //Added
                         child: new TabBar(
                           tabs: [
-                            _individualTab('assets/img/navigate.png'),
-                            _individualTab('assets/img/earth.png'),
-                            _individualTab('assets/img/list.png'),
+                            (this.widget.selectedNavigationIndex == 0 ? _individualTab('assets/img/navigate.png') : _individualTab('assets/img/earth.png')),
+                            (this.widget.selectedNavigationIndex == 1 ? _individualTab('assets/img/earth.png') : _individualTab('assets/img/earth.png')),
+                            (this.widget.selectedNavigationIndex == 2 ? _individualTab('assets/img/list.png') : _individualTab('assets/img/list.png')),
+
                             Tab(icon: Image( ///Keep this as is
                                 image: new AssetImage('assets/img/share.png'),
                                 color: null,
@@ -69,7 +70,7 @@ class _BottomBarState extends State<BottomBar> {
                                   _selectedNavigationIndex); //Callback to Main
                             });
                           },
-                          labelColor: Colors.green,
+                          labelColor: Colors.blue,
                           unselectedLabelColor: Colors.grey,
                           indicatorColor: Colors.white,
                           indicatorSize: TabBarIndicatorSize.tab,

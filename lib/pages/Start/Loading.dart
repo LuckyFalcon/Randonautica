@@ -53,7 +53,6 @@ class _LoadingState extends State<Loading> {
     if (Platform.isAndroid) {
       var androidInfo = await DeviceInfoPlugin().androidInfo;
       var sdkInt = androidInfo.version.sdkInt;
-      print(sdkInt);
       if(sdkInt >= 23){
         //Ask for permissions
         PermissionStatus permission = await LocationPermissions()

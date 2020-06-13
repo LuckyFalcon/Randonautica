@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:app/components/LoadingPoints.dart';
+import 'file:///E:/Randonautica/randonautica/lib/components/Randonaut/LoadingPoints.dart';
 import 'package:app/components/Randonaut/ButtonGoMainPage.dart';
 import 'package:app/components/Randonaut/HelpButton.dart';
 import 'package:app/components/Randonaut/OpenMapsButton.dart';
@@ -273,7 +273,7 @@ class RandonautState extends State<Randonaut> {
           ),
         ),
         Container(
-          height: SizeConfig.blockSizeVertical * 15,
+          height: SizeConfig.blockSizeVertical * 17,
           width: SizeConfig.blockSizeHorizontal * 100,
           child: (pointsSucesfullyGenerated
               ? Row(
