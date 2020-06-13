@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:app/helpers/AppLocalizations.dart';
 import 'package:app/models/Post.dart';
 import 'package:app/utils/size_config.dart';
 import 'package:flappy_search_bar/flappy_search_bar.dart';
@@ -37,49 +38,89 @@ class _SearchBarController extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-
     return Scaffold(
-        body: Container(
-          decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomRight,
-                  stops: [0, 100],
-                  colors: [Color(0xff5A87E4), Color(0xff37CDDC)])),
+      resizeToAvoidBottomPadding: false,
+      extendBodyBehindAppBar: true,
+      extendBody: true,
+      body: Container(
+        decoration: BoxDecoration(
+            gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomRight,
+                stops: [0, 100],
+                colors: [Color(0xff5A87E4), Color(0xff37CDDC)])),
         height: SizeConfig.blockSizeVertical * 100,
         width: SizeConfig.blockSizeHorizontal * 100,
         child: Column(
           children: <Widget>[
             TopBar(),
             Expanded(
-              child:  SearchBar<Post>(
+              child: SearchBar<Post>(
                 searchBarPadding: EdgeInsets.only(left: 50),
                 headerPadding: EdgeInsets.symmetric(horizontal: 10),
                 listPadding: EdgeInsets.symmetric(horizontal: 10),
                 onSearch: _getALlPosts,
                 searchBarStyle: SearchBarStyle(
                     padding: EdgeInsets.all(5.0),
-                  borderRadius: BorderRadius.all(Radius.circular(30.0)),
-                  backgroundColor: Colors.white
-
-                ),
+                    borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                    backgroundColor: Colors.white),
                 searchBarController: _searchBarController,
-                placeHolder: Column(
-                  children: <Widget>[
-                    Text(
-                      'Try searching for...',
-                      textAlign: TextAlign.center,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    )
+                placeHolder:
+                    Container(
+                        padding: const EdgeInsets.only(left: 50),
+                        width: SizeConfig.blockSizeHorizontal * 80,
+                        child: Column(
+                          children: <Widget>[
+                            Text(
+                                AppLocalizations.of(context)
+                                    .translate('try_searching'),
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontSize: 28,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold)),
+                            SizedBox(height: 10),
+                            Text(
+                                AppLocalizations.of(context)
+                                    .translate('search_list_item_1'),
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold)),
+                            Text(
+                                AppLocalizations.of(context)
+                                    .translate('search_list_item_1'),
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold)),
+                            Text(
+                                AppLocalizations.of(context)
+                                    .translate('search_list_item_1'),
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold)),
+                            Text(
+                                AppLocalizations.of(context)
+                                    .translate('search_list_item_1'),
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold)),
 
-                  ],
+                          ],
+
+                        )),
+                icon: Icon(
+                  Icons.audiotrack,
+                  color: Colors.green,
+                  size: 30.0,
                 ),
-                  icon: Icon(
-                    Icons.audiotrack,
-                    color: Colors.green,
-                    size: 30.0,
-                  ),
                 cancellationWidget: Text("Cancel"),
                 emptyWidget: Text("empty"),
                 indexedScaledTileBuilder: (int index) =>

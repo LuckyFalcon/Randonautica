@@ -28,7 +28,7 @@ class Points {
   int type;
   double x;
   double y;
-  Center center;
+  _Center center;
   int side;
   double distanceErr;
   double radiusM;
@@ -73,7 +73,7 @@ class Points {
     x = json['X'];
     y = json['Y'];
     center =
-    json['Center'] != null ? new Center.fromJson(json['Center']) : null;
+    json['Center'] != null ? new _Center.fromJson(json['Center']) : null;
     side = json['Side'];
     distanceErr = json['DistanceErr'];
     radiusM = json['RadiusM'];
@@ -122,13 +122,13 @@ class Points {
   }
 }
 
-class Center {
+class _Center {
   Point point;
   Bearing bearing;
 
-  Center({this.point, this.bearing});
+  _Center({this.point, this.bearing});
 
-  Center.fromJson(Map<String, dynamic> json) {
+  _Center.fromJson(Map<String, dynamic> json) {
     point = json['Point'] != null ? new Point.fromJson(json['Point']) : null;
     bearing =
     json['Bearing'] != null ? new Bearing.fromJson(json['Bearing']) : null;
