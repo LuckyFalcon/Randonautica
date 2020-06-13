@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'file:///E:/Randonautica/randonautica/lib/components/SearchBar.dart';
 import 'package:app/components/TopBarTest.dart';
 import 'package:app/components/Trips/NoTripsFound.dart';
 import 'package:app/helpers/storage/loggedTripsDatabase.dart';
@@ -86,6 +87,7 @@ class TripListState extends State<TripList> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
+          SearchBar(),
           Expanded(
             child: ListView(
               physics: ScrollPhysics(),

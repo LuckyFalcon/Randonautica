@@ -68,8 +68,6 @@ class TopBar extends StatelessWidget {
       ]),
     );
   }
-
-
 }
 
 class SecondPageRoute extends CupertinoPageRoute {

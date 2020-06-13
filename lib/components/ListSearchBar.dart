@@ -1,16 +1,22 @@
 import 'dart:math';
 
 import 'package:app/models/Post.dart';
-import 'file:///E:/Randonautica/randonautica/lib/pages/List/LoggedTripDetails.dart';
-import 'file:///E:/Randonautica/randonautica/lib/pages/List/UnloggedTripDetails_old.dart';
+import 'package:app/utils/size_config.dart';
+import 'package:flappy_search_bar/flappy_search_bar.dart';
 import 'package:flappy_search_bar/scaled_tile.dart';
 import 'package:flappy_search_bar/search_bar_style.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flappy_search_bar/flappy_search_bar.dart';
 
-class ListSearchBar extends StatelessWidget {
+import 'TopBar.dart';
+
+class SearchPage extends StatefulWidget {
+  @override
+  _SearchBarController createState() => _SearchBarController();
+}
+
+class _SearchBarController extends State<SearchPage> {
   final SearchBarController<Post> _searchBarController = SearchBarController();
-
   bool isReplay = false;
 
   Future<List<Post>> _getALlPosts(String text) async {
@@ -30,41 +36,97 @@ class ListSearchBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: SearchBar<Post>(
-        searchBarPadding: EdgeInsets.symmetric(horizontal: 10),
-        headerPadding: EdgeInsets.symmetric(horizontal: 10),
-        listPadding: EdgeInsets.symmetric(horizontal: 10),
-        onSearch: _getALlPosts,
-        searchBarController: _searchBarController,
-        cancellationWidget: Text("Cancel"),
-        hintText: "SEARCH",
-        indexedScaledTileBuilder: (int index) =>
-            ScaledTile.count(1, index.isEven ? 2 : 1),
-        onCancelled: () {
-          print("Cancelled triggered");
-        },
-        searchBarStyle: SearchBarStyle(
-          backgroundColor: Colors.white,
-          borderRadius: BorderRadius.circular(90),
-        ),
-        mainAxisSpacing: 10,
-        crossAxisSpacing: 10,
-        crossAxisCount: 2,
-        onItemFound: (Post post, int index) {
-          return Container(
-            color: Colors.lightBlue,
-            child: ListTile(
-              title: Text(post.title),
-              isThreeLine: true,
-              subtitle: Text(post.body),
-              onTap: () {
-//                Navigator.of(context)
-//                    .push(MaterialPageRoute(builder: (context) => TripDetails('123', 'amstel')));
-              },
+    SizeConfig().init(context);
+
+    return Scaffold(
+        body: Container(
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomRight,
+                  stops: [0, 100],
+                  colors: [Color(0xff5A87E4), Color(0xff37CDDC)])),
+        height: SizeConfig.blockSizeVertical * 100,
+        width: SizeConfig.blockSizeHorizontal * 100,
+        child: Column(
+          children: <Widget>[
+            TopBar(),
+            Expanded(
+              child:  SearchBar<Post>(
+                searchBarPadding: EdgeInsets.only(left: 50),
+                headerPadding: EdgeInsets.symmetric(horizontal: 10),
+                listPadding: EdgeInsets.symmetric(horizontal: 10),
+                onSearch: _getALlPosts,
+                searchBarStyle: SearchBarStyle(
+                    padding: EdgeInsets.all(5.0),
+                  borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                  backgroundColor: Colors.white
+
+                ),
+                searchBarController: _searchBarController,
+                placeHolder: Column(
+                  children: <Widget>[
+                    Text(
+                      'Try searching for...',
+                      textAlign: TextAlign.center,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    )
+
+                  ],
+                ),
+                  icon: Icon(
+                    Icons.audiotrack,
+                    color: Colors.green,
+                    size: 30.0,
+                  ),
+                cancellationWidget: Text("Cancel"),
+                emptyWidget: Text("empty"),
+                indexedScaledTileBuilder: (int index) =>
+                    ScaledTile.count(1, index.isEven ? 2 : 1),
+                onCancelled: () {
+                  print("Cancelled triggered");
+                },
+                mainAxisSpacing: 10,
+                crossAxisSpacing: 10,
+                crossAxisCount: 2,
+                onItemFound: (Post post, int index) {
+                  return Container(
+                    color: Colors.lightBlue,
+                    child: ListTile(
+                      title: Text(post.title),
+                      isThreeLine: true,
+                      subtitle: Text(post.body),
+                      onTap: () {
+                        Navigator.of(context).push(
+                            MaterialPageRoute(builder: (context) => Detail()));
+                      },
+                    ),
+                  );
+                },
+              ),
             ),
-          );
-        },
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class Detail extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SafeArea(
+        child: Column(
+          children: <Widget>[
+            IconButton(
+              icon: Icon(Icons.arrow_back),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+            Text("Detail"),
+          ],
+        ),
       ),
     );
   }
