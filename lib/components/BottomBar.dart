@@ -1,3 +1,4 @@
+import 'package:app/utils/size_config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -20,11 +21,12 @@ class _BottomBarState extends State<BottomBar> {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return Align(
         alignment: Alignment.bottomCenter,
         child: Container(
-            height: 100,
-            padding: EdgeInsets.only(bottom: 25, left: 45, right: 45),
+            height: SizeConfig.blockSizeHorizontal * 20,
+            padding: EdgeInsets.only(bottom: 0, left: 45, right: 45),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(30),
                 boxShadow: [

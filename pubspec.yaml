@@ -41,9 +41,7 @@ dependencies:
   # for storing coordinates
   latlong: ^0.6.1
   geolocator: ^5.1.5
-  flutter_polyline_points: ^0.1.0
   google_maps_flutter: ^0.5.27+1
-  achievement_view: ^0.2.0
   location: ^2.5.3
   share: ^0.6.4+3
   flutter_tags: "^0.4.8+2"
@@ -59,7 +57,6 @@ dependencies:
   sliding_up_panel: ^1.0.2
   audioplayers: ^0.15.1
   sleek_circular_slider: ^1.1.0
-  simple_animations: ^2.2.1
   device_info: ^0.4.2+4
 
 dev_dependencies:

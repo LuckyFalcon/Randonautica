@@ -1,34 +1,26 @@
 import 'dart:async';
 
-import 'package:app/api/getAttractors.dart';
 import 'package:app/components/LoadingPoints.dart';
 import 'package:app/components/Randonaut/ButtonGoMainPage.dart';
-import 'package:app/components/Randonaut/ButtonsRowMainPage.dart';
 import 'package:app/components/Randonaut/HelpButton.dart';
 import 'package:app/components/Randonaut/OpenMapsButton.dart';
 import 'package:app/components/Randonaut/SetRadius.dart';
 import 'package:app/components/Randonaut/SetWaterPoints.dart';
 import 'package:app/components/Randonaut/StartOverButton.dart';
 
-import 'package:app/components/TopBar.dart';
 import 'package:app/helpers/FadeRoute.dart';
 import 'package:app/helpers/OpenGoogleMaps.dart';
 import 'package:app/helpers/storage/unloggedTripsDatabase.dart';
-import 'package:app/models/Attractors.dart';
 import 'package:app/models/Attractors.dart';
 import 'package:app/models/UnloggedTrip.dart';
 import 'package:app/models/map_pin_pill.dart';
 import 'package:app/models/pin_pill_info.dart';
 import 'package:app/utils/size_config.dart';
-import 'package:audioplayers/audio_cache.dart';
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
-import 'package:progress_dialog/progress_dialog.dart';
 
 const double CAMERA_TILT = 0;
 const double CAMERA_BEARING = 0;
@@ -68,7 +60,7 @@ class RandonautState extends State<Randonaut> {
   // for my drawn routes on the map (Polyline)
   Set<Polyline> _polylines = Set<Polyline>();
   List<LatLng> polylineCoordinates = [];
-  PolylinePoints polylinePoints;
+//  PolylinePoints polylinePoints;
 
   // for my custom marker pins
   BitmapDescriptor sourceIcon;
@@ -111,7 +103,7 @@ class RandonautState extends State<Randonaut> {
 
     // create an instance of Location
     location = new Location();
-    polylinePoints = PolylinePoints();
+   // polylinePoints = PolylinePoints();
 
     // subscribe to changes in the user's location
     // by "listening" to the location's onLocationChanged event
@@ -220,7 +212,6 @@ class RandonautState extends State<Randonaut> {
 
     return Column(
       children: <Widget>[
-
         Container(
           height: SizeConfig.blockSizeVertical * 60,
 
@@ -232,7 +223,6 @@ class RandonautState extends State<Randonaut> {
             children: <Widget>[
               Container(
                 height: SizeConfig.blockSizeVertical * 58,
-
                 ///This is 70% of the Vertical / Height for this container in this class
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(30.0)),
@@ -282,21 +272,15 @@ class RandonautState extends State<Randonaut> {
             ],
           ),
         ),
-        (pointsSucesfullyGenerated
-            ? SizedBox(
-                height: SizeConfig.blockSizeVertical * 5,
-
-                ///Todo this is just a workaround
-              )
-            : SizedBox(height: 0)),
         Container(
-          child: (pointsSucesfullyGenerated //TODO MOVE TO ButtonGoMainPage
+          height: SizeConfig.blockSizeVertical * 15,
+          width: SizeConfig.blockSizeHorizontal * 100,
+          child: (pointsSucesfullyGenerated
               ? Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Row(
                           children: <Widget>[
@@ -346,26 +330,14 @@ class RandonautState extends State<Randonaut> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Column(
-                      children: [SetRadius()],
-                    ),
-                    SizedBox(width: 10),
+                    SetRadius(),
+                    SizedBox(width: SizeConfig.blockSizeHorizontal * 2),
                     HelpButton(),
-                    SizedBox(width: 10),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [SetWaterPoints()],
-                    ),
+                    SizedBox(width: SizeConfig.blockSizeHorizontal * 2),
+                    SetWaterPoints(),
                   ],
                 )),
         ),
-        (pointsSucesfullyGenerated
-            ? SizedBox(
-                height: SizeConfig.blockSizeVertical * 4.6,
-
-                ///Todo this is just a workaround
-              )
-            : SizedBox(height: 0)),
       ],
     );
   }

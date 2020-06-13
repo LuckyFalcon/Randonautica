@@ -52,17 +52,16 @@ class _LoadingState extends State<Loading> {
 
     if (Platform.isAndroid) {
       var androidInfo = await DeviceInfoPlugin().androidInfo;
-      var release = androidInfo.version.release;
       var sdkInt = androidInfo.version.sdkInt;
-      var manufacturer = androidInfo.manufacturer;
-      var model = androidInfo.model;
-      print('Android $release (SDK $sdkInt), $manufacturer $model');
-      // Android 9 (SDK 28), Xiaomi Redmi Note 7
+      print(sdkInt);
+      if(sdkInt >= 23){
+        //Ask for permissions
+        PermissionStatus permission = await LocationPermissions()
+            .requestPermissions();
+      }
     }
 
-      //Ask for permissions
-      PermissionStatus permission = await LocationPermissions()
-          .requestPermissions();
+
 
     try {
 
