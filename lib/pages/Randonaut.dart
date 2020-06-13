@@ -11,6 +11,7 @@ import 'package:app/components/Randonaut/SetWaterPoints.dart';
 import 'package:app/components/Randonaut/StartOverButton.dart';
 
 import 'package:app/components/TopBar.dart';
+import 'package:app/helpers/FadeRoute.dart';
 import 'package:app/helpers/OpenGoogleMaps.dart';
 import 'package:app/helpers/storage/unloggedTripsDatabase.dart';
 import 'package:app/models/Attractors.dart';
@@ -370,12 +371,7 @@ class RandonautState extends State<Randonaut> {
   }
 
   void onAddMarkerButtonPressed() async {
-    // Navigator.push(context, FadeRoute(page: LoadingPoints(callbackLoadingPoints, 3000, currentLocation)));
-    if (pointsSucesfullyGenerated) {
-      pointsSucesfullyGenerated = false;
-    } else {
-      pointsSucesfullyGenerated = true;
-    }
+     Navigator.push(context, FadeRoute(page: LoadingPoints(callbackLoadingPoints, 3000, currentLocation)));
   }
 
   void setSourceAndDestinationIcons() async {
@@ -529,26 +525,4 @@ class RandonautState extends State<Randonaut> {
   }
 }
 
-class FadeRoute extends PageRouteBuilder {
-  final Widget page;
 
-  FadeRoute({this.page})
-      : super(
-          pageBuilder: (
-            BuildContext context,
-            Animation<double> animation,
-            Animation<double> secondaryAnimation,
-          ) =>
-              page,
-          transitionsBuilder: (
-            BuildContext context,
-            Animation<double> animation,
-            Animation<double> secondaryAnimation,
-            Widget child,
-          ) =>
-              FadeTransition(
-            opacity: animation,
-            child: child,
-          ),
-        );
-}

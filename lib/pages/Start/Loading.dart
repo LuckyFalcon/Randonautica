@@ -81,22 +81,20 @@ class _LoadingState extends State<Loading> {
         getCurrentUser().then((value) => Future.delayed(Duration(seconds: 3), () {
           if (value != null)
           {
-            Navigator.push(
+            Navigator.pushAndRemoveUntil(
                 context,
-                MaterialPageRoute(
-                  builder: (context) => HomePage(),
-                ));
+                MaterialPageRoute(builder: (context) => HomePage()),
+                ModalRoute.withName("/HomePage"));
           }
           else
           {
             //Setup Databases
             setupDatabases()
                 .then((value) => Future.delayed(Duration(seconds: 3), () {
-              Navigator.push(
+              Navigator.pushAndRemoveUntil(
                   context,
-                  MaterialPageRoute(
-                    builder: (context) => Login(),
-                  ));
+                  MaterialPageRoute(builder: (context) => Login()),
+                  ModalRoute.withName("/Login"));
             }));
           }
         }));

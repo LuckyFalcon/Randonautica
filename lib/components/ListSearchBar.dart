@@ -55,26 +55,45 @@ class _SearchBarController extends State<SearchPage> {
           children: <Widget>[
             TopBar(),
             Expanded(
-              child: SearchBar<Post>(
-                searchBarPadding: EdgeInsets.only(left: 50),
-                headerPadding: EdgeInsets.symmetric(horizontal: 10),
-                listPadding: EdgeInsets.symmetric(horizontal: 10),
-                onSearch: _getALlPosts,
-                searchBarStyle: SearchBarStyle(
-                    padding: EdgeInsets.all(5.0),
-                    borderRadius: BorderRadius.all(Radius.circular(30.0)),
-                    backgroundColor: Colors.white),
-                searchBarController: _searchBarController,
-                placeHolder:
+              child:
+              Stack(
+                children: <Widget>[
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        Navigator.pop(context); //Go back to previous navigation item
+                      });
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 15.0, top: 15.0),
+                      child: Icon(
+                        Icons.arrow_back_ios,
+                        color: Colors.white,
+                        size: 40.0,
+                      ),
+                  ),
+                ),
+                  SearchBar<Post>(
+                    searchBarPadding: EdgeInsets.only(left: 75, right: 50),
+                    headerPadding: EdgeInsets.symmetric(horizontal: 10),
+                    listPadding: EdgeInsets.symmetric(horizontal: 10),
+                    onSearch: _getALlPosts,
+                    searchBarStyle: SearchBarStyle(
+                        padding: EdgeInsets.only(left: 15),
+                        borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                        backgroundColor: Color(0xff7FB1FE)),
+                    searchBarController: _searchBarController,
+                    placeHolder:
                     Container(
                         padding: const EdgeInsets.only(left: 50),
                         width: SizeConfig.blockSizeHorizontal * 80,
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
                                 AppLocalizations.of(context)
                                     .translate('try_searching'),
-                                textAlign: TextAlign.center,
+                                textAlign: TextAlign.left,
                                 style: TextStyle(
                                     fontSize: 28,
                                     color: Colors.white,
@@ -83,6 +102,14 @@ class _SearchBarController extends State<SearchPage> {
                             Text(
                                 AppLocalizations.of(context)
                                     .translate('search_list_item_1'),
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold)),
+                            Text(
+                                AppLocalizations.of(context)
+                                    .translate('search_list_item_2'),
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                     fontSize: 14,
@@ -90,62 +117,75 @@ class _SearchBarController extends State<SearchPage> {
                                     fontWeight: FontWeight.bold)),
                             Text(
                                 AppLocalizations.of(context)
-                                    .translate('search_list_item_1'),
-                                textAlign: TextAlign.center,
+                                    .translate('search_list_item_3'),
+                                textAlign: TextAlign.left,
                                 style: TextStyle(
                                     fontSize: 14,
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold)),
                             Text(
                                 AppLocalizations.of(context)
-                                    .translate('search_list_item_1'),
-                                textAlign: TextAlign.center,
+                                    .translate('search_list_item_4'),
+                                textAlign: TextAlign.left,
                                 style: TextStyle(
                                     fontSize: 14,
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold)),
                             Text(
                                 AppLocalizations.of(context)
-                                    .translate('search_list_item_1'),
-                                textAlign: TextAlign.center,
+                                    .translate('search_list_item_5'),
+                                textAlign: TextAlign.left,
                                 style: TextStyle(
                                     fontSize: 14,
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold)),
-
+                            Text(
+                                AppLocalizations.of(context)
+                                    .translate('search_list_item_6'),
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold)),
                           ],
 
                         )),
-                icon: Icon(
-                  Icons.audiotrack,
-                  color: Colors.green,
-                  size: 30.0,
-                ),
-                cancellationWidget: Text("Cancel"),
-                emptyWidget: Text("empty"),
-                indexedScaledTileBuilder: (int index) =>
-                    ScaledTile.count(1, index.isEven ? 2 : 1),
-                onCancelled: () {
-                  print("Cancelled triggered");
-                },
-                mainAxisSpacing: 10,
-                crossAxisSpacing: 10,
-                crossAxisCount: 2,
-                onItemFound: (Post post, int index) {
-                  return Container(
-                    color: Colors.lightBlue,
-                    child: ListTile(
-                      title: Text(post.title),
-                      isThreeLine: true,
-                      subtitle: Text(post.body),
-                      onTap: () {
-                        Navigator.of(context).push(
-                            MaterialPageRoute(builder: (context) => Detail()));
-                      },
+                    icon: Icon(
+                      Icons.search,
+                      color: Color(0xff5E80E1),
+                      size: 20.0,
                     ),
-                  );
-                },
-              ),
+                    hintText: "SEARCH",
+                      hintStyle: TextStyle(color: Color(0xff5E80E1)),
+                    emptyWidget: Text("empty"),
+                    indexedScaledTileBuilder: (int index) =>
+                        ScaledTile.count(1, index.isEven ? 2 : 1),
+                    onCancelled: () {
+                      print("Cancelled triggered");
+                    },
+                    mainAxisSpacing: 10,
+                    crossAxisSpacing: 10,
+                    crossAxisCount: 2,
+                    onItemFound: (Post post, int index) {
+                      return Container(
+                        color: Colors.lightBlue,
+                        child: ListTile(
+                          title: Text(post.title),
+                          isThreeLine: true,
+                          subtitle: Text(post.body),
+                          onTap: () {
+                            Navigator.of(context).push(
+                                MaterialPageRoute(builder: (context) => Detail()));
+                          },
+                        ),
+                      );
+                    },
+                  ),
+
+                ],
+              )
+
+
             ),
           ],
         ),

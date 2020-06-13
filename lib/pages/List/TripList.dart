@@ -87,6 +87,7 @@ class TripListState extends State<TripList> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
+          SizedBox(height: SizeConfig.blockSizeVertical * 1),
           SearchBar(),
           Expanded(
             child: ListView(
