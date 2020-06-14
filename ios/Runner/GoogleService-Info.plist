@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>798292909561-gb6jkb1te188245v3sfn8sdaojb5o99u.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.798292909561-gb6jkb1te188245v3sfn8sdaojb5o99u</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>798292909561-idbt1qt6265hgc31saimo9c2nhksr188.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDZGEtQyOartowWGjCaHgoihQv4jEQkXwI</string>
+	<key>GCM_SENDER_ID</key>
+	<string>798292909561</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.randonautica.app</string>
+	<key>PROJECT_ID</key>
+	<string>randonautica</string>
+	<key>STORAGE_BUCKET</key>
+	<string>randonautica.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:798292909561:ios:f5f10285ace8bd783cf128</string>
+	<key>DATABASE_URL</key>
+	<string>https://randonautica.firebaseio.com</string>
+</dict>
+</plist>
