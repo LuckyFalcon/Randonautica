@@ -100,6 +100,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
+  /// TODO Check if this is legit: https://stackoverflow.com/questions/56639529/duplicate-class-com-google-common-util-concurrent-listenablefuture-found-in-modu
   int selectedNavigationIndex = 0;
 
   final GlobalKey<TripListState> _TripListKey = GlobalKey();

@@ -120,7 +120,7 @@ class UnloggedTripDetailsState extends State<UnloggedTripDetails> {
     print('success');
   }
 
-  List _items = ['0'];
+  List _items = [];
   double _fontSize = 14;
 
   bool _symmetry = false;
@@ -138,7 +138,7 @@ class UnloggedTripDetailsState extends State<UnloggedTripDetails> {
 
   List _icon = [Icons.home, Icons.language, Icons.headset];
 
-  var _controller = TextEditingController();
+  var _tag = TextEditingController();
   var _text = TextEditingController();
   var _title = TextEditingController();
 
@@ -202,14 +202,14 @@ class UnloggedTripDetailsState extends State<UnloggedTripDetails> {
                         color: Color(0xff7BBFFE),
                         borderRadius: BorderRadius.circular(30),
                       ),
-                      child: TextFormField(
+                      child: TextField(
                           controller: _title,
                           style: TextStyle(
                             color: Colors.white,
                           ),
-                          obscureText: true,
                           decoration: InputDecoration(
-                              contentPadding: const EdgeInsets.all(20.0),
+                              contentPadding: const EdgeInsets.only(
+                                  bottom: 10, left: 25, right: 45),
                               border: InputBorder.none,
                               labelText: AppLocalizations.of(context)
                                   .translate('give_trip_a_name'),
@@ -226,9 +226,6 @@ class UnloggedTripDetailsState extends State<UnloggedTripDetails> {
                         borderRadius: BorderRadius.circular(30),
                       ),
                       child: TextField(
-                          keyboardType: TextInputType.multiline,
-                          maxLines: null,
-                          maxLength: null,
                           controller: _text,
                           style: TextStyle(
                             color: Colors.white,
@@ -252,26 +249,24 @@ class UnloggedTripDetailsState extends State<UnloggedTripDetails> {
                         borderRadius: BorderRadius.circular(30),
                       ),
                       child: TextFormField(
-                          controller: _controller,
+                          controller: _tag,
                           onFieldSubmitted: (String str) {
-                            // Add item to the data source.
-
                             setState(() {
                               // required
                               _items.add(str);
-                              _controller.clear();
+                              _tag.clear();
                             });
                           },
                           style: TextStyle(
                             color: Colors.white,
                           ),
-                          obscureText: true,
                           decoration: InputDecoration(
                               suffixIcon: IconButton(
-                                onPressed: () => _controller.clear(),
+                                onPressed: () => _tag.clear(),
                                 icon: Icon(Icons.clear),
                               ),
-                              contentPadding: const EdgeInsets.all(20.0),
+                              contentPadding: const EdgeInsets.only(
+                                  bottom: 10, left: 25, right: 45),
                               border: InputBorder.none,
                               labelText: AppLocalizations.of(context)
                                   .translate('add_trip_tags'),

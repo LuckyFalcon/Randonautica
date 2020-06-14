@@ -31,10 +31,10 @@ class _BottomBarState extends State<BottomBar> {
                 borderRadius: BorderRadius.circular(30),
                 boxShadow: [
                   BoxShadow(
-                      blurRadius: 40,
-                      offset: Offset(1, 3),
+                      blurRadius: 35,
+                      offset: Offset(1, 10),
                       color: Colors.black,
-                      spreadRadius: -40)
+                      spreadRadius: -60)
                 ]),
             child: ClipRRect(
                 borderRadius: BorderRadius.only(

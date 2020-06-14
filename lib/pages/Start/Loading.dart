@@ -1,9 +1,10 @@
 import 'package:app/helpers/AppLocalizations.dart';
-import 'package:app/helpers/circularLoading.dart';
+import 'package:app/helpers/FadingCircleLoading.dart';
 import 'package:app/helpers/storage/setupDatabases.dart';
 import 'package:app/helpers/storage/createDatabases.dart';
 import 'package:app/main.dart';
 import 'package:app/pages/start/Login.dart';
+import 'package:app/utils/size_config.dart';
 import 'package:device_info/device_info.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -45,7 +46,8 @@ class _LoadingState extends State<Loading> {
   versionCheck(context) async {
     //Get Current installed version of app
     final PackageInfo info = await PackageInfo.fromPlatform();
-    double currentVersion = double.parse(info.version.trim().replaceAll(".", ""));
+    double currentVersion =
+        double.parse(info.version.trim().replaceAll(".", ""));
 
     //Get Latest version info from firebase config
     final RemoteConfig remoteConfig = await RemoteConfig.instance;
@@ -53,17 +55,14 @@ class _LoadingState extends State<Loading> {
     if (Platform.isAndroid) {
       var androidInfo = await DeviceInfoPlugin().androidInfo;
       var sdkInt = androidInfo.version.sdkInt;
-      if(sdkInt >= 23){
+      if (sdkInt >= 23) {
         //Ask for permissions
-        PermissionStatus permission = await LocationPermissions()
-            .requestPermissions();
+        PermissionStatus permission =
+            await LocationPermissions().requestPermissions();
       }
     }
 
-
-
     try {
-
       // Using default duration to force fetching from remote server.
       await remoteConfig.fetch(expiration: const Duration(seconds: 0));
       await remoteConfig.activateFetched();
@@ -76,26 +75,24 @@ class _LoadingState extends State<Loading> {
         _showVersionDialog(context);
       } else {
         ///No new version -> Continue to App
-        getCurrentUser().then((value) => Future.delayed(Duration(seconds: 3), () {
-          if (value != null)
-          {
-            Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(builder: (context) => HomePage()),
-                ModalRoute.withName("/HomePage"));
-          }
-          else
-          {
-            //Setup Databases
-            setupDatabases()
-                .then((value) => Future.delayed(Duration(seconds: 3), () {
-              Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(builder: (context) => Login()),
-                  ModalRoute.withName("/Login"));
+        getCurrentUser().then((value) =>
+            Future.delayed(Duration(seconds: 3), () {
+              if (value != null) {
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => HomePage()),
+                    ModalRoute.withName("/HomePage"));
+              } else {
+                //Setup Databases
+                setupDatabases()
+                    .then((value) => Future.delayed(Duration(seconds: 3), () {
+                          Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(builder: (context) => Login()),
+                              ModalRoute.withName("/Login"));
+                        }));
+              }
             }));
-          }
-        }));
       }
     } on FetchThrottledException catch (exception) {
       // Fetch throttled.
@@ -118,33 +115,33 @@ class _LoadingState extends State<Loading> {
         String btnLabelCancel = "Later";
         return Platform.isIOS
             ? new CupertinoAlertDialog(
-          title: Text(title),
-          content: Text(message),
-          actions: <Widget>[
-            FlatButton(
-              child: Text(btnLabel),
-              onPressed: () => _launchURL(APP_STORE_URL),
-            ),
-            FlatButton(
-              child: Text(btnLabelCancel),
-              onPressed: () => Navigator.pop(context),
-            ),
-          ],
-        )
+                title: Text(title),
+                content: Text(message),
+                actions: <Widget>[
+                  FlatButton(
+                    child: Text(btnLabel),
+                    onPressed: () => _launchURL(APP_STORE_URL),
+                  ),
+                  FlatButton(
+                    child: Text(btnLabelCancel),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                ],
+              )
             : new AlertDialog(
-          title: Text(title),
-          content: Text(message),
-          actions: <Widget>[
-            FlatButton(
-              child: Text(btnLabel),
-              onPressed: () => _launchURL(PLAY_STORE_URL),
-            ),
-            FlatButton(
-              child: Text(btnLabelCancel),
-              onPressed: () => Navigator.pop(context),
-            ),
-          ],
-        );
+                title: Text(title),
+                content: Text(message),
+                actions: <Widget>[
+                  FlatButton(
+                    child: Text(btnLabel),
+                    onPressed: () => _launchURL(PLAY_STORE_URL),
+                  ),
+                  FlatButton(
+                    child: Text(btnLabelCancel),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                ],
+              );
       },
     );
   }
@@ -173,16 +170,15 @@ class _LoadingState extends State<Loading> {
       print(e);
     }
     super.initState();
-
-
   }
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       extendBodyBehindAppBar: true,
-      extendBody:true,
+      extendBody: true,
       backgroundColor: Colors.yellow[200],
       body: Container(
           decoration: BoxDecoration(
@@ -194,7 +190,7 @@ class _LoadingState extends State<Loading> {
           child: Center(
             child: Column(children: <Widget>[
               Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-                SizedBox(height: 150),
+                SizedBox(height: SizeConfig.blockSizeVertical * 25),
                 ImageIcon(
                   AssetImage('assets/img/Owl.png'),
                   color: Colors.white,
@@ -206,9 +202,12 @@ class _LoadingState extends State<Loading> {
                         fontSize: 40,
                         color: Colors.white,
                         fontWeight: FontWeight.bold)),
-                SizedBox(height: 10),
-                SizedBox(height: 20),
-                circularLoading()
+                SizedBox(height: SizeConfig.blockSizeVertical * 3),
+                SizedBox(height: SizeConfig.blockSizeVertical * 3),
+                FadingCircleLoading(
+                  color: Colors.white,
+                  size: 75.0,
+                )
               ])
             ]),
           )),

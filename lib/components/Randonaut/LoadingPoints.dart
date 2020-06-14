@@ -1,15 +1,9 @@
 import 'package:app/api/getAttractors.dart';
 import 'package:app/helpers/AppLocalizations.dart';
-import 'package:app/helpers/circularLoading.dart';
-import 'package:app/helpers/storage/setupDatabases.dart';
-import 'package:app/helpers/storage/createDatabases.dart';
-import 'package:app/main.dart';
+import 'package:app/helpers/FadingCircleLoading.dart';
 import 'package:app/models/Attractors.dart';
-import 'package:app/pages/Randonaut.dart';
-import 'package:app/pages/start/Login.dart';
-import 'package:app/utils/size_config.dart';
 import 'package:app/utils/BackgroundColor.dart' as backgrounds;
-
+import 'package:app/utils/size_config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -72,7 +66,10 @@ class LoadingPoints extends StatelessWidget {
                               fontWeight: FontWeight.bold)),
                     ),
                     SizedBox(height: SizeConfig.blockSizeVertical * 10),
-                    circularLoading(),
+                    FadingCircleLoading(
+                      color: Colors.white,
+                      size: 75.0,
+                    ),
                     SizedBox(height: SizeConfig.blockSizeVertical * 10),
                     Container(
                       width: SizeConfig.blockSizeHorizontal * 40,
