@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'file:///E:/Randonautica/randonautica/lib/components/Randonaut/LoadingPoints.dart';
 import 'package:app/components/Randonaut/ButtonGoMainPage.dart';
 import 'package:app/components/Randonaut/HelpButton.dart';
+import 'package:app/components/Randonaut/LoadingPoints.dart';
 import 'package:app/components/Randonaut/OpenMapsButton.dart';
 import 'package:app/components/Randonaut/SetRadius.dart';
 import 'package:app/components/Randonaut/SetWaterPoints.dart';

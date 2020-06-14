@@ -1,4 +1,3 @@
-import 'file:///E:/Randonautica/randonautica/lib/components/Shop/subscriptionDialog.dart';
 import 'package:app/pages/News.dart';
 import 'package:app/pages/Profile.dart';
 import 'package:app/utils/size_config.dart';

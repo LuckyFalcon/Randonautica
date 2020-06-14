@@ -1,4 +1,4 @@
-import 'file:///E:/Randonautica/randonautica/lib/components/News/NewsItem.dart';
+import 'package:app/components/News/NewsItem.dart';
 import 'package:app/helpers/AppLocalizations.dart';
 import 'package:flutter/material.dart';
 

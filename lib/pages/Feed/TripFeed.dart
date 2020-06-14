@@ -1,7 +1,7 @@
-import 'file:///E:/Randonautica/randonautica/lib/components/SearchBar.dart';
+import 'package:app/components/Feed/TripFeedEntry.dart';
 import 'package:app/components/TopBar.dart';
-import 'file:///E:/Randonautica/randonautica/lib/components/Feed/TripFeedEntry.dart';
-import 'file:///E:/Randonautica/randonautica/lib/components/Trips/TripRow.dart';
+import 'package:app/components/Trips/TripRow.dart';
+
 import 'package:flutter/material.dart';
 import '../../helpers/AppLocalizations.dart';
 

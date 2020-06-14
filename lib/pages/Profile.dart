@@ -1,5 +1,6 @@
-import 'file:///E:/Randonautica/randonautica/lib/components/Profile/BadeGrow.dart';
-import 'file:///E:/Randonautica/randonautica/lib/components/Trips/TripRow.dart';
+
+import 'package:app/components/Profile/BadeGrow.dart';
+import 'package:app/components/Trips/TripRow.dart';
 import 'package:app/helpers/AppLocalizations.dart';
 import 'package:flutter/material.dart';
 
