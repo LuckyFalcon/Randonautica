@@ -1,4 +1,5 @@
 import 'package:app/helpers/AppLocalizations.dart';
+import 'package:app/helpers/FadeRoute.dart';
 import 'package:app/helpers/inviteFriends.dart';
 import 'package:app/main.dart';
 import 'package:app/pages/start/Walkthrough.dart';
@@ -115,7 +116,7 @@ class _InviteState extends State<Invite> {
                         ///Todo at this point remove previous navigation items
                         Navigator.pushAndRemoveUntil(
                             context,
-                            MaterialPageRoute(builder: (context) => Walkthrough()),
+                            FadeRoute(page: Walkthrough()),
                             ModalRoute.withName("/Walktrhough"));
                       },
                       color: Colors.white,

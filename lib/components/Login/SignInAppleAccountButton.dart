@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:app/helpers/FadeRoute.dart';
 import 'package:app/pages/Start/Invite.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -14,7 +15,6 @@ class SignInAppleAccountButton extends StatefulWidget {
 }
 
 class _SignInAppleAccountButtonState extends State<SignInAppleAccountButton> {
-
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
@@ -55,25 +55,11 @@ class _SignInAppleAccountButtonState extends State<SignInAppleAccountButton> {
           ),
           onPressed: () async {
             if (Platform.isAndroid) {
-              signInWithAppleAndroid().whenComplete(() =>
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return Invite();
-                      },
-                    ),
-                  )
-              );
+              signInWithAppleAndroid().whenComplete(
+                  () => Navigator.of(context).push(FadeRoute(page: Invite())));
             } else if (Platform.isIOS) {
-              signInWithAppleIOS().whenComplete(() =>
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return Invite();
-                      },
-                    ),
-                  )
-              );
+              signInWithAppleIOS().whenComplete(
+                  () => Navigator.of(context).push(FadeRoute(page: Invite())));
             }
           },
           color: Color(0xff43CCDB),
@@ -81,15 +67,14 @@ class _SignInAppleAccountButtonState extends State<SignInAppleAccountButton> {
   }
 
   Future<FirebaseUser> signInWithAppleAndroid() async {
-    final appleIdCredential =  await SignInWithApple.getAppleIDCredential(
+    final appleIdCredential = await SignInWithApple.getAppleIDCredential(
       scopes: [
         AppleIDAuthorizationScopes.email,
         AppleIDAuthorizationScopes.fullName,
       ],
       webAuthenticationOptions: WebAuthenticationOptions(
         // TODO: Set the `clientId` and `redirectUri` arguments to the values you entered in the Apple Developer portal during the setup
-        clientId:
-        'com.randonautica.app.signinwithapple',
+        clientId: 'com.randonautica.app.signinwithapple',
         redirectUri: Uri.parse(
           'https://api2.randonauts.com/apple/callbacks/sign_in_with_apple',
         ),
@@ -105,14 +90,12 @@ class _SignInAppleAccountButtonState extends State<SignInAppleAccountButton> {
     try {
       final authResult = await _auth.signInWithCredential(credential);
       return authResult.user;
-
-    } catch (error){
+    } catch (error) {
       print(error);
     }
   }
 
   Future<FirebaseUser> signInWithAppleIOS() async {
-
     final appleIdCredential = await SignInWithApple.getAppleIDCredential(
       scopes: [
         AppleIDAuthorizationScopes.email,

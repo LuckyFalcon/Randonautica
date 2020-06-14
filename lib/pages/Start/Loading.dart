@@ -1,4 +1,5 @@
 import 'package:app/helpers/AppLocalizations.dart';
+import 'package:app/helpers/FadeRoute.dart';
 import 'package:app/helpers/FadingCircleLoading.dart';
 import 'package:app/helpers/storage/setupDatabases.dart';
 import 'package:app/helpers/storage/createDatabases.dart';
@@ -75,24 +76,24 @@ class _LoadingState extends State<Loading> {
         _showVersionDialog(context);
       } else {
         ///No new version -> Continue to App
-        getCurrentUser().then((value) =>
-            Future.delayed(Duration(seconds: 3), () {
-              if (value != null) {
-                Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(builder: (context) => HomePage()),
-                    ModalRoute.withName("/HomePage"));
-              } else {
-                //Setup Databases
-                setupDatabases()
-                    .then((value) => Future.delayed(Duration(seconds: 3), () {
-                          Navigator.pushAndRemoveUntil(
-                              context,
-                              MaterialPageRoute(builder: (context) => Login()),
-                              ModalRoute.withName("/Login"));
-                        }));
-              }
-            }));
+        getCurrentUser()
+            .then((value) => Future.delayed(Duration(seconds: 3), () {
+                  if (value != null) {
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        FadeRoute(page: HomePage()),
+                        ModalRoute.withName("/HomePage"));
+                  } else {
+                    //Setup Databases
+                    setupDatabases().then(
+                        (value) => Future.delayed(Duration(seconds: 3), () {
+                              Navigator.pushAndRemoveUntil(
+                                  context,
+                                  FadeRoute(page: Login()),
+                                  ModalRoute.withName("/Login"));
+                            }));
+                  }
+                }));
       }
     } on FetchThrottledException catch (exception) {
       // Fetch throttled.
