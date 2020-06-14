@@ -64,7 +64,6 @@ class _SignInGoogleAccountButtonState extends State<SignInGoogleAccountButton> {
 
   void signOutGoogle() async{
     await googleSignIn.signOut();
-
     print("User Sign Out");
   }
 

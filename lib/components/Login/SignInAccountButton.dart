@@ -1,3 +1,7 @@
+import 'dart:io';
+
+import 'package:app/helpers/CreateAppleAccount.dart';
+import 'package:app/helpers/CreateGoogleAccount.dart';
 import 'package:app/pages/start/CreateAccount.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -43,10 +47,11 @@ class _SignInCreateAccountButtonState extends State<SignInCreateAccountButton> {
             ),
           ),
           onPressed: () {
-            Navigator.of(context, rootNavigator: true)
-                .push(new CupertinoPageRoute<bool>(
-                builder: (BuildContext context) => new CreateAccount()),
-            );
+            if (Platform.isAndroid) {
+              CreateGoogleAccount();
+            } else if (Platform.isIOS) {
+              CreateAppleAccount();
+            }
           },
           color: Color(0xff43CCDB),
         ));

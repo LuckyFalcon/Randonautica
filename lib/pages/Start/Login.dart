@@ -1,8 +1,9 @@
+import 'dart:io';
+
 import 'package:app/components/Login/SignInAccountButton.dart';
 import 'package:app/components/Login/SignInAppleAccountButton.dart';
 import 'package:app/components/Login/SignInGoogleAccountButton.dart';
 import 'package:app/helpers/AppLocalizations.dart';
-import 'package:app/pages/start/Invite.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -12,7 +13,6 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-
   @override
   void initState() {
     super.initState();
@@ -58,11 +58,15 @@ class _LoginState extends State<Login> {
                   child: Column(
                     children: <Widget>[
                       SizedBox(height: 40),
+                      (Platform.isAndroid
+                          ? SignInGoogleAccountButton()
+                          : SignInAppleAccountButton()),
+                      SizedBox(height: 15),
+                      (Platform.isAndroid
+                          ? SignInAppleAccountButton()
+                          : SignInGoogleAccountButton()),
+                      SizedBox(height: 15),
                       SignInCreateAccountButton(),
-                      SizedBox(height: 15),
-                      SignInGoogleAccountButton(),
-                      SizedBox(height: 15),
-                      SignInAppleAccountButton()
                     ],
                   )),
               SizedBox(height: 15),

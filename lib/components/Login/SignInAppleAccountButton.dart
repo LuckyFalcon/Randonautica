@@ -1,17 +1,26 @@
 import 'dart:io';
 
+import 'package:app/pages/Start/Invite.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import '../../helpers/AppLocalizations.dart';
+import 'dart:io' show Platform;
 
 class SignInAppleAccountButton extends StatefulWidget {
   State<StatefulWidget> createState() => new _SignInAppleAccountButtonState();
 }
 
 class _SignInAppleAccountButtonState extends State<SignInAppleAccountButton> {
+
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,53 +54,77 @@ class _SignInAppleAccountButtonState extends State<SignInAppleAccountButton> {
             ),
           ),
           onPressed: () async {
-            final credential = await SignInWithApple.getAppleIDCredential(
-              scopes: [
-                AppleIDAuthorizationScopes.email,
-                AppleIDAuthorizationScopes.fullName,
-              ],
-              webAuthenticationOptions: WebAuthenticationOptions(
-                // TODO: Set the `clientId` and `redirectUri` arguments to the values you entered in the Apple Developer portal during the setup
-                clientId:
-                'com.aboutyou.dart_packages.sign_in_with_apple.example',
-                redirectUri: Uri.parse(
-                  'https://flutter-sign-in-with-apple-example.glitch.me/callbacks/sign_in_with_apple',
-                ),
-              ),
-              // TODO: Remove these if you have no need for them
-              nonce: 'example-nonce',
-              state: 'example-state',
-            );
-
-            print(credential);
-
-            // This is the endpoint that will convert an authorization code obtained
-            // via Sign in with Apple into a session in your system
-            final signInWithAppleEndpoint = Uri(
-              scheme: 'https',
-              host: 'flutter-sign-in-with-apple-example.glitch.me',
-              path: '/sign_in_with_apple',
-              queryParameters: <String, String>{
-                'code': credential.authorizationCode,
-                'firstName': credential.givenName,
-                'lastName': credential.familyName,
-                'useBundleId':
-                Platform.isIOS || Platform.isMacOS ? 'true' : 'false',
-                if (credential.state != null) 'state': credential.state,
-              },
-            );
-
-            final session = await http.Client().post(
-              signInWithAppleEndpoint,
-            );
-
-            // If we got this far, a session based on the Apple ID credential has been created in your system,
-            // and you can now set this as the app's session
-            print(session);
-
-
+            if (Platform.isAndroid) {
+              signInWithAppleAndroid().whenComplete(() =>
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return Invite();
+                      },
+                    ),
+                  )
+              );
+            } else if (Platform.isIOS) {
+              signInWithAppleIOS().whenComplete(() =>
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return Invite();
+                      },
+                    ),
+                  )
+              );
+            }
           },
           color: Color(0xff43CCDB),
         ));
+  }
+
+  Future<FirebaseUser> signInWithAppleAndroid() async {
+    final appleIdCredential =  await SignInWithApple.getAppleIDCredential(
+      scopes: [
+        AppleIDAuthorizationScopes.email,
+        AppleIDAuthorizationScopes.fullName,
+      ],
+      webAuthenticationOptions: WebAuthenticationOptions(
+        // TODO: Set the `clientId` and `redirectUri` arguments to the values you entered in the Apple Developer portal during the setup
+        clientId:
+        'com.randonautica.app.signinwithapple',
+        redirectUri: Uri.parse(
+          'https://api2.randonauts.com/apple/callbacks/sign_in_with_apple',
+        ),
+      ),
+    );
+
+    final oAuthProvider = OAuthProvider(providerId: 'apple.com');
+    final credential = oAuthProvider.getCredential(
+      idToken: appleIdCredential.identityToken,
+      accessToken: appleIdCredential.authorizationCode,
+    );
+
+    try {
+      final authResult = await _auth.signInWithCredential(credential);
+      return authResult.user;
+
+    } catch (error){
+      print(error);
+    }
+  }
+
+  Future<FirebaseUser> signInWithAppleIOS() async {
+
+    final appleIdCredential = await SignInWithApple.getAppleIDCredential(
+      scopes: [
+        AppleIDAuthorizationScopes.email,
+        AppleIDAuthorizationScopes.fullName,
+      ],
+    );
+    final oAuthProvider = OAuthProvider(providerId: 'apple.com');
+    final credential = oAuthProvider.getCredential(
+      idToken: appleIdCredential.identityToken,
+      accessToken: appleIdCredential.authorizationCode,
+    );
+    final authResult = await _auth.signInWithCredential(credential);
+    return authResult.user;
   }
 }
