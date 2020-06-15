@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
-import 'package:randonautica/addons_shop.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
@@ -11,6 +10,8 @@ import 'package:toast/toast.dart';
 
 // camrng
 import 'package:flutter/services.dart';
+
+import 'addons_shop.dart';
 
 final String piMapsPack = 'fatumbot.addons.nc.maps_pack.v2';
 final String piSkipWaterPack = 'fatumbot.addons.nc.skip_water_pack.v2';

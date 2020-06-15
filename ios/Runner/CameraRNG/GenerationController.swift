@@ -68,41 +68,6 @@ class GenerationController: UIViewController, CameraFramesDelegate, UITableViewD
             cameraCenterY -= 16
         }
         
-        // 2020-04-10 insertion hack by soliax
-        // quick repurposing this UI and upload code to use SteveLib (libTemporal) instead of CamRNG
-        if (rngType == "goToTemporal") {
-            // remove all the CamRNG stats from the table except the timer
-            stats = ["TIME ELAPSED"]
-            settingsTable.dataSource = self
-            settingsTable.delegate = self
-            settingsTable.tableFooterView = UIView()
-            
-            timer = Timer.scheduledTimer(timeInterval: 0.2, target: self, selector: #selector(timerForSteveAction), userInfo: nil, repeats: true)
-            
-            // Rotating image on center
-            let animation = CABasicAnimation(keyPath: "transform.rotation")
-            animation.fromValue = 0
-            animation.toValue = CGFloat.pi * 2
-            animation.duration = Constants.spinnerAnimationDuration
-            animation.repeatCount = .infinity
-            animation.isRemovedOnCompletion = false
-            overlay.layer.add(animation, forKey: "spinAnimation")
-            
-            // summon Steve to generate magical entropy (on a background thread to not freeze the UI)
-            let concurrentQueue = DispatchQueue.init(label: "concurrentQueue", qos: .background, attributes: .concurrent, autoreleaseFrequency: .inherit, target: nil)
-            concurrentQueue.async {
-                let steveBytes: UnsafeMutablePointer<UInt8> = hitBooks(Int32(self.bytesNeeded))
-
-                // upload entropy to the libwrapper API server
-                let bufferPtr = UnsafeMutableBufferPointer(start: steveBytes, count: self.bytesNeeded)
-                let buffer = Array(bufferPtr)
-                self.postEntropyToLibwrapper(entropy: buffer)
-                free(steveBytes)
-            }
-            
-            return
-        }
-        
         settingsTable.dataSource = self
         settingsTable.delegate = self
         settingsTable.tableFooterView = UIView()
@@ -156,20 +121,6 @@ class GenerationController: UIViewController, CameraFramesDelegate, UITableViewD
     
     func localized(_ val: Int) -> String {
         return NumberFormatter.localizedString(from: NSNumber(value: val), number: NumberFormatter.Style.decimal)
-    }
-    
-    @objc func timerForSteveAction() {
-        ticker += 1
-        
-        // Text animation
-        let animation: CATransition = CATransition()
-        animation.duration = 0.1
-        animation.type = CATransitionType.fade
-        animation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
-        settingsTable.cellForRow(at: IndexPath(row: 0, section: 0))?.layer.add(animation, forKey: "changeTextTransition")
-        
-        // Row 0: Time elapsed
-        updateValue(row: 0, val: String(format: "%02i:%02i", ticker / 5 / 60, ticker / 5 % 60))
     }
     
     @objc func timerAction() {

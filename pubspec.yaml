@@ -64,7 +64,7 @@ dependencies:
   # for the Bot
   webview_flutter: ^0.3.19+2
   in_app_purchase: ^0.3.3+2
-  toast: ^0.1.5Q
+  toast: ^0.1.5
 
 dev_dependencies:
   flutter_test:
