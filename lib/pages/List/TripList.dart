@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:app/components/SearchBar.dart';
 import 'package:app/components/TopBarTest.dart';
 import 'package:app/components/Trips/NoTripsFound.dart';
+import 'package:app/helpers/FadeRoute.dart';
 import 'package:app/helpers/storage/loggedTripsDatabase.dart';
 import 'package:app/helpers/storage/unloggedTripsDatabase.dart';
 import 'package:app/models/LoggedTrip.dart';
@@ -328,8 +329,7 @@ class listWidget extends StatelessWidget {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(
-                  builder: (context) => UnloggedTripDetails(
+              FadeRoute(page: UnloggedTripDetails(
                         this.id,
                         this.gid,
                         this.location,
@@ -466,8 +466,7 @@ class loggedListWidget extends StatelessWidget {
                                 onPressed: () {
                                   Navigator.push(
                                     context,
-                                    MaterialPageRoute(
-                                        builder: (context) => LoggedTripDetails(
+                                    FadeRoute(page: LoggedTripDetails(
                                             this.location,
                                             this.datetime,
                                             this.title,

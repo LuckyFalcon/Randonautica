@@ -32,7 +32,7 @@ class NoTripsFound extends StatelessWidget {
                 style: TextStyle(fontSize: 20, color: Colors.white)),
           ),
           SizedBox(height: 20),
-          NoTripsFoundButton()
+          //NoTripsFoundButton()
         ])
       ]),
     );
