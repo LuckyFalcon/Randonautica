@@ -14,6 +14,7 @@ import 'package:path_provider/path_provider.dart';
 
 class UnloggedTripDetails extends StatefulWidget {
 
+  Function callback;
   int id;
   String gid;
   String location;
@@ -28,6 +29,7 @@ class UnloggedTripDetails extends StatefulWidget {
   String report;
 
   UnloggedTripDetails(
+      this.callback,
       this.id,
       this.gid,
       this.location,
@@ -67,6 +69,8 @@ class UnloggedTripDetailsState extends State<UnloggedTripDetails> {
       print(true);
       submiteReport();
       DeleteUnloggedTrip(id);
+      Navigator.pop(context);
+
     });
   }
 

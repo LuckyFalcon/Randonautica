@@ -46,7 +46,7 @@ class RandonautState extends State<Randonaut> {
   CameraPosition initialCameraPosition;
 
   ///Attractor points
-  LatLng attractorPoint;
+  LatLng attractorCoordinates;
 
   BitmapDescriptor pinLocationIcon;
 
@@ -129,7 +129,7 @@ class RandonautState extends State<Randonaut> {
   void callbackOpenMaps(bool pressOpenMapsButton) {
     setState(() {
       this.pressOpenMapsButton = pressOpenMapsButton;
-      MapUtils.openMap(attractorPoint.latitude, attractorPoint.longitude);
+      MapUtils.openMap(attractorCoordinates.latitude, attractorCoordinates.longitude);
     });
   }
 
@@ -143,7 +143,7 @@ class RandonautState extends State<Randonaut> {
 
   void callbackLoadingPoints(Attractors attractors) async {
     this.pointsSucesfullyGenerated = true;
-    final LatLng attractorCoordinates = new LatLng(
+    attractorCoordinates = new LatLng(
         attractors.points[0].center.point.latitude,
         attractors.points[0].center.point.longitude);
 

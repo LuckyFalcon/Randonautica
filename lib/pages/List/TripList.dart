@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:app/components/SearchBar.dart';
 import 'package:app/components/TopBarTest.dart';
 import 'package:app/components/Trips/NoTripsFound.dart';
+import 'package:app/helpers/FadeRoute.dart';
 import 'package:app/helpers/storage/loggedTripsDatabase.dart';
 import 'package:app/helpers/storage/unloggedTripsDatabase.dart';
 import 'package:app/models/LoggedTrip.dart';
@@ -71,11 +72,18 @@ class TripListState extends State<TripList> {
     });
   }
 
+  void callback(bool labButtonPress) {
+    setState(() {
+
+
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return (unloggedTripsloaded && LoggedTripList
-        ? (unloggedTrips.length > 0
+        ? (unloggedTrips.length > 0 ||  _LoggedTripList.length > 0
             ? Container(
                 height: SizeConfig.blockSizeVertical * 70,
                 width: SizeConfig.blockSizeHorizontal * 100,
@@ -270,6 +278,7 @@ class UserWidget extends StatelessWidget {
 }
 
 class listWidget extends StatelessWidget {
+  Function callback;
   int id;
   String gid;
   String location;
@@ -285,6 +294,7 @@ class listWidget extends StatelessWidget {
 
   listWidget(
       {Key key,
+        this.callback,
       this.id,
       this.gid,
       this.location,
@@ -328,8 +338,8 @@ class listWidget extends StatelessWidget {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(
-                  builder: (context) => UnloggedTripDetails(
+              FadeRoute(page: UnloggedTripDetails(
+                        this.callback,
                         this.id,
                         this.gid,
                         this.location,
@@ -466,8 +476,7 @@ class loggedListWidget extends StatelessWidget {
                                 onPressed: () {
                                   Navigator.push(
                                     context,
-                                    MaterialPageRoute(
-                                        builder: (context) => LoggedTripDetails(
+                                    FadeRoute(page: LoggedTripDetails(
                                             this.location,
                                             this.datetime,
                                             this.title,
