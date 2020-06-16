@@ -17,12 +17,10 @@ GoogleSignIn _googleSignIn = GoogleSignIn(
 );
 
 class SignInGoogleAccountButton extends StatefulWidget {
-
   State<StatefulWidget> createState() => new _SignInGoogleAccountButtonState();
 }
 
 class _SignInGoogleAccountButtonState extends State<SignInGoogleAccountButton> {
-
   GoogleSignInAccount _currentUser;
   String _contactText;
 
@@ -42,8 +40,13 @@ class _SignInGoogleAccountButtonState extends State<SignInGoogleAccountButton> {
 
   Future<String> signInWithGoogle() async {
     final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
+
+    if (googleSignInAccount == null) {
+      return Future.error("CANCELLED_SIGN_IN");
+    }
+
     final GoogleSignInAuthentication googleSignInAuthentication =
-    await googleSignInAccount.authentication;
+        await googleSignInAccount.authentication;
 
     final AuthCredential credential = GoogleAuthProvider.getCredential(
       accessToken: googleSignInAuthentication.accessToken,
@@ -59,10 +62,11 @@ class _SignInGoogleAccountButtonState extends State<SignInGoogleAccountButton> {
     final FirebaseUser currentUser = await _auth.currentUser();
     assert(user.uid == currentUser.uid);
 
+    print('user: $user');
     return 'signInWithGoogle succeeded: $user';
   }
 
-  void signOutGoogle() async{
+  void signOutGoogle() async {
     await googleSignIn.signOut();
     print("User Sign Out");
   }
@@ -99,7 +103,9 @@ class _SignInGoogleAccountButtonState extends State<SignInGoogleAccountButton> {
             ),
           ),
           onPressed: () {
-            signInWithGoogle().whenComplete(() {
+            signInWithGoogle().catchError(() {
+              /// On cancel or error do Nothing
+            }).whenComplete(() {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) {

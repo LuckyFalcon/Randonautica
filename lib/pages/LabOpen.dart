@@ -40,7 +40,7 @@ class LabOpenState extends State<LabOpen> {
   ///Attractor points
   LatLng attractorPoint;
 
-  BitmapDescriptor pinLocationIcon;
+  //BitmapDescriptor pinLocationIcon;
 
   //Map controller
   Completer<GoogleMapController> _controller = Completer();
@@ -53,9 +53,9 @@ class LabOpenState extends State<LabOpen> {
   Set<Polyline> _polylines = Set<Polyline>();
   List<LatLng> polylineCoordinates = [];
 
-  // for my custom marker pins
-  BitmapDescriptor sourceIcon;
-  BitmapDescriptor destinationIcon;
+//  // for my custom marker pins
+//  BitmapDescriptor sourceIcon;
+//  BitmapDescriptor destinationIcon;
 
   // the user's initial location and current location
   // as it moves
@@ -78,8 +78,8 @@ class LabOpenState extends State<LabOpen> {
       location: LatLng(0, 0),
       locationName: '',
       labelColor: Colors.grey);
-  PinInformation sourcePinInfo;
-  PinInformation destinationPinInfo;
+//  PinInformation sourcePinInfo;
+//  PinInformation destinationPinInfo;
 
   Animation<double> animation;
   AnimationController controllerA;
@@ -102,10 +102,10 @@ class LabOpenState extends State<LabOpen> {
       // current user's position in real time,
       // so we're holding on to it
       currentLocation = cLoc;
-      updatePinOnMap();
+      //updatePinOnMap();
     });
     // set custom marker pins
-    setSourceAndDestinationIcons();
+    //setSourceAndDestinationIcons();
     // set the initial location
     setInitialLocation();
 
@@ -351,19 +351,19 @@ class LabOpenState extends State<LabOpen> {
 
   }
 
-  void setSourceAndDestinationIcons() async {
-    BitmapDescriptor.fromAssetImage(
-        ImageConfiguration(devicePixelRatio: 2.0), 'assets/driving_pin.png')
-        .then((onValue) {
-      sourceIcon = onValue;
-    });
+//  void setSourceAndDestinationIcons() async {
+//    BitmapDescriptor.fromAssetImage(
+//        ImageConfiguration(devicePixelRatio: 2.0), 'assets/driving_pin.png')
+//        .then((onValue) {
+//      sourceIcon = onValue;
+//    });
 
-    BitmapDescriptor.fromAssetImage(ImageConfiguration(devicePixelRatio: 2.0),
-        'assets/destination_map_marker.png')
-        .then((onValue) {
-      destinationIcon = onValue;
-    });
-  }
+//    BitmapDescriptor.fromAssetImage(ImageConfiguration(devicePixelRatio: 2.0),
+//        'assets/destination_map_marker.png')
+//        .then((onValue) {
+//      destinationIcon = onValue;
+//    });
+//  }
 
   void _onMarkerDragEnd(MarkerId markerId, LatLng newPosition) async {
     final Marker tappedMarker = markers[markerId];
@@ -413,106 +413,106 @@ class LabOpenState extends State<LabOpen> {
     controller.animateCamera(CameraUpdate.newCameraPosition(cPosition));
   }
 
-  void _onMarkerTapped(MarkerId markerId) {
-    final Marker tappedMarker = markers[markerId];
-    if (tappedMarker != null) {
-      setState(() {
-        if (markers.containsKey(selectedMarker)) {
-          final Marker resetOld = markers[selectedMarker]
-              .copyWith(iconParam: BitmapDescriptor.defaultMarker);
-          markers[selectedMarker] = resetOld;
-        }
-        selectedMarker = markerId;
-        final Marker newMarker = tappedMarker.copyWith(
-          iconParam: BitmapDescriptor.defaultMarkerWithHue(
-            BitmapDescriptor.hueGreen,
-          ),
-        );
-        markers[markerId] = newMarker;
-      });
-    }
-  }
+//  void _onMarkerTapped(MarkerId markerId) {
+//    final Marker tappedMarker = markers[markerId];
+//    if (tappedMarker != null) {
+//      setState(() {
+//        if (markers.containsKey(selectedMarker)) {
+//          final Marker resetOld = markers[selectedMarker]
+//              .copyWith(iconParam: BitmapDescriptor.defaultMarker);
+//          markers[selectedMarker] = resetOld;
+//        }
+//        selectedMarker = markerId;
+//        final Marker newMarker = tappedMarker.copyWith(
+//          iconParam: BitmapDescriptor.defaultMarkerWithHue(
+//            BitmapDescriptor.hueGreen,
+//          ),
+//        );
+//        markers[markerId] = newMarker;
+//      });
+//    }
+//  }
 
-  void showPinsOnMap() {
-    // get a LatLng for the source location
-    // from the LocationData currentLocation object
-    var pinPosition =
-    LatLng(currentLocation.latitude, currentLocation.longitude);
-    // get a LatLng out of the LocationData object
-    var destPosition =
-    LatLng(destinationLocation.latitude, destinationLocation.longitude);
+//  void showPinsOnMap() {
+//    // get a LatLng for the source location
+//    // from the LocationData currentLocation object
+//    var pinPosition =
+//    LatLng(currentLocation.latitude, currentLocation.longitude);
+//    // get a LatLng out of the LocationData object
+//    var destPosition =
+//    LatLng(destinationLocation.latitude, destinationLocation.longitude);
+//
+//    sourcePinInfo = PinInformation(
+//        locationName: "Start Location",
+//        location: SOURCE_LOCATION,
+//        pinPath: "assets/driving_pin.png",
+//        avatarPath: "assets/friend1.jpg",
+//        labelColor: Colors.blueAccent);
+//
+//    destinationPinInfo = PinInformation(
+//        locationName: "End Location",
+//        location: DEST_LOCATION,
+//        pinPath: "assets/destination_map_marker.png",
+//        avatarPath: "assets/friend2.jpg",
+//        labelColor: Colors.purple);
+//
+//    // add the initial source location pin
+//    _markers.add(Marker(
+//        markerId: MarkerId('sourcePin'),
+//        position: pinPosition,
+//        onTap: () {
+//          setState(() {
+//            currentlySelectedPin = sourcePinInfo;
+//            pinPillPosition = 0;
+//          });
+//        },
+//        icon: sourceIcon));
+//    // destination pin
+//    _markers.add(Marker(
+//        markerId: MarkerId('destPin'),
+//        position: destPosition,
+//        onTap: () {
+//          setState(() {
+//            currentlySelectedPin = destinationPinInfo;
+//            pinPillPosition = 0;
+//          });
+//        },
+//        icon: destinationIcon));
+//    // set the route lines on the map from source to destination
+//    // for more info follow this tutorial
+//    // setPolylines();
+//  }
 
-    sourcePinInfo = PinInformation(
-        locationName: "Start Location",
-        location: SOURCE_LOCATION,
-        pinPath: "assets/driving_pin.png",
-        avatarPath: "assets/friend1.jpg",
-        labelColor: Colors.blueAccent);
-
-    destinationPinInfo = PinInformation(
-        locationName: "End Location",
-        location: DEST_LOCATION,
-        pinPath: "assets/destination_map_marker.png",
-        avatarPath: "assets/friend2.jpg",
-        labelColor: Colors.purple);
-
-    // add the initial source location pin
-    _markers.add(Marker(
-        markerId: MarkerId('sourcePin'),
-        position: pinPosition,
-        onTap: () {
-          setState(() {
-            currentlySelectedPin = sourcePinInfo;
-            pinPillPosition = 0;
-          });
-        },
-        icon: sourceIcon));
-    // destination pin
-    _markers.add(Marker(
-        markerId: MarkerId('destPin'),
-        position: destPosition,
-        onTap: () {
-          setState(() {
-            currentlySelectedPin = destinationPinInfo;
-            pinPillPosition = 0;
-          });
-        },
-        icon: destinationIcon));
-    // set the route lines on the map from source to destination
-    // for more info follow this tutorial
-    // setPolylines();
-  }
-
-  void updatePinOnMap() async {
-    // create a new CameraPosition instance
-    // every time the location changes, so the camera
-    // follows the pin as it moves with an animation
-
-
-    // do this inside the setState() so Flutter gets notified
-    // that a widget update is due
-    setState(() {
-      // updated position
-      var pinPosition =
-      LatLng(currentLocation.latitude, currentLocation.longitude);
-
-      sourcePinInfo.location = pinPosition;
-
-      // the trick is to remove the marker (by id)
-      // and add it again at the updated location
-      _markers.removeWhere((m) => m.markerId.value == 'sourcePin');
-      _markers.add(Marker(
-          markerId: MarkerId('sourcePin'),
-          onTap: () {
-            setState(() {
-              currentlySelectedPin = sourcePinInfo;
-              pinPillPosition = 0;
-            });
-          },
-          position: pinPosition, // updated position
-          icon: sourceIcon));
-    });
-  }
+//  void updatePinOnMap() async {
+//    // create a new CameraPosition instance
+//    // every time the location changes, so the camera
+//    // follows the pin as it moves with an animation
+//
+//
+//    // do this inside the setState() so Flutter gets notified
+//    // that a widget update is due
+//    setState(() {
+//      // updated position
+//      var pinPosition =
+//      LatLng(currentLocation.latitude, currentLocation.longitude);
+//
+//     // sourcePinInfo.location = pinPosition;
+//
+//      // the trick is to remove the marker (by id)
+//      // and add it again at the updated location
+//      _markers.removeWhere((m) => m.markerId.value == 'sourcePin');
+//      _markers.add(Marker(
+//          markerId: MarkerId('sourcePin'),
+//          onTap: () {
+//            setState(() {
+//           //   currentlySelectedPin = sourcePinInfo;
+//              pinPillPosition = 0;
+//            });
+//          },
+//          position: pinPosition, // updated position
+//          icon: sourceIcon));
+//    });
+//  }
 
   addPulsatingEffect(LatLng userLatlng, int radius) {
 

@@ -72,11 +72,18 @@ class TripListState extends State<TripList> {
     });
   }
 
+  void callback(bool labButtonPress) {
+    setState(() {
+
+
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return (unloggedTripsloaded && LoggedTripList
-        ? (unloggedTrips.length > 0
+        ? (unloggedTrips.length > 0 ||  _LoggedTripList.length > 0
             ? Container(
                 height: SizeConfig.blockSizeVertical * 70,
                 width: SizeConfig.blockSizeHorizontal * 100,
@@ -271,6 +278,7 @@ class UserWidget extends StatelessWidget {
 }
 
 class listWidget extends StatelessWidget {
+  Function callback;
   int id;
   String gid;
   String location;
@@ -286,6 +294,7 @@ class listWidget extends StatelessWidget {
 
   listWidget(
       {Key key,
+        this.callback,
       this.id,
       this.gid,
       this.location,
@@ -330,6 +339,7 @@ class listWidget extends StatelessWidget {
             Navigator.push(
               context,
               FadeRoute(page: UnloggedTripDetails(
+                        this.callback,
                         this.id,
                         this.gid,
                         this.location,
