@@ -34,19 +34,6 @@ class BotWebView extends StatelessWidget {
     }
   }
 
-  //
-  // temporal rng
-  //
-  // flutter->ios(swift) (used to load the TrueEntropy Temporal RNG)
-  Future<void> _navToTemporal(int bytesNeeded) async {
-    try {
-      await platform.invokeMethod('goToTemporal', bytesNeeded);
-    } on PlatformException catch (e) {
-      print("Failed: '${e.message}'.");
-    }
-  }
-
-  //
   // Add-ons shop
   //
   // C# Fatumbot -> javascript/html webbot client front end -> javascript/flutter bridge -> flutter native IAP screen
@@ -311,11 +298,6 @@ class BotWebView extends StatelessWidget {
                   name: 'flutterChannel_loadCamRNGWithBytesNeeded',
                   onMessageReceived: (JavascriptMessage message) {
                     _navToCamRNG(int.parse(message.message)); // open swift TrueEntropy Camera RNG view
-                  }),
-              JavascriptChannel(
-                  name: 'flutterChannel_loadTemporalWithBytesNeeded',
-                  onMessageReceived: (JavascriptMessage message) {
-                    _navToTemporal(int.parse(message.message)); // open swift TrueEntropy Temporal RNG view
                   }),
               JavascriptChannel(
                   name: 'flutterChannel_loadNativeShop',
