@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:app/api/getAttractors.dart';
 
+import 'package:app/components/Bot/bot_webview.dart';
 import 'package:app/components/Randonaut/ButtonGoMainPage.dart';
 import 'package:app/components/Randonaut/ButtonsRowMainPage.dart';
 import 'package:app/components/Randonaut/OpenMapsButton.dart';
@@ -337,6 +338,17 @@ class LabOpenState extends State<LabOpen> {
                         ButtonsRowMainPage('2_point'),
                         SizedBox(height: 10),
                         ButtonsRowMainPage('3_point'),
+                        SizedBox(height: 10),
+                        FlatButton( // TODO: choose proper place and button type for this
+                          child: Text('BOT', style: TextStyle(color: Colors.white, fontSize: 18)),
+                          color: Color.fromARGB(255, 88, 136, 226),
+                          onPressed: () => {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => BotWebView())
+                            )
+                          },
+                        ),
                       ],
                     ),
                   ],

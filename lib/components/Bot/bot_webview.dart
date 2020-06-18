@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io' show Platform;
+import 'package:app/helpers/AppLocalizations.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -287,9 +288,9 @@ class BotWebView extends StatelessWidget {
 
     platform.setMethodCallHandler(_handleMethod); // for handling javascript->flutter callbacks
     return Scaffold(
-//        appBar: AppBar(
-//          title: Text("Randonautica"),
-//        ),
+        appBar: AppBar(
+          title: Text(AppLocalizations.of(context).translate('bot_app_title')),
+        ),
         body: WebView(
             initialUrl: botUrl,
             javascriptMode: JavascriptMode.unrestricted,
