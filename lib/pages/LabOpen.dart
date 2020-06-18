@@ -354,11 +354,11 @@ class LabOpenState extends State<LabOpen> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        ButtonsRowMainPage('1_point'),
+                        ButtonsRowMainPage('anu'),
                         SizedBox(height: 10),
-                        ButtonsRowMainPage('2_point'),
+                        ButtonsRowMainPage('camera'),
                         SizedBox(height: 10),
-                        ButtonsRowMainPage('3_point'),
+                        ButtonsRowMainPage('my_qrng'),
                         SizedBox(height: 10),
                         FlatButton( // TODO: choose proper place and button type for this
                           child: Text('BOT', style: TextStyle(color: Colors.white, fontSize: 18)),
