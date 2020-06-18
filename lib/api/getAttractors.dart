@@ -11,3 +11,6 @@ Future<Attractors> fetchAttractors(int radius, double x, double y) async {
     throw Exception('Failed to load album');
   }
 }
+
+
+

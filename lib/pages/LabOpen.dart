@@ -1,6 +1,12 @@
 import 'dart:async';
 
 import 'package:app/api/getAttractors.dart';
+import 'package:app/components/Lab/ANUButton.dart';
+import 'package:app/components/Lab/AnomalyButton.dart';
+import 'package:app/components/Lab/AttractorButton.dart';
+import 'package:app/components/Lab/CameraRNGButton.dart';
+import 'package:app/components/Lab/ComScireButton.dart';
+import 'package:app/components/Lab/VoidButton.dart';
 
 import 'package:app/components/Randonaut/ButtonGoMainPage.dart';
 import 'package:app/components/Randonaut/ButtonsRowMainPage.dart';
@@ -35,12 +41,19 @@ class LabOpenState extends State<LabOpen> {
   bool pressOpenMapsButton = false;
   bool pressStartOverButton = false;
 
+  ///Attractor buttons
+  bool pressAnomalyButton = false;
+  bool pressAttractorButton = false;
+  bool pressVoidButton = false;
+
+  ///Entropy buttons
+  bool pressANUButton = false;
+  bool pressCameraRNGButton = false;
+  bool pressComScireButton = false;
+
   double CAMERA_ZOOM = 16;
   CameraPosition initialCameraPosition;
-  ///Attractor points
   LatLng attractorPoint;
-
-  //BitmapDescriptor pinLocationIcon;
 
   //Map controller
   Completer<GoogleMapController> _controller = Completer();
@@ -52,10 +65,6 @@ class LabOpenState extends State<LabOpen> {
   // for my drawn routes on the map (Polyline)
   Set<Polyline> _polylines = Set<Polyline>();
   List<LatLng> polylineCoordinates = [];
-
-//  // for my custom marker pins
-//  BitmapDescriptor sourceIcon;
-//  BitmapDescriptor destinationIcon;
 
   // the user's initial location and current location
   // as it moves
@@ -78,8 +87,6 @@ class LabOpenState extends State<LabOpen> {
       location: LatLng(0, 0),
       locationName: '',
       labelColor: Colors.grey);
-//  PinInformation sourcePinInfo;
-//  PinInformation destinationPinInfo;
 
   Animation<double> animation;
   AnimationController controllerA;
@@ -116,30 +123,9 @@ class LabOpenState extends State<LabOpen> {
     setState(() {
       this.pressGoButton = pressGoButton;
       onAddMarkerButtonPressed();
-
-      ///This is called when Go Button is pressed.
-      print('test');
-
-
     });
   }
 
-//
-  void dialog(){
-    final ProgressDialog pr = ProgressDialog(context,type: ProgressDialogType.Normal, isDismissible: true, showLogs: true);
-    pr.show();
-    pr.update(
-      progress: 50.0,
-      message: "Please wait...",
-      progressWidget: Container(
-          padding: EdgeInsets.all(8.0), child: CircularProgressIndicator()),
-      maxProgress: 100.0,
-      progressTextStyle: TextStyle(
-          color: Colors.black, fontSize: 13.0, fontWeight: FontWeight.w400),
-      messageTextStyle: TextStyle(
-          color: Colors.black, fontSize: 19.0, fontWeight: FontWeight.w600),
-    );
-  }
 
   void callbackOpenMaps(bool pressOpenMapsButton) {
     setState(() {
@@ -152,9 +138,56 @@ class LabOpenState extends State<LabOpen> {
   void callbackStartOver(bool pressStartOverButton) {
     setState(() {
       this.pressStartOverButton = pressOpenMapsButton;
+    });
+  }
 
+  void callbackAnomalyButton(bool pressOpenMapsButton) {
+    setState(() {
+      this.pressAnomalyButton = true;
+      this.pressAttractorButton = false;
+      this.pressVoidButton = false;
 
+    });
+  }
 
+  void callbackAttractorButton(bool pressOpenMapsButton) {
+    setState(() {
+      this.pressAnomalyButton = false;
+      this.pressAttractorButton = true;
+      this.pressVoidButton = false;
+    });
+  }
+
+  void callbackVoidButton(bool pressOpenMapsButton) {
+    setState(() {
+      this.pressAnomalyButton = false;
+      this.pressAttractorButton = false;
+      this.pressVoidButton = true;
+    });
+  }
+
+  void callbackANUButton(bool pressOpenMapsButton) {
+    setState(() {
+      this.pressANUButton = true;
+      this.pressCameraRNGButton = false;
+      this.pressComScireButton = false;
+    });
+  }
+
+  void callbackCameraRNGButton(bool pressOpenMapsButton) {
+    setState(() {
+      this.pressANUButton = false;
+      this.pressCameraRNGButton = true;
+      this.pressComScireButton = false;
+    });
+  }
+
+  void callbackComScireButton(bool pressOpenMapsButton) {
+    setState(() {
+      print('reached');
+      this.pressANUButton = false;
+      this.pressCameraRNGButton = false;
+      this.pressComScireButton = true;
     });
   }
 
@@ -283,11 +316,11 @@ class LabOpenState extends State<LabOpen> {
                   children: [
                     Column(
                       children: [
-                        ButtonsRowMainPage('anomaly'),
+                        AnomalyButton(this.callbackAnomalyButton),
                         SizedBox(height: 7),
-                        ButtonsRowMainPage('attractor'),
+                        AttractorButton(this.callbackAttractorButton),
                         SizedBox(height: 7),
-                        ButtonsRowMainPage('void'),
+                        VoidButton(this.callbackVoidButton),
                       ],
                     ),
                     SizedBox(width: 10),
@@ -332,11 +365,11 @@ class LabOpenState extends State<LabOpen> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        ButtonsRowMainPage('1_point'),
+                        ANUButton(this.callbackANUButton),
                         SizedBox(height: 10),
-                        ButtonsRowMainPage('2_point'),
+                        CameraRNGButton(this.callbackCameraRNGButton),
                         SizedBox(height: 10),
-                        ButtonsRowMainPage('3_point'),
+                        ComScireButton(this.callbackComScireButton),
                       ],
                     ),
                   ],
@@ -349,46 +382,6 @@ class LabOpenState extends State<LabOpen> {
   void onAddMarkerButtonPressed() {
 
 
-  }
-
-//  void setSourceAndDestinationIcons() async {
-//    BitmapDescriptor.fromAssetImage(
-//        ImageConfiguration(devicePixelRatio: 2.0), 'assets/driving_pin.png')
-//        .then((onValue) {
-//      sourceIcon = onValue;
-//    });
-
-//    BitmapDescriptor.fromAssetImage(ImageConfiguration(devicePixelRatio: 2.0),
-//        'assets/destination_map_marker.png')
-//        .then((onValue) {
-//      destinationIcon = onValue;
-//    });
-//  }
-
-  void _onMarkerDragEnd(MarkerId markerId, LatLng newPosition) async {
-    final Marker tappedMarker = markers[markerId];
-    if (tappedMarker != null) {
-      await showDialog<void>(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-                actions: <Widget>[
-                  FlatButton(
-                    child: const Text('OK'),
-                    onPressed: () => Navigator.of(context).pop(),
-                  )
-                ],
-                content: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 66),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        Text('Old position: ${tappedMarker.position}'),
-                        Text('New position: $newPosition'),
-                      ],
-                    )));
-          });
-    }
   }
 
   void setInitialLocation() async {
@@ -412,146 +405,6 @@ class LabOpenState extends State<LabOpen> {
     controller = await _controller.future;
     controller.animateCamera(CameraUpdate.newCameraPosition(cPosition));
   }
-
-//  void _onMarkerTapped(MarkerId markerId) {
-//    final Marker tappedMarker = markers[markerId];
-//    if (tappedMarker != null) {
-//      setState(() {
-//        if (markers.containsKey(selectedMarker)) {
-//          final Marker resetOld = markers[selectedMarker]
-//              .copyWith(iconParam: BitmapDescriptor.defaultMarker);
-//          markers[selectedMarker] = resetOld;
-//        }
-//        selectedMarker = markerId;
-//        final Marker newMarker = tappedMarker.copyWith(
-//          iconParam: BitmapDescriptor.defaultMarkerWithHue(
-//            BitmapDescriptor.hueGreen,
-//          ),
-//        );
-//        markers[markerId] = newMarker;
-//      });
-//    }
-//  }
-
-//  void showPinsOnMap() {
-//    // get a LatLng for the source location
-//    // from the LocationData currentLocation object
-//    var pinPosition =
-//    LatLng(currentLocation.latitude, currentLocation.longitude);
-//    // get a LatLng out of the LocationData object
-//    var destPosition =
-//    LatLng(destinationLocation.latitude, destinationLocation.longitude);
-//
-//    sourcePinInfo = PinInformation(
-//        locationName: "Start Location",
-//        location: SOURCE_LOCATION,
-//        pinPath: "assets/driving_pin.png",
-//        avatarPath: "assets/friend1.jpg",
-//        labelColor: Colors.blueAccent);
-//
-//    destinationPinInfo = PinInformation(
-//        locationName: "End Location",
-//        location: DEST_LOCATION,
-//        pinPath: "assets/destination_map_marker.png",
-//        avatarPath: "assets/friend2.jpg",
-//        labelColor: Colors.purple);
-//
-//    // add the initial source location pin
-//    _markers.add(Marker(
-//        markerId: MarkerId('sourcePin'),
-//        position: pinPosition,
-//        onTap: () {
-//          setState(() {
-//            currentlySelectedPin = sourcePinInfo;
-//            pinPillPosition = 0;
-//          });
-//        },
-//        icon: sourceIcon));
-//    // destination pin
-//    _markers.add(Marker(
-//        markerId: MarkerId('destPin'),
-//        position: destPosition,
-//        onTap: () {
-//          setState(() {
-//            currentlySelectedPin = destinationPinInfo;
-//            pinPillPosition = 0;
-//          });
-//        },
-//        icon: destinationIcon));
-//    // set the route lines on the map from source to destination
-//    // for more info follow this tutorial
-//    // setPolylines();
-//  }
-
-//  void updatePinOnMap() async {
-//    // create a new CameraPosition instance
-//    // every time the location changes, so the camera
-//    // follows the pin as it moves with an animation
-//
-//
-//    // do this inside the setState() so Flutter gets notified
-//    // that a widget update is due
-//    setState(() {
-//      // updated position
-//      var pinPosition =
-//      LatLng(currentLocation.latitude, currentLocation.longitude);
-//
-//     // sourcePinInfo.location = pinPosition;
-//
-//      // the trick is to remove the marker (by id)
-//      // and add it again at the updated location
-//      _markers.removeWhere((m) => m.markerId.value == 'sourcePin');
-//      _markers.add(Marker(
-//          markerId: MarkerId('sourcePin'),
-//          onTap: () {
-//            setState(() {
-//           //   currentlySelectedPin = sourcePinInfo;
-//              pinPillPosition = 0;
-//            });
-//          },
-//          position: pinPosition, // updated position
-//          icon: sourceIcon));
-//    });
-//  }
-
-  addPulsatingEffect(LatLng userLatlng, int radius) {
-
-    int colorOutline = Colors.red.red;
-    int colorInner = 0x22FF0000;
-
-    final int finalColorOutline = colorOutline;
-    final int finalColorInner = colorInner;
-//    var controller =
-//        AnimationController(duration: const Duration(seconds: 2), vsync: this);
-//    lastPulseAnimator = valueAnimate(getDisplayPulseRadius(radius, map), RandonautFragment.pulseDuration, new ValueAnimator.AnimatorUpdateListener() {
-//    @Override
-//    public void onAnimationUpdate(ValueAnimator animation) {
-//    if (RandonautFragment.lastUserCircle != null)
-//    RandonautFragment.lastUserCircle.setRadius((Float) animation.getAnimatedValue());
-//    else {
-//    RandonautFragment.lastUserCircle = map.addCircle(new CircleOptions()
-//        .center(userLatlng)
-//        .radius(getDisplayPulseRadius((Float) animation.getAnimatedValue(), map))
-//        .strokeColor(finalColorOutline));
-//    //.fillColor(Color.BLUE));
-//    RandonautFragment.lastUserCircle.setFillColor(adjustAlpha(finalColorInner, 1 - animation.getAnimatedFraction()));
-//
-//
-//    }
-//    }
-//    });
-
-  }
-
-  adjustAlpha(int color, var factor) {
-    int alpha = (Color.getAlphaFromOpacity(color * factor)).round();
-    int red = Colors.red.red;
-    int green = Colors.green.green;
-    int blue = Colors.blue.blue;
-    return Color.fromARGB(alpha, red, green, blue);
-  }
-
-
 
 
 }
