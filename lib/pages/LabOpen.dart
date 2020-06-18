@@ -15,6 +15,8 @@ import 'package:app/models/UnloggedTrip.dart';
 import 'package:app/models/map_pin_pill.dart';
 import 'package:app/models/pin_pill_info.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:progress_dialog/progress_dialog.dart';
@@ -89,6 +91,9 @@ class LabOpenState extends State<LabOpen> {
   MarkerId selectedMarker;
   int _markerIdCounter = 1;
 
+  // For calling native iOS code
+  static const platform = const MethodChannel('com.randonautica.app');
+
   @override
   void initState() {
     super.initState();
@@ -123,6 +128,16 @@ class LabOpenState extends State<LabOpen> {
 
 
     });
+  }
+
+  // TODO: One day do away with Swift-implemented CamRNG and make it Fluttery
+  Future<void> _navToCamRNG(int bytesNeeded) async {
+    try {
+      // flutter->ios(swift) (used to load the TrueEntropy Camera RNG view controller)
+      await platform.invokeMethod('goToTrueEntropy', bytesNeeded);
+    } on PlatformException catch (e) {
+      print("Failed: '${e.message}'.");
+    }
   }
 
 //
@@ -289,6 +304,12 @@ class LabOpenState extends State<LabOpen> {
                         ButtonsRowMainPage('attractor'),
                         SizedBox(height: 7),
                         ButtonsRowMainPage('void'),
+                        SizedBox(height: 7),
+                        FlatButton( // TODO: choose proper place and button type for this
+                          child: Text('CAMRNG', style: TextStyle(color: Colors.white, fontSize: 18)),
+                          color: Color.fromARGB(255, 88, 136, 226),
+                          onPressed: () => { _navToCamRNG(100000) }
+                        )
                       ],
                     ),
                     SizedBox(width: 10),
