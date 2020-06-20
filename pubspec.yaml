@@ -40,9 +40,9 @@ dependencies:
   path_provider: ^1.6.10
   # for storing coordinates
   latlong: ^0.6.1
-  geolocator: ^5.1.5
-  google_maps_flutter: ^0.5.27+1
-  location: ^2.5.3
+  geolocator: ^5.3.2+2
+  google_maps_flutter: ^0.5.28+1
+  location: ^3.0.2
   share: ^0.6.4+3
   flutter_tags: "^0.4.8+2"
   image_picker: ^0.6.7+1
@@ -59,11 +59,11 @@ dependencies:
   sleek_circular_slider: ^1.1.0
   device_info: ^0.4.2+4
   sign_in_with_apple: ^2.5.0
-  onesignal_flutter: ^2.0.0
+  onesignal_flutter: ^2.5.0
 
   # for the Bot
-  webview_flutter: ^0.3.19+2
-  in_app_purchase: ^0.3.3+2
+  webview_flutter: ^0.3.22+1
+  in_app_purchase: ^0.3.4
   toast: ^0.1.5
 
 dev_dependencies:
