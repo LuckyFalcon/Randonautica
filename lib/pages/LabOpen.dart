@@ -132,16 +132,6 @@ class LabOpenState extends State<LabOpen> {
     });
   }
 
-  // TODO: One day do away with Swift-implemented CamRNG and make it Fluttery
-  Future<void> _navToCamRNG(int bytesNeeded) async {
-    try {
-      // flutter->ios(swift) (used to load the TrueEntropy Camera RNG view controller)
-      await platform.invokeMethod('goToTrueEntropy', bytesNeeded);
-    } on PlatformException catch (e) {
-      print("Failed: '${e.message}'.");
-    }
-  }
-
   void callbackOpenMaps(bool pressOpenMapsButton) {
     setState(() {
       this.pressOpenMapsButton = pressOpenMapsButton;
@@ -195,6 +185,17 @@ class LabOpenState extends State<LabOpen> {
       this.pressCameraRNGButton = true;
       this.pressComScireButton = false;
     });
+
+    openCameraRNGAsync();
+  }
+
+  Future<void> openCameraRNGAsync() async {
+    try {
+      // Flutter->ios(swift) (used to load the TrueEntropy Camera RNG view controller)
+      await platform.invokeMethod('goToTrueEntropy', 1000000 /* get real bytes needed somehow */);
+    } on PlatformException catch (e) {
+      print("Failed: '${e.message}'.");
+    }
   }
 
   void callbackComScireButton(bool pressOpenMapsButton) {
