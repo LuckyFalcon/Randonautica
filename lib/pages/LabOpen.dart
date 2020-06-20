@@ -333,10 +333,20 @@ class LabOpenState extends State<LabOpen> {
                     Column(
                       children: [
                         AnomalyButton(this.callbackAnomalyButton),
-                        SizedBox(height: 7),
+                        SizedBox(height: 10),
                         AttractorButton(this.callbackAttractorButton),
-                        SizedBox(height: 7),
+                        SizedBox(height: 10),
                         VoidButton(this.callbackVoidButton),
+                        FlatButton(
+                          child: Text('BOT', style: TextStyle(color: Colors.white, fontSize: 18)),
+                          color: Color.fromARGB(255, 88, 136, 226),
+                          onPressed: () => {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => BotWebView())
+                            )
+                          },
+                        )
                       ],
                     ),
                     SizedBox(width: 10),
