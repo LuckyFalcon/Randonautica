@@ -10,12 +10,7 @@ class profile extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       body: Container(
-          decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomRight,
-                  stops: [0, 100],
-                  colors: [Color(0xff5A87E4), Color(0xff37CDDC)])),
+
           child: Center(
             child: Column(
               children: <Widget>[
@@ -109,7 +104,5 @@ class profile extends StatelessWidget {
           )),
     );
   }
-
-//Functions
 
 }

@@ -59,6 +59,7 @@ dependencies:
   sleek_circular_slider: ^1.1.0
   device_info: ^0.4.2+4
   sign_in_with_apple: ^2.5.0
+  shared_preferences: ^0.5.7+3
 
 dev_dependencies:
   flutter_test:
@@ -99,6 +100,9 @@ flutter:
     - assets/img/tripplaceholder.png
     - assets/img/inboxicon.png
     - assets/audio/inceptionbutton.mp3
+    - assets/img/Warnings/Warning1.png
+    - assets/img/Warnings/Warning2.png
+    - assets/img/Warnings/Warning3.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

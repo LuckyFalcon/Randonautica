@@ -460,41 +460,6 @@ class RandonautState extends State<Randonaut> {
           icon: sourceIcon));
     });
   }
-
-  addPulsatingEffect(LatLng userLatlng, int radius) {
-    int colorOutline = Colors.red.red;
-    int colorInner = 0x22FF0000;
-
-    final int finalColorOutline = colorOutline;
-    final int finalColorInner = colorInner;
-//    var controller =
-//        AnimationController(duration: const Duration(seconds: 2), vsync: this);
-//    lastPulseAnimator = valueAnimate(getDisplayPulseRadius(radius, map), RandonautFragment.pulseDuration, new ValueAnimator.AnimatorUpdateListener() {
-//    @Override
-//    public void onAnimationUpdate(ValueAnimator animation) {
-//    if (RandonautFragment.lastUserCircle != null)
-//    RandonautFragment.lastUserCircle.setRadius((Float) animation.getAnimatedValue());
-//    else {
-//    RandonautFragment.lastUserCircle = map.addCircle(new CircleOptions()
-//        .center(userLatlng)
-//        .radius(getDisplayPulseRadius((Float) animation.getAnimatedValue(), map))
-//        .strokeColor(finalColorOutline));
-//    //.fillColor(Color.BLUE));
-//    RandonautFragment.lastUserCircle.setFillColor(adjustAlpha(finalColorInner, 1 - animation.getAnimatedFraction()));
-//
-//
-//    }
-//    }
-//    });
-  }
-
-  adjustAlpha(int color, var factor) {
-    int alpha = (Color.getAlphaFromOpacity(color * factor)).round();
-    int red = Colors.red.red;
-    int green = Colors.green.green;
-    int blue = Colors.blue.blue;
-    return Color.fromARGB(alpha, red, green, blue);
-  }
 }
 
 
