@@ -2,6 +2,7 @@ import 'package:app/pages/Feed/TripFeed.dart';
 import 'package:app/pages/Lab.dart';
 import 'package:app/pages/List/TripList.dart';
 import 'package:app/pages/Loading/WarningScreens.dart';
+import 'package:app/pages/Start/Loading.dart';
 import 'package:app/utils/size_config.dart';
 import 'components/TopBar.dart';
 import 'package:flutter/services.dart';
@@ -84,7 +85,10 @@ class Randonautica extends StatelessWidget {
             GlobalWidgetsLocalizations.delegate,
           ],
           //Home Page
-          home: WarningScreens())
+          home:
+        //    WarningScreens()
+        Loading()
+      )
           //Loading()),
     );
   }

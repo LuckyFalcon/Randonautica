@@ -44,6 +44,7 @@
   "ok_button": "Ok",
   "cancel_button": "Cancel",
   "recently_viewed_trips": "recently viewed trips",
+  "recently_reported_trips": "recently reported trips",
   "trip_title": "trip title",
   "empty_trip_title": "Enter the void",
   "empty_trip_list": "It looks like you haven't generated any points yet!",

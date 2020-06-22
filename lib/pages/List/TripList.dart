@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:app/components/SearchBar.dart';
-import 'package:app/components/TopBarTest.dart';
 import 'package:app/components/Trips/NoTripsFound.dart';
+import 'package:app/components/Trips/RecentlyViewedTrips.dart';
 import 'package:app/helpers/FadeRoute.dart';
 import 'package:app/helpers/storage/loggedTripsDatabase.dart';
 import 'package:app/helpers/storage/unloggedTripsDatabase.dart';
@@ -10,9 +10,10 @@ import 'package:app/models/LoggedTrip.dart';
 import 'package:app/models/UnloggedTrip.dart';
 import 'package:app/utils/size_config.dart';
 import 'package:flutter/material.dart';
+
 import '../../helpers/AppLocalizations.dart';
-import 'UnloggedTripDetails.dart';
 import 'LoggedTripDetails.dart';
+import 'UnloggedTripDetails.dart';
 
 class TripList extends StatefulWidget {
   TripList({Key key}) : super(key: key);
@@ -73,17 +74,14 @@ class TripListState extends State<TripList> {
   }
 
   void callback(bool labButtonPress) {
-    setState(() {
-
-
-    });
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return (unloggedTripsloaded && LoggedTripList
-        ? (unloggedTrips.length > 0 ||  _LoggedTripList.length > 0
+        ? (unloggedTrips.length > 0 || _LoggedTripList.length > 0
             ? Container(
                 height: SizeConfig.blockSizeVertical * 70,
                 width: SizeConfig.blockSizeHorizontal * 100,
@@ -104,35 +102,97 @@ class TripListState extends State<TripList> {
                                   padding: EdgeInsets.only(left: 20),
                                   child: Text(
                                       AppLocalizations.of(context)
-                                          .translate('your_trip_log')
+                                          .translate('recently_reported_trips')
                                           .toUpperCase(),
+                                      textAlign: TextAlign.center,
                                       style: TextStyle(
-                                          fontSize: 28,
+                                          fontSize: 14,
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold)))
                               : Container(
                                   padding: EdgeInsets.only(left: 20),
                                   child: Text(
                                       AppLocalizations.of(context)
-                                          .translate('your_trip_log')
+                                          .translate('recently_reported_trips')
                                           .toUpperCase(),
                                       textAlign: TextAlign.start,
                                       style: TextStyle(
                                           fontSize: 28,
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold)))),
+                          SizedBox(height: 10),
                           (_LoggedTripList.length > 0
-                              ? (ListView.separated(
+                              ? (RecentlyViewedTrips(_LoggedTripList))
+                              : Container(
+                                  padding: EdgeInsets.only(left: 20),
+                                  child: Text(
+                                      AppLocalizations.of(context)
+                                          .translate('empty_logged_trip_list')
+                                          .toUpperCase(),
+                                      style: TextStyle(
+                                          fontSize: 14, color: Colors.white)))),
+                          SizedBox(height: 25),
+//                          (_LoggedTripList.length > 0
+//                              ? Container(
+//                              padding: EdgeInsets.only(left: 20),
+//                              child: Text(
+//                                  AppLocalizations.of(context)
+//                                      .translate('favorite_trips')
+//                                      .toUpperCase(),
+//                                  textAlign: TextAlign.center,
+//                                  style: TextStyle(
+//                                      fontSize: 14,
+//                                      color: Colors.white,
+//                                      fontWeight: FontWeight.bold)))
+//                              : Container(
+//                              padding: EdgeInsets.only(left: 20),
+//                              child: Text(
+//                                  AppLocalizations.of(context)
+//                                      .translate('your_trip_log')
+//                                      .toUpperCase(),
+//                                  textAlign: TextAlign.start,
+//                                  style: TextStyle(
+//                                      fontSize: 28,
+//                                      color: Colors.white,
+//                                      fontWeight: FontWeight.bold)))),
+//                          SizedBox(height: 10),
+//                          (_LoggedTripList.length > 0
+//                              ? (TripRow())
+//                              : Container(
+//                              padding: EdgeInsets.only(left: 40),
+//                              child: Text(
+//                                  AppLocalizations.of(context)
+//                                      .translate('empty_logged_trip_list')
+//                                      .toUpperCase(),
+//                                  style: TextStyle(
+//                                      fontSize: 14, color: Colors.white)))),
+//                          SizedBox(height: 25),
+                          (_LoggedTripList.length > 0
+                              ? Container(
+                                  padding: EdgeInsets.only(left: 40),
+                                  child: Text(
+                                      AppLocalizations.of(context)
+                                          .translate('your_trip_log'),
+                                      style: TextStyle(
+                                          fontSize: 40,
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold)))
+                              : Container(
+                                  padding: EdgeInsets.only(left: 40),
+                                  child: Text(
+                                      AppLocalizations.of(context)
+                                          .translate('your_trip_log')
+                                          .toUpperCase(),
+                                      textAlign: TextAlign.start,
+                                      style: TextStyle(
+                                          fontSize: 40,
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold)))),
+                          SizedBox(height: 25),
+                          (_LoggedTripList.length > 0
+                              ? (ListView.builder(
+                                  padding: EdgeInsets.only(left: 30, right: 30),
                                   shrinkWrap: true,
-                                  separatorBuilder: (context, index) {
-                                    return Divider(
-                                      color: Colors.white,
-                                      height: 20,
-                                      thickness: 2,
-                                      indent: 20,
-                                      endIndent: 20,
-                                    );
-                                  },
                                   physics: ScrollPhysics(),
                                   itemCount: _LoggedTripList.length,
                                   itemBuilder:
@@ -186,9 +246,9 @@ class TripListState extends State<TripList> {
                               ? Divider(
                                   color: Colors.white,
                                   height: 20,
-                                  thickness: 2,
-                                  indent: 20,
-                                  endIndent: 20,
+                                  thickness: 5,
+                                  indent: 35,
+                                  endIndent: 30,
                                 )
                               : SizedBox(width: 10)),
                           SizedBox(height: 40),
@@ -204,17 +264,8 @@ class TripListState extends State<TripList> {
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold)))
                               : SizedBox(width: 10)),
-                          ListView.separated(
+                          ListView.builder(
                               shrinkWrap: true,
-                              separatorBuilder: (context, index) {
-                                return Divider(
-                                  color: Colors.white,
-                                  height: 20,
-                                  thickness: 2,
-                                  indent: 20,
-                                  endIndent: 20,
-                                );
-                              },
                               physics: ScrollPhysics(),
                               itemCount: unloggedTrips.length,
                               itemBuilder: (BuildContext context, int index) {
@@ -232,15 +283,15 @@ class TripListState extends State<TripList> {
                                   pseudo: unloggedTrips[index].pseudo,
                                 );
                               }),
-                          (unloggedTrips.length > 0
-                              ? Divider(
-                                  color: Colors.white,
-                                  height: 20,
-                                  thickness: 2,
-                                  indent: 20,
-                                  endIndent: 20,
-                                )
-                              : SizedBox(width: 10)),
+//                          (unloggedTrips.length > 0
+//                              ? Divider(
+//                                  color: Colors.white,
+//                                  height: 20,
+//                                  thickness: 2,
+//                                  indent: 20,
+//                                  endIndent: 20,
+//                                )
+//                              : SizedBox(width: 10)),
                         ],
                       ),
                     )
@@ -294,7 +345,7 @@ class listWidget extends StatelessWidget {
 
   listWidget(
       {Key key,
-        this.callback,
+      this.callback,
       this.id,
       this.gid,
       this.location,
@@ -338,21 +389,22 @@ class listWidget extends StatelessWidget {
           onPressed: () {
             Navigator.push(
               context,
-              FadeRoute(page: UnloggedTripDetails(
-                        this.callback,
-                        this.id,
-                        this.gid,
-                        this.location,
-                        this.datetime,
-                        this.latitude,
-                        this.longitude,
-                        this.radius,
-                        this.type,
-                        this.power,
-                        this.zScore,
-                        this.pseudo,
-                        this.report,
-                      )),
+              FadeRoute(
+                  page: UnloggedTripDetails(
+                this.callback,
+                this.id,
+                this.gid,
+                this.location,
+                this.datetime,
+                this.latitude,
+                this.longitude,
+                this.radius,
+                this.type,
+                this.power,
+                this.zScore,
+                this.pseudo,
+                this.report,
+              )),
             );
           }),
     ]));
@@ -397,103 +449,165 @@ class loggedListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return new Container(
-        alignment: FractionalOffset.centerLeft,
-        child: Row(children: [
-          imagelocation == null
-              ? Text(
-                  imagelocation,
-                  textAlign: TextAlign.center,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold, color: Colors.white),
-                )
-              : Image.file(File(imagelocation), width: 96, height: 96),
-          Column(
-            children: <Widget>[
-              Stack(
+        alignment: FractionalOffset.center,
+        child: Column(
+          children: <Widget>[
+            Container(
+              width: SizeConfig.blockSizeHorizontal * 100,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: Divider(
+                color: Colors.white,
+                height: 5,
+              ),
+            ),
+            Row(children: [
+              SizedBox(width: 10),
+              imagelocation == null
+                  ? Text(
+                      imagelocation,
+                      textAlign: TextAlign.center,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, color: Colors.white),
+                    )
+                  : Container(
+                      width: 80,
+                      height: 80,
+                      child: RaisedButton(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15.0),
+                        ),
+                        padding: EdgeInsets.zero,
+                        onPressed: () {},
+                        color: Colors.white,
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(15),
+                              image: DecorationImage(
+                                  image: FileImage(File(imagelocation)),
+                                  fit: BoxFit.cover),
+                              boxShadow: [
+                                BoxShadow(
+                                    blurRadius: 8,
+                                    offset: Offset(0, 15),
+                                    color: Colors.black.withOpacity(.6),
+                                    spreadRadius: -9)
+                              ]),
+                        ),
+                      )),
+              SizedBox(width: 10),
+              Column(
                 children: <Widget>[
-                  Card(
-                    elevation: 0,
-                    color: Colors.transparent,
-                    child: Container(
-                      height: 120,
-                      width: 300,
-                      child: Column(
-                        children: <Widget>[
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  Stack(
+                    children: <Widget>[
+                      Card(
+                        elevation: 0,
+                        color: Colors.transparent,
+                        child: Container(
+                          height: SizeConfig.blockSizeVertical * 10,
+                          width: SizeConfig.blockSizeHorizontal * 56,
+                          child: Column(
                             children: <Widget>[
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Align(
+                                    alignment: Alignment.topLeft,
+                                    child: Text(
+                                      'Trip title',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                  Align(
+                                    alignment: Alignment.bottomRight,
+                                    child: Text(
+                                      'Tuesday',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                ],
+                              ),
                               Align(
                                 alignment: Alignment.topLeft,
                                 child: Text(
-                                  'Day',
+                                  'Location',
                                   style: TextStyle(
-                                    color: Colors.white,
+                                    color: Colors.blue,
                                   ),
                                 ),
                               ),
-                              Align(
-                                alignment: Alignment.bottomRight,
-                                child: Text(
-                                  'Day',
-                                  style: TextStyle(
-                                    color: Colors.white,
+                              Row(
+                                children: <Widget>[
+                                  Expanded(
+                                    flex: 9,
+                                    child: Align(
+                                      alignment: Alignment.centerLeft,
+                                      child:
+                                      Flexible(
+                                        child: RichText(
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 2,
+                                          softWrap: true,
+                                          text: TextSpan(
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 12,
+                                              ),
+                                              text: 'Begining of the desciprtion of the trip, description.description descriptiondescriptiondescription',
+                                          ),
+                                        ),
+                                      ),
+                                    ),
                                   ),
-                                ),
-                              ),
+                                  Align(
+                                    alignment: Alignment.bottomRight,
+                                    child: IconButton(
+                                        icon: Icon(
+                                          Icons.arrow_forward_ios,
+                                          color: Colors.white,
+                                          size: 24.0,
+                                          semanticLabel:
+                                              'Text to announce in accessibility modes',
+                                        ),
+                                        tooltip: 'Increase volume by 10',
+                                        onPressed: () {
+                                          Navigator.push(
+                                            context,
+                                            FadeRoute(
+                                                page: LoggedTripDetails(
+                                                    this.location,
+                                                    this.datetime,
+                                                    this.title,
+                                                    this.imagelocation,
+                                                    this.text,
+                                                    this.tagList)),
+                                          );
+                                        }),
+                                  ),
+                                ],
+                              )
                             ],
                           ),
-                          Align(
-                            alignment: Alignment.topLeft,
-                            child: Text(
-                              'Day',
-                              style: TextStyle(
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                          Align(
-                            alignment: Alignment.topLeft,
-                            child: Text(
-                              'Begining of the desciprtion of the trip, description. I love u Steve',
-                              style: TextStyle(
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                          Align(
-                            alignment: Alignment.bottomRight,
-                            child: IconButton(
-                                icon: Icon(
-                                  Icons.arrow_forward_ios,
-                                  color: Colors.white,
-                                  size: 24.0,
-                                  semanticLabel:
-                                      'Text to announce in accessibility modes',
-                                ),
-                                tooltip: 'Increase volume by 10',
-                                onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    FadeRoute(page: LoggedTripDetails(
-                                            this.location,
-                                            this.datetime,
-                                            this.title,
-                                            this.imagelocation,
-                                            this.text,
-                                            this.tagList)),
-                                  );
-                                }),
-                          ),
-                        ],
+                        ),
                       ),
-                    ),
-                  ),
+                    ],
+                  )
                 ],
-              )
-            ],
-          ),
-        ]));
+              ),
+            ])
+          ],
+        ));
   }
 }

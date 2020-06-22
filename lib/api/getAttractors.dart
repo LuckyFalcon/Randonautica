@@ -21,6 +21,7 @@ Future<Attractors> fetchAttractors(int radius, double x, double y) async {
       'Authorization': 'Bearer $token',
       },
   );
+  print(response);
   if (response.statusCode == 200) {
     return Attractors.fromJson(json.decode(response.body));
   } else {
