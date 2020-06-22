@@ -26,6 +26,7 @@ import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:progress_dialog/progress_dialog.dart';
+import 'dart:io' show Platform;
 
 
 const double CAMERA_TILT = 0;
@@ -191,8 +192,14 @@ class LabOpenState extends State<LabOpen> {
 
   Future<void> openCameraRNGAsync() async {
     try {
-      // Flutter->ios(swift) (used to load the TrueEntropy Camera RNG view controller)
-      await platform.invokeMethod('goToTrueEntropy', 1000000 /* get real bytes needed somehow */);
+      if (Platform.isAndroid) {
+        // Flutter->iOS (Swift) (used to load the a camrng implementation done with vault12's TrueEntropy - https://github.com/vault12/TrueEntropy)
+        await platform.invokeMethod('goToTrueEntropy', 3000 /* TODO: get real radius somehow */);
+      } else if (Platform.isIOS) {
+        // Flutter->Android (Java/Kotlin) (used to load an implementation of awasisto's camrng - https://github.com/awasisto/camrng/)
+        await platform.invokeMethod('gotoCameraRNG', 3000 /* TODO: get real radius somehow */);
+      }
+
     } on PlatformException catch (e) {
       print("Failed: '${e.message}'.");
     }
