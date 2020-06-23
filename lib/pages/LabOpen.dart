@@ -194,10 +194,10 @@ class LabOpenState extends State<LabOpen> {
     try {
       if (Platform.isAndroid) {
         // Flutter->iOS (Swift) (used to load the a camrng implementation done with vault12's TrueEntropy - https://github.com/vault12/TrueEntropy)
-        await platform.invokeMethod('goToTrueEntropy', 3000 /* TODO: get real radius somehow */);
+        await platform.invokeMethod('gotoCameraRNG', 3000 /* TODO: get real radius somehow */);
       } else if (Platform.isIOS) {
         // Flutter->Android (Java/Kotlin) (used to load an implementation of awasisto's camrng - https://github.com/awasisto/camrng/)
-        await platform.invokeMethod('gotoCameraRNG', 3000 /* TODO: get real radius somehow */);
+        await platform.invokeMethod('goToTrueEntropy', 3000 /* TODO: get real radius somehow */);
       }
 
     } on PlatformException catch (e) {
