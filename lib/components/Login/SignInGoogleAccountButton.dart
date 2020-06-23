@@ -61,10 +61,27 @@ class _SignInGoogleAccountButtonState extends State<SignInGoogleAccountButton> {
 
     final FirebaseUser currentUser = await _auth.currentUser();
     assert(user.uid == currentUser.uid);
+    var token = await currentUser.getIdToken();
+    print('usertoken: '+ token.token);
+    print('usertoken: '+ token.toString());
 
+    signBackendGoogle(token.token.toString());
+
+    print('useruuid: '+ currentUser.uid.toString());
     print('user: $user');
     return 'signInWithGoogle succeeded: $user';
   }
+
+  Future<String>signBackendGoogle(token) async {
+    final response = await http.get("http://192.168.1.217:8080/userBasedFunc", headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token',
+    });
+    print(response.toString());
+    return response.toString();
+  }
+
 
   void signOutGoogle() async {
     await googleSignIn.signOut();

@@ -14,6 +14,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:location_permissions/location_permissions.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:upgrader/upgrader.dart';
 
 import 'dart:io';
@@ -38,6 +39,10 @@ class Loading extends StatefulWidget {
 class _LoadingState extends State<Loading> {
   GoogleSignInAccount _currentUser;
   FirebaseAuth _auth = FirebaseAuth.instance;
+
+  //Set SharedPreferences
+  Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+
 
   var APP_STORE_URL =
       'https://phobos.apple.com/WebObjects/MZStore.woa/wa/viewSoftwareUpdate?id=YOUR-APP-ID&mt=8';
@@ -156,7 +161,19 @@ class _LoadingState extends State<Loading> {
   }
 
   Future getCurrentUser() async {
+    //Await SharedPreferences future object
+    final SharedPreferences prefs = await _prefs;
+
+    //Get current user
     FirebaseUser _user = await FirebaseAuth.instance.currentUser();
+
+    //Recieve token from user
+    var token = await _user.getIdToken();
+
+    print('usertoken: '+ token.token);
+
+    await prefs.setString("authToken", token.token);
+
     return _user;
   }
 
