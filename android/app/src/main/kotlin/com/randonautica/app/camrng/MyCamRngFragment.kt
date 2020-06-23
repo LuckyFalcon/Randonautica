@@ -1,4 +1,4 @@
-package com.randonautica.app
+package com.randonautica.app.camrng
 
 import android.Manifest
 import android.annotation.TargetApi
@@ -19,7 +19,8 @@ import android.view.animation.Animation
 import android.view.animation.LinearInterpolator
 import android.view.animation.RotateAnimation
 import androidx.annotation.RequiresApi
-import com.randonautica.app.Classes.NoiseBasedCamRng
+import com.randonautica.app.R
+import com.randonautica.app.camrng.NoiseBasedCamRng
 import kotlinx.android.synthetic.main.dialog_camrng.view.*
 
 class MyCamRngFragment : Fragment(), SurfaceHolder.Callback, Handler.Callback {
@@ -183,7 +184,6 @@ class MyCamRngFragment : Fragment(), SurfaceHolder.Callback, Handler.Callback {
         } catch (e: ClassCastException) {
             throw ClassCastException("Error in retrieving data. Please try again")
         }
-
     }
     override fun onPause() {
         super.onPause()

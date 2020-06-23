@@ -20,7 +20,7 @@
  * SOFTWARE.
  */
 
-package com.randonautica.app.Classes
+package com.randonautica.app.camrng
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -28,11 +28,10 @@ import android.graphics.BitmapFactory
 import android.graphics.ImageFormat
 import android.hardware.camera2.*
 import android.media.ImageReader
-import android.os.Build
 import android.os.Handler
 import android.os.HandlerThread
 import android.util.Size
-import com.randonautica.app.MyCamRngFragment.Companion.mCameraSurface
+import com.randonautica.app.camrng.MyCamRngFragment.Companion.mCameraSurface
 import io.reactivex.processors.MulticastProcessor
 import java.util.concurrent.CountDownLatch
 import kotlin.random.Random

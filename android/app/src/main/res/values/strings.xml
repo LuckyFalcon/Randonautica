@@ -9,5 +9,6 @@
     <string name="entropy_generated">ENTROPY GENERATED</string>
     <string name="entropy_needed">ENTROPY NEEDED</string>
     <string name="amount_of_pixels">AMOUNT OF PIXELS</string>
+    <string name="cancel_button">Cancel</string>
 
 </resources>

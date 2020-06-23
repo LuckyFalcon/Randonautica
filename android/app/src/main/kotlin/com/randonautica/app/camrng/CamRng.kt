@@ -20,7 +20,7 @@
  * SOFTWARE.
  */
 
-package com.randonautica.app.Classes
+package com.randonautica.app.camrng
 
 import io.reactivex.Flowable
 import io.reactivex.Single

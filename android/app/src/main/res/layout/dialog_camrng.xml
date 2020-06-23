@@ -16,7 +16,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.randonautica.app.Classes.CircleOverlayView
+    <com.randonautica.app.camrng.CircleOverlayView
         android:id="@+id/cicleOverlay"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -28,7 +28,7 @@
         app:layout_constraintWidth_default="percent"
         app:layout_constraintWidth_percent="1">
 
-    </com.randonautica.app.Classes.CircleOverlayView>
+    </com.randonautica.app.camrng.CircleOverlayView>
 
     <ImageView
         android:interpolator="@android:anim/linear_interpolator"

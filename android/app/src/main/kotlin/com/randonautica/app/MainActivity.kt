@@ -4,13 +4,11 @@ import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
 
-import android.content.Context
-import android.content.ContextWrapper
 import android.content.Intent
-import android.content.IntentFilter
-import android.widget.Toast
 
 import androidx.annotation.NonNull
+
+import com.randonautica.app.camrng.CamRNGActivity;
 
 class MainActivity: FlutterActivity() {
     private val CHANNEL = "com.randonautica.app"
@@ -26,7 +24,7 @@ class MainActivity: FlutterActivity() {
     }
 
     private fun gotoCameraRNG() {
-        val intent = Intent(this, SecondActivity::class.java)
+        val intent = Intent(this, CamRNGActivity::class.java)
         startActivity(intent)
     }
 }
