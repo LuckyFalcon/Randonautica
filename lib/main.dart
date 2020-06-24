@@ -1,16 +1,16 @@
 import 'package:app/pages/Feed/TripFeed.dart';
 import 'package:app/pages/Lab.dart';
 import 'package:app/pages/List/TripList.dart';
-import 'package:app/pages/Loading/WarningScreens.dart';
 import 'package:app/pages/Start/Loading.dart';
 import 'package:app/utils/size_config.dart';
-import 'components/TopBar.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
+
 import 'components/BottomBar.dart';
+import 'components/TopBar.dart';
 import 'helpers/AppLocalizations.dart';
 import 'pages/Randonaut.dart';
 import 'utils/BackgroundColor.dart' as backgrounds;
@@ -48,49 +48,48 @@ class Randonautica extends StatelessWidget {
     final initialPlatform = TargetPlatform.iOS;
 
     return PlatformProvider(
-      //Uncomment this to set the platform manually
-      initialPlatform: initialPlatform,
-      settings: PlatformSettingsData(
-        platformStyle: PlatformStyleData(
-          android: PlatformStyle.Cupertino,
+        //Uncomment this to set the platform manually
+        initialPlatform: initialPlatform,
+        settings: PlatformSettingsData(
+          platformStyle: PlatformStyleData(
+            android: PlatformStyle.Cupertino,
+          ),
         ),
-      ),
-      builder: (context) => PlatformApp(
+        builder: (context) => PlatformApp(
 
-          //Title
-          title: 'Randonautica',
+            //Title
+            title: 'Randonautica',
 
-          //Theme Data
-          android: (_) {
-            return new MaterialAppData(
-              theme: materialTheme,
-              darkTheme: materialDarkTheme,
-              themeMode: brightness == Brightness.light
-                  ? ThemeMode.light
-                  : ThemeMode.dark,
-            );
-          },
-          ios: (_) => new CupertinoAppData(
-                theme: cupertinoTheme,
-              ),
+            //Theme Data
+            android: (_) {
+              return new MaterialAppData(
+                theme: materialTheme,
+                darkTheme: materialDarkTheme,
+                themeMode: brightness == Brightness.light
+                    ? ThemeMode.light
+                    : ThemeMode.dark,
+              );
+            },
+            ios: (_) => new CupertinoAppData(
+                  theme: cupertinoTheme,
+                ),
 
-          //Localizations
-          supportedLocales: [
-            Locale('en', 'US'),
-            Locale('jp', ''),
-          ],
-          localizationsDelegates: [
-            AppLocalizations.delegate,
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-          ],
-          //Home Page
-          home:
-        //    WarningScreens()
-        Loading()
-      )
-          //Loading()),
-    );
+            //Localizations
+            supportedLocales: [
+              Locale('en', 'US'),
+              Locale('jp', ''),
+            ],
+            localizationsDelegates: [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+            ],
+            //Home Page
+            home:
+                //    WarningScreens()
+                Loading())
+        //Loading()),
+        );
   }
 }
 
@@ -104,31 +103,51 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   /// TODO Check if this is legit: https://stackoverflow.com/questions/56639529/duplicate-class-com-google-common-util-concurrent-listenablefuture-found-in-modu
   int selectedNavigationIndex = 0;
+  int selectedNavigation = 0;
 
   final GlobalKey<TripListState> _TripListKey = GlobalKey();
+
+  List<Widget> pageList = List<Widget>();
+
+  bool openlab = false;
 
   @override
   void initState() {
     super.initState();
   }
 
+
   void selectedNavigationIndexCallback(int selectedNavigationIndex) {
     setState(() {
       this.selectedNavigationIndex = selectedNavigationIndex;
+      if(selectedNavigationIndex == 3 && openlab == true){  //Check if lab is open
+        selectedNavigation = 0;
+      } else {
+        selectedNavigation = selectedNavigationIndex;
+      }
     });
   }
 
-  void updateListStateCallback() {
+  void updateStateCallback() {
     _TripListKey.currentState.updateState();
+
+    setState(() {
+
+    });
+  }
+
+  void openLabCallback(bool labOpen) {
+      setState(() {
+        openlab = true;
+        this.selectedNavigation = 0;
+      });
   }
 
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       extendBodyBehindAppBar: true,
@@ -143,12 +162,13 @@ class _HomePageState extends State<HomePage> {
             TopBar(),
             IndexedStack(
               children: <Widget>[
-                Randonaut(this.updateListStateCallback),
+                Randonaut(this.updateStateCallback, selectedNavigationIndex),
                 TripFeed(),
                 TripList(key: _TripListKey),
-                Lab(),
+                Lab(this.openLabCallback),
+
               ],
-              index: selectedNavigationIndex,
+              index: selectedNavigation,
             ),
             BottomBar(
                 this.selectedNavigationIndexCallback, selectedNavigationIndex),

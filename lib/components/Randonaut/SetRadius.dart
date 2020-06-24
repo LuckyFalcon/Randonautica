@@ -11,11 +11,22 @@ class SetRadius extends StatefulWidget {
 
 class _SetRadius extends State<SetRadius> {
 
+  var radius = 3;
+
   @override
   void initState() {
     super.initState();
     
   }
+
+  void setRadiusCallback(String radiusInput) {
+    setState(() {
+      radius = int.tryParse(radiusInput);
+      print(radius);
+    });
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -28,18 +39,17 @@ class _SetRadius extends State<SetRadius> {
               AppLocalizations.of(context).translate('radius').toUpperCase(),
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white)),
           Text(
-            '20',
+              radius.toString(),
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 46, color: Colors.white)),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-
             children: <Widget>[
               Text(
                   AppLocalizations.of(context).translate('miles').toUpperCase(),
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white)),
               GestureDetector(
                 onTap: () {
-                  setRadiusDialog(context);
+                  setRadiusDialog(context, this.setRadiusCallback);
                 },
                 child: Icon(
                   Icons.create,

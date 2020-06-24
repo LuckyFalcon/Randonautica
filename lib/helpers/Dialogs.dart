@@ -157,7 +157,8 @@ setSliderDialog(BuildContext context) {
   });
 }
 
-setRadiusDialog(BuildContext context) {
+setRadiusDialog(BuildContext context, callback) {
+  var _radiusInputController = TextEditingController();
 
   showDialog(
       context: context,
@@ -170,9 +171,13 @@ setRadiusDialog(BuildContext context) {
             AppLocalizations.of(context).translate('change_radius_dialog_text'),
           ),
           actions: <Widget>[
-            RadiusInput(),
+            CupertinoTextField(placeholder: AppLocalizations.of(context).translate('radius_initial_text'), controller: _radiusInputController),
             CupertinoDialogAction(
               isDefaultAction: true,
+              onPressed: () {
+                Navigator.pop(context);
+                callback(_radiusInputController.text);
+              },
               child: Text(
                 AppLocalizations.of(context).translate('ok_button'),
               ),

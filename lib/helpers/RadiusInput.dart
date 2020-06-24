@@ -3,13 +3,13 @@ import 'package:flutter/widgets.dart';
 import 'AppLocalizations.dart';
 
 class RadiusInput extends StatefulWidget {
-
+  Function callback;
   @override
   RadiusInputState createState() => RadiusInputState();
 }
 
 class RadiusInputState extends State<RadiusInput> {
-  TextEditingController _radiusInputController;
+  var _radiusInputController = TextEditingController();
 
   @override
   void initState() {

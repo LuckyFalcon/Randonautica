@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
 import '../../helpers/AppLocalizations.dart';
 
 class SetWaterPoints extends StatefulWidget {
@@ -12,6 +13,17 @@ class _SetWater extends State<SetWaterPoints> {
   @override
   void initState() {
     super.initState();
+  }
+
+  void setWaterPointsEnabled() {
+    setState(() {
+      if(waterPointsEnabled){
+        waterPointsEnabled = false;
+      } else {
+        ///Check if WaterPoints bought
+        waterPointsEnabled = true;
+      }
+    });
   }
 
   @override
@@ -27,18 +39,32 @@ class _SetWater extends State<SetWaterPoints> {
                     fontSize: 20,
                     color: Colors.white)),
             (waterPointsEnabled
-                ? Text(
-                    AppLocalizations.of(context).translate('on').toUpperCase(),
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 46,
-                        color: Colors.white))
-                : Text(
-                    AppLocalizations.of(context).translate('off').toUpperCase(),
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 46,
-                        color: Color(0xff64E4FF)))),
+                ? GestureDetector(
+                    onTap: () {
+                      setWaterPointsEnabled();
+                    },
+                    child: Text(
+                        AppLocalizations.of(context)
+                            .translate('on')
+                            .toUpperCase(),
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 46,
+                            color: Colors.white)),
+                  )
+                : GestureDetector(
+                    onTap: () {
+                      setWaterPointsEnabled();
+                    },
+                    child: Text(
+                        AppLocalizations.of(context)
+                            .translate('off')
+                            .toUpperCase(),
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 46,
+                            color: Color(0xff64E4FF))),
+                  )),
             Text(AppLocalizations.of(context).translate('points').toUpperCase(),
                 style: TextStyle(
                     fontWeight: FontWeight.bold,

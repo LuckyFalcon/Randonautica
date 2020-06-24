@@ -1,27 +1,23 @@
-///This file was used to get the RandonautMap part in here.
-///However it was easier to get it to be on the page so there's no callback h
-
 //import 'dart:async';
-//import 'dart:convert';
 //
-//import 'dart:math';
-//import 'package:achievement_view/achievement_view.dart';
+//import 'package:app/components/Randonaut/ButtonGoMainPage.dart';
+//import 'package:app/components/Randonaut/LoadingPoints.dart';
+//
+//
+//import 'package:app/helpers/FadeRoute.dart';
+//import 'package:app/helpers/OpenGoogleMaps.dart';
+//import 'package:app/helpers/storage/unloggedTripsDatabase.dart';
+//import 'package:app/models/Attractors.dart';
+//import 'package:app/models/UnloggedTrip.dart';
 //import 'package:app/models/map_pin_pill.dart';
 //import 'package:app/models/pin_pill_info.dart';
+//import 'package:app/utils/size_config.dart';
+//import 'package:flutter/cupertino.dart';
 //import 'package:flutter/material.dart';
-//import 'package:flutter_polyline_points/flutter_polyline_points.dart';
-//import 'package:geolocator/geolocator.dart' as geo;
 //import 'package:geolocator/geolocator.dart';
 //import 'package:google_maps_flutter/google_maps_flutter.dart';
-
-
-
 //import 'package:location/location.dart';
-//import 'package:http/http.dart' as http;
 //
-//
-//
-//const double CAMERA_ZOOM = 16;
 //const double CAMERA_TILT = 0;
 //const double CAMERA_BEARING = 0;
 //const LatLng SOURCE_LOCATION = LatLng(42.747932, -71.167889);
@@ -29,24 +25,29 @@
 //
 //class RandonautMap extends StatefulWidget {
 //
-//  RandonautMapState myAppState=new RandonautMapState();
-//
+//  const RandonautMap(this.callback, {Key key}) : super(key: key);  // NEW CONSTRUCTOR
+//  final Function callback;
 //  @override
 //  State<RandonautMap> createState() => RandonautMapState();
-//
-//  void onAddMarkerButtonPressed() {
-//    myAppState._onAddMarkerButtonPressed();
-//  }
-//
 //}
 //
 //class RandonautMapState extends State<RandonautMap> {
-//  LatLng pinPosition = LatLng(37.422, -122.084);
+//  ///Buttons
+//  bool pointsSucesfullyGenerated = false;
+//  bool pressOpenMapsButton = false;
+//  bool pressStartOverButton = false;
+//
+//  double CAMERA_ZOOM = 16;
+//  CameraPosition initialCameraPosition;
+//
+//  ///Attractor points
+//  LatLng attractorCoordinates;
 //
 //  BitmapDescriptor pinLocationIcon;
 //
 //  //Map controller
 //  Completer<GoogleMapController> _controller = Completer();
+//  GoogleMapController controller;
 //
 //  //Markers
 //  Set<Marker> _markers = Set<Marker>();
@@ -54,7 +55,7 @@
 //  // for my drawn routes on the map (Polyline)
 //  Set<Polyline> _polylines = Set<Polyline>();
 //  List<LatLng> polylineCoordinates = [];
-//  PolylinePoints polylinePoints;
+////  PolylinePoints polylinePoints;
 //
 //  // for my custom marker pins
 //  BitmapDescriptor sourceIcon;
@@ -91,15 +92,13 @@
 //  MarkerId selectedMarker;
 //  int _markerIdCounter = 1;
 //
-//  static final LatLng center = const LatLng(37.422, -122.084);
-//
 //  @override
 //  void initState() {
 //    super.initState();
 //
 //    // create an instance of Location
 //    location = new Location();
-//    polylinePoints = PolylinePoints();
+//    // polylinePoints = PolylinePoints();
 //
 //    // subscribe to changes in the user's location
 //    // by "listening" to the location's onLocationChanged event
@@ -114,11 +113,86 @@
 //    setSourceAndDestinationIcons();
 //    // set the initial location
 //    setInitialLocation();
+//
+//    print('reachedcreating');
+//  }
+//
+//  void callback(bool pressGoButton) {
+//    setState(() {
+//      onAddMarkerButtonPressed();
+//    });
+//  }
+//
+//  void callbackOpenMaps(bool pressOpenMapsButton) {
+//    setState(() {
+//      this.pressOpenMapsButton = pressOpenMapsButton;
+//      MapUtils.openMap(attractorCoordinates.latitude, attractorCoordinates.longitude);
+//    });
+//  }
+//
+//  void callbackStartOver(bool pressStartOverButton) {
+//    setState(() {
+//      this.pressStartOverButton = pressOpenMapsButton;
+//      pointsSucesfullyGenerated = false;
+//      _markers = {};
+//    });
+//  }
+//
+//  void callbackLoadingPoints(Attractors attractors) async {
+//    this.pointsSucesfullyGenerated = true;
+//    attractorCoordinates = new LatLng(
+//        attractors.points[0].center.point.latitude,
+//        attractors.points[0].center.point.longitude);
+//
+//    ///Todo add localidentifier as optional as it doesn't pick it up somehow
+//    ///https://pub.dev/packages/geolocator
+//    var location = await Geolocator().placemarkFromCoordinates(
+//        attractors.points[0].center.point.latitude,
+//        attractors.points[0].center.point.longitude,
+//        localeIdentifier: "fi_FI"
+//
+//      ///Locale for Local GeoLocator
+//    );
+//
+//    //Log trips
+//    final fido = UnloggedTrip(
+//      gid: attractors.points[0].gID.toString(),
+//      location: location[0].administrativeArea.toString(),
+//      datetime: DateTime.now().toIso8601String(),
+//      latitude: attractorCoordinates.latitude.toString(),
+//      longitude: attractorCoordinates.longitude.toString(),
+//      radius: attractors.points[0].radiusM.toString(),
+//      type: attractors.points[0].type.toString(),
+//      power: attractors.points[0].radiusM.toString(),
+//      zScore: attractors.points[0].zScore.toString(),
+//      pseudo: 0.toString(),
+//      report: 0.toString(),
+//    );
+//    await insertUnloggedTrip(fido);
+//    setState(() {
+//      controller.moveCamera(CameraUpdate.newLatLngZoom(
+//          LatLng(attractorCoordinates.latitude, attractorCoordinates.longitude),
+//          10));
+//
+//      //CAMERA_ZOOM = 1; //Change zoom
+//      _markers.add(Marker(
+//        // This marker id can be anything that uniquely identifies each marker.
+//        markerId: MarkerId(attractorCoordinates.toString()),
+//        position: attractorCoordinates,
+//        infoWindow: InfoWindow(
+//          title: 'Really cool place',
+//          snippet: '5 Star Rating',
+//        ),
+//        icon: BitmapDescriptor.defaultMarker,
+//      ));
+//
+//      //this.widget.callback();
+//    });
 //  }
 //
 //  @override
 //  Widget build(BuildContext context) {
-//    CameraPosition initialCameraPosition = CameraPosition(
+//    initialCameraPosition = CameraPosition(
 //        zoom: CAMERA_ZOOM,
 //        tilt: CAMERA_TILT,
 //        bearing: CAMERA_BEARING,
@@ -130,95 +204,72 @@
 //          tilt: CAMERA_TILT,
 //          bearing: CAMERA_BEARING);
 //    }
-//    return  Container(
-//      decoration: BoxDecoration(
-//        borderRadius: BorderRadius.all(Radius.circular(30.0)),
-//        border: Border.all(width: 15, color: Colors.white),
-//        boxShadow: [
-//          BoxShadow(
-//            ///CAST SHADOW ON BORDER
-//            color: Colors.black.withOpacity(0.2),
-//            spreadRadius: 4,
-//            blurRadius: 10,
-//            offset: Offset(0, 6), // changes position of shadow
-//          ),
-//        ],
-//      ),
-//      child: ClipRRect(
-//        borderRadius: BorderRadius.all(Radius.circular(15.0)),
-//        child: Stack(
-//          children: <Widget>[
-//            GoogleMap(
-//                myLocationEnabled: true,
-//                compassEnabled: true,
-//                tiltGesturesEnabled: false,
-//                markers: _markers,
-//                polylines: _polylines,
-//                mapType: MapType.normal,
-//                initialCameraPosition: initialCameraPosition,
-//                onTap: (LatLng loc) {
-//                  pinPillPosition = -100;
-//                },
 //
-//                onMapCreated: (GoogleMapController controller) {
-//                  //Change this to change styles
-//                  // controller.setMapStyle(Utils.DarkStyle);
-//                  _controller.complete(controller);
-//                  //     this.widget.callback(_onAddMarkerButtonPressed());
-//                  // my map has completed being created;
-//                  //     _onAddMarkerButtonPressed();
-//                  // i'm ready to show the pins on the map
-//                  // showPinsOnMap();
-//                }),
-//            MapPinPillComponent(
-//                pinPillPosition: pinPillPosition,
-//                currentlySelectedPin: currentlySelectedPin),
-//          ],
-//        ),
-//      ),
-//      height: 500,
-//      width: 500,
-//    );
+//    SizeConfig().init(context);
+//    return Container(
+//          height: SizeConfig.blockSizeVertical * 60,
+//
+//          ///This is 70% of the Vertical / Height for this container in this class
+//          width: SizeConfig.blockSizeHorizontal * 80,
+//
+//          ///This is 80% of the Horizontal / Width for this container in this class
+//          child: Stack(
+//            children: <Widget>[
+//              Container(
+//                height: SizeConfig.blockSizeVertical * 58,
+//                ///This is 70% of the Vertical / Height for this container in this class
+//                decoration: BoxDecoration(
+//                  borderRadius: BorderRadius.all(Radius.circular(30.0)),
+//                  border: Border.all(width: 15, color: Colors.white),
+//                  boxShadow: [
+//                    BoxShadow(
+//                      color: Colors.black.withOpacity(0.2),
+//                      spreadRadius: 4,
+//                      blurRadius: 10,
+//                      offset: Offset(0, 6), // changes position of shadow
+//                    ),
+//                  ],
+//                ),
+//                child: ClipRRect(
+//                  borderRadius: BorderRadius.all(Radius.circular(15.0)),
+//                  child: Stack(
+//                    children: <Widget>[
+//                      GoogleMap(
+//                          mapToolbarEnabled: false,
+//                          myLocationEnabled: true,
+//                          compassEnabled: true,
+//                          tiltGesturesEnabled: false,
+//                          markers: _markers,
+//                          polylines: _polylines,
+//                          mapType: MapType.normal,
+//                          initialCameraPosition: initialCameraPosition,
+//                          onTap: (LatLng loc) {
+//                            pinPillPosition = -100;
+//                          },
+//                          onMapCreated: (GoogleMapController controller) {
+//                            //Change this to change styles
+//                            // controller.setMapStyle(Utils.DarkStyle);
+//                            _controller.complete(controller);
+//                          }),
+//                      MapPinPillComponent(
+//                          pinPillPosition: pinPillPosition,
+//                          currentlySelectedPin: currentlySelectedPin),
+//                    ],
+//                  ),
+//                ),
+//              ),
+//              Align(
+//                  alignment: Alignment.bottomCenter,
+//                  child:
+//                  (pointsSucesfullyGenerated ? SizedBox(height: 0) : ButtonGoMainPage(this.callback, pointsSucesfullyGenerated))
+//              )
+//            ],
+//          ),
+//        );
 //  }
 //
-//  void _onAddMarkerButtonPressed() {
-//    print("test");
-////    setState(() {
-//      _markers.add(Marker(
-//        // This marker id can be anything that uniquely identifies each marker.
-//        markerId: MarkerId(center.toString()),
-//        position: LatLng(center.latitude, center.longitude),
-//        infoWindow: InfoWindow(
-//          title: 'Really cool place',
-//          snippet: '5 Star Rating',
-//        ),
-//        icon: BitmapDescriptor.defaultMarker,
-//      ));
-////    });
-//    var future = storeUnloggedTrips();
-//    future.then((value) {
-//      setState(() {
-//        var future = fetchAttractors(
-//            3000, centercoordinates.latitude, centercoordinates.longitude);
-//        future.then((value) {
-//          final LatLng attractorCoordinates = new LatLng(
-//              value.points[0].center.point.latitude,
-//              value.points[0].center.point.longitude);
-//
-//          //CAMERA_ZOOM = 1; //Change zoom
-//          _markers.add(Marker(
-//            // This marker id can be anything that uniquely identifies each marker.
-//            markerId: MarkerId(attractorCoordinates.toString()),
-//            position: attractorCoordinates,
-//            infoWindow: InfoWindow(
-//              title: 'Really cool place',
-//              snippet: '5 Star Rating',
-//            ),
-//            icon: BitmapDescriptor.defaultMarker,
-//          ));
-//        });
-//      });
-//    });
+//  void onAddMarkerButtonPressed() async {
+//    Navigator.push(context, FadeRoute(page: LoadingPoints(callbackLoadingPoints, 3000, currentLocation)));
 //  }
 //
 //  void setSourceAndDestinationIcons() async {
@@ -235,34 +286,6 @@
 //    });
 //  }
 //
-//  void _onMarkerDragEnd(MarkerId markerId, LatLng newPosition) async {
-//    final Marker tappedMarker = markers[markerId];
-//    if (tappedMarker != null) {
-//      await showDialog<void>(
-//          context: context,
-//          builder: (BuildContext context) {
-//            return AlertDialog(
-//                actions: <Widget>[
-//                  FlatButton(
-//                    child: const Text('OK'),
-//                    onPressed: () => Navigator.of(context).pop(),
-//                  )
-//                ],
-//                content: Padding(
-//                    padding: const EdgeInsets.symmetric(vertical: 66),
-//                    child: Column(
-//                      mainAxisSize: MainAxisSize.min,
-//                      children: <Widget>[
-//                        Text('Old position: ${tappedMarker.position}'),
-//                        Text('New position: $newPosition'),
-//                      ],
-//                    )));
-//          });
-//    }
-//  }
-//
-//
-//
 //  void setInitialLocation() async {
 //    // set the initial location by pulling the user's
 //    // current location from the location's getLocation()
@@ -273,26 +296,15 @@
 //      "latitude": DEST_LOCATION.latitude,
 //      "longitude": DEST_LOCATION.longitude
 //    });
-//  }
 //
-//  void _onMarkerTapped(MarkerId markerId) {
-//    final Marker tappedMarker = markers[markerId];
-//    if (tappedMarker != null) {
-//      setState(() {
-//        if (markers.containsKey(selectedMarker)) {
-//          final Marker resetOld = markers[selectedMarker]
-//              .copyWith(iconParam: BitmapDescriptor.defaultMarker);
-//          markers[selectedMarker] = resetOld;
-//        }
-//        selectedMarker = markerId;
-//        final Marker newMarker = tappedMarker.copyWith(
-//          iconParam: BitmapDescriptor.defaultMarkerWithHue(
-//            BitmapDescriptor.hueGreen,
-//          ),
-//        );
-//        markers[markerId] = newMarker;
-//      });
-//    }
+//    CameraPosition cPosition = CameraPosition(
+//      zoom: CAMERA_ZOOM,
+//      tilt: CAMERA_TILT,
+//      bearing: CAMERA_BEARING,
+//      target: LatLng(currentLocation.latitude, currentLocation.longitude),
+//    );
+//    controller = await _controller.future;
+//    controller.animateCamera(CameraUpdate.newCameraPosition(cPosition));
 //  }
 //
 //  void showPinsOnMap() {
@@ -349,14 +361,7 @@
 //    // create a new CameraPosition instance
 //    // every time the location changes, so the camera
 //    // follows the pin as it moves with an animation
-//    CameraPosition cPosition = CameraPosition(
-//      zoom: CAMERA_ZOOM,
-//      tilt: CAMERA_TILT,
-//      bearing: CAMERA_BEARING,
-//      target: LatLng(currentLocation.latitude, currentLocation.longitude),
-//    );
-//    final GoogleMapController controller = await _controller.future;
-//    controller.animateCamera(CameraUpdate.newCameraPosition(cPosition));
+//
 //    // do this inside the setState() so Flutter gets notified
 //    // that a widget update is due
 //    setState(() {
@@ -364,7 +369,7 @@
 //      var pinPosition =
 //      LatLng(currentLocation.latitude, currentLocation.longitude);
 //
-//      sourcePinInfo.location = pinPosition;
+//      //  sourcePinInfo.location = pinPosition;
 //
 //      // the trick is to remove the marker (by id)
 //      // and add it again at the updated location
@@ -382,6 +387,6 @@
 //    });
 //  }
 //
-//
 //}
+//
 //

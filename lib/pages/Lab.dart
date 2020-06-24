@@ -1,67 +1,104 @@
-import 'package:app/components/Lab/LabButton.dart';
-import 'package:app/components/TopBar.dart';
 import 'package:app/helpers/AppLocalizations.dart';
+import 'package:app/utils/size_config.dart';
 import 'package:flutter/material.dart';
 
-import 'LabOpen.dart';
-
 class Lab extends StatefulWidget {
+  Function callback;
+
+  Lab(this.callback);
+
   @override
   State<Lab> createState() => LabState();
 }
 
 class LabState extends State<Lab> {
-
-  bool labButtonPress = false;
-
   @override
   void initState() {
     super.initState();
   }
 
-  void callback(bool labButtonPress) {
-    setState(() {
-      this.labButtonPress = labButtonPress;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    return LabOpen();
+    SizeConfig().init(context);
 
-      ///Lab closed
-//      Center(
-//            child: Column(
-//              children: <Widget> [
-//                Column(
-//                    mainAxisAlignment: MainAxisAlignment.start,
-//                    children: [
-//                      SizedBox(height: 50),
-//                      ImageIcon(
-//                          AssetImage('assets/img/Owlking.png'),
-//                        color: Colors.white,
-//                        size: 128.0,
-//                      ),
-//                      SizedBox(height: 10),
-//                      Text(
-//                          AppLocalizations.of(context)
-//                              .translate('uh_oh'),
-//                          style: TextStyle(fontSize: 40, color: Colors.white, fontWeight: FontWeight.bold)),
-//                      SizedBox(height: 10),
-//                      SizedBox(
-//                        width: 300.0,
-//                        height: 100.0,
-//                        child: Text(
-//                            AppLocalizations.of(context)
-//                                .translate('laboratory_lock'),
-//                            textAlign: TextAlign.center,
-//                            style: TextStyle(fontSize: 20, color: Colors.white)),
-//                      ),
-//                      SizedBox(height: 20),
-//                      LabButton(this.callback, labButtonPress)
-//                    ])
-//              ]
-//            ),
-//          );
+    return Container(
+      height: SizeConfig.blockSizeVertical * 70,
+      width: SizeConfig.blockSizeHorizontal * 100,
+      child: Column(children: <Widget>[
+        Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+          SizedBox(height: SizeConfig.blockSizeVertical * 10),
+          ImageIcon(
+            AssetImage('assets/img/Owlking.png'),
+            color: Colors.white,
+            size: 128.0,
+          ),
+          SizedBox(height: 10),
+          Text(AppLocalizations.of(context).translate('uh_oh'),
+              style: TextStyle(
+                  fontSize: 40,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold)),
+          SizedBox(height: SizeConfig.blockSizeVertical * 2),
+          SizedBox(
+            width: SizeConfig.blockSizeHorizontal * 70,
+            height: SizeConfig.blockSizeVertical * 10,
+            child: Text(
+                AppLocalizations.of(context).translate('laboratory_lock'),
+                textAlign: TextAlign.center,
+                maxLines: 3,
+                style: TextStyle(fontSize: 22, color: Colors.white)),
+          ),
+          SizedBox(height: 20),
+          Container(
+              width: SizeConfig.blockSizeHorizontal * 60,
+              height: SizeConfig.blockSizeVertical * 8,
+              decoration: BoxDecoration(
+                  color: Color(0xff5D7FE0),
+                  borderRadius: BorderRadius.circular(60),
+                  boxShadow: [
+                    BoxShadow(
+                        blurRadius: 20,
+                        offset: Offset(10, 5),
+                        color: Colors.black.withOpacity(.6),
+                        spreadRadius: -9)
+                  ]),
+              child: RaisedButton(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(60.0),
+                ),
+                padding: EdgeInsets.zero,
+                child: Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      SizedBox(width: 6),
+                      Text(
+                          AppLocalizations.of(context)
+                              .translate('open_the_lab')
+                              .toUpperCase(),
+                          style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.white,
+                              )),
+                      SizedBox(width: 10),
+                      Icon(
+                        Icons.vpn_key,
+                        size: 20,
+                        color: Colors.white,
+
+                      ),
+                    ],
+                  ),
+                ),
+                onPressed: () {
+                  this.widget.callback(true);
+                },
+                color: Color(0xff5D7FE0),
+              ))
+        ])
+      ]),
+    );
   } //Functions
 }

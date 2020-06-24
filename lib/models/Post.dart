@@ -2,7 +2,11 @@
 
 class Post {
   final String title;
-  final String body;
+  final String text;
+  String imagelocation;
+  String location;
+  String dateTime;
 
-  Post(this.title, this.body);
+
+  Post(this.title, this.text, this.imagelocation, this.location, this.dateTime);
 }

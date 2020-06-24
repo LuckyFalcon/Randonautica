@@ -10,6 +10,7 @@ import 'package:app/models/LoggedTrip.dart';
 import 'package:app/models/UnloggedTrip.dart';
 import 'package:app/utils/size_config.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../../helpers/AppLocalizations.dart';
 import 'LoggedTripDetails.dart';
@@ -83,7 +84,7 @@ class TripListState extends State<TripList> {
     return (unloggedTripsloaded && LoggedTripList
         ? (unloggedTrips.length > 0 || _LoggedTripList.length > 0
             ? Container(
-                height: SizeConfig.blockSizeVertical * 70,
+                height: SizeConfig.blockSizeVertical * 78, ///78 tied to Randonaut.dart
                 width: SizeConfig.blockSizeHorizontal * 100,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -169,7 +170,7 @@ class TripListState extends State<TripList> {
 //                          SizedBox(height: 25),
                           (_LoggedTripList.length > 0
                               ? Container(
-                                  padding: EdgeInsets.only(left: 40),
+                                  padding: EdgeInsets.only(left: 30),
                                   child: Text(
                                       AppLocalizations.of(context)
                                           .translate('your_trip_log'),
@@ -243,33 +244,40 @@ class TripListState extends State<TripList> {
                                       style: TextStyle(
                                           fontSize: 14, color: Colors.white)))),
                           (_LoggedTripList.length > 0
-                              ? Divider(
-                                  color: Colors.white,
-                                  height: 20,
-                                  thickness: 5,
-                                  indent: 35,
-                                  endIndent: 30,
+                              ? Container(
+                                  margin:
+                                      EdgeInsets.only(left: 30.0, right: 30.0),
+                                  width: 20,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                  child: Divider(
+                                    color: Colors.white,
+                                    height: 2,
+                                  ),
                                 )
                               : SizedBox(width: 10)),
                           SizedBox(height: 40),
                           (unloggedTrips.length > 0
                               ? Container(
-                                  padding: EdgeInsets.only(left: 20),
+                                  padding: EdgeInsets.only(left: 30, right: 40),
                                   child: Text(
                                       AppLocalizations.of(context)
-                                          .translate('unlogged_trips')
-                                          .toUpperCase(),
+                                          .translate('unlogged_trips'),
                                       style: TextStyle(
-                                          fontSize: 28,
+                                          fontSize: 40,
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold)))
                               : SizedBox(width: 10)),
+                          SizedBox(height: 30),
                           ListView.builder(
+                              padding: EdgeInsets.only(left: 30, right: 30),
                               shrinkWrap: true,
                               physics: ScrollPhysics(),
                               itemCount: unloggedTrips.length,
                               itemBuilder: (BuildContext context, int index) {
-                                return listWidget(
+                                return unloggedListWidget(
                                   id: unloggedTrips[index].id,
                                   gid: unloggedTrips[index].gid,
                                   location: unloggedTrips[index].location,
@@ -283,15 +291,20 @@ class TripListState extends State<TripList> {
                                   pseudo: unloggedTrips[index].pseudo,
                                 );
                               }),
-//                          (unloggedTrips.length > 0
-//                              ? Divider(
-//                                  color: Colors.white,
-//                                  height: 20,
-//                                  thickness: 2,
-//                                  indent: 20,
-//                                  endIndent: 20,
-//                                )
-//                              : SizedBox(width: 10)),
+                          (_LoggedTripList.length > 0
+                              ? Container(
+                                  margin: EdgeInsets.only(left: 30.0, right: 30.0),
+                                  width: 20,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                  child: Divider(
+                                    color: Colors.white,
+                                    height: 2,
+                                  ),
+                                )
+                              : SizedBox(width: 10)),
                         ],
                       ),
                     )
@@ -305,30 +318,9 @@ class TripListState extends State<TripList> {
   } //Functions
 }
 
-class UserWidget extends StatelessWidget {
-  final String firstName;
-  final String lastName;
-  final String imageURL;
+class unloggedListWidget extends StatelessWidget {
+  final dateFormatter = DateFormat('yyyy/MM/dd, hh:mm a');
 
-  const UserWidget({Key key, this.firstName, this.lastName, this.imageURL})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return new Container(
-      child: new ListTile(
-        leading: new FadeInImage(
-          placeholder: new AssetImage('assets/me.jpg'),
-          image: new NetworkImage(imageURL),
-        ),
-        title: new Text("First Name : " + firstName),
-        subtitle: new Text("Last Name : " + lastName),
-      ),
-    );
-  }
-}
-
-class listWidget extends StatelessWidget {
   Function callback;
   int id;
   String gid;
@@ -343,7 +335,7 @@ class listWidget extends StatelessWidget {
   String pseudo;
   String report;
 
-  listWidget(
+  unloggedListWidget(
       {Key key,
       this.callback,
       this.id,
@@ -364,50 +356,73 @@ class listWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new Container(
-        child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-      Text(
-        datetime,
-        textAlign: TextAlign.center,
-        overflow: TextOverflow.ellipsis,
-        style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+    return new Column(children: [
+      Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: Divider(
+          color: Colors.white,
+          height: 2,
+        ),
       ),
-      Text(
-        location,
-        textAlign: TextAlign.center,
-        overflow: TextOverflow.ellipsis,
-        style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
-      ),
-      IconButton(
-          icon: Icon(
-            Icons.arrow_forward_ios,
-            color: Colors.white,
-            size: 24.0,
-            semanticLabel: 'Text to announce in accessibility modes',
-          ),
-          tooltip: 'Increase volume by 10',
-          onPressed: () {
-            Navigator.push(
-              context,
-              FadeRoute(
-                  page: UnloggedTripDetails(
-                this.callback,
-                this.id,
-                this.gid,
-                this.location,
-                this.datetime,
-                this.latitude,
-                this.longitude,
-                this.radius,
-                this.type,
-                this.power,
-                this.zScore,
-                this.pseudo,
-                this.report,
-              )),
-            );
-          }),
-    ]));
+      Container(
+          child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+            Expanded(
+              flex: 3,
+              child: Text(
+                dateFormatter.format(DateTime.parse(datetime)),
+                textAlign: TextAlign.left,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+              ),
+            ),
+            Expanded(
+              flex: 1,
+              child:   Text(
+                location,
+                textAlign: TextAlign.right,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+              ),
+            ),
+
+          Expanded(
+              flex: 0,
+              child:  IconButton(
+                  icon: Icon(
+                    Icons.arrow_forward_ios,
+                    color: Colors.white,
+                    size: 24.0,
+                    semanticLabel: 'Text to announce in accessibility modes',
+                  ),
+                  tooltip: 'Increase volume by 10',
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      FadeRoute(
+                          page: UnloggedTripDetails(
+                            this.callback,
+                            this.id,
+                            this.gid,
+                            this.location,
+                            this.datetime,
+                            this.latitude,
+                            this.longitude,
+                            this.radius,
+                            this.type,
+                            this.power,
+                            this.zScore,
+                            this.pseudo,
+                            this.report,
+                          )),
+                    );
+                  }),
+            ),
+
+      ]))
+    ]);
   }
 }
 
@@ -462,9 +477,10 @@ class loggedListWidget extends StatelessWidget {
               ),
               child: Divider(
                 color: Colors.white,
-                height: 5,
+                height: 2,
               ),
             ),
+            SizedBox(height: 5),
             Row(children: [
               SizedBox(width: 10),
               imagelocation == null
@@ -554,18 +570,18 @@ class loggedListWidget extends StatelessWidget {
                                     flex: 9,
                                     child: Align(
                                       alignment: Alignment.centerLeft,
-                                      child:
-                                      Flexible(
+                                      child: Flexible(
                                         child: RichText(
                                           overflow: TextOverflow.ellipsis,
                                           maxLines: 2,
                                           softWrap: true,
                                           text: TextSpan(
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 12,
-                                              ),
-                                              text: 'Begining of the desciprtion of the trip, description.description descriptiondescriptiondescription',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 12,
+                                            ),
+                                            text:
+                                                'Begining of the desciprtion of the trip, description.description descriptiondescriptiondescription',
                                           ),
                                         ),
                                       ),
@@ -606,7 +622,8 @@ class loggedListWidget extends StatelessWidget {
                   )
                 ],
               ),
-            ])
+            ]),
+            SizedBox(height: 5),
           ],
         ));
   }

@@ -1,3 +1,4 @@
+import 'package:app/utils/size_config.dart';
 import 'package:audioplayers/audio_cache.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/cupertino.dart';
@@ -21,6 +22,8 @@ class _ButtonGoMainPage extends State<ButtonGoMainPage> {
   @override
   void initState() {
     super.initState();
+
+    ///Todo do some audio stuff or something
     _audioCache = AudioCache(prefix: "audio/", fixedPlayer: AudioPlayer()..setReleaseMode(ReleaseMode.STOP));
   }
   void _toggleGoPressButton() {
@@ -35,18 +38,21 @@ class _ButtonGoMainPage extends State<ButtonGoMainPage> {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
+
     return Container(
-        width: 130,
-        height: 78,
+
+        height: SizeConfig.blockSizeVertical * 9,
+        width: SizeConfig.blockSizeHorizontal * 30,
         decoration: BoxDecoration(
             color: Color(0xff5D7FE0),
             borderRadius: BorderRadius.circular(90),
             boxShadow: [
               BoxShadow(
-                  blurRadius: 8,
-                  offset: Offset(0, 15),
+                  blurRadius: 14,
+                  offset: Offset(10, 10),
                   color: Colors.black.withOpacity(.6),
-                  spreadRadius: -9)
+                  spreadRadius: -15)
             ]),
         child: RaisedButton(
           shape: RoundedRectangleBorder(

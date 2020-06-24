@@ -167,13 +167,14 @@ class _LoadingState extends State<Loading> {
     //Get current user
     FirebaseUser _user = await FirebaseAuth.instance.currentUser();
 
-    //Recieve token from user
-    var token = await _user.getIdToken();
+    if(_user != null){
+      //Recieve token from user
+      var token = await _user.getIdToken();
 
-    print('usertoken: '+ token.token);
+      print('usertoken: ' + token.token);
 
-    await prefs.setString("authToken", token.token);
-
+      await prefs.setString("authToken", token.token);
+    }
     return _user;
   }
 

@@ -1,5 +1,6 @@
-import 'package:app/pages/News.dart';
+import 'file:///C:/Users/David/AndroidStudioProjects/Randonautica/lib/pages/News/News.dart';
 import 'package:app/pages/Profile.dart';
+import 'package:app/pages/Shop/Shop.dart';
 import 'package:app/utils/size_config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -14,9 +15,9 @@ class TopBar extends StatelessWidget {
       width: SizeConfig.blockSizeHorizontal * 100,
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
         Padding(
-          padding: const EdgeInsets.only(left: 15),
+          padding: const EdgeInsets.only(top: 15, left: 15),
           child: Align(
-            alignment: Alignment.center,
+            alignment: Alignment.topLeft,
             child: IconButton(
               iconSize: 32,
               icon: ImageIcon(
@@ -33,11 +34,11 @@ class TopBar extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.only(top: 25.0, right: 15),
+          padding: const EdgeInsets.only(top: 15.0, right: 15),
           child: Align(
             alignment: Alignment.center,
             child: IconButton(
-              iconSize: 48,
+              iconSize: 64,
               icon: ImageIcon(
                 AssetImage('assets/img/Owl.png'),
                 color: Colors.white,
@@ -47,9 +48,9 @@ class TopBar extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.only(right: 15),
+          padding: const EdgeInsets.only(top: 15, right: 15),
           child: Align(
-            alignment: Alignment.center,
+            alignment: Alignment.topRight,
             child: IconButton(
               iconSize: 32,
               icon: ImageIcon(AssetImage('assets/img/pods.png'),
@@ -58,7 +59,7 @@ class TopBar extends StatelessWidget {
 //                openAlertBox(context);
                 Navigator.of(context, rootNavigator: true)
                     .push(new CupertinoPageRoute<bool>(
-                  builder: (BuildContext context) => new News(),
+                  builder: (BuildContext context) => new Shop(),
                 ));
               },
             ),

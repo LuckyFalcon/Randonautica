@@ -25,7 +25,7 @@ class NoTripsFound extends StatelessWidget {
           SizedBox(height: 10),
           SizedBox(
             width: 300.0,
-            height: 100.0,
+            height: 50.0,
             child: Text(
                 AppLocalizations.of(context).translate('empty_trip_list'),
                 textAlign: TextAlign.center,

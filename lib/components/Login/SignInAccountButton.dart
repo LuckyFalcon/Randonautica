@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:app/helpers/CreateAppleAccount.dart';
 import 'package:app/helpers/CreateGoogleAccount.dart';
 import 'package:app/pages/start/CreateAccount.dart';
+import 'package:app/utils/size_config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
@@ -17,9 +18,10 @@ class _SignInCreateAccountButtonState extends State<SignInCreateAccountButton> {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return Container(
-        width: 300,
-        height: 70,
+        width: SizeConfig.blockSizeHorizontal * (70),
+        height: SizeConfig.blockSizeVertical * (8),
         child: RaisedButton(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(60.0),
@@ -29,7 +31,7 @@ class _SignInCreateAccountButtonState extends State<SignInCreateAccountButton> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                SizedBox(width: 6),
+                SizedBox(width: SizeConfig.blockSizeHorizontal * 1),
                 Text(
                     AppLocalizations.of(context)
                         .translate('create_account_button')

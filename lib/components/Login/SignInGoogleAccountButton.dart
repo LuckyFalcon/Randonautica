@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:app/pages/start/Invite.dart';
+import 'package:app/utils/size_config.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -90,9 +91,10 @@ class _SignInGoogleAccountButtonState extends State<SignInGoogleAccountButton> {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return Container(
-        width: 300,
-        height: 70,
+        width: SizeConfig.blockSizeHorizontal * (70),
+        height: SizeConfig.blockSizeVertical * (8),
         child: RaisedButton(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(60.0),
@@ -102,7 +104,7 @@ class _SignInGoogleAccountButtonState extends State<SignInGoogleAccountButton> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                SizedBox(width: 6),
+                SizedBox(width: SizeConfig.blockSizeHorizontal * 1),
                 Text(
                     AppLocalizations.of(context)
                         .translate('sign_in_with_google')
