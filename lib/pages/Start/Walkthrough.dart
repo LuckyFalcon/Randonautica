@@ -4,6 +4,7 @@ import 'package:app/components/Introduction/EnterRandonauticaButton.dart';
 import 'package:app/components/Introduction/slide_dots.dart';
 import 'package:app/components/Introduction/slide_item.dart';
 import 'package:app/models/slide.dart';
+import 'package:app/utils/size_config.dart';
 import 'package:flutter/material.dart';
 
 class Walkthrough extends StatefulWidget {
@@ -49,6 +50,7 @@ class _WalkthroughState extends State<Walkthrough> {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       extendBodyBehindAppBar: true,
@@ -66,18 +68,25 @@ class _WalkthroughState extends State<Walkthrough> {
             children: <Widget>[
               ImageIcon(AssetImage('assets/img/Owl.png'),
                   color: Colors.white, size: 64),
-              Expanded(
-                child: Stack(
-                  alignment: AlignmentDirectional.bottomCenter,
-                  children: <Widget>[
-                    PageView.builder(
-                      scrollDirection: Axis.horizontal,
-                      controller: _pageController,
-                      onPageChanged: _onPageChanged,
-                      itemCount: slideList.length,
-                      itemBuilder: (ctx, i) => SlideItem(i),
-                    ),
-                  ],
+              SizedBox(
+                height: SizeConfig.blockSizeVertical * 5,
+              ),
+              Container(
+                height: SizeConfig.blockSizeVertical * 55,
+                child:   Expanded(
+                  child:
+                  Stack(
+                    alignment: AlignmentDirectional.bottomCenter,
+                    children: <Widget>[
+                      PageView.builder(
+                        scrollDirection: Axis.horizontal,
+                        controller: _pageController,
+                        onPageChanged: _onPageChanged,
+                        itemCount: slideList.length,
+                        itemBuilder: (ctx, i) => SlideItem(i),
+                      ),
+                    ],
+                  ),
                 ),
               ),
               Container(
@@ -94,12 +103,9 @@ class _WalkthroughState extends State<Walkthrough> {
                   ],
                 ),
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  EnterRandonauticaButton(),
-                ],
-              ),
+              (_currentPage == 2 ? EnterRandonauticaButton() : SizedBox(
+                height: 50,
+              )),
               SizedBox(
                 height: 50,
               ),

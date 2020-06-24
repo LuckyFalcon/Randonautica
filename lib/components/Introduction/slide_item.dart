@@ -1,22 +1,25 @@
 import 'package:app/models/slide.dart';
+import 'package:app/utils/size_config.dart';
 import 'package:flutter/material.dart';
 
 class SlideItem extends StatelessWidget {
+
   final int index;
 
   SlideItem(this.index);
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         SizedBox(
-          height: 20,
+          height: SizeConfig.blockSizeVertical * 1,
         ),
         Container(
             padding: const EdgeInsets.all(16.0),
-            width: 220,
+            width: SizeConfig.blockSizeHorizontal * 70,
             child: new Column(
               children: <Widget>[
                 Text(
@@ -25,16 +28,16 @@ class SlideItem extends StatelessWidget {
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
-                      fontSize: 14),
+                      fontSize: 18),
                 )
               ],
             )),
         SizedBox(
-          height: 5,
+          height: SizeConfig.blockSizeVertical * 1,
         ),
         Container(
             padding: const EdgeInsets.all(16.0),
-            width: 250,
+            width: SizeConfig.blockSizeHorizontal * 70,
             child: new Column(
               children: <Widget>[
                 Text(
@@ -43,16 +46,16 @@ class SlideItem extends StatelessWidget {
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
-                      fontSize: 14),
+                      fontSize: 18),
                 ),
               ],
             )),
         SizedBox(
-          height: 5,
+          height: SizeConfig.blockSizeVertical * 1,
         ),
         Container(
             padding: const EdgeInsets.all(16.0),
-            width: 200,
+            width: SizeConfig.blockSizeHorizontal * 70,
             child: new Column(
               children: <Widget>[
                 Text(
@@ -61,7 +64,7 @@ class SlideItem extends StatelessWidget {
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
-                      fontSize: 14),
+                      fontSize: 18),
                 ),
               ],
             )),
