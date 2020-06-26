@@ -40,10 +40,11 @@ class FailedToLogin extends StatelessWidget {
                         fontWeight: FontWeight.bold)),
                 SizedBox(height: SizeConfig.blockSizeVertical * 3),
                 SizedBox(height: SizeConfig.blockSizeVertical * 3),
-                FadingCircleLoading(
-                  color: Colors.white,
-                  size: 75.0,
-                )
+                Text("Failed to login",
+                    style: TextStyle(
+                        fontSize: 40,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold)),
               ])
             ]),
           )),
