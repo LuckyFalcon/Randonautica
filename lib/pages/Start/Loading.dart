@@ -1,3 +1,4 @@
+import 'package:app/api/createUser.dart';
 import 'package:app/helpers/AppLocalizations.dart';
 import 'package:app/helpers/FadeRoute.dart';
 import 'package:app/helpers/FadingCircleLoading.dart';
@@ -164,18 +165,22 @@ class _LoadingState extends State<Loading> {
     //Await SharedPreferences future object
     final SharedPreferences prefs = await _prefs;
 
-    //Get current user
-    FirebaseUser _user = await FirebaseAuth.instance.currentUser();
+    if(prefs.getBool("Account") == true ){
+      //Get current user
+      FirebaseUser _user = await FirebaseAuth.instance.currentUser();
 
-    if(_user != null){
-      //Recieve token from user
-      var token = await _user.getIdToken();
+      if(_user != null){
+        //Recieve token from user
+        var token = await _user.getIdToken();
 
-      print('usertoken: ' + token.token);
+        print('usertoken: ' + token.token);
 
-      await prefs.setString("authToken", token.token);
+        await prefs.setString("authToken", token.token);
+
+      }
+
+      return _user;
     }
-    return _user;
   }
 
   @override

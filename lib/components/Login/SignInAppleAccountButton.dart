@@ -1,7 +1,6 @@
 import 'dart:io';
 
-import 'package:app/helpers/FadeRoute.dart';
-import 'package:app/pages/Start/Invite.dart';
+import 'package:app/api/createUser.dart';
 import 'package:app/utils/size_config.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -12,6 +11,9 @@ import '../../helpers/AppLocalizations.dart';
 import 'dart:io' show Platform;
 
 class SignInAppleAccountButton extends StatefulWidget {
+  Function GoogleSignIncallback;
+  SignInAppleAccountButton(this.GoogleSignIncallback);
+
   State<StatefulWidget> createState() => new _SignInAppleAccountButtonState();
 }
 
@@ -57,25 +59,42 @@ class _SignInAppleAccountButtonState extends State<SignInAppleAccountButton> {
           ),
           onPressed: () async {
             if (Platform.isAndroid) {
-              signInWithAppleAndroid().whenComplete(
-                  () => Navigator.of(context).push(FadeRoute(page: Invite())));
+              signInWithAppleAndroid().then((statusCode) async {
+                if (statusCode == 1337) {
+                  ///User canceledd login, do nothing
+                } else {
+                  ///Return statusCode to login widget
+                  this.widget.GoogleSignIncallback(statusCode);
+                }
+              }).catchError((error) {
+                ///Return statusCode 500 to login widget
+                this.widget.GoogleSignIncallback(500);
+              });
             } else if (Platform.isIOS) {
-              signInWithAppleIOS().whenComplete(
-                  () => Navigator.of(context).push(FadeRoute(page: Invite())));
+              signInWithAppleIOS().then((statusCode) async {
+                if (statusCode == 1337) {
+                  ///User canceledd login, do nothing
+                } else {
+                  ///Return statusCode to login widget
+                  this.widget.GoogleSignIncallback(statusCode);
+                }
+              }).catchError((error) {
+                ///Return statusCode 500 to login widget
+                this.widget.GoogleSignIncallback(500);
+              });
             }
           },
           color: Color(0xff43CCDB),
         ));
   }
 
-  Future<FirebaseUser> signInWithAppleAndroid() async {
+  Future<int> signInWithAppleAndroid() async {
     final appleIdCredential = await SignInWithApple.getAppleIDCredential(
       scopes: [
         AppleIDAuthorizationScopes.email,
         AppleIDAuthorizationScopes.fullName,
       ],
       webAuthenticationOptions: WebAuthenticationOptions(
-        // TODO: Set the `clientId` and `redirectUri` arguments to the values you entered in the Apple Developer portal during the setup
         clientId: 'com.randonautica.app.signinwithapple',
         redirectUri: Uri.parse(
           'https://api2.randonauts.com/apple/callbacks/sign_in_with_apple',
@@ -91,13 +110,25 @@ class _SignInAppleAccountButtonState extends State<SignInAppleAccountButton> {
 
     try {
       final authResult = await _auth.signInWithCredential(credential);
-      return authResult.user;
+
+      final FirebaseUser user = authResult.user;
+
+      assert(!user.isAnonymous);
+      assert(await user.getIdToken() != null);
+
+      final FirebaseUser currentUser = await _auth.currentUser();
+      assert(user.uid == currentUser.uid);
+      var token = await currentUser.getIdToken();
+
+      ///Send request to back-end
+      return await signBackendGoogle(token.token.toString());
     } catch (error) {
-      print(error);
+      return 500;
     }
+
   }
 
-  Future<FirebaseUser> signInWithAppleIOS() async {
+  Future<int> signInWithAppleIOS() async {
     final appleIdCredential = await SignInWithApple.getAppleIDCredential(
       scopes: [
         AppleIDAuthorizationScopes.email,
@@ -109,7 +140,23 @@ class _SignInAppleAccountButtonState extends State<SignInAppleAccountButton> {
       idToken: appleIdCredential.identityToken,
       accessToken: appleIdCredential.authorizationCode,
     );
-    final authResult = await _auth.signInWithCredential(credential);
-    return authResult.user;
+    try {
+      final authResult = await _auth.signInWithCredential(credential);
+
+      final FirebaseUser user = authResult.user;
+
+      assert(!user.isAnonymous);
+      assert(await user.getIdToken() != null);
+
+      final FirebaseUser currentUser = await _auth.currentUser();
+      assert(user.uid == currentUser.uid);
+      var token = await currentUser.getIdToken();
+
+      ///Send request to back-end
+      return await signBackendGoogle(token.token.toString());
+
+    } catch (error) {
+      return 500;
+    }
   }
 }

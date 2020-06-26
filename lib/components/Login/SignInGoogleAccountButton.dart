@@ -1,53 +1,65 @@
-import 'dart:convert';
-
+import 'package:app/api/createUser.dart';
+import 'package:app/pages/Failed/FailedToLogin.dart';
 import 'package:app/pages/start/Invite.dart';
 import 'package:app/utils/size_config.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import "package:http/http.dart" as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../helpers/AppLocalizations.dart';
 
 GoogleSignIn _googleSignIn = GoogleSignIn(
   scopes: <String>[
-    'email',
     'https://www.googleapis.com/auth/contacts.readonly',
   ],
 );
 
 class SignInGoogleAccountButton extends StatefulWidget {
+  Function callback;
+  Function GoogleSignIncallback;
+
+  SignInGoogleAccountButton(this.callback, this.GoogleSignIncallback);
+
   State<StatefulWidget> createState() => new _SignInGoogleAccountButtonState();
 }
 
 class _SignInGoogleAccountButtonState extends State<SignInGoogleAccountButton> {
   GoogleSignInAccount _currentUser;
-  String _contactText;
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn googleSignIn = GoogleSignIn();
 
   @override
   void initState() {
+
     super.initState();
     _googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount account) {
       setState(() {
+        print('thisisreached');
         _currentUser = account;
       });
     });
+    print('thisisreachedsigninsilently');
+
     _googleSignIn.signInSilently();
   }
 
-  Future<String> signInWithGoogle() async {
+  Future<int> signInWithGoogle() async {
+
+
+
     final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
 
     if (googleSignInAccount == null) {
-      return Future.error("CANCELLED_SIGN_IN");
+      return 1337; ///User cancelled the dialog
     }
 
-    final GoogleSignInAuthentication googleSignInAuthentication =
-        await googleSignInAccount.authentication;
+    this.widget.callback(true); ///Start signing in animation
+
+    print(googleSignInAccount.authentication);
+    final GoogleSignInAuthentication googleSignInAuthentication = await googleSignInAccount.authentication;
 
     final AuthCredential credential = GoogleAuthProvider.getCredential(
       accessToken: googleSignInAuthentication.accessToken,
@@ -63,30 +75,16 @@ class _SignInGoogleAccountButtonState extends State<SignInGoogleAccountButton> {
     final FirebaseUser currentUser = await _auth.currentUser();
     assert(user.uid == currentUser.uid);
     var token = await currentUser.getIdToken();
-    print('usertoken: '+ token.token);
-    print('usertoken: '+ token.toString());
+    print('usertoken: ' + token.token);
+    print('usertoken: ' + token.toString());
 
-    signBackendGoogle(token.token.toString());
+    ///Send request to back-end
+    return await signBackendGoogle(token.token.toString());
 
-    print('useruuid: '+ currentUser.uid.toString());
-    print('user: $user');
-    return 'signInWithGoogle succeeded: $user';
   }
-
-  Future<String>signBackendGoogle(token) async {
-    final response = await http.get("http://192.168.1.217:8080/userBasedFunc", headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      'Authorization': 'Bearer $token',
-    });
-    print(response.toString());
-    return response.toString();
-  }
-
 
   void signOutGoogle() async {
     await googleSignIn.signOut();
-    print("User Sign Out");
   }
 
   @override
@@ -122,16 +120,17 @@ class _SignInGoogleAccountButtonState extends State<SignInGoogleAccountButton> {
             ),
           ),
           onPressed: () {
-            signInWithGoogle().catchError(() {
-              /// On cancel or error do Nothing
-            }).whenComplete(() {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) {
-                    return Invite();
-                  },
-                ),
-              );
+            // ignore: missing_return
+            signInWithGoogle().then((statusCode) async {
+              if (statusCode == 1337) {
+                ///User canceledd login, do nothing
+              } else {
+                ///Return statusCode to login widget
+                this.widget.GoogleSignIncallback(statusCode);
+              }
+            }).catchError((error) {
+              ///Return statusCode 500 to login widget
+              this.widget.GoogleSignIncallback(500);
             });
           },
           color: Color(0xff43CCDB),
