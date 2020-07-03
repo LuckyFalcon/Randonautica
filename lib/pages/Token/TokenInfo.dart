@@ -58,7 +58,7 @@ class TokenInfoState extends State<TokenInfo> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 15.0, right: 15),
+                    padding: const EdgeInsets.only(left: 20.0),
                     child: Align(
                       alignment: Alignment.center,
                       child: IconButton(
@@ -66,11 +66,13 @@ class TokenInfoState extends State<TokenInfo> {
                         icon: Icon(
                           Icons.keyboard_arrow_down,
                           color: Colors.white,
-                          size: 44.0,
+                          size: 64.0,
                           semanticLabel:
                           'Text to announce in accessibility modes',
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
                       ),
                     ),
                   ),
@@ -79,8 +81,8 @@ class TokenInfoState extends State<TokenInfo> {
                     child: Align(
                       alignment: Alignment.topRight,
                       child: IconButton(
-                        iconSize: 32,
-                        icon: ImageIcon(AssetImage('assets/img/Shop.png'),
+                        iconSize: 64,
+                        icon: ImageIcon(AssetImage('assets/img/Home.png'),
                             size: 64.0, color: Colors.white),
                         onPressed: () {
 //                openAlertBox(context);
@@ -93,7 +95,7 @@ class TokenInfoState extends State<TokenInfo> {
             Row(mainAxisAlignment: MainAxisAlignment.start, children: [
 
               Padding(
-                padding: const EdgeInsets.only(top: 15.0, left: 150),
+                padding: const EdgeInsets.only(left: 150, bottom: 15),
                 child: Align(
                     alignment: Alignment.center,
                     child: Image.asset('assets/img/Owl_Token.png')
@@ -167,13 +169,24 @@ class TokenInfoState extends State<TokenInfo> {
                     )),
                 Padding(
                   padding: const EdgeInsets.only(top: 15.0, right: 30),
-                  child: Align(
+                  child:
+                  Align(
                     alignment: Alignment.topLeft,
-                    child: Text('60',
-                        style: TextStyle(
-                            fontSize: 23,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold)),
+                    child: Padding(
+                        padding: const EdgeInsets.only(top: 15.0, left: 30),
+                        child: Row(
+                          children: <Widget>[
+                            Text('60',
+                                style: TextStyle(
+                                    fontSize: 23,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold)),
+                            Image.asset(
+                              'assets/img/Owl_Token.png',
+                              width: 40,
+                            )
+                          ],
+                        )),
                   ),
                 ),
               ],
@@ -183,10 +196,10 @@ class TokenInfoState extends State<TokenInfo> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Padding(
-                    padding: const EdgeInsets.only(top: 15.0, left: 30),
+                    padding: const EdgeInsets.only(left: 30),
                     child: Row(
                       children: <Widget>[
-                        Text(AppLocalizations.of(context).translate('quantum_random_point'),
+                        Text(AppLocalizations.of(context).translate('random_point'),
                             style: TextStyle(
                                 fontSize: 23,
                                 color: Colors.white,
@@ -194,14 +207,25 @@ class TokenInfoState extends State<TokenInfo> {
                       ],
                     )),
                 Padding(
-                  padding: const EdgeInsets.only(top: 15.0, right: 30),
-                  child: Align(
+                  padding: const EdgeInsets.only(right: 30),
+                  child:
+                  Align(
                     alignment: Alignment.topLeft,
-                    child: Text('60',
-                        style: TextStyle(
-                            fontSize: 23,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold)),
+                    child: Padding(
+                        padding: const EdgeInsets.only(top: 15.0, left: 30),
+                        child: Row(
+                          children: <Widget>[
+                            Text('60',
+                                style: TextStyle(
+                                    fontSize: 23,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold)),
+                            Image.asset(
+                              'assets/img/Owl_Token.png',
+                              width: 40,
+                            )
+                          ],
+                        )),
                   ),
                 ),
               ],
@@ -211,10 +235,10 @@ class TokenInfoState extends State<TokenInfo> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Padding(
-                    padding: const EdgeInsets.only(top: 15.0, left: 30),
+                    padding: const EdgeInsets.only(left: 30),
                     child: Row(
                       children: <Widget>[
-                        Text(AppLocalizations.of(context).translate('amplification_bias'),
+                        Text(AppLocalizations.of(context).translate('random_point'),
                             style: TextStyle(
                                 fontSize: 23,
                                 color: Colors.white,
@@ -222,32 +246,46 @@ class TokenInfoState extends State<TokenInfo> {
                       ],
                     )),
                 Padding(
-                  padding: const EdgeInsets.only(top: 15.0, right: 30),
-                  child: Align(
+                  padding: const EdgeInsets.only(right: 30),
+                  child:
+                  Align(
                     alignment: Alignment.topLeft,
-                    child: Text("1.99 (.03 per)",
-                        style: TextStyle(
-                            fontSize: 23,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold)),
+                    child: Padding(
+                        padding: const EdgeInsets.only(top: 15.0, left: 30),
+                        child: Row(
+                          children: <Widget>[
+                            Text('60',
+                                style: TextStyle(
+                                    fontSize: 23,
+                                    color: Colors.green,
+                                    fontWeight: FontWeight.bold)),
+                            Image.asset(
+                              'assets/img/Owl_Token.png',
+                              width: 40,
+                            )
+                          ],
+                        )),
                   ),
                 ),
               ],
             ),
+            SizedBox(height: 30),
+
             Text(AppLocalizations.of(context).translate('ways_to_earn').toUpperCase(),
                 style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                     color: Colors.white)),
+            SizedBox(height: 30),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Padding(
-                    padding: const EdgeInsets.only(top: 15.0, left: 30),
+                    padding: const EdgeInsets.only(left: 30),
                     child: Row(
                       children: <Widget>[
-                        Text(AppLocalizations.of(context).translate('5_day_streak'),
+                        Text(AppLocalizations.of(context).translate('random_point'),
                             style: TextStyle(
                                 fontSize: 23,
                                 color: Colors.white,
@@ -255,14 +293,25 @@ class TokenInfoState extends State<TokenInfo> {
                       ],
                     )),
                 Padding(
-                  padding: const EdgeInsets.only(top: 15.0, right: 30),
-                  child: Align(
+                  padding: const EdgeInsets.only(right: 30),
+                  child:
+                  Align(
                     alignment: Alignment.topLeft,
-                    child: Text("1.99 (.03 per)",
-                        style: TextStyle(
-                            fontSize: 23,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold)),
+                    child: Padding(
+                        padding: const EdgeInsets.only(top: 15.0, left: 30),
+                        child: Row(
+                          children: <Widget>[
+                            Text('60',
+                                style: TextStyle(
+                                    fontSize: 23,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold)),
+                            Image.asset(
+                              'assets/img/Owl_Token.png',
+                              width: 40,
+                            )
+                          ],
+                        )),
                   ),
                 ),
               ],

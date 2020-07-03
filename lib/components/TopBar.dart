@@ -39,7 +39,11 @@ class TopBar extends StatelessWidget {
                     builder: (context) => Container(
                       height: SizeConfig.blockSizeVertical * 90,
                       decoration: new BoxDecoration(
-
+                          gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              stops: [0, 5.0],
+                              colors: [Color(0xff383B46), Color(0xff5786E1)]),
                           color: Theme.of(context).primaryColor,
                           borderRadius: new BorderRadius.only(
                               topLeft: const Radius.circular(90.0),
@@ -88,7 +92,11 @@ class TopBar extends StatelessWidget {
                     builder: (context) => Container(
                           height: SizeConfig.blockSizeVertical * 90,
                           decoration: new BoxDecoration(
-                              color: Theme.of(context).primaryColor,
+                              gradient: LinearGradient(
+                                  begin: Alignment.topCenter,
+                                  end: Alignment.bottomCenter,
+                                  stops: [0, 5.0],
+                                  colors: [Color(0xff383B46), Color(0xff5786E1)]),
                               borderRadius: new BorderRadius.only(
                                   topLeft: const Radius.circular(90.0),
                                   topRight: const Radius.circular(90.0))),

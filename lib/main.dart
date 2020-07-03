@@ -166,8 +166,8 @@ class _HomePageState extends State<HomePage> {
             IndexedStack(
               children: <Widget>[
                 Randonaut(this.updateStateCallback, selectedNavigationIndex),
-                TripFeed(),
                 TripList(key: _TripListKey),
+                TripFeed(),
                 Lab(this.openLabCallback),
               ],
               index: selectedNavigation,

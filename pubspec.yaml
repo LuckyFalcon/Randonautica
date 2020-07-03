@@ -111,12 +111,12 @@ flutter:
     - assets/img/navigate_round.png
     - assets/img/tripplaceholder.png
     - assets/img/inboxicon.png
-    - assets/audio/inceptionbutton.mp3
     - assets/img/Warnings/Warning1.png
     - assets/img/Warnings/Warning2.png
     - assets/img/Warnings/Warning3.png
     - assets/img/Owl_Token.png
     - assets/img/Shop.png
+    - assets/img/Home.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

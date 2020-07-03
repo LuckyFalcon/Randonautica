@@ -6,14 +6,14 @@ import 'package:flutter/material.dart';
 
 import '../../helpers/AppLocalizations.dart';
 
-class GoPremiumButton extends StatefulWidget {
+class UnlockPremiumButton extends StatefulWidget {
   Function callback;
-  GoPremiumButton(this.callback);
+  UnlockPremiumButton(this.callback);
 
-  State<StatefulWidget> createState() => new _GoPremiumButton();
+  State<StatefulWidget> createState() => new _UnlockPremiumButton();
 }
 
-class _GoPremiumButton extends State<GoPremiumButton> {
+class _UnlockPremiumButton extends State<UnlockPremiumButton> {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -48,14 +48,14 @@ class _GoPremiumButton extends State<GoPremiumButton> {
                   SizedBox(width: SizeConfig.blockSizeHorizontal * 1),
                   Text(
                       AppLocalizations.of(context)
-                          .translate('enter_randonautica')
+                          .translate('unlock_premium')
                           .toUpperCase(),
                       style: TextStyle(
                           fontSize: 14,
                           color: Colors.white,
                           fontWeight: FontWeight.bold)),
                   SizedBox(width: SizeConfig.blockSizeHorizontal * 1),
-                  Icon(Icons.arrow_forward, size: 24, color: Colors.white),
+                  Icon(Icons.vpn_key, size: 24, color: Colors.white),
                 ],
               ),
             ),

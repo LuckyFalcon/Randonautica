@@ -14,7 +14,6 @@ class _BS extends State<BS> {
   navigateToSubscription(goPremium) {
     setState(() {
       _showSecond = goPremium;
-      print(_showSecond);
     });
   }
 

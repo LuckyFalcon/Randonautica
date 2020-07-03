@@ -55,9 +55,10 @@ class _BottomBarState extends State<BottomBar> {
                         child: new TabBar(
                           tabs: [
                             (this.widget.selectedNavigationIndex == 0 ? _individualTab('assets/img/Pin_Point.svg', selectedColor) : _individualTab('assets/img/Pin_Point.svg', unselectedColor)),
-                            (this.widget.selectedNavigationIndex == 1 ? _individualTab('assets/img/Globe.svg', selectedColor) : _individualTab('assets/img/Globe.svg', unselectedColor)),
-                            (this.widget.selectedNavigationIndex == 2 ? _individualTab('assets/img/List.svg', selectedColor) : _individualTab('assets/img/List.svg', unselectedColor)),
-                             Tab(icon: SvgPicture.asset(
+                            (this.widget.selectedNavigationIndex == 1 ? _individualTab('assets/img/List.svg', selectedColor) : _individualTab('assets/img/List.svg', unselectedColor)),
+                            (this.widget.selectedNavigationIndex == 2 ? _individualTab('assets/img/Globe.svg', selectedColor) : _individualTab('assets/img/Globe.svg', unselectedColor)),
+
+                            Tab(icon: SvgPicture.asset(
                                 'assets/img/Labs.svg',
                                 height: 48,
                                 width: 48,

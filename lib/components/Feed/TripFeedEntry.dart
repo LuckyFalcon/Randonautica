@@ -1,6 +1,7 @@
 
 import 'package:app/components/Feed/TripFeedEntryButton.dart';
 import 'package:app/helpers/AppLocalizations.dart';
+import 'package:app/utils/size_config.dart';
 import 'package:flutter/material.dart';
 
 import '../TopBar.dart';
@@ -21,29 +22,31 @@ class TripFeedEntry extends StatelessWidget {
                   Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        SizedBox(height: 50),
+                        SizedBox(height: SizeConfig.blockSizeVertical * 10),
                         ImageIcon(
                           AssetImage('assets/img/Owl.png'),
                           color: Colors.white,
                           size: 128.0,
                         ),
                         SizedBox(height: 10),
-                        Text(
-                            AppLocalizations.of(context)
-                                .translate('trip_entry_title'),
-                            style: TextStyle(fontSize: 40, color: Colors.white, fontWeight: FontWeight.bold)),
-                        SizedBox(height: 10),
+                        Text(AppLocalizations.of(context).translate('coming_soon'),
+                            style: TextStyle(
+                                fontSize: 40,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold)),
+                        SizedBox(height: SizeConfig.blockSizeVertical * 2),
                         SizedBox(
-                          width: 300.0,
-                          height: 100.0,
+                          width: SizeConfig.blockSizeHorizontal * 70,
+                          height: SizeConfig.blockSizeVertical * 15,
                           child: Text(
-                              AppLocalizations.of(context)
-                                  .translate('trip_entry_description'),
+                              AppLocalizations.of(context).translate('not_complete'),
                               textAlign: TextAlign.center,
-                              style: TextStyle(fontSize: 20, color: Colors.white)),
+                              maxLines: 4,
+                              style: TextStyle(fontSize: 22, color: Colors.white)),
                         ),
                         SizedBox(height: 20),
-                        TripFeedEntryButton()
+                        ///Trip feed entry button
+                        // TripFeedEntryButton()
                       ])
                 ]
             ),

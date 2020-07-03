@@ -18,76 +18,6 @@ class TripFeedState extends State<TripFeed> {
     super.initState();
   }
 
-  ///Fill this list with SQL lite db query
-  List trips = [
-    {
-      "first_name": "FLUTTER",
-      "last_name": "AWESOME",
-      "image_url":
-      "https://www.rd.com/wp-content/uploads/2017/09/01-shutterstock_476340928-Irina-Bg-1024x683.jpg"
-    },
-    {
-      "first_name": "ABC",
-      "last_name": "XYZ",
-      "image_url":
-      "https://www.rd.com/wp-content/uploads/2017/09/01-shutterstock_476340928-Irina-Bg-1024x683.jpg"
-    },
-    {
-      "first_name": "ABC",
-      "last_name": "XYZ",
-      "image_url":
-      "https://www.rd.com/wp-content/uploads/2017/09/01-shutterstock_476340928-Irina-Bg-1024x683.jpg"
-    },
-    {
-      "first_name": "ABC",
-      "last_name": "XYZ",
-      "image_url":
-      "https://www.rd.com/wp-content/uploads/2017/09/01-shutterstock_476340928-Irina-Bg-1024x683.jpg"
-    },
-    {
-      "first_name": "ABC",
-      "last_name": "XYZ",
-      "image_url":
-      "https://www.rd.com/wp-content/uploads/2017/09/01-shutterstock_476340928-Irina-Bg-1024x683.jpg"
-    },
-    {
-      "first_name": "ABC",
-      "last_name": "XYZ",
-      "image_url":
-      "https://www.rd.com/wp-content/uploads/2017/09/01-shutterstock_476340928-Irina-Bg-1024x683.jpg"
-    },
-    {
-      "first_name": "ABC",
-      "last_name": "XYZ",
-      "image_url":
-      "https://www.rd.com/wp-content/uploads/2017/09/01-shutterstock_476340928-Irina-Bg-1024x683.jpg"
-    },
-    {
-      "first_name": "ABC",
-      "last_name": "XYZ",
-      "image_url":
-      "https://www.rd.com/wp-content/uploads/2017/09/01-shutterstock_476340928-Irina-Bg-1024x683.jpg"
-    },
-    {
-      "first_name": "ABC",
-      "last_name": "XYZ",
-      "image_url":
-      "https://www.rd.com/wp-content/uploads/2017/09/01-shutterstock_476340928-Irina-Bg-1024x683.jpg"
-    },
-    {
-      "first_name": "ABC",
-      "last_name": "XYZ",
-      "image_url":
-      "https://www.rd.com/wp-content/uploads/2017/09/01-shutterstock_476340928-Irina-Bg-1024x683.jpg"
-    },
-    {
-      "first_name": "ABC",
-      "last_name": "XYZ",
-      "image_url":
-      "https://www.rd.com/wp-content/uploads/2017/09/01-shutterstock_476340928-Irina-Bg-1024x683.jpg"
-    },
-  ];
-
   @override
   Widget build(BuildContext context) {
     return (acceptedAgreement
@@ -128,11 +58,7 @@ class TripFeedState extends State<TripFeed> {
                     physics: ScrollPhysics(),
                     itemCount: 2,
                     itemBuilder: (BuildContext context, int index) {
-                      return new UserWidget(
-                        firstName: trips[index]['first_name'],
-                        lastName: trips[index]['last_name'],
-                        imageURL: trips[index]['image_url'],
-                      );
+                      return new SizedBox(height: 10); ///Return child widgets here
                     }),
               ],
             ),
@@ -145,25 +71,4 @@ class TripFeedState extends State<TripFeed> {
   } //Functions
 }
 
-class UserWidget extends StatelessWidget {
-  final String firstName;
-  final String lastName;
-  final String imageURL;
 
-  const UserWidget({Key key, this.firstName, this.lastName, this.imageURL})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return new Container(
-      child: new ListTile(
-        leading: new FadeInImage(
-          placeholder: new AssetImage('assets/me.jpg'),
-          image: new NetworkImage(imageURL),
-        ),
-        title: new Text("First Name : " + firstName),
-        subtitle: new Text("Last Name : " + lastName),
-      ),
-    );
-  }
-}
