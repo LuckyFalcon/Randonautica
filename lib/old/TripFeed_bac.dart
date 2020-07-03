@@ -2,7 +2,7 @@ import 'package:app/components/TopBar.dart';
 import 'package:app/components/Trips/TripRow.dart';
 
 import 'package:flutter/material.dart';
-import '../../helpers/AppLocalizations.dart';
+import '../helpers/AppLocalizations.dart';
 
 class TripFeed extends StatefulWidget {
   @override

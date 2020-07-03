@@ -1,6 +1,7 @@
 import 'package:app/utils/size_config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class BottomBar extends StatefulWidget {
   Function callback;
@@ -18,6 +19,9 @@ class _BottomBarState extends State<BottomBar> {
   void initState() {
     super.initState();
   }
+
+  Color selectedColor = Color(0xff6080E2);
+  Color unselectedColor = Color(0xff37CCDC);
 
   @override
   Widget build(BuildContext context) {
@@ -50,15 +54,14 @@ class _BottomBarState extends State<BottomBar> {
                         initialIndex: 0, //Added
                         child: new TabBar(
                           tabs: [
-                            (this.widget.selectedNavigationIndex == 0 ? _individualTab('assets/img/navigate.png') : _individualTab('assets/img/earth.png')),
-                            (this.widget.selectedNavigationIndex == 1 ? _individualTab('assets/img/earth.png') : _individualTab('assets/img/earth.png')),
-                            (this.widget.selectedNavigationIndex == 2 ? _individualTab('assets/img/list.png') : _individualTab('assets/img/list.png')),
-
-                            Tab(icon: Image( ///Keep this as is
-                                image: new AssetImage('assets/img/share.png'),
-                                color: null,
-                                fit: BoxFit.scaleDown,
-                                alignment: Alignment.center,
+                            (this.widget.selectedNavigationIndex == 0 ? _individualTab('assets/img/Pin_Point.svg', selectedColor) : _individualTab('assets/img/Pin_Point.svg', unselectedColor)),
+                            (this.widget.selectedNavigationIndex == 1 ? _individualTab('assets/img/Globe.svg', selectedColor) : _individualTab('assets/img/Globe.svg', unselectedColor)),
+                            (this.widget.selectedNavigationIndex == 2 ? _individualTab('assets/img/List.svg', selectedColor) : _individualTab('assets/img/List.svg', unselectedColor)),
+                             Tab(icon: SvgPicture.asset(
+                                'assets/img/Labs.svg',
+                                height: 48,
+                                width: 48,
+                                color: (this.widget.selectedNavigationIndex == 3 ? selectedColor : unselectedColor),
                             ))
                           ],
                           onTap: (int _selectedNavigationIndex) {
@@ -84,7 +87,7 @@ class _BottomBarState extends State<BottomBar> {
     );
   }
 
-  Widget _individualTab(String imagePath) {
+  Widget _individualTab(String imagePath, tabColor) {
     return Container(
       height: 75 + MediaQuery.of(context).padding.bottom,
       padding: EdgeInsets.all(0),
@@ -94,12 +97,12 @@ class _BottomBarState extends State<BottomBar> {
               right: BorderSide(
                   color: Colors.grey.withOpacity(0.5), width: 2, style: BorderStyle.solid))),
       child: Tab(
-        icon: Image(
-          image: new AssetImage(imagePath),
-          color: null,
-          fit: BoxFit.scaleDown,
-          alignment: Alignment.center,
-        ),
+        icon: SvgPicture.asset(
+            imagePath,
+            height: 48,
+            width: 48,
+            color: tabColor,
+      )
       ),
     );
   }

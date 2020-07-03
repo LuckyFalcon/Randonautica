@@ -1,15 +1,17 @@
-import 'file:///C:/Users/David/AndroidStudioProjects/Randonautica/lib/pages/News/News.dart';
 import 'package:app/pages/Profile.dart';
 import 'package:app/pages/Shop/Shop.dart';
+import 'package:app/pages/Token/TokenInfo.dart';
 import 'package:app/utils/size_config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import '../pages/Shop/ShopModal.dart';
+import 'file:///C:/Users/David/AndroidStudioProjects/Randonautica/lib/pages/News/News.dart';
 
 class TopBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-
     return Container(
       height: SizeConfig.blockSizeVertical * 10,
       width: SizeConfig.blockSizeHorizontal * 100,
@@ -24,11 +26,29 @@ class TopBar extends StatelessWidget {
                 AssetImage('assets/img/Profile.png'),
                 color: Colors.white,
               ),
-              onPressed: () {
-                Navigator.of(context, rootNavigator: true)
-                    .push(new CupertinoPageRoute<bool>(
-                  builder: (BuildContext context) => new profile(),
-                ));
+              onPressed: ()  {
+                showModalBottomSheet(
+                    isScrollControlled: true,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.only(
+                          topLeft: const Radius.circular(90.0),
+                          topRight: const Radius.circular(90.0)),
+                    ),
+                    useRootNavigator: false,
+                    context: context,
+                    builder: (context) => Container(
+                      height: SizeConfig.blockSizeVertical * 90,
+                      decoration: new BoxDecoration(
+
+                          color: Theme.of(context).primaryColor,
+                          borderRadius: new BorderRadius.only(
+                              topLeft: const Radius.circular(90.0),
+                              topRight: const Radius.circular(90.0))),
+                      child: Container(
+                        height: SizeConfig.blockSizeVertical * 90,
+                        child: BS(),
+                      ),
+                    ));
               },
             ),
           ),
@@ -56,11 +76,24 @@ class TopBar extends StatelessWidget {
               icon: ImageIcon(AssetImage('assets/img/pods.png'),
                   size: 64.0, color: Colors.white),
               onPressed: () {
-//                openAlertBox(context);
-                Navigator.of(context, rootNavigator: true)
-                    .push(new CupertinoPageRoute<bool>(
-                  builder: (BuildContext context) => new Shop(),
-                ));
+                showModalBottomSheet(
+                  isScrollControlled: true,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.only(
+                          topLeft: const Radius.circular(90.0),
+                          topRight: const Radius.circular(90.0)),
+                    ),
+                    useRootNavigator: false,
+                    context: context,
+                    builder: (context) => Container(
+                          height: SizeConfig.blockSizeVertical * 90,
+                          decoration: new BoxDecoration(
+                              color: Theme.of(context).primaryColor,
+                              borderRadius: new BorderRadius.only(
+                                  topLeft: const Radius.circular(90.0),
+                                  topRight: const Radius.circular(90.0))),
+                          child: BS(),
+                        ));
               },
             ),
           ),

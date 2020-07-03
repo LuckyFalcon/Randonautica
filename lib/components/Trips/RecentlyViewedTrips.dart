@@ -24,7 +24,7 @@ class _RecentlyViewedTrips extends State<RecentlyViewedTrips> {
       children: <Widget>[
         Column(
           children: <Widget>[
-            (this.widget._LoggedTripList.length > 1
+            (this.widget._LoggedTripList.length > 2
                 ? Container(
                     width: 80,
                     height: 80,
@@ -56,7 +56,7 @@ class _RecentlyViewedTrips extends State<RecentlyViewedTrips> {
                 : Container(width: 64, height: 64)),
             SizedBox(height: 10),
 
-            (this.widget._LoggedTripList.length > 1
+            (this.widget._LoggedTripList.length > 2
                 ? Text(this.widget._LoggedTripList[1].title,
                     textAlign: TextAlign.center,
                     style: TextStyle(fontSize: 16, color: Colors.white))
@@ -82,7 +82,7 @@ class _RecentlyViewedTrips extends State<RecentlyViewedTrips> {
                         borderRadius: BorderRadius.circular(15),
                         image: DecorationImage(
                             image: FileImage(File(
-                              this.widget._LoggedTripList[1].imagelocation,
+                              this.widget._LoggedTripList[0].imagelocation,
                             )),
                             fit: BoxFit.cover),
                         boxShadow: [
@@ -96,7 +96,6 @@ class _RecentlyViewedTrips extends State<RecentlyViewedTrips> {
                 ))
                 : Container(width: 64, height: 64)),
             SizedBox(height: 10),
-
             (this.widget._LoggedTripList.length > 0
                 ? Text(this.widget._LoggedTripList[0].title,
                 textAlign: TextAlign.center,
@@ -106,7 +105,7 @@ class _RecentlyViewedTrips extends State<RecentlyViewedTrips> {
         ),
         Column(
           children: <Widget>[
-            (this.widget._LoggedTripList.length > 2
+            (this.widget._LoggedTripList.length > 3
                 ? Container(
                 width: 80,
                 height: 80,
@@ -137,7 +136,7 @@ class _RecentlyViewedTrips extends State<RecentlyViewedTrips> {
                 ))
                 : Container(width: 64, height: 64)),
             SizedBox(height: 10),
-            (this.widget._LoggedTripList.length > 2
+            (this.widget._LoggedTripList.length > 3
                 ? Text(this.widget._LoggedTripList[2].title,
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 16, color: Colors.white))

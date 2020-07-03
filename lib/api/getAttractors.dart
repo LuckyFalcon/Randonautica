@@ -24,10 +24,13 @@ Future<Attractors> fetchAttractors(int radius, double x, double y) async {
 //      },
 //  );
 
-  final response = await http.get('https://api2.randonauts.com/v2/getattractors?radius='+radius.toString() + '&x='+x.toString() + '&y='+y.toString()+'&raw=false&selected=attractor&entropy=ANU');
+//  final response = await http.get('https://api2.randonauts.com/v2/getattractors?radius='+radius.toString() + '&x='+x.toString() + '&y='+y.toString()+'&raw=false&selected=attractor&entropy=ANU');
+
+    final response = await http.get('http://192.168.1.217:7071/getattractors?radius='+radius.toString() + '&x='+x.toString() + '&y='+y.toString()+'&raw=false&selected=Attractor&entropy=ANU');
 
   print(response);
   if (response.statusCode == 200) {
+    print('reachedandgotattractors');
     return Attractors.fromJson(json.decode(response.body));
   } else {
     throw Exception('Failed to load album');

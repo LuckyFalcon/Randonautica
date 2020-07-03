@@ -1,14 +1,21 @@
+import 'package:app/helpers/Dialogs.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../helpers/AppLocalizations.dart';
+import 'package:app/utils/currentUser.dart' as globals;
 
 class SetWaterPoints extends StatefulWidget {
   State<StatefulWidget> createState() => new _SetWater();
 }
 
 class _SetWater extends State<SetWaterPoints> {
+  double _sigmaX = 0.0; // from 0-10
+  double _sigmaY = 0.0; // from 0-10
+  double _opacity = 0.1; // from 0-1.0
+
   bool waterPointsEnabled = false;
+  bool waterPointsBought = false;
 
   @override
   void initState() {
@@ -17,27 +24,31 @@ class _SetWater extends State<SetWaterPoints> {
 
   void setWaterPointsEnabled() {
     setState(() {
-      if(waterPointsEnabled){
-        waterPointsEnabled = false;
+      if(globals.currentUser.isIapSkipWaterPoints != 0){
+        if(waterPointsEnabled){
+          waterPointsEnabled = false;
+        } else {
+          ///Check if WaterPoints bought
+          waterPointsEnabled = true;
+        }
       } else {
-        ///Check if WaterPoints bought
-        waterPointsEnabled = true;
+        setBuyDialog(context);
       }
+
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-        height: 150.0,
-        width: 110.0,
-        child: Column(
+    return  Column(
           children: <Widget>[
             Text(AppLocalizations.of(context).translate('water').toUpperCase(),
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: 20,
+                    fontSize: 15,
                     color: Colors.white)),
+
+
             (waterPointsEnabled
                 ? GestureDetector(
                     onTap: () {
@@ -49,7 +60,7 @@ class _SetWater extends State<SetWaterPoints> {
                             .toUpperCase(),
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            fontSize: 46,
+                            fontSize: 40,
                             color: Colors.white)),
                   )
                 : GestureDetector(
@@ -62,15 +73,16 @@ class _SetWater extends State<SetWaterPoints> {
                             .toUpperCase(),
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            fontSize: 46,
+                            fontSize: 40,
                             color: Color(0xff64E4FF))),
-                  )),
-            Text(AppLocalizations.of(context).translate('points').toUpperCase(),
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                    color: Colors.white)),
+                  )
+            ),
+//            Text(AppLocalizations.of(context).translate('points').toUpperCase(),
+//                style: TextStyle(
+//                    fontWeight: FontWeight.bold,
+//                    fontSize: 20,
+//                    color: Colors.white)),
           ],
-        ));
+        );
   }
 }

@@ -56,10 +56,8 @@ class Randonautica extends StatelessWidget {
           ),
         ),
         builder: (context) => PlatformApp(
-
             //Title
             title: 'Randonautica',
-
             //Theme Data
             android: (_) {
               return new MaterialAppData(
@@ -156,7 +154,12 @@ class _HomePageState extends State<HomePage> {
           height: SizeConfig.blockSizeVertical * 100,
           width: SizeConfig.blockSizeHorizontal * 100,
           decoration: (selectedNavigationIndex == 3
-              ? backgrounds.dark
+              ? BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  stops: [0, 5.0],
+                  colors: [Color(0xff383B46), Color(0xff5786E1)]))
               : backgrounds.normal),
           child: Column(children: <Widget>[
             TopBar(),
@@ -166,7 +169,6 @@ class _HomePageState extends State<HomePage> {
                 TripFeed(),
                 TripList(key: _TripListKey),
                 Lab(this.openLabCallback),
-
               ],
               index: selectedNavigation,
             ),

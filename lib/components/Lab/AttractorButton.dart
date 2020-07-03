@@ -29,7 +29,7 @@ class _AttractorButton extends State<AttractorButton> {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 30.0,
-      width: 110.0,
+      width: 120.0,
       child: new ButtonTheme(
         minWidth: 120.0,
         height: 10.0,
@@ -47,7 +47,7 @@ class _AttractorButton extends State<AttractorButton> {
               AppLocalizations.of(context)
                   .translate('attractor')
                   .toUpperCase(),
-            style: TextStyle(fontSize: 13)),
+              style: TextStyle(fontSize: 15)),
         ),
       ),
     );

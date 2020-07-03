@@ -1,7 +1,8 @@
-import 'package:app/helpers/RadiusInput.dart';
+import 'dart:ui';
+
+import 'package:app/utils/size_config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 
 import 'AppLocalizations.dart';
 import 'RadiusSlider.dart';
@@ -171,7 +172,10 @@ setRadiusDialog(BuildContext context, callback) {
             AppLocalizations.of(context).translate('change_radius_dialog_text'),
           ),
           actions: <Widget>[
-            CupertinoTextField(placeholder: AppLocalizations.of(context).translate('radius_initial_text'), controller: _radiusInputController),
+            CupertinoTextField(
+                placeholder: AppLocalizations.of(context)
+                    .translate('radius_initial_text'),
+                controller: _radiusInputController),
             CupertinoDialogAction(
               isDefaultAction: true,
               onPressed: () {
@@ -188,6 +192,155 @@ setRadiusDialog(BuildContext context, callback) {
               ),
             )
           ],
+        );
+      });
+}
+
+setBuyDialog(BuildContext context) {
+
+  showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return new BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+          child: Align(
+            alignment: Alignment.center,
+            child: Container(
+              height: SizeConfig.blockSizeVertical * 40,
+              width: SizeConfig.blockSizeHorizontal * 80,
+              child: Stack(
+                children: <Widget>[
+                  Container(
+                      height: SizeConfig.blockSizeVertical * 30,
+                      width: SizeConfig.blockSizeHorizontal * 80,
+
+                      ///This is 70% of the Vertical / Height for this container in this class
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(45.0)),
+                        border: Border.all(width: 10, color: Colors.white),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.2),
+                            spreadRadius: 4,
+                            blurRadius: 10,
+                            offset: Offset(0, 6), // changes position of shadow
+                          ),
+                        ],
+                      ),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.all(Radius.circular(45.0)),
+                          border:
+                              Border.all(width: 1, color: Color(0xffB1B1B1)),
+                        ),
+                        child: Column(
+                          children: <Widget>[
+                            ImageIcon(AssetImage('assets/img/Owl.png'),
+                                color: Colors.green, size: 64),
+                            Text(
+                                AppLocalizations.of(context)
+                                    .translate('uh_oh')
+                                    .toUpperCase(),
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15,
+                                    color: Colors.blue)),
+                            Text(
+                                AppLocalizations.of(context)
+                                    .translate('access_when_premium')
+                                    .toUpperCase(),
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15,
+                                    color: Colors.blue)),
+                            Container(
+                                width: 250,
+                                height: 60,
+                                decoration: BoxDecoration(
+                                    color: Color(0xff5D7FE0),
+                                    borderRadius: BorderRadius.circular(30),
+                                    boxShadow: []),
+                                child: RaisedButton(
+                                  elevation: 15,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(30.0),
+                                  ),
+                                  padding: EdgeInsets.zero,
+                                  child: Center(
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: <Widget>[
+                                        SizedBox(width: 6),
+                                        Text(
+                                            AppLocalizations.of(context)
+                                                .translate('go_to_store')
+                                                .toUpperCase(),
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold)),
+                                        SizedBox(width: 10),
+                                        Icon(
+                                          Icons.arrow_forward,
+                                          size: 12,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  onPressed: () {},
+                                  color: Color(0xff44C5DB),
+                                ))
+                          ],
+                        ),
+                      )),
+                  Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Container(
+                          width: 250,
+                          height: 60,
+                          decoration: BoxDecoration(
+                              color: Color(0xff5D7FE0),
+                              borderRadius: BorderRadius.circular(30),
+                              boxShadow: []),
+                          child: RaisedButton(
+                            elevation: 15,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30.0),
+                            ),
+                            padding: EdgeInsets.zero,
+                            child: Center(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  SizedBox(width: 6),
+                                  Text(
+                                      AppLocalizations.of(context)
+                                          .translate('go_to_store')
+                                          .toUpperCase(),
+                                      style: TextStyle(
+                                          fontSize: 14,
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold)),
+                                  SizedBox(width: 10),
+                                  Icon(
+                                    Icons.arrow_forward,
+                                    size: 12,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            onPressed: () {},
+                            color: Color(0xff44C5DB),
+                          )))
+                ],
+              ),
+            ),
+          ),
         );
       });
 }

@@ -1,29 +1,27 @@
-import 'package:app/api/createUser.dart';
+import 'dart:io';
+
 import 'package:app/helpers/AppLocalizations.dart';
 import 'package:app/helpers/FadeRoute.dart';
 import 'package:app/helpers/FadingCircleLoading.dart';
 import 'package:app/helpers/storage/setupDatabases.dart';
-import 'package:app/helpers/storage/createDatabases.dart';
+import 'package:app/helpers/storage/userDatabase.dart';
 import 'package:app/main.dart';
+import 'package:app/models/User.dart';
 import 'package:app/pages/start/Login.dart';
+import 'package:app/utils/currentUser.dart' as globals;
 import 'package:app/utils/size_config.dart';
 import 'package:device_info/device_info.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:location_permissions/location_permissions.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:upgrader/upgrader.dart';
-
-import 'dart:io';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:package_info/package_info.dart';
-import 'package:firebase_remote_config/firebase_remote_config.dart';
-
-import 'Invite.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 GoogleSignIn _googleSignIn = GoogleSignIn(
   scopes: <String>[
@@ -43,7 +41,6 @@ class _LoadingState extends State<Loading> {
 
   //Set SharedPreferences
   Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
-
 
   var APP_STORE_URL =
       'https://phobos.apple.com/WebObjects/MZStore.woa/wa/viewSoftwareUpdate?id=YOUR-APP-ID&mt=8';
@@ -99,6 +96,13 @@ class _LoadingState extends State<Loading> {
                                   ModalRoute.withName("/Login"));
                             }));
                   }
+                }))
+            .catchError(
+                (onError) => Future.delayed(Duration(seconds: 3), () {
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      FadeRoute(page: Login()),
+                      ModalRoute.withName("/Login"));
                 }));
       }
     } on FetchThrottledException catch (exception) {
@@ -165,20 +169,22 @@ class _LoadingState extends State<Loading> {
     //Await SharedPreferences future object
     final SharedPreferences prefs = await _prefs;
 
-    if(prefs.getBool("Account") == true ){
+    if (prefs.getBool("Account") == true) {
       //Get current user
       FirebaseUser _user = await FirebaseAuth.instance.currentUser();
 
-      if(_user != null){
+      if (_user != null) {
         //Recieve token from user
         var token = await _user.getIdToken();
 
         print('usertoken: ' + token.token);
 
         await prefs.setString("authToken", token.token);
-
       }
-
+      User user = await RetrieveUser();
+      print('respect' + user.points.toString());
+      globals.currentUser = user;
+      print('respectresec' + globals.currentUser.points.toString());
       return _user;
     }
   }

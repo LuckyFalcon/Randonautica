@@ -32,8 +32,14 @@ class LoadingPoints extends StatelessWidget {
             builder:
                 (BuildContext context, AsyncSnapshot<Attractors> snapshot) {
               if (snapshot.hasData) {
+                print("gotten:"+snapshot.data.x.toString());
+                snapshot.data.gID.toString();
                 Navigator.pop(context); //Go back to previous navigation item
                 callback(snapshot.data);
+              }
+              if(snapshot.hasError){
+                print("gotten:"+snapshot.error.toString());
+
               }
               return Center(
                 child: Column(children: <Widget>[

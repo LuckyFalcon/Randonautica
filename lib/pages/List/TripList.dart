@@ -199,41 +199,16 @@ class TripListState extends State<TripList> {
                                   itemBuilder:
                                       (BuildContext context, int index) {
                                     return loggedListWidget(
-                                        gid: _LoggedTripList[index].gid,
                                         location:
                                             _LoggedTripList[index].location,
                                         datetime:
-                                            _LoggedTripList[index].datetime,
-                                        latitude:
-                                            _LoggedTripList[index].latitude,
-                                        longitude:
-                                            _LoggedTripList[index].longitude,
-                                        radius: _LoggedTripList[index].radius,
-                                        type: _LoggedTripList[index].type,
-                                        power: _LoggedTripList[index].power,
-                                        zScore: _LoggedTripList[index].zScore,
-                                        pseudo: _LoggedTripList[index].pseudo,
+                                            _LoggedTripList[index].created,
                                         title: _LoggedTripList[index].title,
                                         imagelocation: _LoggedTripList[index]
                                             .imagelocation,
-                                        text: _LoggedTripList[index].text,
-                                        tagList: [
-                                          _LoggedTripList[index].tag1,
-                                          _LoggedTripList[index].tag2,
-                                          _LoggedTripList[index].tag3,
-                                          _LoggedTripList[index].tag4,
-                                          _LoggedTripList[index].tag5,
-                                          _LoggedTripList[index].tag6,
-                                          _LoggedTripList[index].tag7,
-                                          _LoggedTripList[index].tag8,
-                                          _LoggedTripList[index].tag9,
-                                          _LoggedTripList[index].tag10,
-                                          _LoggedTripList[index].tag11,
-                                          _LoggedTripList[index].tag12,
-                                          _LoggedTripList[index].tag13,
-                                          _LoggedTripList[index].tag14,
-                                          _LoggedTripList[index].tag15
-                                        ]);
+                                        text: _LoggedTripList[index].report,
+
+                                    );
                                   }))
                               : Container(
                                   padding: EdgeInsets.only(left: 20),
@@ -277,18 +252,11 @@ class TripListState extends State<TripList> {
                               physics: ScrollPhysics(),
                               itemCount: unloggedTrips.length,
                               itemBuilder: (BuildContext context, int index) {
+                                print('created'+unloggedTrips[index].created);
                                 return unloggedListWidget(
                                   id: unloggedTrips[index].id,
-                                  gid: unloggedTrips[index].gid,
                                   location: unloggedTrips[index].location,
-                                  datetime: unloggedTrips[index].datetime,
-                                  latitude: unloggedTrips[index].latitude,
-                                  longitude: unloggedTrips[index].longitude,
-                                  radius: unloggedTrips[index].radius,
-                                  type: unloggedTrips[index].type,
-                                  power: unloggedTrips[index].power,
-                                  zScore: unloggedTrips[index].zScore,
-                                  pseudo: unloggedTrips[index].pseudo,
+                                  created: unloggedTrips[index].created,
                                 );
                               }),
                           (_LoggedTripList.length > 0
@@ -323,36 +291,17 @@ class unloggedListWidget extends StatelessWidget {
 
   Function callback;
   int id;
-  String gid;
   String location;
-  String datetime;
-  String latitude;
-  String longitude;
-  String radius;
-  String type;
-  String power;
-  String zScore;
-  String pseudo;
-  String report;
+  String created;
 
   unloggedListWidget(
       {Key key,
       this.callback,
       this.id,
-      this.gid,
       this.location,
-      this.datetime,
-      this.latitude,
-      this.longitude,
-      this.radius,
-      this.type,
-      this.power,
-      this.zScore,
-      this.pseudo,
-      this.report})
+      this.created,})
       : super(key: key);
 
-//  const listWidget({Key key, this.location, this.dateTime}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -372,7 +321,7 @@ class unloggedListWidget extends StatelessWidget {
             Expanded(
               flex: 3,
               child: Text(
-                dateFormatter.format(DateTime.parse(datetime)),
+                dateFormatter.format(DateTime.parse(created)),
                 textAlign: TextAlign.left,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
@@ -380,14 +329,13 @@ class unloggedListWidget extends StatelessWidget {
             ),
             Expanded(
               flex: 1,
-              child:   Text(
+              child: Text(
                 location,
                 textAlign: TextAlign.right,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
               ),
             ),
-
           Expanded(
               flex: 0,
               child:  IconButton(
@@ -399,23 +347,20 @@ class unloggedListWidget extends StatelessWidget {
                   ),
                   tooltip: 'Increase volume by 10',
                   onPressed: () {
+//                    logUnloggedTrip(
+//                      this.location,
+//                      this.created,
+//
+//
+//                    );
                     Navigator.push(
                       context,
                       FadeRoute(
                           page: UnloggedTripDetails(
                             this.callback,
                             this.id,
-                            this.gid,
                             this.location,
-                            this.datetime,
-                            this.latitude,
-                            this.longitude,
-                            this.radius,
-                            this.type,
-                            this.power,
-                            this.zScore,
-                            this.pseudo,
-                            this.report,
+                            this.created,
                           )),
                     );
                   }),

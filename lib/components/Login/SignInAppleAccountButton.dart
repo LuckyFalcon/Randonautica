@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:app/api/createUser.dart';
+import 'package:app/api/signInBackend.dart';
 import 'package:app/utils/size_config.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -121,7 +121,7 @@ class _SignInAppleAccountButtonState extends State<SignInAppleAccountButton> {
       var token = await currentUser.getIdToken();
 
       ///Send request to back-end
-      return await signBackendGoogle(token.token.toString());
+      return await signBackendApple(token.token.toString());
     } catch (error) {
       return 500;
     }
@@ -153,7 +153,7 @@ class _SignInAppleAccountButtonState extends State<SignInAppleAccountButton> {
       var token = await currentUser.getIdToken();
 
       ///Send request to back-end
-      return await signBackendGoogle(token.token.toString());
+      return await signBackendApple(token.token.toString());
 
     } catch (error) {
       return 500;

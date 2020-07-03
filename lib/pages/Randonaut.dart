@@ -1,16 +1,13 @@
 import 'dart:async';
 
-import 'package:app/components/Lab/ANUButton.dart';
 import 'package:app/components/Lab/AnomalyButton.dart';
 import 'package:app/components/Lab/AttractorButton.dart';
-import 'package:app/components/Lab/CameraRNGButton.dart';
-import 'package:app/components/Lab/ComScireButton.dart';
+import 'package:app/components/Lab/ButtonGoMainPage.dart';
 import 'package:app/components/Lab/VoidButton.dart';
 import 'package:app/components/Randonaut/ButtonGoMainPage.dart';
 import 'package:app/components/Randonaut/HelpButton.dart';
 import 'package:app/components/Randonaut/LoadingPoints.dart';
 import 'package:app/components/Randonaut/OpenMapsButton.dart';
-import 'package:app/components/Randonaut/RandonautMap.dart';
 import 'package:app/components/Randonaut/SetRadius.dart';
 import 'package:app/components/Randonaut/SetWaterPoints.dart';
 import 'package:app/components/Randonaut/StartOverButton.dart';
@@ -44,6 +41,10 @@ class Randonaut extends StatefulWidget {
 }
 
 class RandonautState extends State<Randonaut> {
+  ///Go Buttons
+  bool pressGoButtonMain = false;
+  bool pressGoButtonLab = false;
+
   ///Buttons
   bool pointsSucesfullyGenerated = false;
   bool pressOpenMapsButton = false;
@@ -77,7 +78,6 @@ class RandonautState extends State<Randonaut> {
   // for my drawn routes on the map (Polyline)
   Set<Polyline> _polylines = Set<Polyline>();
   List<LatLng> polylineCoordinates = [];
-//  PolylinePoints polylinePoints;
 
   // for my custom marker pins
   BitmapDescriptor sourceIcon;
@@ -114,32 +114,16 @@ class RandonautState extends State<Randonaut> {
   MarkerId selectedMarker;
   int _markerIdCounter = 1;
 
-  @override
-  void initState() {
-    super.initState();
-
-    // create an instance of Location
-    location = new Location();
-    // polylinePoints = PolylinePoints();
-
-    // subscribe to changes in the user's location
-    // by "listening" to the location's onLocationChanged event
-    location.onLocationChanged().listen((LocationData cLoc) {
-      // cLoc contains the lat and long of the
-      // current user's position in real time,
-      // so we're holding on to it
-      currentLocation = cLoc;
-      updatePinOnMap();
+  void callbackGoButtonMainPage(bool pressGoButton) {
+    //controller.setMapStyle(MapStyles.DarkStyle);
+    setState(() {
+      onAddMarkerButtonPressed();
     });
-    // set custom marker pins
-    setSourceAndDestinationIcons();
-    // set the initial location
-    setInitialLocation();
-
-    print('reachedcreating');
   }
 
-  void callback(bool pressGoButton) {
+  void callbackGoButtonLab(bool pressGoLabButton) {
+    //controller.setMapStyle(MapStyles.DarkStyle);
+    pressGoButtonLab = true;
     setState(() {
       onAddMarkerButtonPressed();
     });
@@ -148,7 +132,8 @@ class RandonautState extends State<Randonaut> {
   void callbackOpenMaps(bool pressOpenMapsButton) {
     setState(() {
       this.pressOpenMapsButton = pressOpenMapsButton;
-      MapUtils.openMap(attractorCoordinates.latitude, attractorCoordinates.longitude);
+      MapUtils.openMap(
+          attractorCoordinates.latitude, attractorCoordinates.longitude);
     });
   }
 
@@ -157,58 +142,6 @@ class RandonautState extends State<Randonaut> {
       this.pressStartOverButton = pressOpenMapsButton;
       pointsSucesfullyGenerated = false;
       _markers = {};
-    });
-  }
-
-  void callbackLoadingPoints(Attractors attractors) async {
-    this.pointsSucesfullyGenerated = true;
-    attractorCoordinates = new LatLng(
-        attractors.points[0].center.point.latitude,
-        attractors.points[0].center.point.longitude);
-
-    ///Todo add localidentifier as optional as it doesn't pick it up somehow
-    ///https://pub.dev/packages/geolocator
-    var location = await Geolocator().placemarkFromCoordinates(
-        attractors.points[0].center.point.latitude,
-        attractors.points[0].center.point.longitude,
-        localeIdentifier: "fi_FI"
-
-      ///Locale for Local GeoLocator
-    );
-
-    //Log trips
-    final fido = UnloggedTrip(
-      gid: attractors.points[0].gID.toString(),
-      location: location[0].administrativeArea.toString(),
-      datetime: DateTime.now().toIso8601String(),
-      latitude: attractorCoordinates.latitude.toString(),
-      longitude: attractorCoordinates.longitude.toString(),
-      radius: attractors.points[0].radiusM.toString(),
-      type: attractors.points[0].type.toString(),
-      power: attractors.points[0].radiusM.toString(),
-      zScore: attractors.points[0].zScore.toString(),
-      pseudo: 0.toString(),
-      report: 0.toString(),
-    );
-    await insertUnloggedTrip(fido);
-    setState(() {
-      controller.moveCamera(CameraUpdate.newLatLngZoom(
-          LatLng(attractorCoordinates.latitude, attractorCoordinates.longitude),
-          10));
-
-      //CAMERA_ZOOM = 1; //Change zoom
-      _markers.add(Marker(
-        // This marker id can be anything that uniquely identifies each marker.
-        markerId: MarkerId(attractorCoordinates.toString()),
-        position: attractorCoordinates,
-        infoWindow: InfoWindow(
-          title: 'Really cool place',
-          snippet: '5 Star Rating',
-        ),
-        icon: BitmapDescriptor.defaultMarker,
-      ));
-
-      //this.widget.callback();
     });
   }
 
@@ -261,8 +194,31 @@ class RandonautState extends State<Randonaut> {
     });
   }
 
-  void pointsGeneratedCallback(bool pointsSuccesfullyGenerated){
+  void pointsGeneratedCallback(bool pointsSuccesfullyGenerated) {
     this.pointsSucesfullyGenerated = pointsSuccesfullyGenerated;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    // create an instance of Location
+    location = new Location();
+    // polylinePoints = PolylinePoints();
+
+    // subscribe to changes in the user's location
+    // by "listening" to the location's onLocationChanged event
+    location.onLocationChanged().listen((LocationData cLoc) {
+      // cLoc contains the lat and long of the
+      // current user's position in real time,
+      // so we're holding on to it
+      currentLocation = cLoc;
+      updatePinOnMap();
+    });
+    // set custom marker pins
+    setSourceAndDestinationIcons();
+    // set the initial location
+    setInitialLocation();
   }
 
   @override
@@ -284,7 +240,7 @@ class RandonautState extends State<Randonaut> {
     return Column(
       children: <Widget>[
         Container(
-          height: SizeConfig.blockSizeVertical * 61,
+          height: SizeConfig.blockSizeVertical * 55,
 
           ///This is 70% of the Vertical / Height for this container in this class
           width: SizeConfig.blockSizeHorizontal * 80,
@@ -293,7 +249,8 @@ class RandonautState extends State<Randonaut> {
           child: Stack(
             children: <Widget>[
               Container(
-                height: SizeConfig.blockSizeVertical * 58,
+                height: SizeConfig.blockSizeVertical * 52,
+
                 ///This is 70% of the Vertical / Height for this container in this class
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(45.0)),
@@ -337,218 +294,293 @@ class RandonautState extends State<Randonaut> {
               ),
               Align(
                   alignment: Alignment.bottomCenter,
-                  child:
-                  (pointsSucesfullyGenerated ? SizedBox(height: 0) : ButtonGoMainPage(this.callback, pointsSucesfullyGenerated))
-              )
+                  child: (pointsSucesfullyGenerated
+                      ? SizedBox(height: 0)
+                      : (this.widget.index == 0
+                          ? ButtonGoMainPage(this.callbackGoButtonMainPage,
+                              pointsSucesfullyGenerated)
+                          : ButtonGoLab(this.callbackGoButtonLab,
+                              pointsSucesfullyGenerated))))
             ],
           ),
         ),
         SizedBox(height: SizeConfig.blockSizeVertical * 2),
-        (this.widget.index == 0
-            ? Container(
-                height: SizeConfig.blockSizeVertical * 15,
-                width: SizeConfig.blockSizeHorizontal * 100,
-                child: (pointsSucesfullyGenerated
-                    ? Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                              Row(
-                                children: <Widget>[
-                                  Align(
-                                    alignment: Alignment.topRight,
-                                    child: Image(
-                                      image: new AssetImage(
-                                          'assets/img/navigate_round.png'),
-                                      alignment: Alignment.topCenter,
-                                    ),
-                                  ),
-                                  SizedBox(width: SizeConfig.blockSizeHorizontal * 3),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Text(
-                                        'Address of Point',
-                                        textAlign: TextAlign.left,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white),
-                                      ),
-                                      Text(
-                                        'POINT TYPE',
-                                        textAlign: TextAlign.left,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: Color(0xff5987E3)),
-                                      ),
-                                      Row(children: [
-                                        //Buttons
-                                        StartOverButton(this.callbackStartOver,
-                                            pressStartOverButton),
-                                        SizedBox(width: SizeConfig.blockSizeHorizontal * 5),
-                                        OpenMapsButton(this.callbackOpenMaps,
-                                            pressOpenMapsButton),
-                                      ]),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ],
-
-
-                      )
-                    : Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SetRadius(),
-                          SizedBox(width: SizeConfig.blockSizeHorizontal * 5),
-                          HelpButton(),
-                          SizedBox(width: SizeConfig.blockSizeHorizontal * 5),
-                          SetWaterPoints(),
-                        ],
-                      )),
-              )
-            : Container(
-                height: SizeConfig.blockSizeVertical * 15,
-                width: SizeConfig.blockSizeHorizontal * 100,
-                child: (pointsSucesfullyGenerated
-                    ? Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Row(
-                                children: <Widget>[
-                                  Image(
-                                    image: new AssetImage(
-                                        'assets/img/navigate_round.png'),
-                                    color: null,
-                                    fit: BoxFit.fill,
-                                    alignment: Alignment.center,
-                                  ),
-                                  SizedBox(width: 5),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Text(
-                                        'Address of Point',
-                                        textAlign: TextAlign.left,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white),
-                                      ),
-                                      Text(
-                                        'POINT TYPE',
-                                        textAlign: TextAlign.left,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: Color(0xff5987E3)),
-                                      ),
-                                      Row(children: [
-                                        //Buttons
-                                        StartOverButton(this.callbackStartOver,
-                                            pressStartOverButton),
-                                        SizedBox(width: 20),
-                                        OpenMapsButton(this.callbackOpenMaps,
-                                            pressOpenMapsButton),
-                                      ]),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ],
+//        Container(
+//          height: SizeConfig.blockSizeVertical * 15,
+//          width: SizeConfig.blockSizeHorizontal * 100,
+//          child: (pointsSucesfullyGenerated
+//              ? Row(
+//                  mainAxisAlignment: MainAxisAlignment.center,
+//                  children: [
+//                    Row(
+//                      children: <Widget>[
+//                        Align(
+//                          alignment: Alignment.topRight,
+//                          child: Image(
+//                            image:
+//                                new AssetImage('assets/img/navigate_round.png'),
+//                            alignment: Alignment.topCenter,
+//                          ),
+//                        ),
+//                        SizedBox(width: SizeConfig.blockSizeHorizontal * 3),
+//                        Column(
+//                          crossAxisAlignment: CrossAxisAlignment.start,
+//                          children: <Widget>[
+//                            Text(
+//                              'Address of Point',
+//                              textAlign: TextAlign.left,
+//                              overflow: TextOverflow.ellipsis,
+//                              style: TextStyle(
+//                                  fontWeight: FontWeight.bold,
+//                                  color: Colors.white),
+//                            ),
+//                            Text(
+//                              'POINT TYPE',
+//                              textAlign: TextAlign.left,
+//                              overflow: TextOverflow.ellipsis,
+//                              style: TextStyle(
+//                                  fontWeight: FontWeight.bold,
+//                                  color: Color(0xff5987E3)),
+//                            ),
+//                            Row(children: [
+//                              //Buttons
+//                              StartOverButton(
+//                                  this.callbackStartOver, pressStartOverButton),
+//                              SizedBox(
+//                                  width: SizeConfig.blockSizeHorizontal * 5),
+//                              OpenMapsButton(
+//                                  this.callbackOpenMaps, pressOpenMapsButton),
+//                            ]),
+//                          ],
+//                        ),
+//                      ],
+//                    ),
+//                  ],
+//                )
+//              : Row(
+//                  crossAxisAlignment: CrossAxisAlignment.center,
+//                  mainAxisAlignment: MainAxisAlignment.center,
+//                  children: [
+//                    SetRadius(),
+//                    (this.widget.index == 0
+//                        ? SizedBox(width: SizeConfig.blockSizeHorizontal * 6.8)
+//                        : SizedBox(width: SizeConfig.blockSizeHorizontal * 1)),
+//                    //,
+//                    (this.widget.index == 0
+//                        ? HelpButton()
+//                        : (pressGoButtonLab
+//                            ? Column(
+//                                children: [
+//                                  AnomalyButton(this.callbackAnomalyButton),
+//                                  SizedBox(height: 7),
+//                                  AttractorButton(this.callbackAttractorButton),
+//                                  SizedBox(height: 7),
+//                                  VoidButton(this.callbackVoidButton),
+//                                ],
+//                              )
+//                            : Column(
+//                                children: [
+//                                  AnomalyButton(this.callbackAnomalyButton),
+//                                  SizedBox(height: 7),
+//                                  AttractorButton(this.callbackAttractorButton),
+//                                  SizedBox(height: 7),
+//                                  VoidButton(this.callbackVoidButton),
+//                                ],
+//                              ))),
+//                    (this.widget.index == 0
+//                        ? SizedBox(width: SizeConfig.blockSizeHorizontal * 6.7)
+//                        : SizedBox(width: SizeConfig.blockSizeHorizontal * 1)),
+//                    SetWaterPoints(),
+//                  ],
+//                )),
+//        )
+        Container(
+          height: SizeConfig.blockSizeVertical * 20,
+          width: SizeConfig.blockSizeHorizontal * 100,
+          child: (pointsSucesfullyGenerated
+              ? Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Row(
+                      children: <Widget>[
+                        Align(
+                          alignment: Alignment.topRight,
+                          child: Image(
+                            image:
+                                new AssetImage('assets/img/navigate_round.png'),
+                            alignment: Alignment.topCenter,
                           ),
-                        ],
-                      )
-                    : Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Column(
-                            children: [
-                              AnomalyButton(this.callbackAnomalyButton),
-                              SizedBox(height: 7),
-                              AttractorButton(this.callbackAttractorButton),
-                              SizedBox(height: 7),
-                              VoidButton(this.callbackVoidButton),
-                            ],
-                          ),
-                          SizedBox(width: SizeConfig.blockSizeHorizontal * 2),
-                          SizedBox(
-                            width: 60,
-                            child: Column(
-                              children: [
-                                Text(
-                                  'Radius',
-                                  textAlign: TextAlign.center,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white
-                                  ),
-                                ),
-                                Text(
-                                  '20',
-                                  textAlign: TextAlign.center,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 30,
-                                      color: Colors.white
-                                  ),
-                                ),
-                                Text(
-                                  'MILES',
-                                  textAlign: TextAlign.center,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 12,
-                                      color: Colors.white
-                                  ),
-                                )
-                              ],
+                        ),
+                        SizedBox(width: SizeConfig.blockSizeHorizontal * 3),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              'Address of Point',
+                              textAlign: TextAlign.left,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),
                             ),
-                          ),
-                          SizedBox(width: SizeConfig.blockSizeHorizontal * 2),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              ANUButton(this.callbackANUButton),
-                              SizedBox(height: 10),
-                              CameraRNGButton(this.callbackCameraRNGButton),
-                              SizedBox(height: 10),
-                              ComScireButton(this.callbackComScireButton),
-                            ],
-                          ),
-                        ],
-                      )),
-              ))
+                            Text(
+                              'POINT TYPE',
+                              textAlign: TextAlign.left,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Color(0xff5987E3)),
+                            ),
+                            Row(children: [
+                              //Buttons
+                              StartOverButton(
+                                  this.callbackStartOver, pressStartOverButton),
+                              SizedBox(
+                                  width: SizeConfig.blockSizeHorizontal * 5),
+                              OpenMapsButton(
+                                  this.callbackOpenMaps, pressOpenMapsButton),
+                            ]),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
+                )
+              : Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        SetRadius(),
+                        SizedBox(height: 10),
+                        AnomalyButton(this.callbackAnomalyButton),
+                        SizedBox(height: 5),
+                        AnomalyButton(this.callbackAnomalyButton),
+
+                      ],
+                    ),
+                    SizedBox(width: 25),
+                    HelpButton(),
+                    SizedBox(width: 25),
+                    Column(
+                      children: <Widget>[
+                        SetWaterPoints(),
+                        Column(
+                          children: [
+                            AnomalyButton(this.callbackAnomalyButton),
+                            SizedBox(height: 5),
+                            AttractorButton(this.callbackAttractorButton),
+                            SizedBox(height: 5),
+                            VoidButton(this.callbackVoidButton),
+                          ],
+                        )
+                      ],
+                    ),
+                  ],
+                )),
+        )
       ],
     );
   }
 
   void onAddMarkerButtonPressed() async {
-    Navigator.push(context, FadeRoute(page: LoadingPoints(callbackLoadingPoints, 3000, currentLocation)));
+    Navigator.push(
+        context,
+        FadeRoute(
+            page: LoadingPoints(callbackLoadingPoints, 3000, currentLocation)));
+  }
+
+  void callbackLoadingPoints(Attractors attractors) async {
+    this.pointsSucesfullyGenerated = true;
+    attractorCoordinates = new LatLng(
+        attractors.center.point.latitude, attractors.center.point.longitude);
+
+    ///Todo add localidentifier as optional as it doesn't pick it up somehow
+    ///https://pub.dev/packages/geolocator
+    var location = await Geolocator().placemarkFromCoordinates(
+      attractors.center.point.latitude,
+      attractors.center.point.longitude,
+
+      ///Locale for Local GeoLocator
+      //  localeIdentifier: "fi_FI"
+    );
+
+    //Log trips
+    final fido = UnloggedTrip(
+      is_visited: 0,
+      is_logged: 0,
+      is_favorite: 0,
+      rng_type: 0,
+      point_type: 0,
+      title: null,
+      report: 0.toString(),
+      what_3_words_address: null,
+      what_3_nearest_place: null,
+      what_3_words_country: null,
+      center: attractors.gID.toString(),
+      latitude: attractors.gID.toString(),
+      longitude: attractors.gID.toString(),
+      location: location[0].administrativeArea.toString(),
+      gid: attractors.gID.toString(),
+      tid: attractors.gID.toString(),
+      lid: attractors.gID.toString(),
+      type: attractors.gID.toString(),
+      x: attractors.gID.toString(),
+      y: attractors.gID.toString(),
+      distance: attractors.gID.toString(),
+      initial_bearing: attractors.gID.toString(),
+      final_bearing: attractors.gID.toString(),
+      side: attractors.gID.toString(),
+      distance_err: attractors.gID.toString(),
+      radiusM: attractors.gID.toString(),
+      number_points: attractors.gID.toString(),
+      mean: attractors.gID.toString(),
+      rarity: attractors.gID.toString(),
+      power_old: attractors.gID.toString(),
+      power: attractors.gID.toString(),
+      z_score: attractors.gID.toString(),
+      probability_single: attractors.gID.toString(),
+      integral_score: attractors.gID.toString(),
+      significance: attractors.gID.toString(),
+      probability: attractors.gID.toString(),
+      created: DateTime.now().toIso8601String(),
+    );
+
+    await insertUnloggedTrip(fido);
+
+    setState(() {
+      controller.moveCamera(CameraUpdate.newLatLngZoom(
+          LatLng(attractorCoordinates.latitude, attractorCoordinates.longitude),
+          10));
+
+      //CAMERA_ZOOM = 1; //Change zoom
+      _markers.add(Marker(
+        // This marker id can be anything that uniquely identifies each marker.
+        markerId: MarkerId(attractorCoordinates.toString()),
+        position: attractorCoordinates,
+        infoWindow: InfoWindow(
+          title: 'Really cool place',
+          snippet: '5 Star Rating',
+        ),
+        icon: BitmapDescriptor.defaultMarker,
+      ));
+
+      //this.widget.callback();
+    });
   }
 
   void setSourceAndDestinationIcons() async {
     BitmapDescriptor.fromAssetImage(
-        ImageConfiguration(devicePixelRatio: 2.0), 'assets/driving_pin.png')
+            ImageConfiguration(devicePixelRatio: 2.0), 'assets/driving_pin.png')
         .then((onValue) {
       sourceIcon = onValue;
     });
 
     BitmapDescriptor.fromAssetImage(ImageConfiguration(devicePixelRatio: 2.0),
-        'assets/destination_map_marker.png')
+            'assets/destination_map_marker.png')
         .then((onValue) {
       destinationIcon = onValue;
     });
@@ -579,10 +611,10 @@ class RandonautState extends State<Randonaut> {
     // get a LatLng for the source location
     // from the LocationData currentLocation object
     var pinPosition =
-    LatLng(currentLocation.latitude, currentLocation.longitude);
+        LatLng(currentLocation.latitude, currentLocation.longitude);
     // get a LatLng out of the LocationData object
     var destPosition =
-    LatLng(destinationLocation.latitude, destinationLocation.longitude);
+        LatLng(destinationLocation.latitude, destinationLocation.longitude);
 
     sourcePinInfo = PinInformation(
         locationName: "Start Location",
@@ -635,7 +667,7 @@ class RandonautState extends State<Randonaut> {
     setState(() {
       // updated position
       var pinPosition =
-      LatLng(currentLocation.latitude, currentLocation.longitude);
+          LatLng(currentLocation.latitude, currentLocation.longitude);
 
       //  sourcePinInfo.location = pinPosition;
 
@@ -654,5 +686,4 @@ class RandonautState extends State<Randonaut> {
           icon: sourceIcon));
     });
   }
-
 }

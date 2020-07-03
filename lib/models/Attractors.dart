@@ -1,28 +1,5 @@
 class Attractors {
-  List<Points> points;
-
-  Attractors({this.points});
-
-  Attractors.fromJson(Map<String, dynamic> json) {
-    if (json['points'] != null) {
-      points = new List<Points>();
-      json['points'].forEach((v) {
-        points.add(new Points.fromJson(v));
-      });
-    }
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.points != null) {
-      data['points'] = this.points.map((v) => v.toJson()).toList();
-    }
-    return data;
-  }
-}
-
-class Points {
-  int gID;
+  String gID;
   int tID;
   int lID;
   int type;
@@ -40,10 +17,10 @@ class Points {
   double zScore;
   double probabilitySingle;
   double integralScore;
- // double significance;
+  double significance;
   double probability;
 
-  Points(
+  Attractors(
       {this.gID,
         this.tID,
         this.lID,
@@ -62,10 +39,10 @@ class Points {
         this.zScore,
         this.probabilitySingle,
         this.integralScore,
-      //  this.significance,
+        this.significance,
         this.probability});
 
-  Points.fromJson(Map<String, dynamic> json) {
+  Attractors.fromJson(Map<String, dynamic> json) {
     gID = json['GID'];
     tID = json['TID'];
     lID = json['LID'];
@@ -85,7 +62,7 @@ class Points {
     zScore = json['Z_score'];
     probabilitySingle = json['Probability_single'];
     integralScore = json['Integral_score'];
-    //significance = json['Significance'];
+    significance = json['Significance'].toDouble();
     probability = json['Probability'];
   }
 
@@ -111,14 +88,9 @@ class Points {
     data['Z_score'] = this.zScore;
     data['Probability_single'] = this.probabilitySingle;
     data['Integral_score'] = this.integralScore;
-   // data['Significance'] = this.significance;
+    data['Significance'] = this.significance;
     data['Probability'] = this.probability;
     return data;
-  }
-
-  //For bublesort
-  compareTo(Points point) {
-    return 0;
   }
 }
 

@@ -31,7 +31,7 @@ class _VoidButton extends State<VoidButton> {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 30.0,
-      width: 110.0,
+      width: 120.0,
       child: new ButtonTheme(
         minWidth: 120.0,
         height: 10.0,
@@ -49,7 +49,7 @@ class _VoidButton extends State<VoidButton> {
               AppLocalizations.of(context)
                   .translate('void')
                   .toUpperCase(),
-              style: TextStyle(fontSize: 13)),
+              style: TextStyle(fontSize: 15)),
         ),
       ),
     );

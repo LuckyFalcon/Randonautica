@@ -44,11 +44,14 @@ class LoggedTripDetailsState extends State<LoggedTripDetails> {
     title = this.widget.title;
     imagelocation = this.widget.imagelocation;
     text = this.widget.text;
-    for(int i = 0; i < this.widget.tagList.length; i ++){
-      if(this.widget.tagList[i] != null){
-        tagList.add(this.widget.tagList[i]);
+    if(this.widget.tagList != null){
+      for(int i = 0; i < this.widget.tagList.length; i ++){
+        if(this.widget.tagList[i] != null){
+          tagList.add(this.widget.tagList[i]);
+        }
       }
     }
+
   }
 
   List _items = ['0'];

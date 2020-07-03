@@ -30,7 +30,7 @@ class _AnomalyButton extends State<AnomalyButton> {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 30.0,
-      width: 110.0,
+      width: 120.0,
       child: new ButtonTheme(
         minWidth: 120.0,
         height: 10.0,
@@ -43,12 +43,12 @@ class _AnomalyButton extends State<AnomalyButton> {
               borderRadius: BorderRadius.circular(30.0),
               side: BorderSide(
                   color:
-                      pressAttention1 ? Colors.white : Colors.lightBlueAccent)),
+                  pressAttention1 ? Colors.white : Colors.lightBlueAccent)),
           child: Text(
               AppLocalizations.of(context)
                   .translate('anomaly')
                   .toUpperCase(),
-              style: TextStyle(fontSize: 13)),
+              style: TextStyle(fontSize: 15)),
         ),
       ),
     );

@@ -19,17 +19,14 @@ class _HelpButton extends State<HelpButton> {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    return SizedBox(
-        height: 150.0,
-        width: 60,
-        child: Column(
+    return Column(
           children: <Widget>[
-            SizedBox(height: SizeConfig.blockSizeHorizontal * 5), ///Todo Sizeconfig responsive
+            SizedBox(height: SizeConfig.blockSizeHorizontal * 13), ///Todo Sizeconfig responsive
             IconButton(
               icon: Icon(
                 Icons.help,
                 color: Colors.white,
-                size: 30.0,
+                size: 35.0,
                 semanticLabel: 'Text to announce in accessibility modes',
               ),
               tooltip: 'Increase volume by 10',
@@ -39,9 +36,8 @@ class _HelpButton extends State<HelpButton> {
                 });
               },
             ),
-
             SizedBox(height: SizeConfig.blockSizeHorizontal * 5), ///Todo Sizeconfig responsive
           ],
-        ));
+        );
   }
 }

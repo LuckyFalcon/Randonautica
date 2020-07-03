@@ -38,10 +38,10 @@ class _SearchBarController extends State<SearchPage> {
     for (int i = 0; i < _LoggedTripList.length; i++) {
       posts.add(Post(
           _LoggedTripList[i].title,
-          _LoggedTripList[i].text,
+          _LoggedTripList[i].report,
           _LoggedTripList[i].imagelocation,
           _LoggedTripList[i].location,
-          _LoggedTripList[i].datetime));
+          _LoggedTripList[i].created));
     }
     return posts;
   }
