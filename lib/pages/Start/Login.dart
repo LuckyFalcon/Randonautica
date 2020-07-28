@@ -42,7 +42,7 @@ class _LoginState extends State<Login> {
 
     if (statusCode == 409) {
       prefs.setBool("Account", true);
-      Navigator.of(context).push(
+      Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (context) {
             return Invite();
@@ -51,7 +51,7 @@ class _LoginState extends State<Login> {
       );
     } else if (statusCode == 200) {
       prefs.setBool("Account", true);
-      Navigator.of(context).push(
+      Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (context) {
             return Invite();
@@ -60,7 +60,7 @@ class _LoginState extends State<Login> {
       );
     } else if (statusCode == 500) { //Error
       prefs.setBool("Account", false);
-      Navigator.of(context).push(
+      Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (context) {
             return FailedToLogin();

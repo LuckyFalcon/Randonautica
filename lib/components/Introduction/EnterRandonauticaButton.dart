@@ -1,5 +1,5 @@
 import 'package:app/helpers/FadeRoute.dart';
-import 'package:app/main.dart';
+import 'package:app/pages/HomePage.dart';
 import 'package:app/utils/size_config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

@@ -1,5 +1,3 @@
-import 'package:app/helpers/FadeRoute.dart';
-import 'package:app/main.dart';
 import 'package:app/utils/size_config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +6,7 @@ import '../../helpers/AppLocalizations.dart';
 
 class GoPremiumButton extends StatefulWidget {
   Function callback;
+
   GoPremiumButton(this.callback);
 
   State<StatefulWidget> createState() => new _GoPremiumButton();
@@ -48,14 +47,15 @@ class _GoPremiumButton extends State<GoPremiumButton> {
                   SizedBox(width: SizeConfig.blockSizeHorizontal * 1),
                   Text(
                       AppLocalizations.of(context)
-                          .translate('enter_randonautica')
+                          .translate('go_premium')
                           .toUpperCase(),
                       style: TextStyle(
                           fontSize: 14,
                           color: Colors.white,
                           fontWeight: FontWeight.bold)),
                   SizedBox(width: SizeConfig.blockSizeHorizontal * 1),
-                  Icon(Icons.arrow_forward, size: 24, color: Colors.white),
+                  ImageIcon(AssetImage('assets/img/double_arrow.png'),
+                      size: 24, color: Colors.white),
                 ],
               ),
             ),

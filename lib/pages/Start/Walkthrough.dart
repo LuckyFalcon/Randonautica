@@ -72,7 +72,7 @@ class _WalkthroughState extends State<Walkthrough> {
                 height: SizeConfig.blockSizeVertical * 5,
               ),
               Container(
-                height: SizeConfig.blockSizeVertical * 55,
+                height: SizeConfig.blockSizeVertical * 60,
                 child:   Expanded(
                   child:
                   Stack(
@@ -106,9 +106,9 @@ class _WalkthroughState extends State<Walkthrough> {
               (_currentPage == 2 ? EnterRandonauticaButton() : SizedBox(
                 height: 50,
               )),
-              SizedBox(
-                height: 50,
-              ),
+//              SizedBox(
+//                height: 0,
+//              ),
             ],
           ),
         ),

@@ -39,9 +39,7 @@ class _ButtonGoMainPage extends State<ButtonGoMainPage> {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-
     return Container(
-
         height: SizeConfig.blockSizeVertical * 9,
         width: SizeConfig.blockSizeHorizontal * 30,
         decoration: BoxDecoration(
@@ -71,7 +69,6 @@ class _ButtonGoMainPage extends State<ButtonGoMainPage> {
               ],
             ),
           ),
-
           onPressed: () {
             //_audioCache.play('inceptionbutton.mp3');
             _toggleGoPressButton();

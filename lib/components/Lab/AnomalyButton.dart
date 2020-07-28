@@ -20,7 +20,7 @@ class _AnomalyButton extends State<AnomalyButton> {
   }
 
   void setButtonClicked() {
-    this.widget.callback(true);
+    this.widget.callback(1, true);
 
     setState(() => pressAttention1 = !pressAttention1);
 
@@ -46,8 +46,8 @@ class _AnomalyButton extends State<AnomalyButton> {
                   pressAttention1 ? Colors.white : Colors.lightBlueAccent)),
           child: Text(
               AppLocalizations.of(context)
-                  .translate('anomaly')
-                  .toUpperCase(),
+              .translate('anomaly')
+              .toUpperCase(),
               style: TextStyle(fontSize: 15)),
         ),
       ),

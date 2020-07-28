@@ -1,40 +1,53 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:app/models/Attractors.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-Future<Attractors> fetchAttractors(int radius, double x, double y) async {
+Future<Attractors> fetchAttractors(int radius, double x, double y, selectedPoint, selectedRandomness, bool checkWater) async {
   //Set SharedPreferences
   Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
   //Await SharedPreferences future object
   final SharedPreferences prefs = await _prefs;
+
+  //Get Token
   String token = prefs.getString("authToken");
-  print('usertoken:');
-  print('usertoken: $token');
 
+  try {
+    //Get Attractors from API
+    final response = await http.get(
+        'http://192.168.1.217:7071/getAttractors?radius=' + radius.toString() +
+            '&x=' + x.toString() + '&y=' + y.toString() +
+            '&selected=$selectedPoint&source=$selectedRandomness&checkwater=$checkWater',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        }
+    ).timeout(const Duration(seconds: 60));
 
-//  final response = await http.get(
-//        'http://192.168.1.217:7071/getattractors?radius='+radius.toString() + '&x='+x.toString() + '&y='+y.toString()+'&raw=false&selected=attractor&entropy=ANU',
-//      headers: {
-//      'Content-Type': 'application/json',
-//      'Accept': 'application/json',
-//      'Authorization': 'Bearer $token',
-//      },
-//  );
+    //Successfully got attractors
+    if (response.statusCode == 200) {
+      return Attractors.fromJson(json.decode(response.body));
+    } else {
+      //Error from
+      throw Exception('Failed to get Attractors');
+    }
 
-//  final response = await http.get('https://api2.randonauts.com/v2/getattractors?radius='+radius.toString() + '&x='+x.toString() + '&y='+y.toString()+'&raw=false&selected=attractor&entropy=ANU');
-
-    final response = await http.get('http://192.168.1.217:7071/getattractors?radius='+radius.toString() + '&x='+x.toString() + '&y='+y.toString()+'&raw=false&selected=Attractor&entropy=ANU');
-
-  print(response);
-  if (response.statusCode == 200) {
-    print('reachedandgotattractors');
-    return Attractors.fromJson(json.decode(response.body));
-  } else {
-    throw Exception('Failed to load album');
+  } on TimeoutException catch (_) {
+    // A timeout occurred.
+    throw Exception('Failed to get Attractors');
+  } on SocketException catch (_) {
+    // Other exception
+    throw Exception('Failed to get Attractors');
+  } catch (error) {
+    // Error occurred
+    throw Exception('Failed to get Attractors');
   }
+
+
 }
 
 

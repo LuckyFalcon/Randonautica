@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:app/pages/Shop/ShopModal.dart';
 import 'package:app/utils/size_config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -248,6 +249,7 @@ setBuyDialog(BuildContext context) {
                                     fontWeight: FontWeight.bold,
                                     fontSize: 15,
                                     color: Colors.blue)),
+                            SizedBox(height: SizeConfig.blockSizeVertical * 1),
                             Text(
                                 AppLocalizations.of(context)
                                     .translate('access_when_premium')
@@ -257,17 +259,18 @@ setBuyDialog(BuildContext context) {
                                     fontWeight: FontWeight.bold,
                                     fontSize: 15,
                                     color: Colors.blue)),
+                            SizedBox(height: SizeConfig.blockSizeVertical * 3),
                             Container(
-                                width: 250,
-                                height: 60,
+                                width:  SizeConfig.blockSizeHorizontal * 70,
+                                height: SizeConfig.blockSizeVertical * 8,
                                 decoration: BoxDecoration(
                                     color: Color(0xff5D7FE0),
-                                    borderRadius: BorderRadius.circular(30),
+                                    borderRadius: BorderRadius.circular(60),
                                     boxShadow: []),
                                 child: RaisedButton(
                                   elevation: 15,
                                   shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(30.0),
+                                    borderRadius: BorderRadius.circular(60.0),
                                   ),
                                   padding: EdgeInsets.zero,
                                   child: Center(
@@ -287,12 +290,43 @@ setBuyDialog(BuildContext context) {
                                         SizedBox(width: 10),
                                         Icon(
                                           Icons.arrow_forward,
-                                          size: 12,
+                                          size: 24,
+                                          color: Colors.white
                                         ),
                                       ],
                                     ),
                                   ),
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                    showModalBottomSheet(
+                                        isScrollControlled: true,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: new BorderRadius.only(
+                                              topLeft: const Radius.circular(90.0),
+                                              topRight: const Radius.circular(90.0)),
+                                        ),
+                                        useRootNavigator: false,
+                                        context: context,
+                                        builder: (context) => Container(
+                                          height: SizeConfig.blockSizeVertical * 90,
+                                          decoration: new BoxDecoration(
+                                              gradient: LinearGradient(
+                                                  begin: Alignment.topCenter,
+                                                  end: Alignment.bottomCenter,
+                                                  stops: [0, 5.0],
+                                                  colors: [Color(0xff383B46), Color(0xff5786E1)]),
+                                              color: Theme.of(context).primaryColor,
+                                              borderRadius: new BorderRadius.only(
+                                                  topLeft: const Radius.circular(90.0),
+                                                  topRight: const Radius.circular(90.0))),
+                                          child: Container(
+                                            height: SizeConfig.blockSizeVertical * 90,
+                                            child: BS(),
+                                          ),
+                                        ));
+
+
+                                  },
                                   color: Color(0xff44C5DB),
                                 ))
                           ],
@@ -301,7 +335,7 @@ setBuyDialog(BuildContext context) {
                   Align(
                       alignment: Alignment.bottomCenter,
                       child: Container(
-                          width: 250,
+                          width: 125,
                           height: 60,
                           decoration: BoxDecoration(
                               color: Color(0xff5D7FE0),
@@ -317,25 +351,19 @@ setBuyDialog(BuildContext context) {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
-                                  SizedBox(width: 6),
-                                  Text(
-                                      AppLocalizations.of(context)
-                                          .translate('go_to_store')
-                                          .toUpperCase(),
-                                      style: TextStyle(
-                                          fontSize: 14,
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold)),
-                                  SizedBox(width: 10),
                                   Icon(
-                                    Icons.arrow_forward,
-                                    size: 12,
+                                    Icons.arrow_back_ios,
+                                    size: 40,
+                                    color: Colors.white,
                                   ),
                                 ],
                               ),
                             ),
-                            onPressed: () {},
-                            color: Color(0xff44C5DB),
+                            onPressed: () {
+                              Navigator.pop(context);
+
+                            },
+                            color: Color(0xff5889E1),
                           )))
                 ],
               ),

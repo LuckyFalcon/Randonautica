@@ -83,7 +83,7 @@ class UnloggedTripDetailsState extends State<UnloggedTripDetails> {
   }
 
   void callback(bool labButtonPress) {
-
+    submiteReport();
     logMyTrip(unloggedTrip, _title.text, _text.text);
 //    setState(() {
 //      _text.text.isEmpty ? _validateText = true : _validateText = false;
@@ -103,9 +103,11 @@ class UnloggedTripDetailsState extends State<UnloggedTripDetails> {
 
   Future<void> submiteReport() async {
     // getting a directory path for saving
+    print('reached');
     final Directory directory = await getApplicationDocumentsDirectory();
-
+    print('reached');
     final String path = directory.path;
+    print('reached');
 
     var id = new DateTime.now().millisecondsSinceEpoch;
     File newImage;
@@ -113,6 +115,7 @@ class UnloggedTripDetailsState extends State<UnloggedTripDetails> {
       // copy the file to a new path
       newImage = await _image.copy('$path/$id.png');
     }
+    print('sucess'+newImage.toString());
 
     var tagsLength = _items.length;
 

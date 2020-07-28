@@ -1,5 +1,6 @@
 import 'package:app/models/slide.dart';
 import 'package:app/utils/size_config.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
 class SlideItem extends StatelessWidget {
@@ -19,16 +20,15 @@ class SlideItem extends StatelessWidget {
         ),
         Container(
             padding: const EdgeInsets.all(16.0),
-            width: SizeConfig.blockSizeHorizontal * 70,
+            width: SizeConfig.blockSizeHorizontal * 68,
             child: new Column(
               children: <Widget>[
                 Text(
                   returnSlide(index, context).descriptionone,
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                      fontWeight: FontWeight.bold,
                       color: Colors.white,
-                      fontSize: 18),
+                      fontSize: 16),
                 )
               ],
             )),
@@ -37,16 +37,15 @@ class SlideItem extends StatelessWidget {
         ),
         Container(
             padding: const EdgeInsets.all(16.0),
-            width: SizeConfig.blockSizeHorizontal * 70,
+            width: SizeConfig.blockSizeHorizontal * 68,
             child: new Column(
               children: <Widget>[
                 Text(
                   slideList[index].descriptiontwo,
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                      fontWeight: FontWeight.bold,
                       color: Colors.white,
-                      fontSize: 18),
+                      fontSize: 16),
                 ),
               ],
             )),
@@ -55,16 +54,15 @@ class SlideItem extends StatelessWidget {
         ),
         Container(
             padding: const EdgeInsets.all(16.0),
-            width: SizeConfig.blockSizeHorizontal * 70,
+            width: SizeConfig.blockSizeHorizontal * 68,
             child: new Column(
               children: <Widget>[
                 Text(
                   slideList[index].descriptionthree,
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                      fontWeight: FontWeight.bold,
                       color: Colors.white,
-                      fontSize: 18),
+                      fontSize: 16),
                 ),
               ],
             )),

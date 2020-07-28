@@ -98,7 +98,7 @@ class TripListState extends State<TripList> {
                         padding: const EdgeInsets.all(8),
                         children: <Widget>[
                           SizedBox(height: SizeConfig.blockSizeVertical * 3),
-                          (_LoggedTripList.length > 0
+                          (_LoggedTripList.length > 2
                               ? Container(
                                   padding: EdgeInsets.only(left: 20),
                                   child: Text(
@@ -110,29 +110,12 @@ class TripListState extends State<TripList> {
                                           fontSize: 14,
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold)))
-                              : Container(
-                                  padding: EdgeInsets.only(left: 20),
-                                  child: Text(
-                                      AppLocalizations.of(context)
-                                          .translate('recently_reported_trips')
-                                          .toUpperCase(),
-                                      textAlign: TextAlign.start,
-                                      style: TextStyle(
-                                          fontSize: 28,
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold)))),
-                          SizedBox(height: 10),
-                          (_LoggedTripList.length > 0
+                              : SizedBox(height: 0)),
+                          (_LoggedTripList.length > 2 ? SizedBox(height: 10) : SizedBox(height: 0)),
+                          (_LoggedTripList.length > 2
                               ? (RecentlyViewedTrips(_LoggedTripList))
-                              : Container(
-                                  padding: EdgeInsets.only(left: 20),
-                                  child: Text(
-                                      AppLocalizations.of(context)
-                                          .translate('empty_logged_trip_list')
-                                          .toUpperCase(),
-                                      style: TextStyle(
-                                          fontSize: 14, color: Colors.white)))),
-                          SizedBox(height: 25),
+                              : SizedBox(height: 0)),
+                          (_LoggedTripList.length > 2 ? SizedBox(height: 25) : SizedBox(height: 0)),
 //                          (_LoggedTripList.length > 0
 //                              ? Container(
 //                              padding: EdgeInsets.only(left: 20),
@@ -437,8 +420,8 @@ class loggedListWidget extends StatelessWidget {
                           fontWeight: FontWeight.bold, color: Colors.white),
                     )
                   : Container(
-                      width: 80,
-                      height: 80,
+                      width: SizeConfig.blockSizeHorizontal * 20,
+                      height: SizeConfig.blockSizeVertical * 10,
                       child: RaisedButton(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15.0),
@@ -472,7 +455,7 @@ class loggedListWidget extends StatelessWidget {
                         color: Colors.transparent,
                         child: Container(
                           height: SizeConfig.blockSizeVertical * 10,
-                          width: SizeConfig.blockSizeHorizontal * 56,
+                          width: SizeConfig.blockSizeHorizontal * 54,
                           child: Column(
                             children: <Widget>[
                               Row(
@@ -482,7 +465,7 @@ class loggedListWidget extends StatelessWidget {
                                   Align(
                                     alignment: Alignment.topLeft,
                                     child: Text(
-                                      'Trip title',
+                                      this.title,
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontSize: 18,
@@ -503,7 +486,7 @@ class loggedListWidget extends StatelessWidget {
                               Align(
                                 alignment: Alignment.topLeft,
                                 child: Text(
-                                  'Location',
+                                  this.location,
                                   style: TextStyle(
                                     color: Colors.blue,
                                   ),
@@ -525,8 +508,7 @@ class loggedListWidget extends StatelessWidget {
                                               color: Colors.white,
                                               fontSize: 12,
                                             ),
-                                            text:
-                                                'Begining of the desciprtion of the trip, description.description descriptiondescriptiondescription',
+                                            text: this.text,
                                           ),
                                         ),
                                       ),

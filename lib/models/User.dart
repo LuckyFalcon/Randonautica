@@ -1,4 +1,5 @@
 class User {
+  int id;
   int platform;
   int points;
   int isIapSkipWaterPoints;
@@ -7,7 +8,7 @@ class User {
   int isIapInappGooglePreview;
 
   User(
-      {this.platform,
+      {this.id, this.platform,
         this.points,
         this.isIapSkipWaterPoints,
         this.isIapExtendRadius,
@@ -15,6 +16,7 @@ class User {
         this.isIapInappGooglePreview});
 
   User.fromJson(Map<String, dynamic> json) {
+    id = json['ID'];
     platform = json['platform'];
     points = json['points'];
     isIapSkipWaterPoints = json['is_iap_skip_water_points'];
@@ -25,6 +27,7 @@ class User {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['ID'] = this.id;
     data['platform'] = this.platform;
     data['points'] = this.points;
     data['is_iap_skip_water_points'] = this.isIapSkipWaterPoints;
@@ -38,6 +41,7 @@ class User {
   // Convert a UnloggedTrip into a Map. The keys must correspond to the names of the
   Map<String, dynamic> toMap() {
     return {
+      'ID': id,
       'platform': platform,
       'points': points,
       'isIapSkipWaterPoints': isIapSkipWaterPoints,

@@ -21,7 +21,7 @@ class _AttractorButton extends State<AttractorButton> {
   }
 
   void setButtonClicked() {
-    this.widget.callback(true);
+    this.widget.callback(2, true);
     setState(() => pressAttention1 = !pressAttention1);
   }
 

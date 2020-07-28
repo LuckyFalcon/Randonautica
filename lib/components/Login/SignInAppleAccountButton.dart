@@ -50,9 +50,10 @@ class _SignInAppleAccountButtonState extends State<SignInAppleAccountButton> {
                         color: Colors.white,
                         fontWeight: FontWeight.bold)),
                 SizedBox(width: 10),
-                Icon(
-                  Icons.arrow_forward,
-                  size: 12,
+                ImageIcon(
+                  AssetImage('assets/img/Apple_icon.png'),
+                  color: Colors.white,
+                  size: 40.0,
                 ),
               ],
             ),

@@ -1,4 +1,5 @@
 import 'package:app/helpers/AppLocalizations.dart';
+import 'package:app/pages/Start/Login.dart';
 import 'package:app/utils/size_config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -43,6 +44,41 @@ class FailedToLogin extends StatelessWidget {
                         fontSize: 40,
                         color: Colors.white,
                         fontWeight: FontWeight.bold)),
+                SizedBox(height: SizeConfig.blockSizeVertical * 5),
+                Container(
+                  width: SizeConfig.blockSizeHorizontal * (70),
+                  height: SizeConfig.blockSizeVertical * (8),
+                  child: RaisedButton(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(60.0),
+                    ),
+                    padding: EdgeInsets.zero,
+                    child: Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                              AppLocalizations.of(context)
+                                  .translate('try_again')
+                                  .toUpperCase(),
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold)),
+                        ],
+                      ),
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return Login();
+                          },
+                        ),
+                      );
+                    },
+                    color: Color(0xff43CCDB),
+                  ))
               ])
             ]),
           )),

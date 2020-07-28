@@ -19,6 +19,7 @@ class _RecentlyViewedTrips extends State<RecentlyViewedTrips> {
 
   @override
   Widget build(BuildContext context) {
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[

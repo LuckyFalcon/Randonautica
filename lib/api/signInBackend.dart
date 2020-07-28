@@ -48,7 +48,12 @@ Future<int> signBackendGoogle(String token) async {
     if (response.statusCode == 200 || response.statusCode == 409) {
       User user = User.fromJson(json.decode(response.body));
       if (user != null) {
-        await insertUser(user);
+        try {
+          await insertUser(user);
+          print('success');
+        } catch (err){
+          print(err);
+        }
         user = await RetrieveUser();
         print('respect'+user.points.toString());
         globals.currentUser = user;
@@ -56,13 +61,12 @@ Future<int> signBackendGoogle(String token) async {
         return response.statusCode;
       }
     }
-
-    return 500;
+    return 500; //Return Status Code 500
   } on TimeoutException catch (_) {
     // A timeout occurred.
-    return 500;
+    return 500; //Return Status Code 500
   } on SocketException catch (_) {
     // Other exception
-    return 500;
+    return 500; //Return Status Code 500
   }
 }

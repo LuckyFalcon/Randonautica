@@ -4,17 +4,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../helpers/AppLocalizations.dart';
 
-class HelpButton extends StatefulWidget {
-  State<StatefulWidget> createState() => new _HelpButton();
-}
+class HelpButton extends StatelessWidget {
+  Function callback;
 
-class _HelpButton extends State<HelpButton> {
-  bool waterPointsEnabled = false;
-
-  @override
-  void initState() {
-    super.initState();
-  }
+  HelpButton(this.callback);
 
   @override
   Widget build(BuildContext context) {
@@ -31,9 +24,7 @@ class _HelpButton extends State<HelpButton> {
               ),
               tooltip: 'Increase volume by 10',
               onPressed: () {
-                setState(() {
-                  setSliderDialog(context);
-                });
+                  this.callback();
               },
             ),
             SizedBox(height: SizeConfig.blockSizeHorizontal * 5), ///Todo Sizeconfig responsive

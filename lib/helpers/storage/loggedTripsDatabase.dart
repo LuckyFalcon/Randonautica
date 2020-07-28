@@ -13,13 +13,14 @@ Future<void> insertLoggedTrip(LoggedTrip loggedTrip) async {
 
   // Insert the Dog into the correct table. You might also specify the
   // `conflictAlgorithm` to use in case the same dog is inserted twice.
-  //
   // In this case, replace any previous data.
   await database.insert(
     'loggedTrips',
     loggedTrip.toMap(),
     conflictAlgorithm: ConflictAlgorithm.replace,
   );
+
+  print('sucess');
 }
 
 // A method that retrieves all the dogs from the dogs table.

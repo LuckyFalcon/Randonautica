@@ -42,7 +42,7 @@ Future<int> verifyIAPConsumableGoogle(PurchasedItem productItem) async {
   //Await SharedPreferences future object
   final SharedPreferences prefs = await _prefs;
   String token = prefs.getString("authToken");
-  print('usertoken:');
+  print('reachediAP:');
   print('usertokeniap: $token');
   final response = await http.post(
     'http://192.168.1.217:7071/api/IAPurchases?platform=2',
@@ -52,21 +52,10 @@ Future<int> verifyIAPConsumableGoogle(PurchasedItem productItem) async {
       'Authorization': 'Bearer $token',
     },
     body: jsonEncode(<String, String>{
-      'tag1': 'placeholder',
-      'tag2': 'placeholder',
-      'tag3': 'placeholder',
-      'tag4': 'placeholder',
-      'tag5': 'placeholder',
-      'tag6': 'placeholder',
-      'tag7': 'placeholder',
-      'tag8': 'placeholder',
-      'tag9': 'placeholder',
-      'tag10': 'placeholder',
-      'tag11': 'placeholder',
-      'tag12': 'placeholder',
-      'tag13': 'placeholder',
-      'tag14': 'placeholder',
-      'tag15': 'placeholder'
+      'packageName': 'com.randonautica.app',
+      'productId': productItem.productId,
+      'purchaseToken': productItem.purchaseToken,
+      'subscription': 'false'
     }),
   );
   print(response);

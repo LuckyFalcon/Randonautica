@@ -1,15 +1,17 @@
 import 'dart:io';
 
+import 'package:app/api/signInBackend.dart';
 import 'package:app/helpers/AppLocalizations.dart';
 import 'package:app/helpers/FadeRoute.dart';
 import 'package:app/helpers/FadingCircleLoading.dart';
 import 'package:app/helpers/storage/setupDatabases.dart';
 import 'package:app/helpers/storage/userDatabase.dart';
-import 'package:app/main.dart';
 import 'package:app/models/User.dart';
+import 'package:app/pages/Failed/FailedInternet.dart';
 import 'package:app/pages/start/Login.dart';
 import 'package:app/utils/currentUser.dart' as globals;
 import 'package:app/utils/size_config.dart';
+import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:device_info/device_info.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
@@ -22,6 +24,8 @@ import 'package:location_permissions/location_permissions.dart';
 import 'package:package_info/package_info.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../HomePage.dart';
 
 GoogleSignIn _googleSignIn = GoogleSignIn(
   scopes: <String>[
@@ -65,6 +69,14 @@ class _LoadingState extends State<Loading> {
             await LocationPermissions().requestPermissions();
       }
     }
+    //Check for Internet Connection
+    bool result = await DataConnectionChecker().hasConnection;
+    if(result != true) {
+      Navigator.pushAndRemoveUntil(
+          context,
+          FadeRoute(page: FailedToInternet()),
+          ModalRoute.withName("/FailedToInternet"));
+    }
 
     try {
       // Using default duration to force fetching from remote server.
@@ -87,6 +99,7 @@ class _LoadingState extends State<Loading> {
                         FadeRoute(page: HomePage()),
                         ModalRoute.withName("/HomePage"));
                   } else {
+                    print('value' + value.toString());
                     //Setup Databases
                     setupDatabases().then(
                         (value) => Future.delayed(Duration(seconds: 3), () {
@@ -97,12 +110,9 @@ class _LoadingState extends State<Loading> {
                             }));
                   }
                 }))
-            .catchError(
-                (onError) => Future.delayed(Duration(seconds: 3), () {
-                  Navigator.pushAndRemoveUntil(
-                      context,
-                      FadeRoute(page: Login()),
-                      ModalRoute.withName("/Login"));
+            .catchError((onError) => Future.delayed(Duration(seconds: 3), () {
+                  Navigator.pushAndRemoveUntil(context,
+                      FadeRoute(page: Login()), ModalRoute.withName("/Login"));
                 }));
       }
     } on FetchThrottledException catch (exception) {
@@ -174,18 +184,20 @@ class _LoadingState extends State<Loading> {
       FirebaseUser _user = await FirebaseAuth.instance.currentUser();
 
       if (_user != null) {
-        //Recieve token from user
         var token = await _user.getIdToken();
-
-        print('usertoken: ' + token.token);
-
         await prefs.setString("authToken", token.token);
+        await signBackendGoogle(token.token.toString())
+            .then((statusCode) async {
+          if (statusCode == 200 || statusCode == 409) {
+            User user = await RetrieveUser();
+            globals.currentUser = user;
+          } else {
+            print('somethingwentwrong');
+            throw ("Login failed"); // error thrown on back-end signin failed
+          }
+        });
+        return _user;
       }
-      User user = await RetrieveUser();
-      print('respect' + user.points.toString());
-      globals.currentUser = user;
-      print('respectresec' + globals.currentUser.points.toString());
-      return _user;
     }
   }
 

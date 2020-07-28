@@ -1,4 +1,4 @@
-import 'package:app/pages/NewsItemDetails.dart';
+import 'file:///C:/Users/David/AndroidStudioProjects/Randonautica/lib/old/NewsItemDetails.dart';
 import 'package:flutter/material.dart';
 
 class NewsItem extends StatelessWidget {

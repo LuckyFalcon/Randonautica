@@ -2,6 +2,7 @@ import 'package:app/utils/size_config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_shine/flutter_shine.dart';
 
 class BottomBar extends StatefulWidget {
   Function callback;
@@ -24,22 +25,23 @@ class _BottomBarState extends State<BottomBar> {
   Color unselectedColor = Color(0xff37CCDC);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ) {
     SizeConfig().init(context);
     return Align(
         alignment: Alignment.bottomCenter,
-        child: Container(
-            height: SizeConfig.blockSizeHorizontal * 18,
+        child: Padding(
             padding: EdgeInsets.only(bottom: 0, left: 45, right: 45),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(30),
-                boxShadow: [
-                  BoxShadow(
-                      blurRadius: 35,
-                      offset: Offset(1, 10),
-                      color: Colors.black,
-                      spreadRadius: -60)
-                ]),
+            child: Material(
+            shape : RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(90.0),
+                topRight: Radius.circular(90.0),
+                bottomLeft: Radius.circular(90.0),
+                bottomRight: Radius.circular(90.0),
+              ),),
+            elevation: 10.0,
+            child: Container(
+            height: SizeConfig.blockSizeHorizontal * 18,
             child: ClipRRect(
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(90.0),
@@ -57,11 +59,10 @@ class _BottomBarState extends State<BottomBar> {
                             (this.widget.selectedNavigationIndex == 0 ? _individualTab('assets/img/Pin_Point.svg', selectedColor) : _individualTab('assets/img/Pin_Point.svg', unselectedColor)),
                             (this.widget.selectedNavigationIndex == 1 ? _individualTab('assets/img/List.svg', selectedColor) : _individualTab('assets/img/List.svg', unselectedColor)),
                             (this.widget.selectedNavigationIndex == 2 ? _individualTab('assets/img/Globe.svg', selectedColor) : _individualTab('assets/img/Globe.svg', unselectedColor)),
-
                             Tab(icon: SvgPicture.asset(
                                 'assets/img/Labs.svg',
-                                height: 48,
-                                width: 48,
+                                height: 42,
+                                width: 42,
                                 color: (this.widget.selectedNavigationIndex == 3 ? selectedColor : unselectedColor),
                             ))
                           ],
@@ -84,7 +85,7 @@ class _BottomBarState extends State<BottomBar> {
                     )
                 )
             )
-        )
+        )))
     );
   }
 
@@ -96,12 +97,12 @@ class _BottomBarState extends State<BottomBar> {
       decoration: BoxDecoration(
           border: Border(
               right: BorderSide(
-                  color: Colors.grey.withOpacity(0.5), width: 2, style: BorderStyle.solid))),
+                  color: Colors.grey.withOpacity(0.2), width: 2, style: BorderStyle.solid))),
       child: Tab(
         icon: SvgPicture.asset(
             imagePath,
-            height: 48,
-            width: 48,
+            height: 42,
+            width: 42,
             color: tabColor,
       )
       ),

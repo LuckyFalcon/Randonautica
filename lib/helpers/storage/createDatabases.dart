@@ -363,7 +363,7 @@ void createUserDatabase() async {
   final String COL4 =   "isIapLocationSearch"; //Image location
   final String COL5 =   "isIapInappGooglePreview";
 
-  String createAchievementsTable = "CREATE TABLE " + userTable  + " (ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+  String createAchievementsTable = "CREATE TABLE " + userTable  + " (ID INTEGER PRIMARY KEY NOT NULL, " +
       COL0 + " INTEGER, " +
       COL1 + " INTEGER, " +
       COL2 + " INTEGER, " +

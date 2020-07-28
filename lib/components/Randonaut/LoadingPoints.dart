@@ -11,10 +11,13 @@ import 'package:location/location.dart';
 
 class LoadingPoints extends StatelessWidget {
   Function callback;
-  int radius;
   LocationData currentLocation;
+  int radius;
+  int selectedPoint;
+  int selectedRandomness;
+  bool checkWater;
 
-  LoadingPoints(this.callback, this.radius, this.currentLocation);
+  LoadingPoints(this.callback, this.radius, this.currentLocation, this.selectedPoint, this.selectedRandomness, this.checkWater);
 
   @override
   Widget build(BuildContext context) {
@@ -28,18 +31,15 @@ class LoadingPoints extends StatelessWidget {
         decoration: backgrounds.normal,
         child: FutureBuilder<Attractors>(
             future: fetchAttractors(
-                radius, currentLocation.latitude, currentLocation.longitude),
+                radius, currentLocation.latitude, currentLocation.longitude, selectedPoint, selectedRandomness, checkWater),
             builder:
                 (BuildContext context, AsyncSnapshot<Attractors> snapshot) {
               if (snapshot.hasData) {
-                print("gotten:"+snapshot.data.x.toString());
-                snapshot.data.gID.toString();
                 Navigator.pop(context); //Go back to previous navigation item
                 callback(snapshot.data);
               }
               if(snapshot.hasError){
-                print("gotten:"+snapshot.error.toString());
-
+                Navigator.pop(context);
               }
               return Center(
                 child: Column(children: <Widget>[

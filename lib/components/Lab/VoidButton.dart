@@ -21,8 +21,7 @@ class _VoidButton extends State<VoidButton> {
   }
 
   void setButtonClicked() {
-    this.widget.callback(true);
-
+    this.widget.callback(3, true);
     setState(() => pressAttention1 = !pressAttention1);
 
   }
