@@ -5,6 +5,7 @@ import 'package:app/pages/start/Walkthrough.dart';
 import 'package:app/utils/size_config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 class Invite extends StatefulWidget {
   @override
@@ -33,19 +34,21 @@ class _InviteState extends State<Invite> {
                   colors: [Color(0xff5A87E4), Color(0xff37CDDC)])),
           child: Center(
             child:
-                Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+              Column(mainAxisAlignment: MainAxisAlignment.start, children: [
               SizedBox(height: SizeConfig.blockSizeVertical * 13),
               Align(
                 alignment: Alignment.centerLeft,
                 child: Container(
-                  width: SizeConfig.blockSizeHorizontal * 80,
+                  width: SizeConfig.blockSizeHorizontal * 75,
                     padding: new EdgeInsets.only(
                         left: SizeConfig.blockSizeHorizontal * 10),
-                    child: Text(
+                    child: AutoSizeText(
                         AppLocalizations.of(context).translate('invite_text'),
                         textAlign: TextAlign.left,
+                        minFontSize: 20,
+                        maxLines: 4,
                         style: TextStyle(
-                            fontSize: 40,
+                            fontSize: 35,
                             color: Colors.white,
                             fontWeight: FontWeight.bold))),
               ),

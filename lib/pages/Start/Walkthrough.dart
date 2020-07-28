@@ -5,6 +5,7 @@ import 'package:app/components/Introduction/slide_dots.dart';
 import 'package:app/components/Introduction/slide_item.dart';
 import 'package:app/models/slide.dart';
 import 'package:app/utils/size_config.dart';
+import 'package:app/utils/BackgroundColor.dart' as backgrounds;
 import 'package:flutter/material.dart';
 
 class Walkthrough extends StatefulWidget {
@@ -56,12 +57,7 @@ class _WalkthroughState extends State<Walkthrough> {
       extendBodyBehindAppBar: true,
       extendBody:true,
       body: Container(
-        decoration: BoxDecoration(
-            gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomRight,
-                stops: [0, 1],
-                colors: [Color(0xff383B46), Color(0xff5E80E0)])),
+        decoration: backgrounds.dark,
         child: Padding(
           padding: const EdgeInsets.all(20),
           child: Column(
@@ -104,11 +100,8 @@ class _WalkthroughState extends State<Walkthrough> {
                 ),
               ),
               (_currentPage == 2 ? EnterRandonauticaButton() : SizedBox(
-                height: 50,
+                height: 0,
               )),
-//              SizedBox(
-//                height: 0,
-//              ),
             ],
           ),
         ),

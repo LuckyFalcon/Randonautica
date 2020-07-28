@@ -1,6 +1,11 @@
 import 'package:app/pages/Start/Loading.dart';
+import 'package:app/pages/Start/Invite.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:theme_provider/theme_provider.dart';
@@ -8,11 +13,14 @@ import 'package:theme_provider/theme_provider.dart';
 import 'helpers/AppLocalizations.dart';
 
 void main() {
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+
   runApp(Randonautica());
 }
 
 class Randonautica extends StatelessWidget {
   Brightness brightness = Brightness.light;
+
 
   @override
   Widget build(BuildContext context) {
@@ -75,8 +83,9 @@ class Randonautica extends StatelessWidget {
                     ],
                     //Home Page
                     home:
+                    Invite()))
                         //WarningScreens())
-                        Loading()))
+                     //   Loading()))
             //VisitScreen())
             //PremiumIntro())
             //Loading())

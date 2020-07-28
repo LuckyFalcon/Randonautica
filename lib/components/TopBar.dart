@@ -1,5 +1,6 @@
 import 'package:app/pages/Profile.dart';
 import 'package:app/utils/size_config.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:app/utils/currentUser.dart' as globals;
@@ -71,7 +72,9 @@ class TopBar extends StatelessWidget {
                     });
                   },
                 ),
-                Text(globals.currentUser.points.toString(),
+                AutoSizeText(
+                    globals.currentUser.points.toString(),
+                    maxLines: 1,
                     style: TextStyle(
                         fontSize: 23,
                         color: Colors.white,
