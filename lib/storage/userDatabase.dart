@@ -43,6 +43,8 @@ Future<User> RetrieveUser() async {
       isIapExtendRadius:  maps[i]['isIapExtendRadius'],
       isIapLocationSearch: maps[i]['isIapLocationSearch'],
       isIapInappGooglePreview: maps[i]['isIapInappGooglePreview'],
+      isSharedWithFriends: maps[i]['isSharedWithFriends'],
+      isAgreementAccepted: maps[i]['isAgreementAccepted'],
     );
   });
 
@@ -69,6 +71,35 @@ Future<User> enableIsIapSkipWaterPoints() async {
       isIapExtendRadius:  maps[i]['isIapExtendRadius'],
       isIapLocationSearch: maps[i]['isIapLocationSearch'],
       isIapInappGooglePreview: maps[i]['isIapInappGooglePreview'],
+      isSharedWithFriends: maps[i]['isSharedWithFriends'],
+    );
+  });
+
+  return UserList[0];
+
+}
+
+
+// Enable Sharing With Friends for the user
+Future<User> enableIsSharedWithFriends() async {
+
+  // Get a reference to the database.
+  final Database db = await openDatabase(
+      join(await getDatabasesPath(), 'user.db'));
+
+  // Query the table for all The Dogs.
+  final List<Map<String, dynamic>> maps = await db.rawQuery('UPDATE user SET isSharedWithFriends=1, points = points + 3 WHERE ID=1');
+
+  // Convert the List<Map<String, dynamic> into a List<Dog>.
+  var UserList =  List.generate(maps.length, (i) {
+    return User(
+      platform: maps[i]['platform'],
+      points:  maps[i]['points'],
+      isIapSkipWaterPoints:  maps[i]['isIapSkipWaterPoints'],
+      isIapExtendRadius:  maps[i]['isIapExtendRadius'],
+      isIapLocationSearch: maps[i]['isIapLocationSearch'],
+      isIapInappGooglePreview: maps[i]['isIapInappGooglePreview'],
+      isSharedWithFriends: maps[i]['isSharedWithFriends'],
     );
   });
 

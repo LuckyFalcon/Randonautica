@@ -2,6 +2,7 @@ import 'dart:ui' as ui;
 
 import 'package:app/helpers/Dialogs.dart';
 import 'package:app/utils/size_config.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -86,7 +87,7 @@ class _SetRandomness extends State<SetRandomness> {
               textColor: Colors.white,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(30.0),),
-              child: Text(
+              child: AutoSizeText(
                   AppLocalizations.of(context)
                       .translate('random')
                       .toUpperCase(),
@@ -108,7 +109,7 @@ class _SetRandomness extends State<SetRandomness> {
               textColor: Colors.white,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(30.0),),
-              child: Text(
+              child: AutoSizeText(
                   AppLocalizations.of(context)
                       .translate('quantum')
                       .toUpperCase(),
@@ -130,7 +131,7 @@ class _SetRandomness extends State<SetRandomness> {
               textColor: Colors.white,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(30.0),),
-              child: Text(
+              child: AutoSizeText(
                   AppLocalizations.of(context)
                       .translate('bias')
                       .toUpperCase(),

@@ -3,10 +3,6 @@ import 'package:app/utils/size_config.dart';
 import 'package:flutter/material.dart';
 
 class Lab extends StatefulWidget {
-  Function callback;
-
-  Lab(this.callback);
-
   @override
   State<Lab> createState() => LabState();
 }

@@ -1,5 +1,5 @@
 import 'package:app/helpers/AppLocalizations.dart';
-import 'package:app/pages/Start/Loading.dart';
+import 'file:///C:/Users/David/AndroidStudioProjects/Randonautica/lib/pages/Loading.dart';
 import 'package:app/pages/Start/Login.dart';
 import 'package:app/utils/size_config.dart';
 import 'package:flutter/cupertino.dart';

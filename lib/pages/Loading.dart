@@ -1,15 +1,15 @@
 import 'dart:io';
 
 import 'package:app/api/signInBackend.dart';
+import 'package:app/api/syncTripReports.dart';
 import 'package:app/helpers/AppLocalizations.dart';
 import 'package:app/helpers/FadeRoute.dart';
-import 'package:app/helpers/FadingCircleLoading.dart';
-import 'package:app/helpers/storage/setupDatabases.dart';
-import 'package:app/helpers/storage/userDatabase.dart';
+import 'file:///C:/Users/David/AndroidStudioProjects/Randonautica/lib/components/FadingCircleLoading.dart';
+import 'file:///C:/Users/David/AndroidStudioProjects/Randonautica/lib/storage/setupDatabases.dart';
+import 'package:app/storage/userDatabase.dart';
 import 'package:app/models/User.dart';
 import 'package:app/pages/Failed/FailedInternet.dart';
 import 'package:app/pages/start/Login.dart';
-import 'package:app/utils/currentUser.dart' as globals;
 import 'package:app/utils/size_config.dart';
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:device_info/device_info.dart';
@@ -25,14 +25,10 @@ import 'package:package_info/package_info.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../HomePage.dart';
+import 'HomePage.dart';
 
-GoogleSignIn _googleSignIn = GoogleSignIn(
-  scopes: <String>[
-    'email',
-    'https://www.googleapis.com/auth/contacts.readonly',
-  ],
-);
+import 'package:app/utils/currentUser.dart' as globals;
+import 'package:app/utils/BackgroundColor.dart' as backgrounds;
 
 class Loading extends StatefulWidget {
   @override
@@ -40,8 +36,6 @@ class Loading extends StatefulWidget {
 }
 
 class _LoadingState extends State<Loading> {
-  GoogleSignInAccount _currentUser;
-  FirebaseAuth _auth = FirebaseAuth.instance;
 
   //Set SharedPreferences
   Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
@@ -51,7 +45,7 @@ class _LoadingState extends State<Loading> {
   var PLAY_STORE_URL =
       'https://play.google.com/store/apps/details?id=com.randonautica.app';
 
-  versionCheck(context) async {
+  _versionCheck(context) async {
     //Get Current installed version of app
     final PackageInfo info = await PackageInfo.fromPlatform();
     double currentVersion =
@@ -184,7 +178,9 @@ class _LoadingState extends State<Loading> {
       FirebaseUser _user = await FirebaseAuth.instance.currentUser();
 
       if (_user != null) {
+
         var token = await _user.getIdToken();
+
         await prefs.setString("authToken", token.token);
         await signBackendGoogle(token.token.toString())
             .then((statusCode) async {
@@ -207,7 +203,7 @@ class _LoadingState extends State<Loading> {
     SystemChrome.setEnabledSystemUIOverlays([]);
 
     try {
-      versionCheck(context);
+      _versionCheck(context);
     } catch (e) {
       print(e);
     }
@@ -223,12 +219,7 @@ class _LoadingState extends State<Loading> {
       extendBody: true,
       backgroundColor: Colors.yellow[200],
       body: Container(
-          decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomRight,
-                  stops: [0, 100],
-                  colors: [Color(0xff5A87E4), Color(0xff37CDDC)])),
+          decoration: backgrounds.normal,
           child: Center(
             child: Column(children: <Widget>[
               Column(mainAxisAlignment: MainAxisAlignment.start, children: [

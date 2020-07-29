@@ -5,19 +5,20 @@ import 'package:app/api/verifyIAP.dart';
 import 'package:app/components/Shop/GoPremiumButton.dart';
 import 'package:app/components/Shop/UnlockPremiumButton.dart';
 import 'package:app/helpers/AppLocalizations.dart';
-import 'package:app/helpers/FadingCircleLoading.dart';
-import 'package:app/helpers/storage/userDatabase.dart';
+import 'file:///C:/Users/David/AndroidStudioProjects/Randonautica/lib/components/FadingCircleLoading.dart';
+import 'package:app/storage/userDatabase.dart';
 import 'package:app/utils/currentUser.dart' as currentUser;
 import 'package:app/utils/currentUser.dart' as globals;
 import 'package:app/utils/size_config.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_inapp_purchase/flutter_inapp_purchase.dart';
 
 class Shop extends StatefulWidget {
-  Function callbackGoPremium;
-
-  Shop(this.callbackGoPremium);
+//  Function callbackGoPremium;
+//
+//  Shop(this.callbackGoPremium);
 
   @override
   State<Shop> createState() => ShopState();
@@ -58,7 +59,10 @@ class ShopState extends State<Shop> {
 
   bool openSubscriptionMenu = false;
 
-  goPremiumButtonCallback(bool goPremiumButtonClicked) {
+  var AutoSizeTextGroupTop = AutoSizeGroup();
+  var AutoSizeTextGroupItems = AutoSizeGroup();
+
+  goPremiumButton(bool goPremiumButtonClicked) {
     setState(() {
       premiumShop = goPremiumButtonClicked;
     });
@@ -126,6 +130,13 @@ class ShopState extends State<Shop> {
       if (Platform.isAndroid) {
         await verifyIAPConsumableGoogle(productItem)
             .catchError((onError) => {print(onError)});
+        //print('Acknowledged:' + productItem.originalJsonAndroid);
+        //FlutterInappPurchase.instance.consumePurchaseAndroid(productItem.purchaseToken);
+        //print('Acknowledged:' + productItem.originalJsonAndroid);
+        print('Acknowledged:' + productItem.isAcknowledgedAndroid.toString());
+        FlutterInappPurchase.instance.acknowledgePurchaseAndroid(productItem.purchaseToken, developerPayload: "");
+        print('Acknowledged:' + productItem.isAcknowledgedAndroid.toString());
+
       }
     });
 
@@ -285,7 +296,7 @@ class ShopState extends State<Shop> {
                                         'Text to announce in accessibility modes',
                                   ),
                                   onPressed: () {
-                                    goPremiumButtonCallback(false);
+                                    goPremiumButton(false);
                                   },
                                 ),
                               ),
@@ -392,428 +403,465 @@ class ShopState extends State<Shop> {
                     Align(
                         alignment: Alignment.center,
                         child:
-                            UnlockPremiumButton(this.goPremiumButtonCallback)),
+                            UnlockPremiumButton(this.goPremiumButton)),
                   ]))
             : Center(
                 child: Column(
                 children: <Widget>[
-                  Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(top: 15, left: 80),
-                          child: Align(
-                            alignment: Alignment.topLeft,
+                  Container(
+                    height: SizeConfig.blockSizeVertical * 10,
+                    child: Row(children: [
+                      Container(width: SizeConfig.blockSizeHorizontal * 33.3),
+                      Container(
+                        width: SizeConfig.blockSizeHorizontal * 33.3,
+                        child: IconButton(
+                          iconSize: 64,
+                          icon: Icon(
+                            Icons.keyboard_arrow_down,
+                            color: Colors.white,
+                            size: 64.0,
                           ),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 20.0),
-                          child: Align(
-                            alignment: Alignment.center,
-                            child: IconButton(
-                              iconSize: 64,
-                              icon: Icon(
-                                Icons.keyboard_arrow_down,
-                                color: Colors.white,
-                                size: 64.0,
-                                semanticLabel:
-                                    'Text to announce in accessibility modes',
-                              ),
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 15, right: 15),
-                          child: Align(
-                            alignment: Alignment.topRight,
-                            child: IconButton(
-                              iconSize: 64,
-                              icon: ImageIcon(AssetImage('assets/img/Shop.png'),
-                                  size: 64.0, color: Colors.white),
-                              onPressed: () {
-//                openAlertBox(context);
-                                //     goToShop(true);
-                              },
-                            ),
-                          ),
-                        ),
-                      ]),
-                  Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 15, left: 15),
-                      child: IconButton(
+                      ),
+                      Container(width: SizeConfig.blockSizeHorizontal * 10.3),
+                      IconButton(
                         iconSize: 64,
-                        icon: Icon(
-                          Icons.keyboard_arrow_left,
-                          color: Colors.white,
-                          size: 64.0,
-                          semanticLabel:
-                              'Text to announce in accessibility modes',
-                        ),
+                        icon: ImageIcon(AssetImage('assets/img/Shop.png'),
+                            size: 64.0, color: Colors.white),
                         onPressed: () {
-                          this.widget.callbackGoPremium(false);
+                          //                openAlertBox(context);
+                          //   goToShop(true);
                         },
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 55, bottom: 15),
-                      child: Align(
-                          alignment: Alignment.center,
+                    ]),
+                  ), ///Arrow & Shop icon
+                  Container(
+                    height: SizeConfig.blockSizeVertical * 10,
+                    child: Row(children: [
+                      Container(width: SizeConfig.blockSizeHorizontal * 33.3),
+                      Container(
+                          width: SizeConfig.blockSizeHorizontal * 33.3,
                           child: Image.asset('assets/img/Owl_Token.png')),
+                    ]),
+                  ), ///OWL Token Icon
+                  Container(
+                    height: SizeConfig.blockSizeVertical * 5,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        AutoSizeText(
+                            AppLocalizations.of(context)
+                                .translate('owl_tokens')
+                                .toUpperCase(),
+                            group: AutoSizeTextGroupTop,
+                            maxLines: 1,
+                            style: TextStyle(
+                              fontSize: 23,
+                              color: Colors.white,
+                            )),
+                        SizedBox(width: 10),
+                        AutoSizeText(currentUser.currentUser.points.toString(),
+                            group: AutoSizeTextGroupTop,
+                            maxLines: 1,
+                            style: TextStyle(
+                              fontSize: 23,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            )),
+                      ],
                     ),
-                  ]),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                          AppLocalizations.of(context)
-                              .translate('owl_tokens')
-                              .toUpperCase(),
-                          style: TextStyle(
-                            fontSize: 23,
-                            color: Colors.white,
+                  ), ///Amount of Owl Tokens
+                  Container(
+                      height: SizeConfig.blockSizeVertical * 5,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          AutoSizeText(
+                              AppLocalizations.of(context)
+                                  .translate('daily_allowence')
+                                  .toUpperCase(),
+                              group: AutoSizeTextGroupTop,
+                              maxLines: 1,
+                              style:
+                                  TextStyle(fontSize: 23, color: Colors.white)),
+                          SizedBox(width: 10),
+                          AutoSizeText('20',
+                              group: AutoSizeTextGroupTop,
+                              maxLines: 1,
+                              style:
+                                  TextStyle(fontSize: 20, color: Colors.white)),
+                        ],
+                      )), ///Daily Allowence
+                  SizedBox(height: 15),
+                  Container(
+                    height: SizeConfig.blockSizeVertical * 5,
+                    child: AutoSizeText(
+                        AppLocalizations.of(context).translate('store'),
+                        maxLines: 1,
+                        style: TextStyle(
+                            fontSize: 33,
                             fontWeight: FontWeight.bold,
-                          )),
-                      SizedBox(width: 10),
-                      Text(currentUser.currentUser.points.toString(),
-                          style: TextStyle(
-                            fontSize: 23,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          )),
-                    ],
-                  ),
-                  SizedBox(height: 10),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                          AppLocalizations.of(context)
-                              .translate('daily_allowence')
-                              .toUpperCase(),
-                          style: TextStyle(
-                              fontSize: 23,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold)),
-                      SizedBox(width: 10),
-                      Text('20',
-                          style: TextStyle(
-                              fontSize: 23,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold)),
-                    ],
-                  ),
+                            color: Colors.white)),
+                  ), ///Store text
+                  SizedBox(height: 15),
+                  Container(
+                      height: SizeConfig.blockSizeVertical * 5,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Padding(
+                              padding:
+                                  const EdgeInsets.only(top: 0.0, left: 30),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: <Widget>[
+                                  AutoSizeText(_productListTokenAmount[0],
+                                      group: AutoSizeTextGroupItems,
+                                      style: TextStyle(
+                                          fontSize: 23,
+                                          color: Colors.green)),
+                                  Image.asset(
+                                    'assets/img/Owl_Token.png',
+                                    width: 40,
+                                  ),
+                                  IconButton(
+                                    icon: ImageIcon(
+                                        AssetImage(
+                                            'assets/img/double_arrow.png'),
+                                        size: 64.0,
+                                        color: Colors.white),
+                                    onPressed: () {
+                                      purchase(sixtyOwlTokenIndex);
+                                    },
+                                  ),
+                                ],
+                              )),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 0.0, right: 50),
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: AutoSizeText(
+                                  _items[sixtyOwlTokenIndex]
+                                          .localizedPrice
+                                          .toString() +
+                                      '(' +
+                                      ((double.parse(_items[sixtyOwlTokenIndex]
+                                                      .price) /
+                                                  double.parse(
+                                                      _productListTokenAmount[
+                                                          0]))
+                                              .toString())
+                                          .toString() +
+                                      ' per' +
+                                      ')',
+                                  group: AutoSizeTextGroupItems,
+                                  style: TextStyle(
+                                      fontSize: 23,
+                                      color: Colors.white)),
+                            ),
+                          ),
+                        ],
+                      )), ///60_owl_tokens
+                  Container(
+                      height: SizeConfig.blockSizeVertical * 5,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Padding(
+                              padding:
+                                  const EdgeInsets.only(top: 0.0, left: 30),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: <Widget>[
+                                  AutoSizeText(_productListTokenAmount[1],
+                                      group: AutoSizeTextGroupItems,
+                                      style: TextStyle(
+                                          fontSize: 23,
+                                          color: Colors.green)),
+                                  Image.asset(
+                                    'assets/img/Owl_Token.png',
+                                    width: 40,
+                                  ),
+                                  IconButton(
+                                    icon: ImageIcon(
+                                        AssetImage(
+                                            'assets/img/double_arrow.png'),
+                                        size: 64.0,
+                                        color: Colors.white),
+                                    onPressed: () {
+                                      purchase(sixtyOwlTokenIndex);
+                                    },
+                                  ),
+                                ],
+                              )),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 0.0, right: 50),
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: AutoSizeText(
+                                  _items[sixtyOwlTokenIndex]
+                                          .localizedPrice
+                                          .toString() +
+                                      '(' +
+                                      ((double.parse(_items[sixtyOwlTokenIndex]
+                                                      .price) /
+                                                  double.parse(
+                                                      _productListTokenAmount[
+                                                          0]))
+                                              .toString())
+                                          .toString() +
+                                      ' per' +
+                                      ')',
+                                  group: AutoSizeTextGroupItems,
+                                  style: TextStyle(
+                                      fontSize: 21,
+                                      color: Colors.white)),
+                            ),
+                          ),
+                        ],
+                      )), ///150_owl_tokens
+                  Container(
+                      height: SizeConfig.blockSizeVertical * 5,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Padding(
+                              padding:
+                                  const EdgeInsets.only(top: 0.0, left: 30),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: <Widget>[
+                                  AutoSizeText(_productListTokenAmount[1],
+                                      group: AutoSizeTextGroupItems,
+                                      style: TextStyle(
+                                          fontSize: 23, color: Colors.green)),
+                                  Image.asset(
+                                    'assets/img/Owl_Token.png',
+                                    width: 40,
+                                  ),
+                                  IconButton(
+                                    icon: ImageIcon(
+                                        AssetImage(
+                                            'assets/img/double_arrow.png'),
+                                        size: 64.0,
+                                        color: Colors.white),
+                                    onPressed: () {
+                                      purchase(sixtyOwlTokenIndex);
+                                    },
+                                  ),
+                                ],
+                              )),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 0.0, right: 50),
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: AutoSizeText(
+                                  _items[sixtyOwlTokenIndex]
+                                          .localizedPrice
+                                          .toString() +
+                                      '(' +
+                                      ((double.parse(_items[sixtyOwlTokenIndex]
+                                                      .price) /
+                                                  double.parse(
+                                                      _productListTokenAmount[
+                                                          0]))
+                                              .toString())
+                                          .toString() +
+                                      ' per' +
+                                      ')',
+                                  group: AutoSizeTextGroupItems,
+                                  style: TextStyle(
+                                    fontSize: 23,
+                                    color: Colors.white,
+                                  )),
+                            ),
+                          ),
+                        ],
+                      )), ///500_owl_tokens
+                  Container(
+                      height: SizeConfig.blockSizeVertical * 5,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Padding(
+                              padding:
+                                  const EdgeInsets.only(top: 0.0, left: 30),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: <Widget>[
+                                  AutoSizeText(_productListTokenAmount[3],
+                                      group: AutoSizeTextGroupItems,
+                                      style: TextStyle(
+                                          fontSize: 23, color: Colors.green)),
+                                  Image.asset(
+                                    'assets/img/Owl_Token.png',
+                                    width: 40,
+                                  ),
+                                  IconButton(
+                                    icon: ImageIcon(
+                                        AssetImage(
+                                            'assets/img/double_arrow.png'),
+                                        size: 64.0,
+                                        color: Colors.white),
+                                    onPressed: () {
+                                      purchase(fifteenhundredOwlTokenIndex);
+                                    },
+                                  ),
+                                ],
+                              )),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 0.0, right: 50),
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: AutoSizeText(
+                                  _items[fifteenhundredOwlTokenIndex]
+                                          .localizedPrice
+                                          .toString() +
+                                      '(' +
+                                      ((double.parse(_items[
+                                                          fifteenhundredOwlTokenIndex]
+                                                      .price) /
+                                                  double.parse(
+                                                      _productListTokenAmount[
+                                                          3]))
+                                              .toStringAsFixed(3))
+                                          .toString() +
+                                      ' per' +
+                                      ')',
+                                  group: AutoSizeTextGroupItems,
+                                  maxLines: 1,
+                                  style: TextStyle(
+                                    fontSize: 23,
+                                    color: Colors.white,
+                                  )),
+                            ),
+                          ),
+                        ],
+                      )), ///1500_owl_tokens
                   SizedBox(height: 30),
-                  Text(AppLocalizations.of(context).translate('store'),
-                      style: TextStyle(
-                          fontSize: 33,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white)),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Padding(
-                          padding: const EdgeInsets.only(top: 15.0, left: 30),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: <Widget>[
-                              Text(_productListTokenAmount[0],
-                                  style: TextStyle(
-                                      fontSize: 23,
-                                      color: Colors.green,
-                                      fontWeight: FontWeight.bold)),
-                              Image.asset(
-                                'assets/img/Owl_Token.png',
-                                width: 40,
-                              ),
-                              IconButton(
-                                icon: ImageIcon(
-                                    AssetImage('assets/img/double_arrow.png'),
-                                    size: 64.0,
-                                    color: Colors.white),
-                                onPressed: () {
-                                  purchase(sixtyOwlTokenIndex);
-                                },
-                              ),
-                            ],
-                          )),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 15.0, right: 30),
-                        child: Align(
-                          alignment: Alignment.topLeft,
-                          child: Text(
-                              _items[sixtyOwlTokenIndex]
-                                      .localizedPrice
-                                      .toString() +
-                                  '(' +
-                                  ((double.parse(_items[sixtyOwlTokenIndex]
-                                                  .price) /
-                                              double.parse(
-                                                  _productListTokenAmount[0]))
-                                          .toString())
-                                      .toString() +
-                                  ' per' +
-                                  ')',
-                              style: TextStyle(
-                                  fontSize: 23,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold)),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Padding(
-                          padding: const EdgeInsets.only(top: 0.0, left: 30),
-                          child: Row(
-                            children: <Widget>[
-                              Text(_productListTokenAmount[1],
-                                  style: TextStyle(
-                                      fontSize: 23,
-                                      color: Colors.green,
-                                      fontWeight: FontWeight.bold)),
-                              Image.asset(
-                                'assets/img/Owl_Token.png',
-                                width: 40,
-                              ),
-                              IconButton(
-                                icon: ImageIcon(
-                                    AssetImage('assets/img/double_arrow.png'),
-                                    size: 64.0,
-                                    color: Colors.white),
-                                onPressed: () {
-                                  purchase(sixtyOwlTokenIndex);
-                                },
-                              ),
-                            ],
-                          )),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 15.0, right: 30),
-                        child: Align(
-                          alignment: Alignment.topLeft,
-                          child: Text(
-                              _items[sixtyOwlTokenIndex]
-                                      .localizedPrice
-                                      .toString() +
-                                  '(' +
-                                  ((double.parse(_items[sixtyOwlTokenIndex]
-                                                  .price) /
-                                              double.parse(
-                                                  _productListTokenAmount[0]))
-                                          .toString())
-                                      .toString() +
-                                  ' per' +
-                                  ')',
-                              style: TextStyle(
-                                  fontSize: 23,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold)),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Padding(
-                          padding: const EdgeInsets.only(top: 0.0, left: 30),
-                          child: Row(
-                            children: <Widget>[
-                              Text(_productListTokenAmount[2],
-                                  style: TextStyle(
-                                      fontSize: 23,
-                                      color: Colors.green,
-                                      fontWeight: FontWeight.bold)),
-                              Image.asset(
-                                'assets/img/Owl_Token.png',
-                                width: 40,
-                              ),
-                              IconButton(
-                                icon: ImageIcon(
-                                    AssetImage('assets/img/double_arrow.png'),
-                                    size: 64.0,
-                                    color: Colors.white),
-                                onPressed: () {
-                                  purchase(fivehundredOwlTokenIndex);
-                                },
-                              ),
-                            ],
-                          )),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 15.0, right: 30),
-                        child: Align(
-                          alignment: Alignment.topLeft,
-                          child: Text(
-                              _items[fivehundredOwlTokenIndex]
-                                      .localizedPrice
-                                      .toString() +
-                                  '(' +
-                                  ((double.parse(_items[
-                                                      fivehundredOwlTokenIndex]
-                                                  .price) /
-                                              double.parse(
-                                                  _productListTokenAmount[2]))
-                                          .toStringAsFixed(3))
-                                      .toString() +
-                                  ' per' +
-                                  ')',
-                              style: TextStyle(
-                                  fontSize: 23,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold)),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Padding(
-                          padding: const EdgeInsets.only(top: 0.0, left: 30),
-                          child: Row(
-                            children: <Widget>[
-                              Text(_productListTokenAmount[3],
-                                  style: TextStyle(
-                                      fontSize: 23,
-                                      color: Colors.green,
-                                      fontWeight: FontWeight.bold)),
-                              Image.asset(
-                                'assets/img/Owl_Token.png',
-                                width: 40,
-                              ),
-                              IconButton(
-                                icon: ImageIcon(
-                                    AssetImage('assets/img/double_arrow.png'),
-                                    size: 64.0,
-                                    color: Colors.white),
-                                onPressed: () {
-                                  purchase(fifteenhundredOwlTokenIndex);
-                                },
-                              ),
-                            ],
-                          )),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 15.0, right: 30),
-                        child: Align(
-                          alignment: Alignment.topLeft,
-                          child: Text(
-                              _items[fifteenhundredOwlTokenIndex]
-                                      .localizedPrice
-                                      .toString() +
-                                  '(' +
-                                  ((double.parse(_items[
-                                                      fifteenhundredOwlTokenIndex]
-                                                  .price) /
-                                              double.parse(
-                                                  _productListTokenAmount[3]))
-                                          .toStringAsFixed(3))
-                                      .toString() +
-                                  ' per' +
-                                  ')',
-                              style: TextStyle(
-                                  fontSize: 23,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold)),
-                        ),
-                      ),
-                    ],
-                  ),
+                  Container(
+                      height: SizeConfig.blockSizeVertical * 5,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Padding(
+                              padding:
+                                  const EdgeInsets.only(top: 0.0, left: 30),
+                              child: Row(
+                                children: <Widget>[
+                                  AutoSizeText(
+                                      AppLocalizations.of(context)
+                                          .translate('extend_radius'),
+                                      group: AutoSizeTextGroupItems,
+                                      style: TextStyle(
+                                        fontSize: 23,
+                                        color: Colors.white,
+                                      )),
+                                  IconButton(
+                                    icon: ImageIcon(
+                                        AssetImage(
+                                            'assets/img/double_arrow.png'),
+                                        size: 64.0,
+                                        color: Colors.white),
+                                    onPressed: () {
+                                      purchase(extendradiusIndex);
+                                    },
+                                  ),
+                                ],
+                              )),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 0.0, right: 50),
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Padding(
+                                  padding:
+                                      const EdgeInsets.only(top: 0.0, left: 0),
+                                  child: Row(
+                                    children: <Widget>[
+                                      AutoSizeText(
+                                          _items[extendradiusIndex]
+                                              .localizedPrice,
+                                          group: AutoSizeTextGroupItems,
+                                          style: TextStyle(
+                                            fontSize: 23,
+                                            color: Colors.white,
+                                          )),
+                                    ],
+                                  )),
+                            ),
+                          ),
+                        ],
+                      )), ///Extend_radius
+                  Container(
+                      height: SizeConfig.blockSizeVertical * 5,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Padding(
+                              padding:
+                                  const EdgeInsets.only(top: 0.0, left: 30),
+                              child: Row(
+                                children: <Widget>[
+                                  AutoSizeText(
+                                      AppLocalizations.of(context)
+                                          .translate('skip_water_points'),
+                                      group: AutoSizeTextGroupItems,
+                                      style: TextStyle(
+                                        fontSize: 23,
+                                        color: Colors.white,
+                                      )),
+                                  IconButton(
+                                    icon: ImageIcon(
+                                        AssetImage(
+                                            'assets/img/double_arrow.png'),
+                                        size: 64.0,
+                                        color: Colors.white),
+                                    onPressed: () {
+                                      purchase(skipwaterpointsIndex);
+                                    },
+                                  ),
+                                ],
+                              )),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 0.0, right: 50),
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Padding(
+                                  padding:
+                                      const EdgeInsets.only(top: 0.0, left: 0),
+                                  child: Row(
+                                    children: <Widget>[
+                                      AutoSizeText(
+                                          _items[skipwaterpointsIndex]
+                                              .localizedPrice,
+                                          group: AutoSizeTextGroupItems,
+                                          style: TextStyle(
+                                            fontSize: 23,
+                                            color: Colors.white,
+                                          )),
+                                    ],
+                                  )),
+                            ),
+                          ),
+                        ],
+                      )), ///Skip_water_points
                   SizedBox(height: 30),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Padding(
-                          padding: const EdgeInsets.only(left: 30),
-                          child: Row(
-                            children: <Widget>[
-                              Text(
-                                  AppLocalizations.of(context)
-                                      .translate('share_with_friends'),
-                                  style: TextStyle(
-                                      fontSize: 23,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold)),
-                              IconButton(
-                                icon: ImageIcon(
-                                    AssetImage('assets/img/double_arrow.png'),
-                                    size: 64.0,
-                                    color: Colors.white),
-                                onPressed: () {
-                                  purchase(extendradiusIndex);
-                                },
-                              ),
-                            ],
-                          )),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 15.0, right: 30),
-                        child: Align(
-                          alignment: Alignment.topLeft,
-                          child: Text(_items[extendradiusIndex].localizedPrice,
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold)),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Padding(
-                          padding: const EdgeInsets.only(left: 10),
-                          child: Row(
-                            children: <Widget>[
-                              Text(
-                                  AppLocalizations.of(context)
-                                      .translate('skip_water_points'),
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold)),
-                              IconButton(
-                                icon: Icon(
-                                  Icons.arrow_forward_ios,
-                                  color: Colors.pink,
-                                  size: 24.0,
-                                  semanticLabel:
-                                      'Text to announce in accessibility modes',
-                                ),
-                                onPressed: () {
-                                  purchase(skipwaterpointsIndex);
-                                },
-                              ),
-                            ],
-                          )),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 0.0, right: 5),
-                        child: Align(
-                          alignment: Alignment.topLeft,
-                          child: Text("464,000(0.0000 per)",
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold)),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 30),
-                  GoPremiumButton(this.goPremiumButtonCallback)
+                  GoPremiumButton(this.goPremiumButton)
                 ],
               ))
         : FadingCircleLoading(

@@ -10,7 +10,6 @@ class profile extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       body: Container(
-
           child: Center(
             child: Column(
               children: <Widget>[

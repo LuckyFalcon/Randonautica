@@ -6,6 +6,8 @@ class User {
   int isIapExtendRadius;
   int isIapLocationSearch;
   int isIapInappGooglePreview;
+  int isSharedWithFriends;
+  int isAgreementAccepted;
 
   User(
       {this.id, this.platform,
@@ -13,7 +15,10 @@ class User {
         this.isIapSkipWaterPoints,
         this.isIapExtendRadius,
         this.isIapLocationSearch,
-        this.isIapInappGooglePreview});
+        this.isIapInappGooglePreview,
+        this.isSharedWithFriends,
+        this.isAgreementAccepted
+      });
 
   User.fromJson(Map<String, dynamic> json) {
     id = json['ID'];
@@ -23,6 +28,8 @@ class User {
     isIapExtendRadius = json['is_iap_extend_radius'];
     isIapLocationSearch = json['is_iap_location_search'];
     isIapInappGooglePreview = json['is_iap_inapp_google_preview'];
+    isSharedWithFriends = json['is_shared_with_friends'];
+    isAgreementAccepted = json['is_agreement_accepted'];
   }
 
   Map<String, dynamic> toJson() {
@@ -34,6 +41,8 @@ class User {
     data['is_iap_extend_radius'] = this.isIapExtendRadius;
     data['is_iap_location_search'] = this.isIapLocationSearch;
     data['is_iap_inapp_google_preview'] = this.isIapInappGooglePreview;
+    data['is_shared_with_friends'] = this.isSharedWithFriends;
+    data['is_agreement_accepted'] = this.isAgreementAccepted;
     return data;
   }
 
@@ -47,7 +56,9 @@ class User {
       'isIapSkipWaterPoints': isIapSkipWaterPoints,
       'isIapExtendRadius': isIapExtendRadius,
       'isIapLocationSearch': isIapLocationSearch,
-      'isIapInappGooglePreview': isIapInappGooglePreview
+      'isIapInappGooglePreview': isIapInappGooglePreview,
+      'isSharedWithFriends': isSharedWithFriends,
+      'isAgreementAccepted': isAgreementAccepted
     };
   }
 }

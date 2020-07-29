@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:app/components/Warnings/slide_warning_dots.dart';
 import 'package:app/components/Warnings/slide_warning_item.dart';
-import 'package:app/helpers/FadingCircleLoading.dart';
+import 'file:///C:/Users/David/AndroidStudioProjects/Randonautica/lib/components/FadingCircleLoading.dart';
 import 'package:app/models/slide_warnings.dart';
 
 import 'package:app/utils/BackgroundColor.dart' as backgrounds;

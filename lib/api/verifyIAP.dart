@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:app/helpers/storage/userDatabase.dart';
+import 'package:app/storage/userDatabase.dart';
 import 'package:app/models/User.dart';
 import 'package:flutter_inapp_purchase/modules.dart';
 import 'package:http/http.dart' as http;

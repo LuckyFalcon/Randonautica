@@ -350,7 +350,6 @@ void createAchievementsDatabase() async {
   );
 
 }
-
 void createUserDatabase() async {
 
   String userTable  = 'user';
@@ -362,6 +361,8 @@ void createUserDatabase() async {
   final String COL3 =   "isIapExtendRadius";
   final String COL4 =   "isIapLocationSearch"; //Image location
   final String COL5 =   "isIapInappGooglePreview";
+  final String COL6 =   "isSharedWithFriends";
+  final String COL7 =   "isAgreementAccepted";
 
   String createAchievementsTable = "CREATE TABLE " + userTable  + " (ID INTEGER PRIMARY KEY NOT NULL, " +
       COL0 + " INTEGER, " +
@@ -369,7 +370,9 @@ void createUserDatabase() async {
       COL2 + " INTEGER, " +
       COL3 + " INTEGER, " +
       COL4 + " INTEGER, " +
-      COL5 + " INTEGER)";
+      COL5 + " INTEGER, " +
+      COL6 + " INTEGER, " +
+      COL7 + " INTEGER)";
 
   final Future<Database> database = openDatabase(
     // Set the path to the database.

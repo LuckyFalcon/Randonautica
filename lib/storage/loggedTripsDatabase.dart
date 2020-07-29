@@ -2,7 +2,6 @@
 import 'dart:async';
 
 import 'package:app/models/LoggedTrip.dart';
-import 'package:app/models/UnloggedTrip.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -19,8 +18,6 @@ Future<void> insertLoggedTrip(LoggedTrip loggedTrip) async {
     loggedTrip.toMap(),
     conflictAlgorithm: ConflictAlgorithm.replace,
   );
-
-  print('sucess');
 }
 
 // A method that retrieves all the dogs from the dogs table.

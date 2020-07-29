@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
-import 'AppLocalizations.dart';
+import '../helpers/AppLocalizations.dart';
 
 class RadiusInput extends StatefulWidget {
   Function callback;

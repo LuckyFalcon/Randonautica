@@ -88,7 +88,7 @@
 //                  )),
 //          ],
 //        ),
-//      (PowerBought ? SizedBox(height: 0) :  Container(
+//        (PowerBought ? SizedBox(height: 0) :  Container(
 //            height: 75,
 //            width: 75,
 //            child: Stack(

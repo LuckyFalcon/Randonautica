@@ -58,78 +58,79 @@ class _SetWater extends State<SetWaterPoints> {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    return (waterPointsBought
-        ? Container(
-        width: SizeConfig.blockSizeHorizontal * 30,
-        child:  Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            AutoSizeText(
-                AppLocalizations.of(context).translate('water').toUpperCase(),
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 15,
-                    color: Colors.white)),
-            SizedBox(height: SizeConfig.blockSizeVertical * 1),
-
-            Container(
-                height: SizeConfig.blockSizeVertical * 4.5,
-                width: SizeConfig.blockSizeHorizontal * 30,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-
-                    Container(
-                      width: SizeConfig.blockSizeHorizontal * 12,
-                      child: SwitchButton(
-                        activeColor: Colors.white,
-                        inactiveColor: Color(0xff6FDDFE),
-                        value: waterPointsEnabled,
-                        onChanged: (value) {
-                          print("VALUE : $value");
-                          setState(() {
-                            setWaterPointsEnabled();
-                          });
-                        },
-                      ),
-                    ),
-
-                  ],
-                )),
-           SizedBox(height: SizeConfig.blockSizeVertical * 1)
-          ],
-        ))
+    return Stack(
+        children: <Widget>[
+          Container(
+              width: SizeConfig.blockSizeHorizontal * 30,
+              child:  Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  AutoSizeText(
+                      AppLocalizations.of(context).translate('water').toUpperCase(),
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15,
+                          color: Colors.white)),
+                  SizedBox(height: SizeConfig.blockSizeVertical * 1),
+                  Container(
+                      height: SizeConfig.blockSizeVertical * 4.5,
+                      width: SizeConfig.blockSizeHorizontal * 30,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Container(
+                            width: SizeConfig.blockSizeHorizontal * 12,
+                            child: SwitchButton(
+                              activeColor: Colors.white,
+                              inactiveColor: Color(0xff6FDDFE),
+                              value: waterPointsEnabled,
+                              onChanged: (value) {
+                                print("VALUE : $value");
+                                setState(() {
+                                  setWaterPointsEnabled();
+                                });
+                              },
+                            ),
+                          ),
+                        ],
+                      )),
+                  SizedBox(height: SizeConfig.blockSizeVertical * 1)
+                ],
+              )),
+          (waterPointsBought
+        ? SizedBox(height: 0)
         : Container(
-            height: 75,
-            width: 125,
-            child: Stack(
-              children: <Widget>[
-                Align(
-                  alignment: Alignment.center,
-                  child: ClipRect(
-                    // <-- clips to the 200x200 [Container] below
-                    child: BackdropFilter(
-                      filter: ui.ImageFilter.blur(
-                        sigmaX: 15.0,
-                        sigmaY: 10.0,
-                      ),
-                      child: Container(
-                        alignment: Alignment.center,
-                        child: GestureDetector(
-                            onTap: () {
-                              setWaterPointsEnabled();
-                            },
-                            child: Icon(
-                              Icons.lock,
-                              color: Colors.white,
-                              size: 30.0,
-                            )),
-                      ),
-                    ),
+          height:  SizeConfig.blockSizeVertical * 7.5,
+          width: SizeConfig.blockSizeHorizontal * 30,
+        child: Stack(
+          children: <Widget>[
+            Align(
+              alignment: Alignment.center,
+              child: ClipRect(
+                // <-- clips to the 200x200 [Container] below
+                child: BackdropFilter(
+                  filter: ui.ImageFilter.blur(
+                    sigmaX: 15.0,
+                    sigmaY: 10.0,
                   ),
-                )
-              ],
-            )));
+                  child: Container(
+                    alignment: Alignment.center,
+                    child:
+                    GestureDetector(
+                        onTap: () {
+                          setWaterPointsEnabled();
+                        },
+                        child:  Icon(
+                          Icons.lock,
+                          color: Colors.white,
+                          size: 30.0,
+                        )),
+                  ),
+                ),
+              ),
+            )
+          ],
+        )))]);
   }
 }

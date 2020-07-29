@@ -1,11 +1,12 @@
 import 'package:app/helpers/AppLocalizations.dart';
-import 'package:app/helpers/FadeRoute.dart';
+import 'package:app/api/shareWithFriends.dart';
 import 'package:app/helpers/inviteFriends.dart';
-import 'package:app/pages/start/Walkthrough.dart';
+import 'package:app/storage/userDatabase.dart';
 import 'package:app/utils/size_config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:app/utils/currentUser.dart' as user;
 
 class Invite extends StatefulWidget {
   @override
@@ -13,9 +14,19 @@ class Invite extends StatefulWidget {
 }
 
 class _InviteState extends State<Invite> {
+
+  var SharedWithFriendsPoints = 3;
+
   @override
   void initState() {
     super.initState();
+  }
+
+  void enableShareWithFriends() async {
+    await shareWithFriends().then((value) => {
+      enableIsSharedWithFriends(),
+      user.currentUser.points = user.currentUser.points + SharedWithFriendsPoints
+    });
   }
 
   @override
@@ -76,7 +87,7 @@ class _InviteState extends State<Invite> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           SizedBox(width: SizeConfig.blockSizeHorizontal * 1),
-                          Text(
+                          AutoSizeText(
                               AppLocalizations.of(context)
                                   .translate('sure_button')
                                   .toUpperCase(),
@@ -111,7 +122,7 @@ class _InviteState extends State<Invite> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           SizedBox(width: SizeConfig.blockSizeHorizontal * 1),
-                          Text(
+                          AutoSizeText(
                               AppLocalizations.of(context)
                                   .translate('not_right_now')
                                   .toUpperCase(),
@@ -124,11 +135,7 @@ class _InviteState extends State<Invite> {
                       ),
                     ),
                     onPressed: () {
-                      ///Todo at this point remove previous navigation items
-                      Navigator.pushAndRemoveUntil(
-                          context,
-                          FadeRoute(page: Walkthrough()),
-                          ModalRoute.withName("/Walktrhough"));
+                      Navigator.pop(context);
                     },
                     color: Colors.white,
                   ))

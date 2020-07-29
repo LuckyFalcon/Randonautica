@@ -1,17 +1,22 @@
 import 'dart:io';
 
+import 'package:app/api/acceptAgreement.dart';
+import 'package:app/api/syncTripReports.dart';
+import 'package:app/components/FadingCircleLoading.dart';
 import 'package:app/components/Login/SignInAccountButton.dart';
 import 'package:app/components/Login/SignInAppleAccountButton.dart';
 import 'package:app/components/Login/SignInGoogleAccountButton.dart';
 import 'package:app/helpers/AppLocalizations.dart';
-import 'package:app/helpers/FadingCircleLoading.dart';
+import 'package:app/helpers/Dialogs.dart';
 import 'package:app/pages/Failed/FailedToLogin.dart';
+import 'package:app/utils/BackgroundColor.dart' as backgrounds;
+import 'package:app/utils/currentUser.dart' as user;
 import 'package:app/utils/size_config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'Invite.dart';
+import '../HomePage.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -35,30 +40,37 @@ class _LoginState extends State<Login> {
     });
   }
 
-  void  googleSignInCallback(int statusCode) async {
-
+  void googleSignInCallback(int statusCode) async {
     //Await SharedPreferences future object
     final SharedPreferences prefs = await _prefs;
 
-    if (statusCode == 409) {
-      prefs.setBool("Account", true);
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (context) {
-            return Invite();
-          },
-        ),
-      );
-    } else if (statusCode == 200) {
-      prefs.setBool("Account", true);
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (context) {
-            return Invite();
-          },
-        ),
-      );
-    } else if (statusCode == 500) { //Error
+    if (statusCode == 409 || statusCode == 200) {
+      //Status codes: 409 Account Already exists, 200 Account successfully created
+      if (user.currentUser.isAgreementAccepted == 0) {
+        showAgreementDialog(context, prefs);
+      } else {
+
+        ///Continue this later
+        if(prefs.getBool("SyncedReports") != true){
+          await syncTripReports().then((value) => {
+            prefs.setBool("SyncedReports", true),
+            prefs.setBool("Account", true)
+
+
+          });
+        }
+
+
+//        if(statusCode == 409){
+//          await syncTripReports().then((value) =>
+//              print(value)
+//          );
+//        }
+
+
+      }
+    } else if (statusCode == 500) {
+      //Error
       prefs.setBool("Account", false);
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
@@ -79,12 +91,7 @@ class _LoginState extends State<Login> {
       extendBody: true,
       backgroundColor: Colors.yellow[200],
       body: Container(
-          decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomRight,
-                  stops: [0, 100],
-                  colors: [Color(0xff5A87E4), Color(0xff37CDDC)])),
+          decoration: backgrounds.normal,
           child: (signingIn
               ? Center(
                   child: Column(children: <Widget>[
@@ -167,13 +174,17 @@ class _LoginState extends State<Login> {
                             SizedBox(height: SizeConfig.blockSizeVertical * 4),
                             (Platform.isAndroid
                                 ? SignInGoogleAccountButton(
-                                    this.signingInCallback, this.googleSignInCallback)
-                                : SignInAppleAccountButton(this.googleSignInCallback)),
+                                    this.signingInCallback,
+                                    this.googleSignInCallback)
+                                : SignInAppleAccountButton(
+                                    this.googleSignInCallback)),
                             SizedBox(height: SizeConfig.blockSizeVertical * 2),
                             (Platform.isAndroid
-                                ? SignInAppleAccountButton(this.googleSignInCallback)
+                                ? SignInAppleAccountButton(
+                                    this.googleSignInCallback)
                                 : SignInGoogleAccountButton(
-                                    this.signingInCallback, this.googleSignInCallback)),
+                                    this.signingInCallback,
+                                    this.googleSignInCallback)),
                             SizedBox(height: SizeConfig.blockSizeVertical * 2),
                             SignInCreateAccountButton(),
                           ],

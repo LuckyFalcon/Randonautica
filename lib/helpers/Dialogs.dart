@@ -1,12 +1,15 @@
 import 'dart:ui';
 
-import 'package:app/pages/Shop/ShopModal.dart';
+import 'package:app/api/acceptAgreement.dart';
+import 'package:app/pages/HomePage.dart';
+import 'package:app/pages/Shop/Shop.dart';
 import 'package:app/utils/size_config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import '../old/RadiusSlider.dart';
 import 'AppLocalizations.dart';
-import 'RadiusSlider.dart';
 
 showAlertDialog(BuildContext context) {
   showDialog(
@@ -198,7 +201,6 @@ setRadiusDialog(BuildContext context, callback) {
 }
 
 setBuyDialog(BuildContext context) {
-
   showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -261,7 +263,7 @@ setBuyDialog(BuildContext context) {
                                     color: Colors.blue)),
                             SizedBox(height: SizeConfig.blockSizeVertical * 3),
                             Container(
-                                width:  SizeConfig.blockSizeHorizontal * 70,
+                                width: SizeConfig.blockSizeHorizontal * 70,
                                 height: SizeConfig.blockSizeVertical * 8,
                                 decoration: BoxDecoration(
                                     color: Color(0xff5D7FE0),
@@ -288,11 +290,8 @@ setBuyDialog(BuildContext context) {
                                                 color: Colors.white,
                                                 fontWeight: FontWeight.bold)),
                                         SizedBox(width: 10),
-                                        Icon(
-                                          Icons.arrow_forward,
-                                          size: 24,
-                                          color: Colors.white
-                                        ),
+                                        Icon(Icons.arrow_forward,
+                                            size: 24, color: Colors.white),
                                       ],
                                     ),
                                   ),
@@ -302,30 +301,47 @@ setBuyDialog(BuildContext context) {
                                         isScrollControlled: true,
                                         shape: RoundedRectangleBorder(
                                           borderRadius: new BorderRadius.only(
-                                              topLeft: const Radius.circular(90.0),
-                                              topRight: const Radius.circular(90.0)),
+                                              topLeft:
+                                                  const Radius.circular(90.0),
+                                              topRight:
+                                                  const Radius.circular(90.0)),
                                         ),
                                         useRootNavigator: false,
                                         context: context,
                                         builder: (context) => Container(
-                                          height: SizeConfig.blockSizeVertical * 90,
-                                          decoration: new BoxDecoration(
-                                              gradient: LinearGradient(
-                                                  begin: Alignment.topCenter,
-                                                  end: Alignment.bottomCenter,
-                                                  stops: [0, 5.0],
-                                                  colors: [Color(0xff383B46), Color(0xff5786E1)]),
-                                              color: Theme.of(context).primaryColor,
-                                              borderRadius: new BorderRadius.only(
-                                                  topLeft: const Radius.circular(90.0),
-                                                  topRight: const Radius.circular(90.0))),
-                                          child: Container(
-                                            height: SizeConfig.blockSizeVertical * 90,
-                                            child: BS(),
-                                          ),
-                                        ));
-
-
+                                              height:
+                                                  SizeConfig.blockSizeVertical *
+                                                      90,
+                                              decoration: new BoxDecoration(
+                                                  gradient: LinearGradient(
+                                                      begin: Alignment
+                                                          .topCenter,
+                                                      end: Alignment
+                                                          .bottomCenter,
+                                                      stops: [
+                                                        0,
+                                                        5.0
+                                                      ],
+                                                      colors: [
+                                                        Color(0xff383B46),
+                                                        Color(0xff5786E1)
+                                                      ]),
+                                                  color: Theme.of(
+                                                          context)
+                                                      .primaryColor,
+                                                  borderRadius:
+                                                      new BorderRadius.only(
+                                                          topLeft: const Radius
+                                                              .circular(90.0),
+                                                          topRight: const Radius
+                                                              .circular(90.0))),
+                                              child: Container(
+                                                height: SizeConfig
+                                                        .blockSizeVertical *
+                                                    90,
+                                                child: Shop(),
+                                              ),
+                                            ));
                                   },
                                   color: Color(0xff44C5DB),
                                 ))
@@ -361,7 +377,159 @@ setBuyDialog(BuildContext context) {
                             ),
                             onPressed: () {
                               Navigator.pop(context);
+                            },
+                            color: Color(0xff5889E1),
+                          )))
+                ],
+              ),
+            ),
+          ),
+        );
+      });
+}
 
+showAgreementDialog(BuildContext context, SharedPreferences sharedPreferences) {
+  showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+          child: Align(
+            alignment: Alignment.center,
+            child: Container(
+              height: SizeConfig.blockSizeVertical * 40,
+              width: SizeConfig.blockSizeHorizontal * 80,
+              child: Stack(
+                children: <Widget>[
+                  Container(
+                      height: SizeConfig.blockSizeVertical * 30,
+                      width: SizeConfig.blockSizeHorizontal * 80,
+
+                      ///This is 70% of the Vertical / Height for this container in this class
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(45.0)),
+                        border: Border.all(width: 10, color: Colors.white),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.2),
+                            spreadRadius: 4,
+                            blurRadius: 10,
+                            offset: Offset(0, 6), // changes position of shadow
+                          ),
+                        ],
+                      ),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.all(Radius.circular(45.0)),
+                          border:
+                              Border.all(width: 1, color: Color(0xffB1B1B1)),
+                        ),
+                        child: Column(
+                          children: <Widget>[
+                            ImageIcon(AssetImage('assets/img/Owl.png'),
+                                color: Colors.green, size: 64),
+                            Text(
+                                AppLocalizations.of(context)
+                                    .translate('uh_oh')
+                                    .toUpperCase(),
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15,
+                                    color: Colors.blue)),
+                            SizedBox(height: SizeConfig.blockSizeVertical * 1),
+                            Text(
+                                AppLocalizations.of(context)
+                                    .translate('access_when_premium')
+                                    .toUpperCase(),
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15,
+                                    color: Colors.blue)),
+                            SizedBox(height: SizeConfig.blockSizeVertical * 3),
+                            Container(
+                                width: SizeConfig.blockSizeHorizontal * 70,
+                                height: SizeConfig.blockSizeVertical * 8,
+                                decoration: BoxDecoration(
+                                    color: Color(0xff5D7FE0),
+                                    borderRadius: BorderRadius.circular(60),
+                                    boxShadow: []),
+                                child: RaisedButton(
+                                  elevation: 15,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(60.0),
+                                  ),
+                                  padding: EdgeInsets.zero,
+                                  child: Center(
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: <Widget>[
+                                        SizedBox(width: 6),
+                                        Text(
+                                            AppLocalizations.of(context)
+                                                .translate('go_to_store')
+                                                .toUpperCase(),
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold)),
+                                        SizedBox(width: 10),
+                                        Icon(Icons.arrow_forward,
+                                            size: 24, color: Colors.white),
+                                      ],
+                                    ),
+                                  ),
+                                  onPressed: () async {
+                                    await acceptAgreement().then((value) => {
+                                          sharedPreferences.setBool(
+                                              "Account", true),
+                                          Navigator.of(context).pushReplacement(
+                                            MaterialPageRoute(
+                                              builder: (context) {
+                                                return HomePage();
+                                              },
+                                            ),
+                                          )
+                                        });
+                                  },
+                                  color: Color(0xff44C5DB),
+                                ))
+                          ],
+                        ),
+                      )),
+                  Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Container(
+                          width: 125,
+                          height: 60,
+                          decoration: BoxDecoration(
+                              color: Color(0xff5D7FE0),
+                              borderRadius: BorderRadius.circular(30),
+                              boxShadow: []),
+                          child: RaisedButton(
+                            elevation: 15,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30.0),
+                            ),
+                            padding: EdgeInsets.zero,
+                            child: Center(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Icon(
+                                    Icons.arrow_back_ios,
+                                    size: 40,
+                                    color: Colors.white,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            onPressed: () {
+                              Navigator.pop(context);
                             },
                             color: Color(0xff5889E1),
                           )))

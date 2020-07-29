@@ -1,9 +1,10 @@
 import 'package:app/api/getAttractors.dart';
 import 'package:app/helpers/AppLocalizations.dart';
-import 'package:app/helpers/FadingCircleLoading.dart';
+import 'file:///C:/Users/David/AndroidStudioProjects/Randonautica/lib/components/FadingCircleLoading.dart';
 import 'package:app/models/Attractors.dart';
 import 'package:app/utils/BackgroundColor.dart' as backgrounds;
 import 'package:app/utils/size_config.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -62,10 +63,11 @@ class LoadingPoints extends StatelessWidget {
                     SizedBox(height: SizeConfig.blockSizeVertical * 15),
                     Container(
                       width: SizeConfig.blockSizeHorizontal * 50,
-                      child: Text(
+                      child: AutoSizeText(
                           AppLocalizations.of(context)
                               .translate('generating_point'),
                           textAlign: TextAlign.center,
+                          maxLines: 2,
                           style: TextStyle(
                               fontSize: 40,
                               color: Colors.white,
@@ -79,7 +81,7 @@ class LoadingPoints extends StatelessWidget {
                     SizedBox(height: SizeConfig.blockSizeVertical * 10),
                     Container(
                       width: SizeConfig.blockSizeHorizontal * 40,
-                      child: Text(
+                      child: AutoSizeText(
                           AppLocalizations.of(context)
                               .translate('use_this_moment'),
                           textAlign: TextAlign.center,

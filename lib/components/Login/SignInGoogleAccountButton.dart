@@ -1,6 +1,4 @@
 import 'package:app/api/signInBackend.dart';
-import 'package:app/pages/Failed/FailedToLogin.dart';
-import 'package:app/pages/start/Invite.dart';
 import 'package:app/utils/size_config.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -31,24 +29,27 @@ class _SignInGoogleAccountButtonState extends State<SignInGoogleAccountButton> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn googleSignIn = GoogleSignIn();
 
+  //Set SharedPreferences
+  Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+
+
   @override
   void initState() {
-
     super.initState();
+
     _googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount account) {
       setState(() {
-        print('thisisreached');
         _currentUser = account;
       });
     });
-    print('thisisreachedsigninsilently');
 
     _googleSignIn.signInSilently();
   }
 
   Future<int> signInWithGoogle() async {
 
-
+    //Await SharedPreferences future object
+    final SharedPreferences prefs = await _prefs;
 
     final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
 
@@ -77,6 +78,8 @@ class _SignInGoogleAccountButtonState extends State<SignInGoogleAccountButton> {
     var token = await currentUser.getIdToken();
     print('usertoken: ' + token.token);
     print('usertoken: ' + token.toString());
+
+    await prefs.setString("authToken", token.token);
 
     ///Send request to back-end
     return await signBackendGoogle(token.token.toString());
@@ -123,10 +126,8 @@ class _SignInGoogleAccountButtonState extends State<SignInGoogleAccountButton> {
           onPressed: () {
             // ignore: missing_return
             signInWithGoogle().then((statusCode) async {
-              if (statusCode == 1337) {
-                ///User canceledd login, do nothing
-              } else {
-                ///Return statusCode to login widget
+              if (statusCode == 1337) { ///User canceledd login, do nothing
+              } else { ///Return statusCode to login widget
                 this.widget.GoogleSignIncallback(statusCode);
               }
             }).catchError((error) {

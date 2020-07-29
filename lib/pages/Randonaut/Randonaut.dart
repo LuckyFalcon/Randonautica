@@ -1,34 +1,38 @@
 import 'dart:async';
-import 'dart:typed_data';
-import 'dart:ui' as ui;
 
-import 'package:app/components/Lab/ButtonGoMainPage.dart';
 import 'package:app/components/Randonaut/ButtonGoMainPage.dart';
 import 'package:app/components/Randonaut/HelpButton.dart';
-import 'package:app/components/Randonaut/LoadingPoints.dart';
 import 'package:app/components/Randonaut/OpenMapsButton.dart';
 import 'package:app/components/Randonaut/PointsButtons.dart';
 import 'package:app/components/Randonaut/SetRadius.dart';
 import 'package:app/components/Randonaut/SetRandomness.dart';
 import 'package:app/components/Randonaut/SetWaterPoints.dart';
+import 'package:app/components/Randonaut/ShareLocationButton.dart';
 import 'package:app/components/Randonaut/StartOverButton.dart';
+import 'package:app/helpers/AppLocalizations.dart';
+import 'package:app/helpers/Dialogs.dart';
 import 'package:app/helpers/FadeRoute.dart';
 import 'package:app/helpers/OpenGoogleMaps.dart';
-import 'package:app/helpers/storage/unloggedTripsDatabase.dart';
 import 'package:app/models/Attractors.dart';
 import 'package:app/models/UnloggedTrip.dart';
 import 'package:app/models/pin_pill_info.dart';
+import 'package:app/pages/Token/TokenInfo.dart';
 import 'package:app/utils/currentUser.dart' as globals;
 import 'package:app/utils/size_config.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
+import 'package:share/share.dart';
 import 'package:tutorial_coach_mark/animated_focus_light.dart';
 import 'package:tutorial_coach_mark/target_position.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
+
+import 'file:///C:/Users/David/AndroidStudioProjects/Randonautica/lib/storage/unloggedTripsDatabase.dart';
+
+import 'LoadingPoints.dart';
 
 const double CAMERA_TILT = 0;
 const double CAMERA_BEARING = 0;
@@ -37,9 +41,8 @@ const LatLng DEST_LOCATION = LatLng(37.422, -122.084);
 
 class Randonaut extends StatefulWidget {
   Function callback;
-  int index;
 
-  Randonaut(this.callback, this.index);
+  Randonaut(this.callback);
 
   @override
   State<Randonaut> createState() => RandonautState();
@@ -68,10 +71,14 @@ class RandonautState extends State<Randonaut> {
   bool pressStartOverButton = false;
 
   /// Attractor stuff neeeded
-  int selectedPoint = 1; //1 = Anomaly, 2 = Attractor, 3 = Void. Anomaly is selected as standard
-  int selectedRandomness = 1; //1 = Random, 2 = Quantum, 3 = Bias. Random is selected as standard
-  int radius = 3000; //Radius in meters. Miles or Kilometers * 1000, Standard radius is always 3000 meters
-  bool checkWater = false; //True = on, false = off. Standard checkWater is always false.
+  int selectedPoint =
+      1; //1 = Anomaly, 2 = Attractor, 3 = Void. Anomaly is selected as standard
+  int selectedRandomness =
+      1; //1 = Random, 2 = Quantum, 3 = Bias. Random is selected as standard
+  int radius =
+      3000; //Radius in meters. Miles or Kilometers * 1000, Standard radius is always 3000 meters
+  bool checkWater =
+      false; //True = on, false = off. Standard checkWater is always false.
 
   ///Attractor points
   LatLng attractorCoordinates;
@@ -160,14 +167,6 @@ class RandonautState extends State<Randonaut> {
     });
   }
 
-  void callbackGoButtonLab(bool pressGoLabButton) {
-    //controller.setMapStyle(MapStyles.DarkStyle);
-    pressGoButtonLab = true;
-    setState(() {
-      onAddMarkerButtonPressed();
-    });
-  }
-
   void callbackOpenMaps(bool pressOpenMapsButton) {
     setState(() {
       this.pressOpenMapsButton = pressOpenMapsButton;
@@ -181,6 +180,32 @@ class RandonautState extends State<Randonaut> {
       this.pressStartOverButton = pressOpenMapsButton;
       pointsSucesfullyGenerated = false;
       _markers = {};
+      _polylines = {};
+    });
+  }
+
+  void callbackShareLocation(bool pressStartOverButton) {
+    //Render share function
+    final RenderBox box = context.findRenderObject();
+
+    final String shareSubject =
+        AppLocalizations.of(context).translate('share_subject');
+
+    setState(() {
+      String googleUrl = "https://www.google.com/maps/place/" +
+          attractorCoordinates.latitude.toString() +
+          "+" +
+          attractorCoordinates.longitude.toString() +
+          "/@" +
+          attractorCoordinates.latitude.toString() +
+          "+" +
+          attractorCoordinates.longitude.toString() +
+          ",14z&zoom=14&mapmode=standard";
+      Share.share(
+        googleUrl,
+        subject: shareSubject,
+        sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size,
+      ).whenComplete(() => {print('successcomplete')});
     });
   }
 
@@ -448,7 +473,8 @@ class RandonautState extends State<Randonaut> {
 
     // create an instance of Location
     location = new Location();
-    // polylinePoints = PolylinePoints();
+
+    //polylinePoints = PolylinePoints();
 
     // subscribe to changes in the user's location
     // by "listening" to the location's onLocationChanged event
@@ -487,14 +513,18 @@ class RandonautState extends State<Randonaut> {
       children: <Widget>[
         Container(
           ///This is 70% of the Vertical / Height for this container in this class
-          height: SizeConfig.blockSizeVertical * 53,
+          height: (pointsSucesfullyGenerated
+              ? SizeConfig.blockSizeVertical * 60
+              : SizeConfig.blockSizeVertical * 53),
 
           ///This is 80% of the Horizontal / Width for this container in this class
           width: SizeConfig.blockSizeHorizontal * 80,
           child: Stack(
             children: <Widget>[
               Container(
-                height: SizeConfig.blockSizeVertical * 50,
+                height: (pointsSucesfullyGenerated
+                    ? SizeConfig.blockSizeVertical * 57
+                    : SizeConfig.blockSizeVertical * 50),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(45.0)),
                   border: Border.all(width: 15, color: Colors.white),
@@ -538,13 +568,15 @@ class RandonautState extends State<Randonaut> {
                   child: (pointsSucesfullyGenerated
                       ? SizedBox(height: 0)
                       : ButtonGoMainPage(this.callbackGoButtonMainPage,
-                              pointsSucesfullyGenerated)))
+                          pointsSucesfullyGenerated)))
             ],
           ),
         ),
         SizedBox(height: SizeConfig.blockSizeVertical * 2),
         Container(
-          height: SizeConfig.blockSizeVertical * 21,
+          height: (pointsSucesfullyGenerated
+              ? SizeConfig.blockSizeVertical * 14.5
+              : SizeConfig.blockSizeVertical * 21.5),
           width: SizeConfig.blockSizeHorizontal * 100,
           child: (pointsSucesfullyGenerated
               ? Row(
@@ -580,15 +612,27 @@ class RandonautState extends State<Randonaut> {
                                   fontWeight: FontWeight.bold,
                                   color: Color(0xff5987E3)),
                             ),
-                            Row(children: [
-                              //Buttons
-                              StartOverButton(
-                                  this.callbackStartOver, pressStartOverButton),
-                              SizedBox(
-                                  width: SizeConfig.blockSizeHorizontal * 5),
-                              OpenMapsButton(
-                                  this.callbackOpenMaps, pressOpenMapsButton),
-                            ]),
+                            Row(
+                              children: [
+                                //Buttons
+                                StartOverButton(this.callbackStartOver,
+                                    pressStartOverButton),
+                                SizedBox(
+                                    width: SizeConfig.blockSizeHorizontal * 5),
+                                OpenMapsButton(
+                                    this.callbackOpenMaps, pressOpenMapsButton),
+                              ],
+                            ),
+                            SizedBox(height: SizeConfig.blockSizeVertical * 1),
+                            Row(
+                              children: [
+                                //Buttons
+                                SizedBox(
+                                    width: SizeConfig.blockSizeHorizontal * 15),
+                                ShareLocationButton(
+                                    this.callbackOpenMaps, pressOpenMapsButton),
+                              ],
+                            ),
                           ],
                         ),
                       ],
@@ -609,9 +653,85 @@ class RandonautState extends State<Randonaut> {
                         SetRandomness(this.callbackselectedRandomness),
                       ],
                     ),
-                    SizedBox(width: 20),
-                    HelpButton(this.callbackhelp),
-                    SizedBox(width: 30),
+                    SizedBox(width: SizeConfig.blockSizeHorizontal * 4),
+                    Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          Container(
+                            child: HelpButton(this.callbackhelp),
+                          ),
+                          Container(
+                              height: SizeConfig.blockSizeVertical * 10,
+                              child: Column(
+                                children: <Widget>[
+                                  IconButton(
+                                    iconSize: 32,
+                                    icon: ImageIcon(
+                                      AssetImage('assets/img/Owl_Token.png'),
+                                      color: Colors.white,
+                                    ),
+                                    onPressed: () {
+                                      showModalBottomSheet(
+                                          isScrollControlled: true,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: new BorderRadius.only(
+                                                topLeft:
+                                                    const Radius.circular(60.0),
+                                                topRight: const Radius.circular(
+                                                    60.0)),
+                                          ),
+                                          useRootNavigator: false,
+                                          context: context,
+                                          builder: (context) => Container(
+                                                height: SizeConfig
+                                                        .blockSizeVertical *
+                                                    90,
+                                                decoration: new BoxDecoration(
+                                                    gradient: LinearGradient(
+                                                        begin: Alignment
+                                                            .topCenter,
+                                                        end: Alignment
+                                                            .bottomCenter,
+                                                        stops: [
+                                                          0,
+                                                          5.0
+                                                        ],
+                                                        colors: [
+                                                          Color(0xff383B46),
+                                                          Color(0xff5786E1)
+                                                        ]),
+                                                    color: Theme.of(context)
+                                                        .primaryColor,
+                                                    borderRadius:
+                                                        new BorderRadius.only(
+                                                            topLeft: const Radius
+                                                                .circular(60.0),
+                                                            topRight: const Radius
+                                                                    .circular(
+                                                                60.0))),
+                                                child: Container(
+                                                  height: SizeConfig
+                                                          .blockSizeVertical *
+                                                      90,
+                                                  child: TokenInfo(),
+                                                ),
+                                              ));
+                                    },
+                                  ),
+                                  Container(
+                                      child: AutoSizeText(
+                                          globals.currentUser.points.toString(),
+                                          maxLines: 1,
+                                          minFontSize: 12,
+                                          maxFontSize: 23,
+                                          style: TextStyle(
+                                              fontSize: 23,
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold))),
+                                ],
+                              )),
+                        ]),
+                    SizedBox(width: SizeConfig.blockSizeHorizontal * 3),
                     Column(
                       children: <Widget>[
                         SetWaterPoints(this.setCheckWaterCallback),
@@ -628,11 +748,41 @@ class RandonautState extends State<Randonaut> {
   }
 
   void onAddMarkerButtonPressed() async {
-    Navigator.push(
-        context,
-        FadeRoute(
-            page: LoadingPoints(callbackLoadingPoints, radius, currentLocation,
-                selectedPoint, selectedRandomness, checkWater)));
+    bool hasAccess = false;
+
+    //Verifiy if the point selected is the following and whether the user has enough points
+    switch (selectedRandomness.toString()) {
+      case '1':
+        if ((globals.currentUser.points >= RandomPointCost)) {
+          hasAccess = true;
+        }
+        break;
+      case '2':
+        if (globals.currentUser.points >= QuantumPointCost) {
+          hasAccess = true;
+        }
+        break;
+      case '3':
+        if (globals.currentUser.points >= AmplificationBiasPointCost) {
+          hasAccess = true;
+        }
+        break;
+    }
+
+    if (hasAccess) {
+      Navigator.push(
+          context,
+          FadeRoute(
+              page: LoadingPoints(
+                  callbackLoadingPoints,
+                  radius,
+                  currentLocation,
+                  selectedPoint,
+                  selectedRandomness,
+                  checkWater)));
+    } else {
+      setBuyDialog(context);
+    }
   }
 
   void callbackLoadingPoints(Attractors attractors) async {
@@ -643,20 +793,20 @@ class RandonautState extends State<Randonaut> {
       case '1':
         print('shouldremove1');
         if (globals.currentUser.points >= RandomPointCost) {
-            globals.currentUser.points =
-                globals.currentUser.points - RandomPointCost;
+          globals.currentUser.points =
+              globals.currentUser.points - RandomPointCost;
         }
         break;
       case '2':
         if (globals.currentUser.points >= QuantumPointCost) {
-            globals.currentUser.points =
-                globals.currentUser.points - QuantumPointCost;
+          globals.currentUser.points =
+              globals.currentUser.points - QuantumPointCost;
         }
         break;
       case '3':
         if (globals.currentUser.points >= AmplificationBiasPointCost) {
-            globals.currentUser.points =
-                globals.currentUser.points - AmplificationBiasPointCost;
+          globals.currentUser.points =
+              globals.currentUser.points - AmplificationBiasPointCost;
         }
         break;
     }
@@ -728,9 +878,15 @@ class RandonautState extends State<Randonaut> {
     //Insert trip into db
     await insertUnloggedTrip(unloggedTrip);
 
+    List<LatLng> PolylinePoints = new List<LatLng>();
+    PolylinePoints.add(
+        LatLng(currentLocation.latitude, currentLocation.longitude));
+    PolylinePoints.add(
+        LatLng(attractorCoordinates.latitude, attractorCoordinates.longitude));
+
     setState(() {
       //Camera ZOOM on map
-      CAMERA_ZOOM = 10;
+      CAMERA_ZOOM = 13;
 
       _markers.add(Marker(
         // This marker id can be anything that uniquely identifies each marker.
@@ -742,12 +898,14 @@ class RandonautState extends State<Randonaut> {
         ),
         icon: BitmapDescriptor.defaultMarker,
       ));
-      const oneSec = const Duration(seconds: 1);
 
-      _circles.add(Circle(
-          circleId: attractorPointCircleId,
-          center: attractorCoordinates,
-          radius: attractors.radiusM));
+      _polylines.add(Polyline(
+          polylineId: PolylineId('3333'),
+          visible: true,
+          //latlng is List<LatLng>
+          points: PolylinePoints,
+          color: Colors.blue,
+          width: 3));
     });
 
     //Move camera to set ZOOM level
@@ -766,6 +924,30 @@ class RandonautState extends State<Randonaut> {
   }
 
   void setInitialLocation() async {
+    bool _serviceEnabled;
+    PermissionStatus _permissionGranted;
+    LocationData _locationData;
+
+    _serviceEnabled = await location.serviceEnabled();
+    if (!_serviceEnabled) {
+      print('requestgps');
+      _serviceEnabled = await location.requestService();
+      if (!_serviceEnabled) {
+        print('denied');
+
+        ///dialog here
+        return;
+      }
+    }
+
+    _permissionGranted = await location.hasPermission();
+    if (_permissionGranted == PermissionStatus.DENIED) {
+      _permissionGranted = await location.requestPermission();
+      if (_permissionGranted != PermissionStatus.GRANTED) {
+        return;
+      }
+    }
+
     // set the initial location by pulling the user's
     // current location from the location's getLocation()
     currentLocation = await location.getLocation();
@@ -786,7 +968,6 @@ class RandonautState extends State<Randonaut> {
     controller.animateCamera(CameraUpdate.newCameraPosition(cPosition));
   }
 
-
   void updatePinOnMap() async {
     // create a new CameraPosition instance
     // every time the location changes, so the camera
@@ -794,6 +975,20 @@ class RandonautState extends State<Randonaut> {
 
     // do this inside the setState() so Flutter gets notified
     // that a widget update is due
+    if (!(attractorCoordinates == null)) {
+      print('reachedatt');
+      double distanceInMeters = await Geolocator().distanceBetween(
+          attractorCoordinates.latitude,
+          attractorCoordinates.longitude,
+          currentLocation.latitude,
+          currentLocation.longitude);
+
+      print(distanceInMeters);
+      if (distanceInMeters <= 30) {
+        print('attractorreached');
+      }
+    }
+
     setState(() {
       // updated position
       var pinPosition =
