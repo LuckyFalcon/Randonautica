@@ -2,14 +2,14 @@ import 'dart:io';
 
 import 'package:app/api/signInBackend.dart';
 import 'package:app/api/syncTripReports.dart';
+import 'package:app/components/FadingCircleLoading.dart';
 import 'package:app/helpers/AppLocalizations.dart';
 import 'package:app/helpers/FadeRoute.dart';
-import 'file:///C:/Users/David/AndroidStudioProjects/Randonautica/lib/components/FadingCircleLoading.dart';
-import 'file:///C:/Users/David/AndroidStudioProjects/Randonautica/lib/storage/setupDatabases.dart';
+import 'package:app/storage/setupDatabases.dart';
+
 import 'package:app/storage/userDatabase.dart';
 import 'package:app/models/User.dart';
 import 'package:app/pages/Failed/FailedInternet.dart';
-import 'package:app/pages/start/Login.dart';
 import 'package:app/utils/size_config.dart';
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:device_info/device_info.dart';
@@ -29,6 +29,8 @@ import 'HomePage.dart';
 
 import 'package:app/utils/currentUser.dart' as globals;
 import 'package:app/utils/BackgroundColor.dart' as backgrounds;
+
+import 'Login.dart';
 
 class Loading extends StatefulWidget {
   @override
@@ -178,9 +180,7 @@ class _LoadingState extends State<Loading> {
       FirebaseUser _user = await FirebaseAuth.instance.currentUser();
 
       if (_user != null) {
-
         var token = await _user.getIdToken();
-
         await prefs.setString("authToken", token.token);
         await signBackendGoogle(token.token.toString())
             .then((statusCode) async {

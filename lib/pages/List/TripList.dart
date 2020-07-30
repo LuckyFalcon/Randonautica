@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:app/api/syncTripReports.dart';
 import 'package:app/components/SearchBar.dart';
 import 'package:app/components/Trips/NoTripsFound.dart';
 import 'package:app/components/Trips/RecentlyViewedTrips.dart';
@@ -11,6 +12,7 @@ import 'package:app/models/UnloggedTrip.dart';
 import 'package:app/utils/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../helpers/AppLocalizations.dart';
 import 'LoggedTripDetails.dart';
@@ -24,11 +26,15 @@ class TripList extends StatefulWidget {
 }
 
 class TripListState extends State<TripList> {
+  //Set SharedPreferences
+  Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+
   List<UnloggedTrip> unloggedTrips;
   List<LoggedTrip> _LoggedTripList;
 
   List taglist = [];
 
+  bool unloggedTripsSynced = false;
   bool unloggedTripsloaded = false;
   bool LoggedTripList = false;
 
@@ -37,6 +43,25 @@ class TripListState extends State<TripList> {
   @override
   initState() {
     super.initState();
+
+    initializeTripList();
+
+  }
+
+  initializeTripList() async {
+
+    //Await SharedPreferences future object
+    final SharedPreferences prefs = await _prefs;
+
+    if(prefs.getBool("SyncedReports") != true){
+      await syncTripReports();
+        setState(() {
+          prefs.setBool("SyncedReports", true);
+          unloggedTripsSynced = true;
+        });
+    } else {
+      unloggedTripsSynced = true;
+    }
 
     Future<List<UnloggedTrip>> _futureOfList = RetrieveUnloggedTrips();
     _futureOfList.then((value) {
@@ -78,7 +103,7 @@ class TripListState extends State<TripList> {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    return (unloggedTripsloaded && LoggedTripList
+    return (unloggedTripsloaded && LoggedTripList && unloggedTripsSynced
         ? (unloggedTrips.length > 0 || _LoggedTripList.length > 0
             ? Container(
                 height: SizeConfig.blockSizeVertical * 78, ///78 tied to Randonaut.dart

@@ -1,12 +1,11 @@
 import 'dart:ui';
 
-import 'package:app/api/acceptAgreement.dart';
-import 'package:app/pages/HomePage.dart';
+import 'package:app/components/Dialogs/DialogButton.dart';
 import 'package:app/pages/Shop/Shop.dart';
 import 'package:app/utils/size_config.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../old/RadiusSlider.dart';
 import 'AppLocalizations.dart';
@@ -388,7 +387,7 @@ setBuyDialog(BuildContext context) {
       });
 }
 
-showAgreementDialog(BuildContext context, SharedPreferences sharedPreferences) {
+showAgreementDialog(BuildContext context, Function callback) {
   showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -404,8 +403,6 @@ showAgreementDialog(BuildContext context, SharedPreferences sharedPreferences) {
                   Container(
                       height: SizeConfig.blockSizeVertical * 30,
                       width: SizeConfig.blockSizeHorizontal * 80,
-
-                      ///This is 70% of the Vertical / Height for this container in this class
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.all(Radius.circular(45.0)),
@@ -484,17 +481,7 @@ showAgreementDialog(BuildContext context, SharedPreferences sharedPreferences) {
                                     ),
                                   ),
                                   onPressed: () async {
-                                    await acceptAgreement().then((value) => {
-                                          sharedPreferences.setBool(
-                                              "Account", true),
-                                          Navigator.of(context).pushReplacement(
-                                            MaterialPageRoute(
-                                              builder: (context) {
-                                                return HomePage();
-                                              },
-                                            ),
-                                          )
-                                        });
+                                    callback(true);
                                   },
                                   color: Color(0xff44C5DB),
                                 ))
@@ -533,6 +520,541 @@ showAgreementDialog(BuildContext context, SharedPreferences sharedPreferences) {
                             },
                             color: Color(0xff5889E1),
                           )))
+                ],
+              ),
+            ),
+          ),
+        );
+      });
+}
+
+findingPointFailedDialog(BuildContext context) {
+  dialogRetrievePointCallback() {}
+
+  dialogCancelCallback() {}
+
+  showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return new BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+          child: Align(
+            alignment: Alignment.center,
+            child: Container(
+              height: SizeConfig.blockSizeVertical * 35,
+              width: SizeConfig.blockSizeHorizontal * 80,
+              child: Stack(
+                children: <Widget>[
+                  Container(
+                      height: SizeConfig.blockSizeVertical * 35,
+                      width: SizeConfig.blockSizeHorizontal * 80,
+                      ///This is 70% of the Vertical / Height for this container in this class
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(45.0)),
+                        boxShadow: [
+                          BoxShadow(
+                              blurRadius: 8,
+                              offset: Offset(0, 15),
+                              color: Colors.black.withOpacity(.6),
+                              spreadRadius: -9)
+                        ],
+                      ),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.all(Radius.circular(45.0)),
+                        ),
+                        child: Column(
+                          children: <Widget>[
+                            SizedBox(height: SizeConfig.blockSizeVertical * 1),
+                            Container(
+                              height: SizeConfig.blockSizeVertical * 7.5,
+                              child: ImageIcon(AssetImage('assets/img/Owl.png'),
+                                  color: Color(0xff6081E2), size: 64),
+                            ),
+                            SizedBox(height: SizeConfig.blockSizeVertical * 0.5),
+                            Container(
+                              height: SizeConfig.blockSizeVertical * 2,
+                              width: SizeConfig.blockSizeHorizontal * 50,
+                              child: Material(
+                                  color: Colors.white,
+                                  child: Text(
+                                      AppLocalizations.of(context)
+                                          .translate(
+                                              'failed_dialog_description_1')
+                                          .toUpperCase(),
+                                      maxLines: 2,
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 14,
+                                          color: Color(0xff6081E2)))),
+                            ),
+                            SizedBox(height: SizeConfig.blockSizeVertical * 1),
+                            Container(
+                              height: SizeConfig.blockSizeVertical * 2,
+                              width: SizeConfig.blockSizeHorizontal * 50,
+                              child: Material(
+                                  color: Colors.white,
+                                  child: Text(
+                                      AppLocalizations.of(context)
+                                          .translate(
+                                          'failed_dialog_description_2')
+                                          .toUpperCase(),
+                                      maxLines: 2,
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 14,
+                                          color: Color(0xff6081E2)))),
+                            ),
+                            SizedBox(height: SizeConfig.blockSizeVertical * 2),
+                            DialogButton(dialogRetrievePointCallback, "failed_dialog_yes"),
+                            SizedBox(height: SizeConfig.blockSizeVertical * 1.5),
+                            DialogButton(dialogCancelCallback, "failed_dialog_no"),
+                          ],
+                        ),
+                      )),
+                ],
+              ),
+            ),
+          ),
+        );
+      });
+}
+
+gpsDisabledDialog(BuildContext context) {
+  dialogRetrievePointCallback() {}
+
+  dialogCancelCallback() {}
+
+  showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return new BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+          child: Align(
+            alignment: Alignment.center,
+            child: Container(
+              height: SizeConfig.blockSizeVertical * 35,
+              width: SizeConfig.blockSizeHorizontal * 80,
+              child: Stack(
+                children: <Widget>[
+                  Container(
+                      height: SizeConfig.blockSizeVertical * 35,
+                      width: SizeConfig.blockSizeHorizontal * 80,
+                      ///This is 70% of the Vertical / Height for this container in this class
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(45.0)),
+                        boxShadow: [
+                          BoxShadow(
+                              blurRadius: 8,
+                              offset: Offset(0, 15),
+                              color: Colors.black.withOpacity(.6),
+                              spreadRadius: -9)
+                        ],
+                      ),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.all(Radius.circular(45.0)),
+                        ),
+                        child: Column(
+                          children: <Widget>[
+                            SizedBox(height: SizeConfig.blockSizeVertical * 1),
+                            Container(
+                              height: SizeConfig.blockSizeVertical * 9.5,
+                              child: ImageIcon(AssetImage('assets/img/Owl.png'),
+                                  color: Color(0xff6081E2), size: 96),
+                            ),
+                            SizedBox(height: SizeConfig.blockSizeVertical * 0.5),
+                            SizedBox(height: SizeConfig.blockSizeVertical * 1),
+                            Container(
+                              height: SizeConfig.blockSizeVertical * 2,
+                              width: SizeConfig.blockSizeHorizontal * 50,
+                              child: Material(
+                                  color: Colors.white,
+                                  child: Text(
+                                      AppLocalizations.of(context)
+                                          .translate(
+                                          'gps_not_enabled_description')
+                                          .toUpperCase(),
+                                      maxLines: 2,
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 14,
+                                          color: Color(0xff6081E2)))),
+                            ),
+                            SizedBox(height: SizeConfig.blockSizeVertical * 2),
+                            DialogButton(dialogRetrievePointCallback, "gps_not_enabled_description_yes"),
+                            SizedBox(height: SizeConfig.blockSizeVertical * 1.5),
+                            DialogButton(dialogCancelCallback, "gps_not_enabled_description_no"),
+                          ],
+                        ),
+                      )),
+                ],
+              ),
+            ),
+          ),
+        );
+      });
+}
+
+notEnoughTokensDialog(BuildContext context) {
+  dialogRetrievePointCallback() {}
+
+  dialogCancelCallback() {}
+
+  showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return new BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+          child: Align(
+            alignment: Alignment.center,
+            child: Container(
+              height: SizeConfig.blockSizeVertical * 35,
+              width: SizeConfig.blockSizeHorizontal * 80,
+              child: Stack(
+                children: <Widget>[
+                  Container(
+                      height: SizeConfig.blockSizeVertical * 35,
+                      width: SizeConfig.blockSizeHorizontal * 80,
+                      ///This is 70% of the Vertical / Height for this container in this class
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(45.0)),
+                        boxShadow: [
+                          BoxShadow(
+                              blurRadius: 8,
+                              offset: Offset(0, 15),
+                              color: Colors.black.withOpacity(.6),
+                              spreadRadius: -9)
+                        ],
+                      ),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.all(Radius.circular(45.0)),
+                        ),
+                        child: Column(
+                          children: <Widget>[
+                            SizedBox(height: SizeConfig.blockSizeVertical * 1),
+                            Container(
+                              height: SizeConfig.blockSizeVertical * 9.5,
+                              child: ImageIcon(AssetImage('assets/img/Owl.png'),
+                                  color: Color(0xff6081E2), size: 96),
+                            ),
+                            SizedBox(height: SizeConfig.blockSizeVertical * 0.5),
+                            SizedBox(height: SizeConfig.blockSizeVertical * 1),
+                            Container(
+                              height: SizeConfig.blockSizeVertical * 2,
+                              width: SizeConfig.blockSizeHorizontal * 50,
+                              child: Material(
+                                  color: Colors.white,
+                                  child: Text(
+                                      AppLocalizations.of(context)
+                                          .translate(
+                                          'not_enough_tokens_description')
+                                          .toUpperCase(),
+                                      maxLines: 2,
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 14,
+                                          color: Color(0xff6081E2)))),
+                            ),
+                            SizedBox(height: SizeConfig.blockSizeVertical * 2),
+                            DialogButton(dialogRetrievePointCallback, "not_enough_tokens_description_yes"),
+                            SizedBox(height: SizeConfig.blockSizeVertical * 1.5),
+                            DialogButton(dialogCancelCallback, "not_enough_tokens_description_no"),
+                          ],
+                        ),
+                      )),
+                ],
+              ),
+            ),
+          ),
+        );
+      });
+}
+
+randonauticaStreakDialog(BuildContext context) {
+  dialogRetrievePointCallback() {}
+
+  dialogCancelCallback() {}
+
+  showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return new BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+          child: Align(
+            alignment: Alignment.center,
+            child: Container(
+              height: SizeConfig.blockSizeVertical * 35,
+              width: SizeConfig.blockSizeHorizontal * 80,
+              child: Stack(
+                children: <Widget>[
+                  Container(
+                      height: SizeConfig.blockSizeVertical * 35,
+                      width: SizeConfig.blockSizeHorizontal * 80,
+                      ///This is 70% of the Vertical / Height for this container in this class
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(45.0)),
+                        boxShadow: [
+                          BoxShadow(
+                              blurRadius: 8,
+                              offset: Offset(0, 15),
+                              color: Colors.black.withOpacity(.6),
+                              spreadRadius: -9)
+                        ],
+                      ),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.all(Radius.circular(45.0)),
+                        ),
+                        child: Column(
+                          children: <Widget>[
+                            SizedBox(height: SizeConfig.blockSizeVertical * 2),
+                            Container(
+                              height: SizeConfig.blockSizeVertical * 2,
+                              width: SizeConfig.blockSizeHorizontal * 50,
+                              child: Material(
+                                  color: Colors.white,
+                                  child: Text(
+                                      AppLocalizations.of(context)
+                                          .translate(
+                                          'randonaut_streak')
+                                          .toUpperCase(),
+                                      maxLines: 2,
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 14,
+                                          color: Color(0xff6081E2)))),
+                            ),
+                            Container(
+                              height: SizeConfig.blockSizeVertical * 7.5,
+                              child: ImageIcon(AssetImage('assets/img/Owl.png'),
+                                  color: Color(0xff6081E2), size: 64),
+                            ),
+                            SizedBox(height: SizeConfig.blockSizeVertical * 0.5),
+                            Container(
+                              height: SizeConfig.blockSizeVertical * 2,
+                              width: SizeConfig.blockSizeHorizontal * 50,
+                              child: Material(
+                                  color: Colors.white,
+                                  child: Text(
+                                      AppLocalizations.of(context)
+                                          .translate(
+                                          'continue_your_streak')
+                                          .toUpperCase(),
+                                      maxLines: 2,
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12,
+                                          color: Color(0xff6081E2)))),
+                            ),
+                            SizedBox(height: SizeConfig.blockSizeVertical * 1),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Column(
+                                  children: <Widget>[
+                                    Container(
+                                        height: 15,
+                                        width: 15,
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius: BorderRadius.all(Radius.circular(45.0)),
+                                          border: Border.all(width: 2, color: Colors.blue),
+                                        )
+                                    ),
+                                    SizedBox(height: SizeConfig.blockSizeVertical * 1),
+                                    Material(
+                                      color: Colors.white,
+                                      child: Text(
+                                        AppLocalizations.of(context)
+                                            .translate(
+                                            'day')
+                                            .toUpperCase() + ' 1',
+                                        maxLines: 2,
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 14,
+                                            color: Color(0xff6081E2)))),
+                                    Container(
+                                      height: 30,
+                                      child:  Visibility(
+                                        child: ImageIcon(AssetImage('assets/img/Owl.png'),
+                                            color: Color(0xff6081E2), size: 48),
+                                        visible: false,
+                                      )
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(width: SizeConfig.blockSizeHorizontal * 1.5),
+
+                                Column(
+                                  children: <Widget>[
+                                    Container(
+                                        height: 15,
+                                        width: 15,
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius: BorderRadius.all(Radius.circular(45.0)),
+                                          border: Border.all(width: 2, color: Colors.blue),
+                                        )
+                                    ),
+                                    SizedBox(height: SizeConfig.blockSizeVertical * 1),
+                                    Material(
+                                        color: Colors.white,
+                                        child: Text(
+                                            AppLocalizations.of(context)
+                                                .translate(
+                                                'day')
+                                                .toUpperCase() + ' 1',
+                                            maxLines: 2,
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 14,
+                                                color: Color(0xff6081E2)))),
+                                    Container(
+                                        height: 30,
+                                        child:  Visibility(
+                                          child: ImageIcon(AssetImage('assets/img/Owl.png'),
+                                              color: Color(0xff6081E2), size: 48),
+                                          visible: false,
+                                        )
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(width: SizeConfig.blockSizeHorizontal * 1.5),
+
+                                Column(
+                                  children: <Widget>[
+                                    Container(
+                                        height: 15,
+                                        width: 15,
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius: BorderRadius.all(Radius.circular(45.0)),
+                                          border: Border.all(width: 2, color: Colors.blue),
+                                        )
+                                    ),
+                                    SizedBox(height: SizeConfig.blockSizeVertical * 1),
+                                    Material(
+                                        color: Colors.white,
+                                        child: Text(
+                                            AppLocalizations.of(context)
+                                                .translate(
+                                                'day')
+                                                .toUpperCase() + ' 1',
+                                            maxLines: 2,
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 14,
+                                                color: Color(0xff6081E2)))),
+                                    Container(
+                                        height: 30,
+                                        child:  Visibility(
+                                          child: ImageIcon(AssetImage('assets/img/Owl.png'),
+                                              color: Color(0xff6081E2), size: 48),
+                                          visible: false,
+                                        )
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(width: SizeConfig.blockSizeHorizontal * 1.5),
+
+                                Column(
+                                  children: <Widget>[
+                                    Container(
+                                        height: 15,
+                                        width: 15,
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius: BorderRadius.all(Radius.circular(45.0)),
+                                          border: Border.all(width: 2, color: Colors.blue),
+                                        )
+                                    ),
+                                    SizedBox(height: SizeConfig.blockSizeVertical * 1),
+                                    Material(
+                                        color: Colors.white,
+                                        child: Text(
+                                            AppLocalizations.of(context)
+                                                .translate(
+                                                'day')
+                                                .toUpperCase() + ' 1',
+                                            maxLines: 2,
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 14,
+                                                color: Color(0xff6081E2)))),
+                                    Container(
+                                        height: 30,
+                                        child:  Visibility(
+                                          child: ImageIcon(AssetImage('assets/img/Owl.png'),
+                                              color: Color(0xff6081E2), size: 48),
+                                          visible: false,
+                                        )
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(width: SizeConfig.blockSizeHorizontal * 1.5),
+                                Column(
+                                  children: <Widget>[
+                                    Container(
+                                        height: 15,
+                                        width: 15,
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius: BorderRadius.all(Radius.circular(45.0)),
+                                          border: Border.all(width: 2, color: Colors.blue),
+                                        )
+                                    ),
+                                    SizedBox(width: SizeConfig.blockSizeHorizontal * 1.5),
+                                    Material(
+                                        color: Colors.white,
+                                        child: Text(
+                                            AppLocalizations.of(context)
+                                                .translate(
+                                                'day')
+                                                .toUpperCase() + ' 1',
+                                            maxLines: 2,
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 14,
+                                                color: Color(0xff6081E2)))),
+                                    Container(
+                                        height: 30,
+                                        child:  Visibility(
+                                          child: ImageIcon(AssetImage('assets/img/Owl.png'),
+                                              color: Color(0xff6081E2), size: 48),
+                                          visible: true,
+                                        )
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: SizeConfig.blockSizeVertical * 1.5),
+                            DialogButton(dialogCancelCallback, "not_enough_tokens_description_no"),
+                          ],
+                        ),
+                      )),
                 ],
               ),
             ),

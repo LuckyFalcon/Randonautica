@@ -16,7 +16,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../HomePage.dart';
+import 'HomePage.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -40,6 +40,23 @@ class _LoginState extends State<Login> {
     });
   }
 
+  Future<void> acceptAgreementCallback(bool accept) async {
+    //Await SharedPreferences future object
+    final SharedPreferences prefs = await _prefs;
+
+    await acceptAgreement().then((value) async =>
+    {
+      prefs.setBool("Account", true),
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) {
+            return HomePage();
+          },
+        ),
+      )
+    });
+  }
+
   void googleSignInCallback(int statusCode) async {
     //Await SharedPreferences future object
     final SharedPreferences prefs = await _prefs;
@@ -47,27 +64,16 @@ class _LoginState extends State<Login> {
     if (statusCode == 409 || statusCode == 200) {
       //Status codes: 409 Account Already exists, 200 Account successfully created
       if (user.currentUser.isAgreementAccepted == 0) {
-        showAgreementDialog(context, prefs);
+        showAgreementDialog(context, this.acceptAgreementCallback);
       } else {
-
-        ///Continue this later
-        if(prefs.getBool("SyncedReports") != true){
-          await syncTripReports().then((value) => {
-            prefs.setBool("SyncedReports", true),
-            prefs.setBool("Account", true)
-
-
-          });
-        }
-
-
-//        if(statusCode == 409){
-//          await syncTripReports().then((value) =>
-//              print(value)
-//          );
-//        }
-
-
+        prefs.setBool("Account", true);
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) {
+              return HomePage();
+            },
+          ),
+        );
       }
     } else if (statusCode == 500) {
       //Error

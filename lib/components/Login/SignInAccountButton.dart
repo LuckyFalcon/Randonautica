@@ -2,11 +2,9 @@ import 'dart:io';
 
 import 'package:app/helpers/CreateAppleAccount.dart';
 import 'package:app/helpers/CreateGoogleAccount.dart';
-import 'package:app/pages/start/CreateAccount.dart';
 import 'package:app/utils/size_config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
 import '../../helpers/AppLocalizations.dart';
 

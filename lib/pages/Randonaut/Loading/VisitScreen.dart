@@ -1,6 +1,4 @@
 import 'package:app/components/Introduction/EnterRandonauticaButton.dart';
-import 'package:app/components/Shop/GoPremiumButton.dart';
-import 'package:app/components/Shop/WelcomPremiumButton.dart';
 import 'package:app/helpers/AppLocalizations.dart';
 import 'package:app/utils/size_config.dart';
 import 'package:flutter/material.dart';

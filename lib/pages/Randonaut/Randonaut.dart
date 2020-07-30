@@ -452,25 +452,28 @@ class RandonautState extends State<Randonaut> {
   }
 
   void showTutorial() {
-    TutorialCoachMark(context,
-        targets: targets,
-        colorShadow: Colors.blue,
-        textSkip: "SKIP",
-        paddingFocus: 10,
-        opacityShadow: 0.8, finish: () {
-      print("finish");
-    }, clickTarget: (target) {
-      print(target);
-    }, clickSkip: () {
-      print("skip");
-    })
-      ..show();
+    //findingPointFailedDialog(context);
+    //gpsDisabledDialog(context);
+  // notEnoughTokensDialog(context);
+    randonauticaStreakDialog(context);
+//    TutorialCoachMark(context,
+//        targets: targets,
+//        colorShadow: Colors.blue,
+//        textSkip: "SKIP",
+//        paddingFocus: 10,
+//        opacityShadow: 0.8, finish: () {
+//      print("finish");
+//    }, clickTarget: (target) {
+//      print(target);
+//    }, clickSkip: () {
+//      print("skip");
+//    })
+//      ..show();
   }
 
   @override
   void initState() {
     super.initState();
-
     // create an instance of Location
     location = new Location();
 
@@ -491,6 +494,7 @@ class RandonautState extends State<Randonaut> {
 
   @override
   Widget build(BuildContext context) {
+
     initialCameraPosition = CameraPosition(
         zoom: CAMERA_ZOOM,
         tilt: CAMERA_TILT,

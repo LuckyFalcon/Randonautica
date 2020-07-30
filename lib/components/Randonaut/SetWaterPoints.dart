@@ -1,7 +1,7 @@
 import 'dart:ui' as ui;
 
 import 'package:app/helpers/Dialogs.dart';
-import 'package:app/utils/SwitchButton.dart';
+import 'file:///C:/Users/David/AndroidStudioProjects/Randonautica/lib/components/Randonaut/SwitchButton.dart';
 import 'package:app/utils/currentUser.dart' as globals;
 import 'package:app/utils/size_config.dart';
 import 'package:flutter/cupertino.dart';
