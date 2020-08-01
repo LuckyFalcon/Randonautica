@@ -31,7 +31,7 @@ import 'package:tutorial_coach_mark/animated_focus_light.dart';
 import 'package:tutorial_coach_mark/target_position.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 
-import 'file:///C:/Users/David/AndroidStudioProjects/Randonautica/lib/storage/unloggedTripsDatabase.dart';
+import '../../storage/unloggedTripsDatabase.dart';
 
 import 'LoadingPoints.dart';
 

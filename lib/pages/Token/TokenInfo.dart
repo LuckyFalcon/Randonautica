@@ -1,6 +1,6 @@
 import 'package:app/helpers/AppLocalizations.dart';
 import 'package:app/helpers/FadeRoute.dart';
-import 'file:///C:/Users/David/AndroidStudioProjects/Randonautica/lib/pages/Invite/Invite.dart';
+import '../../pages/Invite/Invite.dart';
 import 'package:app/utils/currentUser.dart' as user;
 import 'package:app/utils/size_config.dart';
 import 'package:auto_size_text/auto_size_text.dart';

@@ -5,7 +5,7 @@ import 'package:app/api/verifyIAP.dart';
 import 'package:app/components/Shop/GoPremiumButton.dart';
 import 'package:app/components/Shop/UnlockPremiumButton.dart';
 import 'package:app/helpers/AppLocalizations.dart';
-import 'file:///C:/Users/David/AndroidStudioProjects/Randonautica/lib/components/FadingCircleLoading.dart';
+import '../../components/FadingCircleLoading.dart';
 import 'package:app/storage/userDatabase.dart';
 import 'package:app/utils/currentUser.dart' as currentUser;
 import 'package:app/utils/currentUser.dart' as globals;

@@ -1,7 +1,7 @@
 import 'package:app/api/getAttractors.dart';
 import 'package:app/helpers/AppLocalizations.dart';
 import 'package:app/helpers/Dialogs.dart';
-import 'file:///C:/Users/David/AndroidStudioProjects/Randonautica/lib/components/FadingCircleLoading.dart';
+import '../../components/FadingCircleLoading.dart';
 import 'package:app/models/Attractors.dart';
 import 'package:app/utils/BackgroundColor.dart' as backgrounds;
 import 'package:app/utils/size_config.dart';

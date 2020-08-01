@@ -2,7 +2,7 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:app/helpers/AppLocalizations.dart';
-import 'file:///C:/Users/David/AndroidStudioProjects/Randonautica/lib/storage/loggedTripsDatabase.dart';
+import '../storage/loggedTripsDatabase.dart';
 import 'package:app/models/LoggedTrip.dart';
 import 'package:app/models/Post.dart';
 import 'package:app/utils/size_config.dart';

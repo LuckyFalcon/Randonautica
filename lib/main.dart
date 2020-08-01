@@ -1,4 +1,4 @@
-import 'file:///C:/Users/David/AndroidStudioProjects/Randonautica/lib/pages/Loading.dart';
+import 'pages/Loading.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
