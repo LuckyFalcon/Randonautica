@@ -1,15 +1,15 @@
 import 'dart:io';
 
 import 'package:app/api/signInBackend.dart';
-import 'package:app/api/syncTripReports.dart';
 import 'package:app/components/FadingCircleLoading.dart';
 import 'package:app/helpers/AppLocalizations.dart';
 import 'package:app/helpers/FadeRoute.dart';
-import 'package:app/storage/setupDatabases.dart';
-
-import 'package:app/storage/userDatabase.dart';
 import 'package:app/models/User.dart';
 import 'package:app/pages/Failed/FailedInternet.dart';
+import 'package:app/storage/setupDatabases.dart';
+import 'package:app/storage/userDatabase.dart';
+import 'package:app/utils/BackgroundColor.dart' as backgrounds;
+import 'package:app/utils/currentUser.dart' as globals;
 import 'package:app/utils/size_config.dart';
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:device_info/device_info.dart';
@@ -19,17 +19,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:location_permissions/location_permissions.dart';
 import 'package:package_info/package_info.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'HomePage.dart';
-
-import 'package:app/utils/currentUser.dart' as globals;
-import 'package:app/utils/BackgroundColor.dart' as backgrounds;
-
 import 'Login.dart';
 
 class Loading extends StatefulWidget {
@@ -38,7 +33,6 @@ class Loading extends StatefulWidget {
 }
 
 class _LoadingState extends State<Loading> {
-
   //Set SharedPreferences
   Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
@@ -56,21 +50,20 @@ class _LoadingState extends State<Loading> {
     //Get Latest version info from firebase config
     final RemoteConfig remoteConfig = await RemoteConfig.instance;
 
+    //Ask permission on Android for SDK above 23
     if (Platform.isAndroid) {
       var androidInfo = await DeviceInfoPlugin().androidInfo;
       var sdkInt = androidInfo.version.sdkInt;
       if (sdkInt >= 23) {
         //Ask for permissions
-        PermissionStatus permission =
-            await LocationPermissions().requestPermissions();
+        await LocationPermissions().requestPermissions();
       }
     }
+
     //Check for Internet Connection
     bool result = await DataConnectionChecker().hasConnection;
-    if(result != true) {
-      Navigator.pushAndRemoveUntil(
-          context,
-          FadeRoute(page: FailedToInternet()),
+    if (result != true) {
+      Navigator.pushAndRemoveUntil(context, FadeRoute(page: FailedToInternet()),
           ModalRoute.withName("/FailedToInternet"));
     }
 
@@ -95,7 +88,6 @@ class _LoadingState extends State<Loading> {
                         FadeRoute(page: HomePage()),
                         ModalRoute.withName("/HomePage"));
                   } else {
-                    print('value' + value.toString());
                     //Setup Databases
                     setupDatabases().then(
                         (value) => Future.delayed(Duration(seconds: 3), () {
@@ -180,19 +172,31 @@ class _LoadingState extends State<Loading> {
       FirebaseUser _user = await FirebaseAuth.instance.currentUser();
 
       if (_user != null) {
+        //Get token
         var token = await _user.getIdToken();
+
+        //Store Token in SharedPreferences
         await prefs.setString("authToken", token.token);
+
+        //Sign in on backend
         await signBackendGoogle(token.token.toString())
             .then((statusCode) async {
+          //Status codes: 409 Account Already exists, 200 Account successfully created
           if (statusCode == 200 || statusCode == 409) {
+            //Get user from DB
             User user = await RetrieveUser();
+
+            //Set Global User
             globals.currentUser = user;
           } else {
-            print('somethingwentwrong');
-            throw ("Login failed"); // error thrown on back-end signin failed
+            //An error occurred running the above logic
+            throw Exception('Failed to get User');
           }
         });
         return _user;
+      } else {
+        //No current user
+        throw Exception('Failed to get User');
       }
     }
   }

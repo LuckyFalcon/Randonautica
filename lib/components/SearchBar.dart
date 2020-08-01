@@ -1,8 +1,6 @@
 import 'package:app/helpers/FadeRoute.dart';
 
 import 'ListSearchBar.dart';
-import 'file:///C:/Users/David/AndroidStudioProjects/Randonautica/lib/pages/News/News.dart';
-import 'file:///C:/Users/David/AndroidStudioProjects/Randonautica/lib/pages/Profile/Profile.dart';
 import 'package:app/utils/size_config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

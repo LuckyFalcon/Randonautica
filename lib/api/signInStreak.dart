@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-Future<int> acceptAgreement() async {
+Future<int> signInStreak() async {
 
   //Set SharedPreferences
   Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
@@ -16,7 +16,7 @@ Future<int> acceptAgreement() async {
 
   try {
     final response = await http.get(
-      'https://randonautica-v2.azure-api.net/legal/agreement',
+      'http://192.168.1.217:7071/api/signInStreak',
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
@@ -26,8 +26,7 @@ Future<int> acceptAgreement() async {
 
     //Successfully got a success from sharing
     if (response.statusCode == 200) {
-      //Return response code
-      return 200;
+      return response.statusCode;
     } else {
       //Error from API call
       throw Exception('Failed to accept agreement');

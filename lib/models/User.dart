@@ -8,6 +8,9 @@ class User {
   int isIapInappGooglePreview;
   int isSharedWithFriends;
   int isAgreementAccepted;
+  String startedSignedInStreakDatetime;
+  int currentSignedInStreak;
+
 
   User(
       {this.id, this.platform,
@@ -17,7 +20,9 @@ class User {
         this.isIapLocationSearch,
         this.isIapInappGooglePreview,
         this.isSharedWithFriends,
-        this.isAgreementAccepted
+        this.isAgreementAccepted,
+        this.startedSignedInStreakDatetime,
+        this.currentSignedInStreak
       });
 
   User.fromJson(Map<String, dynamic> json) {
@@ -30,6 +35,8 @@ class User {
     isIapInappGooglePreview = json['is_iap_inapp_google_preview'];
     isSharedWithFriends = json['is_shared_with_friends'];
     isAgreementAccepted = json['is_agreement_accepted'];
+    startedSignedInStreakDatetime = json['started_signedin_streak_datetime'];
+    currentSignedInStreak = json['current_signedin_streak'];
   }
 
   Map<String, dynamic> toJson() {
@@ -43,6 +50,8 @@ class User {
     data['is_iap_inapp_google_preview'] = this.isIapInappGooglePreview;
     data['is_shared_with_friends'] = this.isSharedWithFriends;
     data['is_agreement_accepted'] = this.isAgreementAccepted;
+    data['started_signedin_streak_datetime'] = this.startedSignedInStreakDatetime;
+    data['current_signedin_streak'] = this.currentSignedInStreak;
     return data;
   }
 
@@ -58,7 +67,9 @@ class User {
       'isIapLocationSearch': isIapLocationSearch,
       'isIapInappGooglePreview': isIapInappGooglePreview,
       'isSharedWithFriends': isSharedWithFriends,
-      'isAgreementAccepted': isAgreementAccepted
+      'isAgreementAccepted': isAgreementAccepted,
+      'startedSignedInStreakDatetime': startedSignedInStreakDatetime,
+      'currentSignedInStreak': currentSignedInStreak,
     };
   }
 }

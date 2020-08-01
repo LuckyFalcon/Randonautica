@@ -1,5 +1,6 @@
 import 'package:app/components/BottomBar.dart';
 import 'package:app/components/TopBar.dart';
+import 'package:app/helpers/SignInStreak.dart';
 import 'package:app/pages/Feed/TripFeed.dart';
 import 'package:app/pages/Lab/Lab.dart';
 import 'package:app/pages/List/TripList.dart';
@@ -26,6 +27,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
+    SignInStreak(context);
     super.initState();
   }
 
@@ -70,4 +72,5 @@ class _HomePageState extends State<HomePage> {
           ])),
     );
   }
+
 }

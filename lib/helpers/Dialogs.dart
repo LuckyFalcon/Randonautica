@@ -516,7 +516,7 @@ showAgreementDialog(BuildContext context, Function callback) {
                               ),
                             ),
                             onPressed: () {
-                              Navigator.pop(context);
+
                             },
                             color: Color(0xff5889E1),
                           )))
@@ -528,12 +528,16 @@ showAgreementDialog(BuildContext context, Function callback) {
       });
 }
 
-findingPointFailedDialog(BuildContext context) {
-  dialogRetrievePointCallback() {}
+findingPointFailedDialog(BuildContext context, Function callback) async {
+  dialogRetrievePointCallback() {
+    callback(); //Return retry to Randonaut page
+  }
 
-  dialogCancelCallback() {}
+  dialogCancelCallback() {
+    Navigator.pop(context);
+  }
 
-  showDialog(
+  await showDialog(
       context: context,
       builder: (BuildContext context) {
         return new BackdropFilter(
@@ -624,8 +628,10 @@ findingPointFailedDialog(BuildContext context) {
       });
 }
 
-gpsDisabledDialog(BuildContext context) {
-  dialogRetrievePointCallback() {}
+Future<bool> gpsDisabledDialog(BuildContext context) {
+  dialogRetrievePointCallback() {
+    return true;
+  }
 
   dialogCancelCallback() {}
 
@@ -782,10 +788,11 @@ notEnoughTokensDialog(BuildContext context) {
       });
 }
 
-randonauticaStreakDialog(BuildContext context) {
-  dialogRetrievePointCallback() {}
+randonauticaStreakDialog(BuildContext context, int currentSignedInStreak) {
 
-  dialogCancelCallback() {}
+  dialogCancelCallback() {
+    Navigator.pop(context);
+  }
 
   showDialog(
       context: context,
@@ -872,7 +879,7 @@ randonauticaStreakDialog(BuildContext context) {
                                         height: 15,
                                         width: 15,
                                         decoration: BoxDecoration(
-                                          color: Colors.white,
+                                          color: (currentSignedInStreak == 1 ? Color(0xff6081E2) : Colors.white ),
                                           borderRadius: BorderRadius.all(Radius.circular(45.0)),
                                           border: Border.all(width: 2, color: Colors.blue),
                                         )
@@ -909,7 +916,7 @@ randonauticaStreakDialog(BuildContext context) {
                                         height: 15,
                                         width: 15,
                                         decoration: BoxDecoration(
-                                          color: Colors.white,
+                                          color: (currentSignedInStreak == 2 ? Color(0xff6081E2) : Colors.white ),
                                           borderRadius: BorderRadius.all(Radius.circular(45.0)),
                                           border: Border.all(width: 2, color: Colors.blue),
                                         )
@@ -946,44 +953,7 @@ randonauticaStreakDialog(BuildContext context) {
                                         height: 15,
                                         width: 15,
                                         decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius: BorderRadius.all(Radius.circular(45.0)),
-                                          border: Border.all(width: 2, color: Colors.blue),
-                                        )
-                                    ),
-                                    SizedBox(height: SizeConfig.blockSizeVertical * 1),
-                                    Material(
-                                        color: Colors.white,
-                                        child: Text(
-                                            AppLocalizations.of(context)
-                                                .translate(
-                                                'day')
-                                                .toUpperCase() + ' 1',
-                                            maxLines: 2,
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 14,
-                                                color: Color(0xff6081E2)))),
-                                    Container(
-                                        height: 30,
-                                        child:  Visibility(
-                                          child: ImageIcon(AssetImage('assets/img/Owl.png'),
-                                              color: Color(0xff6081E2), size: 48),
-                                          visible: false,
-                                        )
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(width: SizeConfig.blockSizeHorizontal * 1.5),
-
-                                Column(
-                                  children: <Widget>[
-                                    Container(
-                                        height: 15,
-                                        width: 15,
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
+                                          color: (currentSignedInStreak == 3 ? Color(0xff6081E2) : Colors.white ),
                                           borderRadius: BorderRadius.all(Radius.circular(45.0)),
                                           border: Border.all(width: 2, color: Colors.blue),
                                         )
@@ -1019,12 +989,12 @@ randonauticaStreakDialog(BuildContext context) {
                                         height: 15,
                                         width: 15,
                                         decoration: BoxDecoration(
-                                          color: Colors.white,
+                                          color: (currentSignedInStreak == 4 ? Color(0xff6081E2) : Colors.white ),
                                           borderRadius: BorderRadius.all(Radius.circular(45.0)),
                                           border: Border.all(width: 2, color: Colors.blue),
                                         )
                                     ),
-                                    SizedBox(width: SizeConfig.blockSizeHorizontal * 1.5),
+                                    SizedBox(height: SizeConfig.blockSizeVertical * 1),
                                     Material(
                                         color: Colors.white,
                                         child: Text(
@@ -1043,7 +1013,43 @@ randonauticaStreakDialog(BuildContext context) {
                                         child:  Visibility(
                                           child: ImageIcon(AssetImage('assets/img/Owl.png'),
                                               color: Color(0xff6081E2), size: 48),
-                                          visible: true,
+                                          visible: false,
+                                        )
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(width: SizeConfig.blockSizeHorizontal * 1.5),
+                                Column(
+                                  children: <Widget>[
+                                    Container(
+                                        height: 15,
+                                        width: 15,
+                                        decoration: BoxDecoration(
+                                          color: (currentSignedInStreak == 7 ? Color(0xff6081E2) : Colors.white ),
+                                          borderRadius: BorderRadius.all(Radius.circular(45.0)),
+                                          border: Border.all(width: 2, color: Colors.blue),
+                                        )
+                                    ),
+                                    SizedBox(height: SizeConfig.blockSizeVertical * 1),
+                                    Material(
+                                        color: Colors.white,
+                                        child: Text(
+                                            AppLocalizations.of(context)
+                                                .translate(
+                                                'day')
+                                                .toUpperCase() + ' 1',
+                                            maxLines: 2,
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 14,
+                                                color: Color(0xff6081E2)))),
+                                    Container(
+                                        height: 30,
+                                        child:  Visibility(
+                                          child: ImageIcon(AssetImage('assets/img/Owl.png'),
+                                              color: Color(0xff6081E2), size: 48),
+                                          visible: false,
                                         )
                                     ),
                                   ],

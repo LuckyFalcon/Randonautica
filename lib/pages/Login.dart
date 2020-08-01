@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:app/api/acceptAgreement.dart';
-import 'package:app/api/syncTripReports.dart';
 import 'package:app/components/FadingCircleLoading.dart';
 import 'package:app/components/Login/SignInAccountButton.dart';
 import 'package:app/components/Login/SignInAppleAccountButton.dart';
@@ -24,6 +23,8 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+
+ //Chekc if user is currently in the signing in process
   bool signingIn = false;
 
   //Set SharedPreferences
@@ -33,40 +34,53 @@ class _LoginState extends State<Login> {
   void initState() {
     super.initState();
   }
-
-  void signingInCallback(bool currentlySigningIn) {
+  void isSigningInCallback(bool currentlySigningIn) {
     setState(() {
       signingIn = currentlySigningIn;
     });
   }
 
   Future<void> acceptAgreementCallback(bool accept) async {
+
     //Await SharedPreferences future object
     final SharedPreferences prefs = await _prefs;
 
-    await acceptAgreement().then((value) async =>
-    {
-      prefs.setBool("Account", true),
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (context) {
-            return HomePage();
-          },
-        ),
-      )
-    });
+    //User has to accept the agreement, backend has to be successful to continue
+    await acceptAgreement().then((value) async => {
+        if(value == 200){
+          prefs.setBool("Account", true),
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) {
+                return HomePage();
+              },
+            ),
+          )
+        }
+      });
   }
 
-  void googleSignInCallback(int statusCode) async {
+  void signInCallback(int statusCode) async {
     //Await SharedPreferences future object
     final SharedPreferences prefs = await _prefs;
 
+    //Status codes: 409 Account Already exists, 200 Account successfully created
     if (statusCode == 409 || statusCode == 200) {
-      //Status codes: 409 Account Already exists, 200 Account successfully created
+
+      //User account exists so sync reports from server
+      if(statusCode == 409){
+        prefs.setBool("ShouldSyncReports", true);
+      }
+
+      //Check whether the agreement is accepted
       if (user.currentUser.isAgreementAccepted == 0) {
+        //Show dialog and wait for accept callback
         showAgreementDialog(context, this.acceptAgreementCallback);
       } else {
+        //Account is active
         prefs.setBool("Account", true);
+
+        //HomePage
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
             builder: (context) {
@@ -75,9 +89,11 @@ class _LoginState extends State<Login> {
           ),
         );
       }
-    } else if (statusCode == 500) {
-      //Error
+    } else if (statusCode == 500) { //Error occurred
+      //Account is not active
       prefs.setBool("Account", false);
+
+      //Failed Login Screen
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (context) {
@@ -180,17 +196,17 @@ class _LoginState extends State<Login> {
                             SizedBox(height: SizeConfig.blockSizeVertical * 4),
                             (Platform.isAndroid
                                 ? SignInGoogleAccountButton(
-                                    this.signingInCallback,
-                                    this.googleSignInCallback)
+                                    this.isSigningInCallback,
+                                    this.signInCallback)
                                 : SignInAppleAccountButton(
-                                    this.googleSignInCallback)),
+                                    this.signInCallback)),
                             SizedBox(height: SizeConfig.blockSizeVertical * 2),
                             (Platform.isAndroid
                                 ? SignInAppleAccountButton(
-                                    this.googleSignInCallback)
+                                    this.signInCallback)
                                 : SignInGoogleAccountButton(
-                                    this.signingInCallback,
-                                    this.googleSignInCallback)),
+                                    this.isSigningInCallback,
+                                    this.signInCallback)),
                             SizedBox(height: SizeConfig.blockSizeVertical * 2),
                             SignInCreateAccountButton(),
                           ],

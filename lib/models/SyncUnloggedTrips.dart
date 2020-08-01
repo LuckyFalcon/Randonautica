@@ -86,7 +86,7 @@ class SyncUnloggedTrips {
   double newtonlibZScore;
   double newtonlibProbabilitySingle;
   double newtonlibIntegralScore;
-  int newtonlibSignificance;
+  double newtonlibSignificance;
   double newtonlibProbability;
   dynamic created;
   dynamic updated;
@@ -127,7 +127,7 @@ class SyncUnloggedTrips {
     newtonlibZScore: json["newtonlib_z_score"] == null ? null : json["newtonlib_z_score"].toDouble(),
     newtonlibProbabilitySingle: json["newtonlib_probability_single"] == null ? null : json["newtonlib_probability_single"].toDouble(),
     newtonlibIntegralScore: json["newtonlib_integral_score"] == null ? null : json["newtonlib_integral_score"].toDouble(),
-    newtonlibSignificance: json["newtonlib_significance"] == null ? null : json["newtonlib_significance"],
+    newtonlibSignificance: json["newtonlib_significance"] == null ? null : json["newtonlib_significance"].toDouble(),
     newtonlibProbability: json["newtonlib_probability"] == null ? null : json["newtonlib_probability"].toDouble(),
     created: json["created"],
     updated: json["updated"],

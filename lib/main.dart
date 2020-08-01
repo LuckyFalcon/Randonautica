@@ -11,7 +11,7 @@ void main() {
   //Ensure initilization
   WidgetsFlutterBinding.ensureInitialized();
 
-  //Allow Potrait up mode
+  //Allow Potrait up mode only
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) {
     runApp(new Randonautica());

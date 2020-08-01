@@ -363,6 +363,8 @@ void createUserDatabase() async {
   final String COL5 =   "isIapInappGooglePreview";
   final String COL6 =   "isSharedWithFriends";
   final String COL7 =   "isAgreementAccepted";
+  final String COL8 =   "startedSignedInStreakDatetime";
+  final String COL9 =   "currentSignedInStreak";
 
   String createAchievementsTable = "CREATE TABLE " + userTable  + " (ID INTEGER PRIMARY KEY NOT NULL, " +
       COL0 + " INTEGER, " +
@@ -372,7 +374,9 @@ void createUserDatabase() async {
       COL4 + " INTEGER, " +
       COL5 + " INTEGER, " +
       COL6 + " INTEGER, " +
-      COL7 + " INTEGER)";
+      COL7 + " INTEGER, " +
+      COL8 + " TEXT, " +
+      COL9 + " INTEGER)";
 
   final Future<Database> database = openDatabase(
     // Set the path to the database.

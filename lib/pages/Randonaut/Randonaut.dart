@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:app/api/signInStreak.dart';
 import 'package:app/components/Randonaut/ButtonGoMainPage.dart';
 import 'package:app/components/Randonaut/HelpButton.dart';
 import 'package:app/components/Randonaut/OpenMapsButton.dart';
@@ -455,7 +456,8 @@ class RandonautState extends State<Randonaut> {
     //findingPointFailedDialog(context);
     //gpsDisabledDialog(context);
   // notEnoughTokensDialog(context);
-    randonauticaStreakDialog(context);
+    randonauticaStreakDialog(context, globals.currentUser.currentSignedInStreak);
+    signInStreak();
 //    TutorialCoachMark(context,
 //        targets: targets,
 //        colorShadow: Colors.blue,
@@ -474,22 +476,13 @@ class RandonautState extends State<Randonaut> {
   @override
   void initState() {
     super.initState();
+
     // create an instance of Location
     location = new Location();
 
-    //polylinePoints = PolylinePoints();
-
-    // subscribe to changes in the user's location
-    // by "listening" to the location's onLocationChanged event
-    location.onLocationChanged().listen((LocationData cLoc) {
-      // cLoc contains the lat and long of the
-      // current user's position in real time,
-      // so we're holding on to it
-      currentLocation = cLoc;
-      updatePinOnMap();
-    });
     // set the initial location
     setInitialLocation();
+
   }
 
   @override
@@ -789,9 +782,20 @@ class RandonautState extends State<Randonaut> {
     }
   }
 
-  void callbackLoadingPoints(Attractors attractors) async {
-    //Remove points locally
+  findingPointFailedDialogRetryCallback(){
+    print('reached');
+    Navigator.of(context).pop();
 
+  }
+
+
+
+  void callbackLoadingPoints(Attractors attractors) async {
+    if(attractors == null){
+      await findingPointFailedDialog(context, this.findingPointFailedDialogRetryCallback);
+    }
+
+    //Remove points locally
     //Verifiy if the point selected is the following and whether the user has enough points
     switch (selectedRandomness.toString()) {
       case '1':
@@ -927,39 +931,35 @@ class RandonautState extends State<Randonaut> {
     this.widget.callback();
   }
 
+  Future<bool>enableGPS() async {
+    return await gpsDisabledDialog(context);
+  }
+
   void setInitialLocation() async {
-    bool _serviceEnabled;
-    PermissionStatus _permissionGranted;
-    LocationData _locationData;
 
-    _serviceEnabled = await location.serviceEnabled();
-    if (!_serviceEnabled) {
-      print('requestgps');
-      _serviceEnabled = await location.requestService();
-      if (!_serviceEnabled) {
-        print('denied');
 
-        ///dialog here
-        return;
-      }
+    bool isServiceEnabled = await location.serviceEnabled();
+
+    print('enabled' + isServiceEnabled.toString());
+
+    if(!isServiceEnabled){
+      await enableGPS();
     }
 
-    _permissionGranted = await location.hasPermission();
-    if (_permissionGranted == PermissionStatus.DENIED) {
-      _permissionGranted = await location.requestPermission();
-      if (_permissionGranted != PermissionStatus.GRANTED) {
-        return;
-      }
-    }
-
-    // set the initial location by pulling the user's
-    // current location from the location's getLocation()
     currentLocation = await location.getLocation();
 
-    // hard-coded destination for this example
-    destinationLocation = LocationData.fromMap({
-      "latitude": DEST_LOCATION.latitude,
-      "longitude": DEST_LOCATION.longitude
+
+    //polylinePoints = PolylinePoints();
+
+    // subscribe to changes in the user's location
+    // by "listening" to the location's onLocationChanged event
+    location.onLocationChanged().listen((LocationData cLoc) {
+      // cLoc contains the lat and long of the
+      // current user's position in real time,
+      // so we're holding on to it
+      currentLocation = cLoc;
+      updatePinOnMap();
+
     });
 
     CameraPosition cPosition = CameraPosition(
@@ -968,8 +968,10 @@ class RandonautState extends State<Randonaut> {
       bearing: CAMERA_BEARING,
       target: LatLng(currentLocation.latitude, currentLocation.longitude),
     );
+
     controller = await _controller.future;
     controller.animateCamera(CameraUpdate.newCameraPosition(cPosition));
+
   }
 
   void updatePinOnMap() async {

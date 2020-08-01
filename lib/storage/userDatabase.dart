@@ -1,21 +1,18 @@
 // Open the database and store the reference.
 import 'dart:async';
-
-import 'package:app/models/UnloggedTrip.dart';
 import 'package:app/models/User.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
-// Define a function that inserts dogs into the database
+//Insert user in database
 Future<String> insertUser(User user) async {
   final database = await openDatabase(
   join(await getDatabasesPath(), 'user.db'));
 
+  //Currently overwrite the current user
   user.id = 1;
 
-  // Insert the Dog into the correct table. You might also specify the
-  // `conflictAlgorithm` to use in case the same dog is inserted twice.
-  //
+  // Insert the User into the correct table. You might also specify the
   // In this case, replace any previous data.
   await database.insert(
     'user',
@@ -45,12 +42,13 @@ Future<User> RetrieveUser() async {
       isIapInappGooglePreview: maps[i]['isIapInappGooglePreview'],
       isSharedWithFriends: maps[i]['isSharedWithFriends'],
       isAgreementAccepted: maps[i]['isAgreementAccepted'],
+      startedSignedInStreakDatetime: maps[i]['startedSignedInStreakDatetime'],
+      currentSignedInStreak: maps[i]['currentSignedInStreak'],
     );
   });
 
   return UserList[0];
 }
-
 
 // Enable Skip Water Points for the user
 Future<User> enableIsIapSkipWaterPoints() async {

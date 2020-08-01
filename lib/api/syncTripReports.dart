@@ -31,67 +31,74 @@ Future<int> syncTripReports() async {
 
     //Successfully got a success from sharing
     if (response.statusCode == 200) {
+
       final syncUnloggedTrips = syncUnloggedTripsFromJson(response.body);
 
-      for (int i = 0; i < syncUnloggedTrips[0].length; i++) {
-        var location;
+      if(syncUnloggedTrips.length > 0) {
+        for (int i = 0; i < syncUnloggedTrips[0].length; i++) {
 
-        try {
-           location = await Geolocator().placemarkFromCoordinates(
-            syncUnloggedTrips[0][i].latitude,
-            syncUnloggedTrips[0][i].longitude,
+          var location;
 
-            ///Locale for Local GeoLocator
-            //  localeIdentifier: "fi_FI"
+          try {
+            location = await Geolocator().placemarkFromCoordinates(
+              syncUnloggedTrips[0][i].latitude,
+              syncUnloggedTrips[0][i].longitude,
+
+              ///Locale for Local GeoLocator
+              //  localeIdentifier: "fi_FI"
+            );
+          } catch (error) {
+            location = null;
+          }
+
+          //Log trips
+          final unloggedTrip = UnloggedTrip(
+            is_visited: syncUnloggedTrips[0][i].isVisited,
+            is_logged: syncUnloggedTrips[0][i].isLogged,
+            is_favorite: syncUnloggedTrips[0][i].isFavorite,
+            rng_type: syncUnloggedTrips[0][i].rngType,
+            point_type: syncUnloggedTrips[0][i].pointType,
+            title: null,
+            report: 0.toString(),
+            what_3_words_address: null,
+            what_3_nearest_place: null,
+            what_3_words_country: null,
+            center: '3333',
+            latitude: syncUnloggedTrips[0][i].longitude.toString(),
+            longitude: syncUnloggedTrips[0][i].longitude.toString(),
+            location: (location != null ? location[0].administrativeArea.toString() : ''),
+            gid: '3333',
+            tid: '3333',
+            lid: '3333',
+            type: '3333',
+            x: '3333',
+            y: '3333',
+            distance: '3333',
+            initial_bearing: '3333',
+            final_bearing: '3333',
+            side: '3333',
+            distance_err: '3333',
+            radiusM: '3333',
+            number_points: '3333',
+            mean: '3333',
+            rarity: '3333',
+            power_old: '3333',
+            power: '3333',
+            z_score: '3333',
+            probability_single: '3333',
+            integral_score: '3333',
+            significance: '3333',
+            probability: '3333',
+            created: DateTime.parse(syncUnloggedTrips[0][i].created).toIso8601String(),
           );
-        } catch (error) {
-          location = null;
+
+          await insertUnloggedTrip(unloggedTrip);
+
         }
-
-        //Log trips
-        final unloggedTrip = UnloggedTrip(
-          is_visited: syncUnloggedTrips[0][i].isVisited,
-          is_logged: syncUnloggedTrips[0][i].isLogged,
-          is_favorite: syncUnloggedTrips[0][i].isFavorite,
-          rng_type: syncUnloggedTrips[0][i].rngType,
-          point_type: syncUnloggedTrips[0][i].pointType,
-          title: null,
-          report: 0.toString(),
-          what_3_words_address: null,
-          what_3_nearest_place: null,
-          what_3_words_country: null,
-          center: '3333',
-          latitude: syncUnloggedTrips[0][i].longitude.toString(),
-          longitude: syncUnloggedTrips[0][i].longitude.toString(),
-          location: (location != null ? location[0].administrativeArea.toString() : ''),
-          gid: '3333',
-          tid: '3333',
-          lid: '3333',
-          type: '3333',
-          x: '3333',
-          y: '3333',
-          distance: '3333',
-          initial_bearing: '3333',
-          final_bearing: '3333',
-          side: '3333',
-          distance_err: '3333',
-          radiusM: '3333',
-          number_points: '3333',
-          mean: '3333',
-          rarity: '3333',
-          power_old: '3333',
-          power: '3333',
-          z_score: '3333',
-          probability_single: '3333',
-          integral_score: '3333',
-          significance: '3333',
-          probability: '3333',
-          created: DateTime.now().toIso8601String(),
-        );
-
-        await insertUnloggedTrip(unloggedTrip);
-
+      } else {
+        return 200;
       }
+      return 200;
     } else {
       //Error from API call
       throw Exception('Failed to accept agreement');

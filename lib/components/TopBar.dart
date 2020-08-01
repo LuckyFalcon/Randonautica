@@ -54,7 +54,7 @@ class TopBar extends StatelessWidget {
               height: SizeConfig.blockSizeVertical * 10,
               width: SizeConfig.blockSizeHorizontal * 33.3,
               child: Padding(
-                padding: const EdgeInsets.only(top: 0.0, right: 0),
+                padding: const EdgeInsets.only(top: 15.0, right: 0),
                 child: Align(
                   alignment: Alignment.center,
                   child: IconButton(
