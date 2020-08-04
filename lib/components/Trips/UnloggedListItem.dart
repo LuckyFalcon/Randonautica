@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:app/helpers/FadeRoute.dart';
 import 'package:app/pages/List/UnloggedTripDetails.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -21,6 +22,7 @@ class UnloggedListWidget extends StatelessWidget {
         this.created,})
       : super(key: key);
 
+  var AutoSizeTextGroup = AutoSizeGroup();
 
   @override
   Widget build(BuildContext context) {
@@ -38,9 +40,10 @@ class UnloggedListWidget extends StatelessWidget {
       Container(
           child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
             Expanded(
-              flex: 3,
-              child: Text(
+              flex: 2,
+              child: AutoSizeText(
                 dateFormatter.format(DateTime.parse(created)),
+                group: AutoSizeTextGroup,
                 textAlign: TextAlign.left,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
@@ -48,11 +51,12 @@ class UnloggedListWidget extends StatelessWidget {
             ),
             Expanded(
               flex: 1,
-              child: Text(
+              child: AutoSizeText(
                 location,
+                group: AutoSizeTextGroup,
                 textAlign: TextAlign.right,
                 overflow: TextOverflow.ellipsis,
-                style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+                style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.white),
               ),
             ),
             Expanded(
@@ -66,12 +70,6 @@ class UnloggedListWidget extends StatelessWidget {
                   ),
                   tooltip: 'Increase volume by 10',
                   onPressed: () {
-//                    logUnloggedTrip(
-//                      this.location,
-//                      this.created,
-//
-//
-//                    );
                     Navigator.push(
                       context,
                       FadeRoute(
@@ -84,7 +82,6 @@ class UnloggedListWidget extends StatelessWidget {
                     );
                   }),
             ),
-
           ]))
     ]);
   }

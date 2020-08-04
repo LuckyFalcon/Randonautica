@@ -2,6 +2,7 @@
 import 'package:app/components/Feed/TripFeedEntryButton.dart';
 import 'package:app/helpers/AppLocalizations.dart';
 import 'package:app/utils/size_config.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
 import '../TopBar.dart';
@@ -38,11 +39,11 @@ class TripFeedEntry extends StatelessWidget {
                         SizedBox(
                           width: SizeConfig.blockSizeHorizontal * 70,
                           height: SizeConfig.blockSizeVertical * 15,
-                          child: Text(
+                          child: AutoSizeText(
                               AppLocalizations.of(context).translate('not_complete'),
                               textAlign: TextAlign.center,
-                              maxLines: 4,
-                              style: TextStyle(fontSize: 22, color: Colors.white)),
+                              maxLines: 5,
+                              style: TextStyle(fontSize: 23, color: Colors.white)),
                         ),
                         SizedBox(height: 20),
                         ///Trip feed entry button

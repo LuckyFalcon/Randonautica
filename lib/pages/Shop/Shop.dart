@@ -182,7 +182,6 @@ class ShopState extends State<Shop> {
       }
       print(items[i].productId);
     }
-    enableWaterPointsPurchase();
     setState(() {
       this._items = items;
       this._purchases = [];

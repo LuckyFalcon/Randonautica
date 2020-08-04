@@ -136,7 +136,7 @@ class _RecentlyViewedTrips extends State<RecentlyViewedTrips> {
                 ))
                 : Container(width: 64, height: 64)),
             SizedBox(height: 10),
-            (this.widget._LoggedTripList.length > 3
+            (this.widget._LoggedTripList.length > 2
                 ? Text(this.widget._LoggedTripList[2].title,
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 16, color: Colors.white))

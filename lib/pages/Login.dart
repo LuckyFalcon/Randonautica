@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:app/api/acceptAgreement.dart';
+import 'package:app/api/syncTripReports.dart';
 import 'package:app/components/FadingCircleLoading.dart';
 import 'package:app/components/Login/SignInAccountButton.dart';
 import 'package:app/components/Login/SignInAppleAccountButton.dart';
@@ -23,8 +24,7 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-
- //Chekc if user is currently in the signing in process
+  //Chekc if user is currently in the signing in process
   bool signingIn = false;
 
   //Set SharedPreferences
@@ -34,6 +34,7 @@ class _LoginState extends State<Login> {
   void initState() {
     super.initState();
   }
+
   void isSigningInCallback(bool currentlySigningIn) {
     setState(() {
       signingIn = currentlySigningIn;
@@ -41,23 +42,23 @@ class _LoginState extends State<Login> {
   }
 
   Future<void> acceptAgreementCallback(bool accept) async {
-
     //Await SharedPreferences future object
     final SharedPreferences prefs = await _prefs;
 
     //User has to accept the agreement, backend has to be successful to continue
     await acceptAgreement().then((value) async => {
-        if(value == 200){
-          prefs.setBool("Account", true),
-          Navigator.of(context).pushReplacement(
-            MaterialPageRoute(
-              builder: (context) {
-                return HomePage();
-              },
-            ),
-          )
-        }
-      });
+          if (value == 200)
+            {
+              prefs.setBool("Account", true),
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
+                  builder: (context) {
+                    return HomePage();
+                  },
+                ),
+              )
+            }
+        });
   }
 
   void signInCallback(int statusCode) async {
@@ -66,16 +67,73 @@ class _LoginState extends State<Login> {
 
     //Status codes: 409 Account Already exists, 200 Account successfully created
     if (statusCode == 409 || statusCode == 200) {
-
       //User account exists so sync reports from server
-      if(statusCode == 409){
-        prefs.setBool("ShouldSyncReports", true);
-      }
+      if (statusCode == 409) {
+        //Account is active
+//        print(prefs.getBool("SyncedReports"));
+//        if (prefs.getBool("SyncedReports") != true) {
+//          await syncTripReports()
+//              .then((value) => {
+//                    if (value == 200)
+//                      {
+//                        //Account is active
+//                        prefs.setBool("Account", true),
+//
+//                        //HomePage
+//                        Navigator.of(context).pushReplacement(
+//                          MaterialPageRoute(
+//                            builder: (context) {
+//                              return HomePage();
+//                            },
+//                          ),
+//                        )
+//                      }
+//                    else
+//                      {
+//                        //Account is not active
+//                        prefs.setBool("Account", false),
+//
+//                        //Failed Login Screen
+//                        Navigator.of(context).pushReplacement(
+//                          MaterialPageRoute(
+//                            builder: (context) {
+//                              return FailedToLogin();
+//                            },
+//                          ),
+//                        )
+//                      }
+//                  })
+//              .catchError((onError) => {
+//                    //Account is not active
+//                    prefs.setBool("Account", false),
+//
+//                    //Failed Login Screen
+//                    Navigator.of(context).pushReplacement(
+//                      MaterialPageRoute(
+//                        builder: (context) {
+//                          return FailedToLogin();
+//                        },
+//                      ),
+//                    )
+//                  });
+//        } else {
+//          //Account is active
+          prefs.setBool("Account", true);
 
-      //Check whether the agreement is accepted
-      if (user.currentUser.isAgreementAccepted == 0) {
-        //Show dialog and wait for accept callback
-        showAgreementDialog(context, this.acceptAgreementCallback);
+          //HomePage
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) {
+                return HomePage();
+              },
+            ),
+          );
+      //  }
+      //}
+//      //Check whether the agreement is accepted
+//      if (user.currentUser.isAgreementAccepted == 0) {
+//        //Show dialog and wait for accept callback
+//        showAgreementDialog(context, this.acceptAgreementCallback);
       } else {
         //Account is active
         prefs.setBool("Account", true);
@@ -89,7 +147,8 @@ class _LoginState extends State<Login> {
           ),
         );
       }
-    } else if (statusCode == 500) { //Error occurred
+    } else if (statusCode == 500) {
+      //Error occurred
       //Account is not active
       prefs.setBool("Account", false);
 
@@ -202,8 +261,7 @@ class _LoginState extends State<Login> {
                                     this.signInCallback)),
                             SizedBox(height: SizeConfig.blockSizeVertical * 2),
                             (Platform.isAndroid
-                                ? SignInAppleAccountButton(
-                                    this.signInCallback)
+                                ? SignInAppleAccountButton(this.signInCallback)
                                 : SignInGoogleAccountButton(
                                     this.isSigningInCallback,
                                     this.signInCallback)),

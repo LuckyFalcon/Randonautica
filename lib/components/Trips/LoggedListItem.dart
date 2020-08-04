@@ -3,7 +3,9 @@ import 'dart:io';
 import 'package:app/helpers/FadeRoute.dart';
 import 'package:app/pages/List/LoggedTripDetails.dart';
 import 'package:app/utils/size_config.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class LoggedListItem extends StatelessWidget {
   String gid;
@@ -24,25 +26,28 @@ class LoggedListItem extends StatelessWidget {
 
   LoggedListItem(
       {Key key,
-        this.gid,
-        this.location,
-        this.datetime,
-        this.latitude,
-        this.longitude,
-        this.radius,
-        this.type,
-        this.power,
-        this.zScore,
-        this.pseudo,
-        this.report,
-        this.title,
-        this.imagelocation,
-        this.text,
-        this.tagList})
+      this.gid,
+      this.location,
+      this.datetime,
+      this.latitude,
+      this.longitude,
+      this.radius,
+      this.type,
+      this.power,
+      this.zScore,
+      this.pseudo,
+      this.report,
+      this.title,
+      this.imagelocation,
+      this.text,
+      this.tagList})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    DateTime date = DateTime.parse(datetime);
+    String dateFormat = DateFormat('EEEE').format(date);
+
     SizeConfig().init(context);
     return new Container(
         alignment: FractionalOffset.center,
@@ -64,38 +69,38 @@ class LoggedListItem extends StatelessWidget {
               SizedBox(width: 10),
               imagelocation == null
                   ? Text(
-                imagelocation,
-                textAlign: TextAlign.center,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                    fontWeight: FontWeight.bold, color: Colors.white),
-              )
+                      imagelocation,
+                      textAlign: TextAlign.center,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, color: Colors.white),
+                    )
                   : Container(
-                  width: SizeConfig.blockSizeHorizontal * 20,
-                  height: SizeConfig.blockSizeVertical * 10,
-                  child: RaisedButton(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.0),
-                    ),
-                    padding: EdgeInsets.zero,
-                    onPressed: () {},
-                    color: Colors.white,
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(15),
-                          image: DecorationImage(
-                              image: FileImage(File(imagelocation)),
-                              fit: BoxFit.cover),
-                          boxShadow: [
-                            BoxShadow(
-                                blurRadius: 8,
-                                offset: Offset(0, 15),
-                                color: Colors.black.withOpacity(.6),
-                                spreadRadius: -9)
-                          ]),
-                    ),
-                  )),
+                      width: SizeConfig.blockSizeHorizontal * 20,
+                      height: SizeConfig.blockSizeVertical * 10,
+                      child: RaisedButton(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15.0),
+                        ),
+                        padding: EdgeInsets.zero,
+                        onPressed: () {},
+                        color: Colors.white,
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(15),
+                              image: DecorationImage(
+                                  image: FileImage(File(imagelocation)),
+                                  fit: BoxFit.cover),
+                              boxShadow: [
+                                BoxShadow(
+                                    blurRadius: 8,
+                                    offset: Offset(0, 15),
+                                    color: Colors.black.withOpacity(.6),
+                                    spreadRadius: -9)
+                              ]),
+                        ),
+                      )),
               SizedBox(width: 10),
               Column(
                 children: <Widget>[
@@ -111,7 +116,7 @@ class LoggedListItem extends StatelessWidget {
                             children: <Widget>[
                               Row(
                                 mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.spaceBetween,
                                 children: <Widget>[
                                   Align(
                                     alignment: Alignment.topLeft,
@@ -126,7 +131,7 @@ class LoggedListItem extends StatelessWidget {
                                   Align(
                                     alignment: Alignment.bottomRight,
                                     child: Text(
-                                      'Tuesday',
+                                      dateFormat,
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold),
@@ -148,24 +153,20 @@ class LoggedListItem extends StatelessWidget {
                                   Expanded(
                                     flex: 9,
                                     child: Align(
-                                      alignment: Alignment.centerLeft,
+                                      alignment: Alignment.topLeft,
                                       child: Flexible(
-                                        child: RichText(
-                                          overflow: TextOverflow.ellipsis,
-                                          maxLines: 2,
-                                          softWrap: true,
-                                          text: TextSpan(
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 12,
-                                            ),
-                                            text: this.text,
+                                        child: AutoSizeText(
+                                          'hello my name is david hello my name is david  hello my name is david hello my name is david hello my name is david ',
+                                          maxLines: 4,
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 11,
                                           ),
                                         ),
                                       ),
                                     ),
                                   ),
-                                  Align(
+                                  Container(
                                     alignment: Alignment.bottomRight,
                                     child: IconButton(
                                         icon: Icon(
@@ -173,7 +174,7 @@ class LoggedListItem extends StatelessWidget {
                                           color: Colors.white,
                                           size: 24.0,
                                           semanticLabel:
-                                          'Text to announce in accessibility modes',
+                                              'Text to announce in accessibility modes',
                                         ),
                                         tooltip: 'Increase volume by 10',
                                         onPressed: () {

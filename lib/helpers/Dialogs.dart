@@ -537,7 +537,7 @@ findingPointFailedDialog(BuildContext context, Function callback) async {
     Navigator.pop(context);
   }
 
-  await showDialog(
+  showDialog(
       context: context,
       builder: (BuildContext context) {
         return new BackdropFilter(
@@ -628,12 +628,15 @@ findingPointFailedDialog(BuildContext context, Function callback) async {
       });
 }
 
-Future<bool> gpsDisabledDialog(BuildContext context) {
+gpsDisabledDialog(BuildContext context, Function enableGPSCallback) {
   dialogRetrievePointCallback() {
-    return true;
+    enableGPSCallback();
+    Navigator.pop(context);
   }
 
-  dialogCancelCallback() {}
+  dialogCancelCallback() {
+    Navigator.pop(context);
+  }
 
   showDialog(
       context: context,
@@ -712,7 +715,9 @@ Future<bool> gpsDisabledDialog(BuildContext context) {
 notEnoughTokensDialog(BuildContext context) {
   dialogRetrievePointCallback() {}
 
-  dialogCancelCallback() {}
+  dialogCancelCallback() {
+    Navigator.pop(context);
+  }
 
   showDialog(
       context: context,

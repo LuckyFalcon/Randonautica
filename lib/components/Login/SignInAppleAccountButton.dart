@@ -98,7 +98,7 @@ class _SignInAppleAccountButtonState extends State<SignInAppleAccountButton> {
       webAuthenticationOptions: WebAuthenticationOptions(
         clientId: 'com.randonautica.app.signinwithapple',
         redirectUri: Uri.parse(
-          'https://api2.randonauts.com/apple/callbacks/sign_in_with_apple',
+          'https://randonautica-v2.azure-api.net/apple/callbacks/sign_in_with_apple',
         ),
       ),
     );
@@ -121,6 +121,7 @@ class _SignInAppleAccountButtonState extends State<SignInAppleAccountButton> {
       assert(user.uid == currentUser.uid);
       var token = await currentUser.getIdToken();
 
+      print('reachedsofar');
       ///Send request to back-end
       return await signBackendApple(token.token.toString());
     } catch (error) {

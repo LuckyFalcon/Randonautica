@@ -56,7 +56,9 @@ class _LoadingState extends State<Loading> {
       var sdkInt = androidInfo.version.sdkInt;
       if (sdkInt >= 23) {
         //Ask for permissions
-        await LocationPermissions().requestPermissions();
+        var Permissions = await LocationPermissions().requestPermissions().then((value) => {
+          print(value)
+        });
       }
     }
 
@@ -80,7 +82,7 @@ class _LoadingState extends State<Loading> {
         _showVersionDialog(context);
       } else {
         ///No new version -> Continue to App
-        getCurrentUser()
+        await getCurrentUser()
             .then((value) => Future.delayed(Duration(seconds: 3), () {
                   if (value != null) {
                     Navigator.pushAndRemoveUntil(
@@ -98,8 +100,11 @@ class _LoadingState extends State<Loading> {
                             }));
                   }
                 }))
-            .catchError((onError) => Future.delayed(Duration(seconds: 3), () {
-                  Navigator.pushAndRemoveUntil(context,
+            .catchError((onError) =>
+            Future.delayed(Duration(seconds: 3), () {
+              print(onError);
+
+              Navigator.pushAndRemoveUntil(context,
                       FadeRoute(page: Login()), ModalRoute.withName("/Login"));
                 }));
       }
@@ -169,7 +174,9 @@ class _LoadingState extends State<Loading> {
 
     if (prefs.getBool("Account") == true) {
       //Get current user
+      print('trytogetaccount');
       FirebaseUser _user = await FirebaseAuth.instance.currentUser();
+      print('trytogetaccount2' + _user.toString());
 
       if (_user != null) {
         //Get token

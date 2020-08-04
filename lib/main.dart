@@ -19,6 +19,9 @@ void main() {
 }
 
 class Randonautica extends StatelessWidget {
+  Brightness _brightness = Brightness.light;
+
+
   @override
   Widget build(BuildContext context) {
     return ThemeProvider(
@@ -26,11 +29,9 @@ class Randonautica extends StatelessWidget {
           AppTheme(
               id: "custom_theme", // Id(or name) of the theme(Has to be unique)
               data: ThemeData(
-                  // Real theme data
-                  primaryColor: Colors.black,
-                  accentColor: Colors.red,
+                  brightness: _brightness,
                   fontFamily: 'Interstate'),
-              description: 'Custom theme for Randonautica'),
+              description: 'Randonautica Theme'),
           // This is standard dark theme (id is default_dark_theme)
           AppTheme.dark(),
         ],

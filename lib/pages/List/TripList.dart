@@ -32,16 +32,13 @@ class TripListState extends State<TripList> {
   //Set SharedPreferences
   Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
+  //Store Unlogged & Logged Trips
   List<UnloggedTrip> unloggedTrips;
   List<LoggedTrip> _LoggedTripList;
 
-  List taglist = [];
-
-  bool unloggedTripsSynced = false;
+  //UnloggedTrips & Logged trips are sucesfully retrieved from database
   bool unloggedTripsloaded = false;
   bool LoggedTripList = false;
-
-  ScrollController _scrollViewController;
 
   @override
   initState() {
@@ -52,24 +49,6 @@ class TripListState extends State<TripList> {
   }
 
   initializeTripList() async {
-
-    //Await SharedPreferences future object
-    final SharedPreferences prefs = await _prefs;
-
-    //Sync reports
-    if(prefs.getBool("ShouldSyncReports") == true){
-      await syncTripReports().then((value) => {
-        if(value == 200){
-          setState(() {
-            print('SyncReportsReached');
-            prefs.setBool("ShouldSyncReports", false);
-            unloggedTripsSynced = true;
-          })
-        }
-      });
-    } else {
-      unloggedTripsSynced = true;
-    }
 
     //Get list of unlogged trips
     Future<List<UnloggedTrip>> _futureOfList = RetrieveUnloggedTrips();
@@ -107,17 +86,10 @@ class TripListState extends State<TripList> {
     });
   }
 
-  void callback(bool labButtonPress) {
-    setState(() {});
-  }
-
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    if(unloggedTripsSynced != true){
-      return NoTripsFound();
-    }
-    return (unloggedTripsloaded && LoggedTripList && unloggedTripsSynced
+    return (unloggedTripsloaded && LoggedTripList
         ? (unloggedTrips.length > 0 || _LoggedTripList.length > 0
             ? Container(
                 height: SizeConfig.blockSizeVertical * 78, ///78 tied to Randonaut.dart
@@ -125,68 +97,45 @@ class TripListState extends State<TripList> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-          //          SizedBox(height: SizeConfig.blockSizeVertical * 1),
-             //       SearchBar(),
+                    SizedBox(height: SizeConfig.blockSizeVertical * 1),
+                    SearchBar(),
+                    SizedBox(height: SizeConfig.blockSizeVertical * 1),
                     Expanded(
                       child: ListView(
+                        addAutomaticKeepAlives: true,
                         physics: ScrollPhysics(),
                         shrinkWrap: true,
                         padding: const EdgeInsets.all(8),
                         children: <Widget>[
-                          SizedBox(height: SizeConfig.blockSizeVertical * 3),
+                          SizedBox(height: SizeConfig.blockSizeVertical * 1),
                           (_LoggedTripList.length > 2
                               ? Container(
-                                  padding: EdgeInsets.only(left: 20),
-                                  child: Text(
-                                      AppLocalizations.of(context)
-                                          .translate('recently_reported_trips')
-                                          .toUpperCase(),
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                          fontSize: 14,
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold)))
+                              alignment: Alignment.center,
+                              padding: EdgeInsets.only(left: 20),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      Text(
+                                          AppLocalizations.of(context)
+                                              .translate('recently_reported_trips')
+                                              .toUpperCase(),
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold)),
+                                      ImageIcon(
+                                          AssetImage('assets/img/double_arrow.png'),
+                                          size: 64.0,
+                                          color: Colors.white)
+                                    ],
+                                  ))
                               : SizedBox(height: 0)),
                           (_LoggedTripList.length > 2 ? SizedBox(height: 10) : SizedBox(height: 0)),
                           (_LoggedTripList.length > 2
                               ? (RecentlyViewedTrips(_LoggedTripList))
                               : SizedBox(height: 0)),
                           (_LoggedTripList.length > 2 ? SizedBox(height: 25) : SizedBox(height: 0)),
-//                          (_LoggedTripList.length > 0
-//                              ? Container(
-//                              padding: EdgeInsets.only(left: 20),
-//                              child: Text(
-//                                  AppLocalizations.of(context)
-//                                      .translate('favorite_trips')
-//                                      .toUpperCase(),
-//                                  textAlign: TextAlign.center,
-//                                  style: TextStyle(
-//                                      fontSize: 14,
-//                                      color: Colors.white,
-//                                      fontWeight: FontWeight.bold)))
-//                              : Container(
-//                              padding: EdgeInsets.only(left: 20),
-//                              child: Text(
-//                                  AppLocalizations.of(context)
-//                                      .translate('your_trip_log')
-//                                      .toUpperCase(),
-//                                  textAlign: TextAlign.start,
-//                                  style: TextStyle(
-//                                      fontSize: 28,
-//                                      color: Colors.white,
-//                                      fontWeight: FontWeight.bold)))),
-//                          SizedBox(height: 10),
-//                          (_LoggedTripList.length > 0
-//                              ? (TripRow())
-//                              : Container(
-//                              padding: EdgeInsets.only(left: 40),
-//                              child: Text(
-//                                  AppLocalizations.of(context)
-//                                      .translate('empty_logged_trip_list')
-//                                      .toUpperCase(),
-//                                  style: TextStyle(
-//                                      fontSize: 14, color: Colors.white)))),
-//                          SizedBox(height: 25),
                           (_LoggedTripList.length > 0
                               ? Container(
                                   padding: EdgeInsets.only(left: 30),
@@ -213,6 +162,7 @@ class TripListState extends State<TripList> {
                               ? (ListView.builder(
                                   padding: EdgeInsets.only(left: 30, right: 30),
                                   shrinkWrap: true,
+                                  addAutomaticKeepAlives: true,
                                   physics: ScrollPhysics(),
                                   itemCount: _LoggedTripList.length,
                                   itemBuilder:
@@ -226,7 +176,6 @@ class TripListState extends State<TripList> {
                                         imagelocation: _LoggedTripList[index]
                                             .imagelocation,
                                         text: _LoggedTripList[index].report,
-
                                     );
                                   }))
                               : Container(
@@ -268,6 +217,7 @@ class TripListState extends State<TripList> {
                           ListView.builder(
                               padding: EdgeInsets.only(left: 30, right: 30),
                               shrinkWrap: true,
+                              addAutomaticKeepAlives: true,
                               physics: ScrollPhysics(),
                               itemCount: unloggedTrips.length,
                               itemBuilder: (BuildContext context, int index) {
@@ -276,6 +226,7 @@ class TripListState extends State<TripList> {
                                   id: unloggedTrips[index].id,
                                   location: unloggedTrips[index].location,
                                   created: unloggedTrips[index].created,
+                                  callback: updateState,
                                 );
                               }),
                           (_LoggedTripList.length > 0

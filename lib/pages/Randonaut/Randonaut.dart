@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:app/api/signInStreak.dart';
 import 'package:app/components/Randonaut/ButtonGoMainPage.dart';
@@ -32,7 +33,6 @@ import 'package:tutorial_coach_mark/target_position.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 
 import '../../storage/unloggedTripsDatabase.dart';
-
 import 'LoadingPoints.dart';
 
 const double CAMERA_TILT = 0;
@@ -180,6 +180,7 @@ class RandonautState extends State<Randonaut> {
     setState(() {
       this.pressStartOverButton = pressOpenMapsButton;
       pointsSucesfullyGenerated = false;
+      attractorCoordinates = null;
       _markers = {};
       _polylines = {};
     });
@@ -455,8 +456,9 @@ class RandonautState extends State<Randonaut> {
   void showTutorial() {
     //findingPointFailedDialog(context);
     //gpsDisabledDialog(context);
-  // notEnoughTokensDialog(context);
-    randonauticaStreakDialog(context, globals.currentUser.currentSignedInStreak);
+    // notEnoughTokensDialog(context);
+    randonauticaStreakDialog(
+        context, globals.currentUser.currentSignedInStreak);
     signInStreak();
 //    TutorialCoachMark(context,
 //        targets: targets,
@@ -482,12 +484,10 @@ class RandonautState extends State<Randonaut> {
 
     // set the initial location
     setInitialLocation();
-
   }
 
   @override
   Widget build(BuildContext context) {
-
     initialCameraPosition = CameraPosition(
         zoom: CAMERA_ZOOM,
         tilt: CAMERA_TILT,
@@ -782,195 +782,194 @@ class RandonautState extends State<Randonaut> {
     }
   }
 
-  findingPointFailedDialogRetryCallback(){
-    print('reached');
+  findingPointFailedDialogRetryCallback() {
     Navigator.of(context).pop();
-
+    onAddMarkerButtonPressed();
   }
-
-
 
   void callbackLoadingPoints(Attractors attractors) async {
-    if(attractors == null){
-      await findingPointFailedDialog(context, this.findingPointFailedDialogRetryCallback);
+    if (attractors == null) { //Error occurred
+      return await findingPointFailedDialog(
+          context, this.findingPointFailedDialogRetryCallback);
+    } else {
+      //Remove points locally
+      //Verifiy if the point selected is the following and whether the user has enough points
+      switch (selectedRandomness.toString()) {
+        case '1':
+          print('shouldremove1');
+          if (globals.currentUser.points >= RandomPointCost) {
+            globals.currentUser.points =
+                globals.currentUser.points - RandomPointCost;
+          }
+          break;
+        case '2':
+          if (globals.currentUser.points >= QuantumPointCost) {
+            globals.currentUser.points =
+                globals.currentUser.points - QuantumPointCost;
+          }
+          break;
+        case '3':
+          if (globals.currentUser.points >= AmplificationBiasPointCost) {
+            globals.currentUser.points =
+                globals.currentUser.points - AmplificationBiasPointCost;
+          }
+          break;
+      }
+
+      //Set sucessfully generated
+      this.pointsSucesfullyGenerated = true;
+
+      //Store attractor coordinates
+      attractorCoordinates = new LatLng(
+          attractors.center.point.latitude, attractors.center.point.longitude);
+
+      //Generate a unique marker id
+      final attractorPointMarkerId = MarkerId(Random().nextInt(1337).toString());
+
+      //Generate a unique circle id
+      final attractorPointCircleId = CircleId('3333');
+
+      ///Todo add localidentifier as optional as it doesn't pick it up somehow
+      ///https://pub.dev/packages/geolocator
+      var location = await Geolocator().placemarkFromCoordinates(
+        attractors.center.point.latitude,
+        attractors.center.point.longitude,
+
+        ///Locale for Local GeoLocator
+        //  localeIdentifier: "fi_FI"
+      );
+
+      print('location' +location[0].administrativeArea.toString() );
+
+      //Log trips
+      final unloggedTrip = UnloggedTrip(
+        is_visited: 0,
+        is_logged: 0,
+        is_favorite: 0,
+        rng_type: 0,
+        point_type: 0,
+        title: null,
+        report: 0.toString(),
+        what_3_words_address: null,
+        what_3_nearest_place: null,
+        what_3_words_country: null,
+        center: attractors.gID.toString(),
+        latitude: attractors.gID.toString(),
+        longitude: attractors.gID.toString(),
+        location: (location[0].administrativeArea.toString() != '' ? location[0].administrativeArea : location[0].country.toString()),
+        gid: attractors.gID.toString(),
+        tid: attractors.gID.toString(),
+        lid: attractors.gID.toString(),
+        type: attractors.gID.toString(),
+        x: attractors.gID.toString(),
+        y: attractors.gID.toString(),
+        distance: attractors.gID.toString(),
+        initial_bearing: attractors.gID.toString(),
+        final_bearing: attractors.gID.toString(),
+        side: attractors.gID.toString(),
+        distance_err: attractors.gID.toString(),
+        radiusM: attractors.gID.toString(),
+        number_points: attractors.gID.toString(),
+        mean: attractors.gID.toString(),
+        rarity: attractors.gID.toString(),
+        power_old: attractors.gID.toString(),
+        power: attractors.gID.toString(),
+        z_score: attractors.gID.toString(),
+        probability_single: attractors.gID.toString(),
+        integral_score: attractors.gID.toString(),
+        significance: attractors.gID.toString(),
+        probability: attractors.gID.toString(),
+        created: DateTime.now().toIso8601String(),
+      );
+
+      //Insert trip into db
+      await insertUnloggedTrip(unloggedTrip);
+
+      List<LatLng> PolylinePoints = new List<LatLng>();
+      PolylinePoints.add(
+          LatLng(currentLocation.latitude, currentLocation.longitude));
+      PolylinePoints.add(LatLng(
+          attractorCoordinates.latitude, attractorCoordinates.longitude));
+
+      setState(() {
+        //Camera ZOOM on map
+        CAMERA_ZOOM = 13;
+
+        _markers.add(Marker(
+          // This marker id can be anything that uniquely identifies each marker.
+          markerId: attractorPointMarkerId,
+          position: attractorCoordinates,
+          infoWindow: InfoWindow(
+            title: (attractors.type == 1 ? "Attractor" : "Void"),
+            snippet: "Radius: " + attractors.radiusM.toStringAsFixed(0),
+          ),
+          icon: BitmapDescriptor.defaultMarker,
+        ));
+
+        _polylines.add(Polyline(
+            polylineId: PolylineId('3333'),
+            visible: true,
+            //latlng is List<LatLng>
+            points: PolylinePoints,
+            color: Colors.blue,
+            width: 3));
+      });
+
+      //Move camera to set ZOOM level
+      controller.moveCamera(CameraUpdate.newLatLngZoom(
+          LatLng(attractorCoordinates.latitude, attractorCoordinates.longitude),
+          CAMERA_ZOOM));
+
+      //Custom delay needed for opening the marker window
+      await Future.delayed(Duration(milliseconds: 100));
+
+      //Open Info window on marker
+      controller.showMarkerInfoWindow(attractorPointMarkerId);
+
+      //Update TripList state with callback to main
+      this.widget.callback();
     }
-
-    //Remove points locally
-    //Verifiy if the point selected is the following and whether the user has enough points
-    switch (selectedRandomness.toString()) {
-      case '1':
-        print('shouldremove1');
-        if (globals.currentUser.points >= RandomPointCost) {
-          globals.currentUser.points =
-              globals.currentUser.points - RandomPointCost;
-        }
-        break;
-      case '2':
-        if (globals.currentUser.points >= QuantumPointCost) {
-          globals.currentUser.points =
-              globals.currentUser.points - QuantumPointCost;
-        }
-        break;
-      case '3':
-        if (globals.currentUser.points >= AmplificationBiasPointCost) {
-          globals.currentUser.points =
-              globals.currentUser.points - AmplificationBiasPointCost;
-        }
-        break;
-    }
-
-    //Set sucessfully generated
-    this.pointsSucesfullyGenerated = true;
-
-    //Store attractor coordinates
-    attractorCoordinates = new LatLng(
-        attractors.center.point.latitude, attractors.center.point.longitude);
-
-    //Generate a unique marker id
-    final attractorPointMarkerId = MarkerId('3333');
-
-    //Generate a unique circle id
-    final attractorPointCircleId = CircleId('3333');
-
-    ///Todo add localidentifier as optional as it doesn't pick it up somehow
-    ///https://pub.dev/packages/geolocator
-    var location = await Geolocator().placemarkFromCoordinates(
-      attractors.center.point.latitude,
-      attractors.center.point.longitude,
-
-      ///Locale for Local GeoLocator
-      //  localeIdentifier: "fi_FI"
-    );
-
-    //Log trips
-    final unloggedTrip = UnloggedTrip(
-      is_visited: 0,
-      is_logged: 0,
-      is_favorite: 0,
-      rng_type: 0,
-      point_type: 0,
-      title: null,
-      report: 0.toString(),
-      what_3_words_address: null,
-      what_3_nearest_place: null,
-      what_3_words_country: null,
-      center: attractors.gID.toString(),
-      latitude: attractors.gID.toString(),
-      longitude: attractors.gID.toString(),
-      location: location[0].administrativeArea.toString(),
-      gid: attractors.gID.toString(),
-      tid: attractors.gID.toString(),
-      lid: attractors.gID.toString(),
-      type: attractors.gID.toString(),
-      x: attractors.gID.toString(),
-      y: attractors.gID.toString(),
-      distance: attractors.gID.toString(),
-      initial_bearing: attractors.gID.toString(),
-      final_bearing: attractors.gID.toString(),
-      side: attractors.gID.toString(),
-      distance_err: attractors.gID.toString(),
-      radiusM: attractors.gID.toString(),
-      number_points: attractors.gID.toString(),
-      mean: attractors.gID.toString(),
-      rarity: attractors.gID.toString(),
-      power_old: attractors.gID.toString(),
-      power: attractors.gID.toString(),
-      z_score: attractors.gID.toString(),
-      probability_single: attractors.gID.toString(),
-      integral_score: attractors.gID.toString(),
-      significance: attractors.gID.toString(),
-      probability: attractors.gID.toString(),
-      created: DateTime.now().toIso8601String(),
-    );
-
-    //Insert trip into db
-    await insertUnloggedTrip(unloggedTrip);
-
-    List<LatLng> PolylinePoints = new List<LatLng>();
-    PolylinePoints.add(
-        LatLng(currentLocation.latitude, currentLocation.longitude));
-    PolylinePoints.add(
-        LatLng(attractorCoordinates.latitude, attractorCoordinates.longitude));
-
-    setState(() {
-      //Camera ZOOM on map
-      CAMERA_ZOOM = 13;
-
-      _markers.add(Marker(
-        // This marker id can be anything that uniquely identifies each marker.
-        markerId: attractorPointMarkerId,
-        position: attractorCoordinates,
-        infoWindow: InfoWindow(
-          title: (attractors.type == 1 ? "Attractor" : "Void"),
-          snippet: "Radius: " + attractors.radiusM.toStringAsFixed(0),
-        ),
-        icon: BitmapDescriptor.defaultMarker,
-      ));
-
-      _polylines.add(Polyline(
-          polylineId: PolylineId('3333'),
-          visible: true,
-          //latlng is List<LatLng>
-          points: PolylinePoints,
-          color: Colors.blue,
-          width: 3));
-    });
-
-    //Move camera to set ZOOM level
-    controller.moveCamera(CameraUpdate.newLatLngZoom(
-        LatLng(attractorCoordinates.latitude, attractorCoordinates.longitude),
-        CAMERA_ZOOM));
-
-    //Custom delay needed for opening the marker window
-    await Future.delayed(Duration(milliseconds: 10));
-
-    //Open Info window on marker
-    controller.showMarkerInfoWindow(attractorPointMarkerId);
-
-    //Update TripList state with callback to main
-    this.widget.callback();
   }
 
-  Future<bool>enableGPS() async {
-    return await gpsDisabledDialog(context);
+  Future<bool> enableGPS() async {
+    await location.requestService();
+    setInitialLocation();
+
+
   }
 
   void setInitialLocation() async {
-
-
     bool isServiceEnabled = await location.serviceEnabled();
 
-    print('enabled' + isServiceEnabled.toString());
+    if (isServiceEnabled) {
 
-    if(!isServiceEnabled){
-      await enableGPS();
+      currentLocation = await location.getLocation();
+
+      //polylinePoints = PolylinePoints();
+
+      // subscribe to changes in the user's location
+      // by "listening" to the location's onLocationChanged event
+      location.onLocationChanged().listen((LocationData cLoc) {
+        // cLoc contains the lat and long of the
+        // current user's position in real time,
+        // so we're holding on to it
+        currentLocation = cLoc;
+        updatePinOnMap();
+      });
+
+      CameraPosition cPosition = CameraPosition(
+        zoom: CAMERA_ZOOM,
+        tilt: CAMERA_TILT,
+        bearing: CAMERA_BEARING,
+        target: LatLng(currentLocation.latitude, currentLocation.longitude),
+      );
+
+      controller = await _controller.future;
+      controller.animateCamera(CameraUpdate.newCameraPosition(cPosition));
+
+    } else {
+      await gpsDisabledDialog(context, enableGPS);
     }
-
-    currentLocation = await location.getLocation();
-
-
-    //polylinePoints = PolylinePoints();
-
-    // subscribe to changes in the user's location
-    // by "listening" to the location's onLocationChanged event
-    location.onLocationChanged().listen((LocationData cLoc) {
-      // cLoc contains the lat and long of the
-      // current user's position in real time,
-      // so we're holding on to it
-      currentLocation = cLoc;
-      updatePinOnMap();
-
-    });
-
-    CameraPosition cPosition = CameraPosition(
-      zoom: CAMERA_ZOOM,
-      tilt: CAMERA_TILT,
-      bearing: CAMERA_BEARING,
-      target: LatLng(currentLocation.latitude, currentLocation.longitude),
-    );
-
-    controller = await _controller.future;
-    controller.animateCamera(CameraUpdate.newCameraPosition(cPosition));
 
   }
 

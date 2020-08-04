@@ -1,14 +1,14 @@
 import 'dart:ui' as ui;
 
 import 'package:app/helpers/Dialogs.dart';
-import 'SwitchButton.dart';
 import 'package:app/utils/currentUser.dart' as globals;
 import 'package:app/utils/size_config.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:auto_size_text/auto_size_text.dart';
 
 import '../../helpers/AppLocalizations.dart';
+import 'SwitchButton.dart';
 
 class SetWaterPoints extends StatefulWidget {
   Function callback;
@@ -58,24 +58,24 @@ class _SetWater extends State<SetWaterPoints> {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    return Stack(
-        children: <Widget>[
-          Container(
-              width: SizeConfig.blockSizeHorizontal * 30,
-              child:  Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  AutoSizeText(
-                      AppLocalizations.of(context).translate('water').toUpperCase(),
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 15,
-                          color: Colors.white)),
-                  SizedBox(height: SizeConfig.blockSizeVertical * 1),
-                  Container(
-                      height: SizeConfig.blockSizeVertical * 4.5,
-                      width: SizeConfig.blockSizeHorizontal * 30,
+    return Stack(children: <Widget>[
+      Container(
+          width: SizeConfig.blockSizeHorizontal * 30,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              AutoSizeText(
+                  AppLocalizations.of(context).translate('water').toUpperCase(),
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15,
+                      color: Colors.white)),
+              SizedBox(height: SizeConfig.blockSizeVertical * 1),
+              (waterPointsBought
+                  ? Container(
+                      height: SizeConfig.blockSizeVertical * 7.5,
+                      width: SizeConfig.blockSizeHorizontal * 5,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
@@ -94,43 +94,55 @@ class _SetWater extends State<SetWaterPoints> {
                             ),
                           ),
                         ],
-                      )),
-                  SizedBox(height: SizeConfig.blockSizeVertical * 1)
-                ],
-              )),
-          (waterPointsBought
-        ? SizedBox(height: 0)
-        : Container(
-          height:  SizeConfig.blockSizeVertical * 7.5,
-          width: SizeConfig.blockSizeHorizontal * 30,
-        child: Stack(
-          children: <Widget>[
-            Align(
-              alignment: Alignment.center,
-              child: ClipRect(
-                // <-- clips to the 200x200 [Container] below
-                child: BackdropFilter(
-                  filter: ui.ImageFilter.blur(
-                    sigmaX: 15.0,
-                    sigmaY: 10.0,
-                  ),
-                  child: Container(
-                    alignment: Alignment.center,
-                    child:
-                    GestureDetector(
-                        onTap: () {
-                          setWaterPointsEnabled();
-                        },
-                        child:  Icon(
-                          Icons.lock,
-                          color: Colors.white,
-                          size: 30.0,
-                        )),
-                  ),
-                ),
-              ),
-            )
-          ],
-        )))]);
+                      ))
+                  : Container(
+                      height: SizeConfig.blockSizeVertical * 4.5,
+                      width: SizeConfig.blockSizeHorizontal * 15,
+                      child: Stack(
+                        children: <Widget>[
+                          Container(
+                            width: SizeConfig.blockSizeHorizontal * 12,
+                            child: SwitchButton(
+                              activeColor: Colors.white,
+                              inactiveColor: Color(0xff6FDDFE),
+                              value: waterPointsEnabled,
+                              onChanged: (value) {
+                                print("VALUE : $value");
+                                setState(() {
+                                  setWaterPointsEnabled();
+                                });
+                              },
+                            ),
+                          ),
+                          Align(
+                            alignment: Alignment.center,
+                            child: ClipRect(
+                              // <-- clips to the 200x200 [Container] below
+                              child: BackdropFilter(
+                                filter: ui.ImageFilter.blur(
+                                  sigmaX: 15.0,
+                                  sigmaY: 15.0,
+                                ),
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  child: GestureDetector(
+                                      onTap: () {
+                                        setWaterPointsEnabled();
+                                      },
+                                      child: Icon(
+                                        Icons.lock,
+                                        color: Colors.white,
+                                        size: 30.0,
+                                      )),
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      ))),
+              SizedBox(height: SizeConfig.blockSizeVertical * 1)
+            ],
+          )),
+    ]);
   }
 }

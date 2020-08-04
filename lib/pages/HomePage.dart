@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:app/api/syncTripReports.dart';
 import 'package:app/components/BottomBar.dart';
 import 'package:app/components/TopBar.dart';
 import 'package:app/helpers/SignInStreak.dart';
@@ -7,8 +10,10 @@ import 'package:app/pages/List/TripList.dart';
 import 'package:app/pages/Randonaut/Randonaut.dart';
 import 'package:app/utils/BackgroundColor.dart' as backgrounds;
 import 'package:app/utils/size_config.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key, this.homePageTitle}) : super(key: key);
@@ -25,10 +30,19 @@ class _HomePageState extends State<HomePage> {
 
   final GlobalKey<TripListState> _TripListKey = GlobalKey();
 
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  //Set SharedPreferences
+  Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+
+  Timer timer;
+
   @override
   void initState() {
     SignInStreak(context);
     super.initState();
+    updateToken();
+    timer = Timer.periodic(Duration(minutes: 56), (Timer t) => updateToken());
   }
 
   void selectedNavigationIndexCallback(int selectedNavigationIndex) {
@@ -40,6 +54,24 @@ class _HomePageState extends State<HomePage> {
   void updateStateCallback() {
     //Update list state
     _TripListKey.currentState.updateState();
+  }
+
+  void updateToken() async {
+
+    //Await SharedPreferences future object
+    final SharedPreferences prefs = await _prefs;
+    FirebaseUser _user = await FirebaseAuth.instance.currentUser();
+
+    if (_user != null) {
+      //Get token
+      var token = await _user.getIdToken();
+
+      print(token.token);
+      //Store Token in SharedPreferences
+      await prefs.setString("authToken", token.token);
+
+
+    }
   }
 
   @override
@@ -72,5 +104,4 @@ class _HomePageState extends State<HomePage> {
           ])),
     );
   }
-
 }

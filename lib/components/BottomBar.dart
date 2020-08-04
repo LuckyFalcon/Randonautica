@@ -39,7 +39,7 @@ class _BottomBarState extends State<BottomBar> {
                 bottomLeft: Radius.circular(90.0),
                 bottomRight: Radius.circular(90.0),
               ),),
-            elevation: 10.0,
+            elevation: 7.0,
             child: Container(
             height: SizeConfig.blockSizeHorizontal * 18,
             child: ClipRRect(

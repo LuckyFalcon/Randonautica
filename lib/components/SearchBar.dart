@@ -15,10 +15,10 @@ class SearchBar extends StatelessWidget {
     SizeConfig().init(context);
 
     return Container(
-        height: SizeConfig.blockSizeVertical * 6,
+        height: SizeConfig.blockSizeVertical * 5,
         width: SizeConfig.blockSizeHorizontal * 100,
         child: Container(
-          padding: EdgeInsets.only(left: 50, right: 45),
+          padding: EdgeInsets.only(left: 40, right: 45),
           child: Container(
               decoration: BoxDecoration(
                 color: Color(0xff7FB1FE),
@@ -32,6 +32,8 @@ class SearchBar extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
+                      SizedBox(width: SizeConfig.blockSizeVertical * 1),
+
                       Icon(
                         Icons.search,
                         color: Color(0xff5E80E1),
@@ -44,12 +46,13 @@ class SearchBar extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(color: Color(0xff5E80E1), fontWeight: FontWeight.bold),
                       ),
+                      SizedBox(width: SizeConfig.blockSizeVertical * 22),
                       Align(
                         alignment: Alignment.centerRight,
                         child: Icon(
                           Icons.arrow_forward,
                           color: Color(0xff5E80E1),
-                          size: 20.0,
+                          size: 30.0,
                         ),
                       ),
                     ],

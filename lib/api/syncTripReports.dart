@@ -33,7 +33,7 @@ Future<int> syncTripReports() async {
     if (response.statusCode == 200) {
 
       final syncUnloggedTrips = syncUnloggedTripsFromJson(response.body);
-
+      print('length: ' + syncUnloggedTrips.length.toString());
       if(syncUnloggedTrips.length > 0) {
         for (int i = 0; i < syncUnloggedTrips[0].length; i++) {
 
@@ -47,7 +47,9 @@ Future<int> syncTripReports() async {
               ///Locale for Local GeoLocator
               //  localeIdentifier: "fi_FI"
             );
+            print(location);
           } catch (error) {
+            print(error);
             location = null;
           }
 
@@ -67,7 +69,7 @@ Future<int> syncTripReports() async {
             latitude: syncUnloggedTrips[0][i].longitude.toString(),
             longitude: syncUnloggedTrips[0][i].longitude.toString(),
             location: (location != null ? location[0].administrativeArea.toString() : ''),
-            gid: '3333',
+            gid: syncUnloggedTrips[0][i].newtonlibGid.toString(),
             tid: '3333',
             lid: '3333',
             type: '3333',
@@ -99,9 +101,9 @@ Future<int> syncTripReports() async {
         return 200;
       }
       return 200;
-    } else {
+    } else if (response.statusCode == 404) {
       //Error from API call
-      throw Exception('Failed to accept agreement');
+      return 200;
     }
   } on TimeoutException catch (_) {
     // A timeout occurred.

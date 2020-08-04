@@ -7,7 +7,7 @@ BoxDecoration normal = BoxDecoration(
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
         stops: [0, 100],
-        colors: [Color(0xff5A87E4), Color(0xff37CDDC)]));
+        colors: [Color(0xff5A87E4), Color(0xff36CCDB)]));
 
 BoxDecoration dark = BoxDecoration(
     gradient: LinearGradient(
