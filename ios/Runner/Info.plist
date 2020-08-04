@@ -41,5 +41,17 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+    <key>CFBundleURLTypes</key>
+    <array>
+            <dict>
+                    <key>CFBundleTypeRole</key>
+                    <string>Editor</string>
+                    <key>CFBundleURLSchemes</key>
+                    <array>
+                            <string>com.randonautica.app</string>
+                            <string>com.googleusercontent.apps.798292909561-gb6jkb1te188245v3sfn8sdaojb5o99u</string>
+                    </array>
+            </dict>
+    </array>
 </dict>
 </plist>
