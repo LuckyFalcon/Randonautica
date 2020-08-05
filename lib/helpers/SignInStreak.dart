@@ -19,10 +19,15 @@ Future<void> SignInStreak(BuildContext context) async {
   if(differenceInHours >= 24){
 
     //Send request
-    await signInStreak();
+    await signInStreak().then((value) =>
+    {
+      if(value == 200){
+        //Show Streak Dialog
+        randonauticaStreakDialog(context, user.currentUser.currentSignedInStreak+1)
+      }
+    }
+    );
 
-    //Show Streak Dialog
-    randonauticaStreakDialog(context, user.currentUser.currentSignedInStreak);
   }
 
 }

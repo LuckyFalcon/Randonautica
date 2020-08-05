@@ -85,4 +85,9 @@ class UnloggedListWidget extends StatelessWidget {
           ]))
     ]);
   }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
+
 }

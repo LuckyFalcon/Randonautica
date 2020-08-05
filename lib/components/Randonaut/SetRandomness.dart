@@ -76,10 +76,10 @@ class _SetRandomness extends State<SetRandomness> {
       children: [
         SizedBox(
           height: SizeConfig.blockSizeVertical * 3.1,
-          width: 120.0,
+          width: SizeConfig.blockSizeHorizontal * 29,
           child: new ButtonTheme(
-            minWidth: 120.0,
-            height: 10.0,
+            minWidth: SizeConfig.blockSizeHorizontal * 29,
+            height: SizeConfig.blockSizeVertical * 3.1,
             child: RaisedButton(
               elevation: 0,
               color: pressAttention1 ? Color(0xff5987E3) : Color(0xff6BE5FE),
@@ -98,10 +98,10 @@ class _SetRandomness extends State<SetRandomness> {
         SizedBox(height: SizeConfig.blockSizeVertical * 0.5),
         SizedBox(
           height: SizeConfig.blockSizeVertical * 3.1,
-          width: 120.0,
+          width: SizeConfig.blockSizeHorizontal * 29,
           child: new ButtonTheme(
-            minWidth: 120.0,
-            height: 10.0,
+            minWidth: SizeConfig.blockSizeHorizontal * 29,
+            height: SizeConfig.blockSizeVertical * 3.1,
             child: RaisedButton(
               elevation: 0,
               color: pressAttention2 ? Color(0xff5987E3) : Color(0xff6BE5FE),
@@ -113,6 +113,7 @@ class _SetRandomness extends State<SetRandomness> {
                   AppLocalizations.of(context)
                       .translate('quantum')
                       .toUpperCase(),
+                  maxLines: 1,
                   style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
             ),
           ),
@@ -120,10 +121,10 @@ class _SetRandomness extends State<SetRandomness> {
         SizedBox(height: SizeConfig.blockSizeVertical * 0.5),
         SizedBox(
           height: SizeConfig.blockSizeVertical * 3.15,
-          width: 120.0,
+          width: SizeConfig.blockSizeHorizontal * 29,
           child: new ButtonTheme(
-            minWidth: 120.0,
-            height: 10.0,
+            minWidth: SizeConfig.blockSizeHorizontal * 29,
+            height: SizeConfig.blockSizeVertical * 3.1,
             child: RaisedButton(
               elevation: 0,
               color: pressAttention3 ? Color(0xff5987E3) : Color(0xff6BE5FE),

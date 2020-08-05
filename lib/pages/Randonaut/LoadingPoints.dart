@@ -81,11 +81,11 @@ class LoadingPointsState extends State<LoadingPoints> with TickerProviderStateMi
                       height: SizeConfig.blockSizeVertical * 10,
                       width: SizeConfig.blockSizeHorizontal * 33.3,
                       child: Padding(
-                        padding: const EdgeInsets.only(top: 15.0, right: 0),
+                        padding: const EdgeInsets.only(top: 0.0, right: 0),
                         child: Align(
                           alignment: Alignment.center,
                           child: IconButton(
-                            iconSize: SizeConfig.blockSizeVertical * 10,
+                            iconSize: SizeConfig.blockSizeVertical * 100,
                             icon: ImageIcon(
                               AssetImage('assets/img/Owl.png'),
                               color: Colors.white,

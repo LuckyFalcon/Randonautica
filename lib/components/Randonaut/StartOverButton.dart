@@ -1,3 +1,5 @@
+import 'package:app/utils/size_config.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
@@ -36,11 +38,11 @@ class _StartOverButton extends State<StartOverButton> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 30.0,
-      width: 110.0,
+      height: SizeConfig.blockSizeVertical * 3.1,
+      width: SizeConfig.blockSizeHorizontal * 29,
       child: new ButtonTheme(
-        minWidth: 120.0,
-        height: 10.0,
+        height: SizeConfig.blockSizeVertical * 3.1,
+        minWidth: SizeConfig.blockSizeHorizontal * 29,
         child: FlatButton(
           color: Color(0xff6080E2),
           onPressed: () {
@@ -59,9 +61,9 @@ class _StartOverButton extends State<StartOverButton> {
               side: BorderSide(
                   color:
                   Color(0xff6080E2))),
-          child: Text(
+          child: AutoSizeText(
               AppLocalizations.of(context).translate('start_over').toUpperCase(),
-              style: TextStyle(fontSize: 13)),
+              style: TextStyle(fontSize: 15)),
         ),
       ),
     );

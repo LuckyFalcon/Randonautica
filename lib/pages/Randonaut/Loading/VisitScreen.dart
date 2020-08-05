@@ -19,7 +19,9 @@ class VisitScreenState extends State<VisitScreen> {
     setState(() {});
   }
 
-  welcomePremiumButtonCallback() {}
+  welcomePremiumButtonCallback() {
+
+  }
 
   @override
   Widget build(BuildContext context) {

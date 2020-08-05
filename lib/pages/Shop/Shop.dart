@@ -549,17 +549,8 @@ class ShopState extends State<Shop> {
                               child: AutoSizeText(
                                   _items[sixtyOwlTokenIndex]
                                           .localizedPrice
-                                          .toString() +
-                                      '(' +
-                                      ((double.parse(_items[sixtyOwlTokenIndex]
-                                                      .price) /
-                                                  double.parse(
-                                                      _productListTokenAmount[
-                                                          0]))
-                                              .toString())
-                                          .toString() +
-                                      ' per' +
-                                      ')',
+                                      .toString(),
+
                                   group: AutoSizeTextGroupItems,
                                   style: TextStyle(
                                       fontSize: 23,
@@ -609,17 +600,8 @@ class ShopState extends State<Shop> {
                               child: AutoSizeText(
                                   _items[sixtyOwlTokenIndex]
                                           .localizedPrice
-                                          .toString() +
-                                      '(' +
-                                      ((double.parse(_items[sixtyOwlTokenIndex]
-                                                      .price) /
-                                                  double.parse(
-                                                      _productListTokenAmount[
-                                                          0]))
-                                              .toString())
-                                          .toString() +
-                                      ' per' +
-                                      ')',
+                                      .toString(),
+
                                   group: AutoSizeTextGroupItems,
                                   style: TextStyle(
                                       fontSize: 21,
@@ -668,17 +650,7 @@ class ShopState extends State<Shop> {
                               child: AutoSizeText(
                                   _items[sixtyOwlTokenIndex]
                                           .localizedPrice
-                                          .toString() +
-                                      '(' +
-                                      ((double.parse(_items[sixtyOwlTokenIndex]
-                                                      .price) /
-                                                  double.parse(
-                                                      _productListTokenAmount[
-                                                          0]))
-                                              .toString())
-                                          .toString() +
-                                      ' per' +
-                                      ')',
+                                      .toString(),
                                   group: AutoSizeTextGroupItems,
                                   style: TextStyle(
                                     fontSize: 23,
@@ -728,18 +700,7 @@ class ShopState extends State<Shop> {
                               child: AutoSizeText(
                                   _items[fifteenhundredOwlTokenIndex]
                                           .localizedPrice
-                                          .toString() +
-                                      '(' +
-                                      ((double.parse(_items[
-                                                          fifteenhundredOwlTokenIndex]
-                                                      .price) /
-                                                  double.parse(
-                                                      _productListTokenAmount[
-                                                          3]))
-                                              .toStringAsFixed(3))
-                                          .toString() +
-                                      ' per' +
-                                      ')',
+                                          .toString(),
                                   group: AutoSizeTextGroupItems,
                                   maxLines: 1,
                                   style: TextStyle(

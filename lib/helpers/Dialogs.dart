@@ -200,6 +200,9 @@ setRadiusDialog(BuildContext context, callback) {
 }
 
 setBuyDialog(BuildContext context) {
+
+  var AutoSizeTextGroup = AutoSizeGroup();
+
   showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -241,25 +244,36 @@ setBuyDialog(BuildContext context) {
                           children: <Widget>[
                             ImageIcon(AssetImage('assets/img/Owl.png'),
                                 color: Colors.green, size: 64),
-                            Text(
+                      Container(
+                        height: SizeConfig.blockSizeVertical * 2,
+                        width: SizeConfig.blockSizeHorizontal * 50,
+                        child: Material(
+                            color: Colors.white,
+                            child: AutoSizeText(
                                 AppLocalizations.of(context)
                                     .translate('uh_oh')
                                     .toUpperCase(),
                                 textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 15,
-                                    color: Colors.blue)),
+                            group: AutoSizeTextGroup,
+                            style: TextStyle(
+                                    fontSize: 13,
+                                    color: Colors.blue)))),
                             SizedBox(height: SizeConfig.blockSizeVertical * 1),
-                            Text(
+                      Container(
+                        height: SizeConfig.blockSizeVertical * 5,
+                        width: SizeConfig.blockSizeHorizontal * 50,
+                        child: Material(
+                            color: Colors.white,
+                            child: AutoSizeText(
                                 AppLocalizations.of(context)
                                     .translate('access_when_premium')
                                     .toUpperCase(),
                                 textAlign: TextAlign.center,
+                                maxLines: 3,
+                                group: AutoSizeTextGroup,
                                 style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 15,
-                                    color: Colors.blue)),
+                                    fontSize: 13,
+                                    color: Colors.blue)))),
                             SizedBox(height: SizeConfig.blockSizeVertical * 3),
                             Container(
                                 width: SizeConfig.blockSizeHorizontal * 70,
@@ -727,12 +741,12 @@ notEnoughTokensDialog(BuildContext context) {
           child: Align(
             alignment: Alignment.center,
             child: Container(
-              height: SizeConfig.blockSizeVertical * 35,
+              height: SizeConfig.blockSizeVertical * 40,
               width: SizeConfig.blockSizeHorizontal * 80,
               child: Stack(
                 children: <Widget>[
                   Container(
-                      height: SizeConfig.blockSizeVertical * 35,
+                      height: SizeConfig.blockSizeVertical * 40,
                       width: SizeConfig.blockSizeHorizontal * 80,
                       ///This is 70% of the Vertical / Height for this container in this class
                       decoration: BoxDecoration(
@@ -762,11 +776,11 @@ notEnoughTokensDialog(BuildContext context) {
                             SizedBox(height: SizeConfig.blockSizeVertical * 0.5),
                             SizedBox(height: SizeConfig.blockSizeVertical * 1),
                             Container(
-                              height: SizeConfig.blockSizeVertical * 2,
-                              width: SizeConfig.blockSizeHorizontal * 50,
+                              height: SizeConfig.blockSizeVertical * 5,
+                              width: SizeConfig.blockSizeHorizontal * 55,
                               child: Material(
                                   color: Colors.white,
-                                  child: Text(
+                                  child: AutoSizeText(
                                       AppLocalizations.of(context)
                                           .translate(
                                           'not_enough_tokens_description')
@@ -775,7 +789,7 @@ notEnoughTokensDialog(BuildContext context) {
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
-                                          fontSize: 14,
+                                          fontSize: 15,
                                           color: Color(0xff6081E2)))),
                             ),
                             SizedBox(height: SizeConfig.blockSizeVertical * 2),

@@ -69,55 +69,53 @@ class _LoginState extends State<Login> {
     if (statusCode == 409 || statusCode == 200) {
       //User account exists so sync reports from server
       if (statusCode == 409) {
-        //Account is active
-//        print(prefs.getBool("SyncedReports"));
-//        if (prefs.getBool("SyncedReports") != true) {
-//          await syncTripReports()
-//              .then((value) => {
-//                    if (value == 200)
-//                      {
-//                        //Account is active
-//                        prefs.setBool("Account", true),
-//
-//                        //HomePage
-//                        Navigator.of(context).pushReplacement(
-//                          MaterialPageRoute(
-//                            builder: (context) {
-//                              return HomePage();
-//                            },
-//                          ),
-//                        )
-//                      }
-//                    else
-//                      {
-//                        //Account is not active
-//                        prefs.setBool("Account", false),
-//
-//                        //Failed Login Screen
-//                        Navigator.of(context).pushReplacement(
-//                          MaterialPageRoute(
-//                            builder: (context) {
-//                              return FailedToLogin();
-//                            },
-//                          ),
-//                        )
-//                      }
-//                  })
-//              .catchError((onError) => {
-//                    //Account is not active
-//                    prefs.setBool("Account", false),
-//
-//                    //Failed Login Screen
-//                    Navigator.of(context).pushReplacement(
-//                      MaterialPageRoute(
-//                        builder: (context) {
-//                          return FailedToLogin();
-//                        },
-//                      ),
-//                    )
-//                  });
-//        } else {
-//          //Account is active
+        //Account is active sync reports
+        if (prefs.getBool("SyncedReports") != true) {
+          await syncTripReports()
+              .then((value) => {
+                    if (value == 200){
+                        //Account is active
+                        prefs.setBool("Account", true),
+                        prefs.setBool("SyncedReports", true),
+                        //HomePage
+                        Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return HomePage();
+                            },
+                          ),
+                        )
+                      }
+                    else
+                      {
+                        //Account is not active
+                        prefs.setBool("Account", false),
+
+                        //Failed Login Screen
+                        Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return FailedToLogin();
+                            },
+                          ),
+                        )
+                      }
+                  })
+              .catchError((onError) => {
+                    //Account is not active
+                    prefs.setBool("Account", false),
+
+                    //Failed Login Screen
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return FailedToLogin();
+                        },
+                      ),
+                    )
+                  });
+        } else {
+          //Account is active
           prefs.setBool("Account", true);
 
           //HomePage
@@ -128,15 +126,11 @@ class _LoginState extends State<Login> {
               },
             ),
           );
-      //  }
-      //}
-//      //Check whether the agreement is accepted
-//      if (user.currentUser.isAgreementAccepted == 0) {
-//        //Show dialog and wait for accept callback
-//        showAgreementDialog(context, this.acceptAgreementCallback);
+        }
       } else {
         //Account is active
         prefs.setBool("Account", true);
+        prefs.setBool("SyncedReports", true);
 
         //HomePage
         Navigator.of(context).pushReplacement(

@@ -8,6 +8,10 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class LoggedListItem extends StatelessWidget {
+
+  var AutoSizeTextTitleGroup = AutoSizeGroup();
+  var AutoSizeTextGroup = AutoSizeGroup();
+
   String gid;
   String location;
   String datetime;
@@ -120,8 +124,9 @@ class LoggedListItem extends StatelessWidget {
                                 children: <Widget>[
                                   Align(
                                     alignment: Alignment.topLeft,
-                                    child: Text(
+                                    child: AutoSizeText(
                                       this.title,
+                                      group: AutoSizeTextTitleGroup,
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontSize: 18,
@@ -130,9 +135,11 @@ class LoggedListItem extends StatelessWidget {
                                   ),
                                   Align(
                                     alignment: Alignment.bottomRight,
-                                    child: Text(
+                                    child: AutoSizeText(
                                       dateFormat,
+                                      group: AutoSizeTextTitleGroup,
                                       style: TextStyle(
+                                          fontSize: 15,
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold),
                                     ),
@@ -141,8 +148,9 @@ class LoggedListItem extends StatelessWidget {
                               ),
                               Align(
                                 alignment: Alignment.topLeft,
-                                child: Text(
+                                child: AutoSizeText(
                                   this.location,
+                                  maxLines: 1,
                                   style: TextStyle(
                                     color: Colors.blue,
                                   ),
@@ -158,6 +166,8 @@ class LoggedListItem extends StatelessWidget {
                                         child: AutoSizeText(
                                           'hello my name is david hello my name is david  hello my name is david hello my name is david hello my name is david ',
                                           maxLines: 4,
+                                          overflow: TextOverflow.fade,
+                                          group: AutoSizeTextGroup,
                                           style: TextStyle(
                                             color: Colors.white,
                                             fontSize: 11,
@@ -206,4 +216,8 @@ class LoggedListItem extends StatelessWidget {
           ],
         ));
   }
+
+  @override
+  bool get wantKeepAlive => true;
+
 }

@@ -208,7 +208,7 @@ class UnloggedTripDetailsState extends State<UnloggedTripDetails> {
                               tooltip: 'Pick Image',
                               child: Icon(Icons.add_a_photo),
                             )
-                          : Image.file(_image, width: 128, height: 128),
+                          : Image.file(_image, width: 256, height: 256),
                       SizedBox(height: 20),
                       Container(
                           height: 60,

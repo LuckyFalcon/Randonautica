@@ -40,9 +40,11 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     SignInStreak(context);
+
     super.initState();
-    updateToken();
-    timer = Timer.periodic(Duration(minutes: 56), (Timer t) => updateToken());
+
+   // updateToken();
+   // timer = Timer.periodic(Duration(minutes: 56), (Timer t) => updateToken());
   }
 
   void selectedNavigationIndexCallback(int selectedNavigationIndex) {
@@ -69,7 +71,6 @@ class _HomePageState extends State<HomePage> {
       print(token.token);
       //Store Token in SharedPreferences
       await prefs.setString("authToken", token.token);
-
 
     }
   }

@@ -1,4 +1,6 @@
 import 'package:app/helpers/AppLocalizations.dart';
+import 'package:app/utils/size_config.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
 class OpenMapsButton extends StatelessWidget {
@@ -18,11 +20,11 @@ class OpenMapsButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 30.0,
-      width: 110.0,
+      height: SizeConfig.blockSizeVertical * 3.1,
+      width: SizeConfig.blockSizeHorizontal * 29,
       child: new ButtonTheme(
-        minWidth: 120.0,
-        height: 10.0,
+        height: SizeConfig.blockSizeVertical * 3.1,
+        minWidth: SizeConfig.blockSizeHorizontal * 29,
         child: RaisedButton(
           elevation: 0,
           color: Color(0xff6BE5FE),
@@ -35,9 +37,9 @@ class OpenMapsButton extends StatelessWidget {
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(30.0),
               side: BorderSide(color: Color(0xff6BE5FE))),
-          child: Text(
+          child: AutoSizeText(
               AppLocalizations.of(context).translate('open_maps').toUpperCase(),
-              style: TextStyle(fontSize: 13)),
+              style: TextStyle(fontSize: 15)),
         ),
       ),
     );

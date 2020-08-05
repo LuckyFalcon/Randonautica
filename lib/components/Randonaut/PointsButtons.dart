@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:app/utils/size_config.dart';
@@ -14,6 +15,8 @@ class PointsButtons extends StatefulWidget {
 }
 
 class _PoinstButtons extends State<PointsButtons> {
+
+  var AutoSizeTextGroup = AutoSizeGroup();
 
   bool pressAttention1 = true;
   bool pressAttention2 = false;
@@ -76,11 +79,11 @@ class _PoinstButtons extends State<PointsButtons> {
     return Column(
       children: [
         SizedBox(
-          height: SizeConfig.blockSizeVertical * 3.1,
-          width: 120.0,
+          height: SizeConfig.blockSizeVertical * 3.15,
+          width: SizeConfig.blockSizeHorizontal * 29,
           child: new ButtonTheme(
-            minWidth: 120.0,
-            height: 10.0,
+            minWidth: SizeConfig.blockSizeHorizontal * 29,
+            height: SizeConfig.blockSizeVertical * 3.1,
             child: RaisedButton(
               elevation: 0,
               color: pressAttention1 ? Color(0xff5987E3) : Color(0xff6BE5FE),
@@ -88,21 +91,23 @@ class _PoinstButtons extends State<PointsButtons> {
               textColor: Colors.white,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(30.0),),
-              child: Text(
+              child: AutoSizeText(
                   AppLocalizations.of(context)
                       .translate('anomaly')
                       .toUpperCase(),
+                  maxLines: 1,
+                  group: AutoSizeTextGroup,
                   style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
             ),
           ),
         ),
         SizedBox(height: SizeConfig.blockSizeVertical * 0.5),
         SizedBox(
-          height: SizeConfig.blockSizeVertical * 3.1,
-          width: 120.0,
+          height: SizeConfig.blockSizeVertical * 3.15,
+          width: SizeConfig.blockSizeHorizontal * 29,
           child: new ButtonTheme(
-            minWidth: 120.0,
-            height: 10.0,
+            minWidth: SizeConfig.blockSizeHorizontal * 29,
+            height: SizeConfig.blockSizeVertical * 3.1,
             child: RaisedButton(
               elevation: 0,
               color: pressAttention2 ? Color(0xff5987E3) : Color(0xff6BE5FE),
@@ -110,21 +115,23 @@ class _PoinstButtons extends State<PointsButtons> {
               textColor: Colors.white,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(30.0),),
-              child: Text(
+              child: AutoSizeText(
                   AppLocalizations.of(context)
                       .translate('attractor')
                       .toUpperCase(),
+                  maxLines: 1,
+                  group: AutoSizeTextGroup,
                   style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
             ),
           ),
         ),
         SizedBox(height: SizeConfig.blockSizeVertical * 0.5),
         SizedBox(
-          height: SizeConfig.blockSizeVertical * 3.1,
-          width: 120.0,
+          height: SizeConfig.blockSizeVertical * 3.15,
+          width: SizeConfig.blockSizeHorizontal * 29,
           child: new ButtonTheme(
-            minWidth: 120.0,
-            height: 10.0,
+            minWidth: SizeConfig.blockSizeHorizontal * 29,
+            height: SizeConfig.blockSizeVertical * 3.1,
             child: RaisedButton(
               elevation: 0,
               color: pressAttention3 ? Color(0xff5987E3) : Color(0xff6BE5FE),
@@ -132,10 +139,12 @@ class _PoinstButtons extends State<PointsButtons> {
               textColor: Colors.white,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30.0),),
-              child: Text(
+              child: AutoSizeText(
                   AppLocalizations.of(context)
                       .translate('void')
                       .toUpperCase(),
+                  maxLines: 1,
+                  group: AutoSizeTextGroup,
                   style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
             ),
           ),

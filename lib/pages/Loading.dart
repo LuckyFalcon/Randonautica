@@ -83,7 +83,7 @@ class _LoadingState extends State<Loading> {
       } else {
         ///No new version -> Continue to App
         await getCurrentUser()
-            .then((value) => Future.delayed(Duration(seconds: 3), () {
+            .then((value) => Future.delayed(Duration(seconds: 1), () {
                   if (value != null) {
                     Navigator.pushAndRemoveUntil(
                         context,
@@ -92,7 +92,7 @@ class _LoadingState extends State<Loading> {
                   } else {
                     //Setup Databases
                     setupDatabases().then(
-                        (value) => Future.delayed(Duration(seconds: 3), () {
+                        (value) => Future.delayed(Duration(seconds: 1), () {
                               Navigator.pushAndRemoveUntil(
                                   context,
                                   FadeRoute(page: Login()),
@@ -181,6 +181,7 @@ class _LoadingState extends State<Loading> {
       if (_user != null) {
         //Get token
         var token = await _user.getIdToken();
+        print('token' + token.token.toString());
 
         //Store Token in SharedPreferences
         await prefs.setString("authToken", token.token);
@@ -196,6 +197,7 @@ class _LoadingState extends State<Loading> {
             //Set Global User
             globals.currentUser = user;
           } else {
+            print('failedtosignin');
             //An error occurred running the above logic
             throw Exception('Failed to get User');
           }

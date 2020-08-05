@@ -29,6 +29,9 @@ class TripList extends StatefulWidget {
 }
 
 class TripListState extends State<TripList> {
+
+  var AutoSizeTextTitleGroup = AutoSizeGroup();
+
   //Set SharedPreferences
   Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
@@ -49,7 +52,6 @@ class TripListState extends State<TripList> {
   }
 
   initializeTripList() async {
-
     //Get list of unlogged trips
     Future<List<UnloggedTrip>> _futureOfList = RetrieveUnloggedTrips();
     _futureOfList.then((value) {
@@ -91,7 +93,9 @@ class TripListState extends State<TripList> {
     SizeConfig().init(context);
     return (unloggedTripsloaded && LoggedTripList
         ? (unloggedTrips.length > 0 || _LoggedTripList.length > 0
-            ? Container(
+            ?
+
+    Container(
                 height: SizeConfig.blockSizeVertical * 78, ///78 tied to Randonaut.dart
                 width: SizeConfig.blockSizeHorizontal * 100,
                 child: Column(
@@ -139,9 +143,10 @@ class TripListState extends State<TripList> {
                           (_LoggedTripList.length > 0
                               ? Container(
                                   padding: EdgeInsets.only(left: 30),
-                                  child: Text(
+                                  child: AutoSizeText(
                                       AppLocalizations.of(context)
                                           .translate('your_trip_log'),
+                                      group: AutoSizeTextTitleGroup,
                                       style: TextStyle(
                                           fontSize: 40,
                                           color: Colors.white,
@@ -205,9 +210,10 @@ class TripListState extends State<TripList> {
                           (unloggedTrips.length > 0
                               ? Container(
                                   padding: EdgeInsets.only(left: 30, right: 40),
-                                  child: Text(
+                                  child: AutoSizeText(
                                       AppLocalizations.of(context)
                                           .translate('unlogged_trips'),
+                                      group: AutoSizeTextTitleGroup,
                                       style: TextStyle(
                                           fontSize: 40,
                                           color: Colors.white,

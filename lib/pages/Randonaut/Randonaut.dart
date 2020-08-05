@@ -33,6 +33,7 @@ import 'package:tutorial_coach_mark/target_position.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 
 import '../../storage/unloggedTripsDatabase.dart';
+import 'Loading/WarningScreens.dart';
 import 'LoadingPoints.dart';
 
 const double CAMERA_TILT = 0;
@@ -70,6 +71,7 @@ class RandonautState extends State<Randonaut> {
   ///Buttons for navigation
   bool pressOpenMapsButton = false;
   bool pressStartOverButton = false;
+  bool pressShareLocationButton = false;
 
   /// Attractor stuff neeeded
   int selectedPoint =
@@ -84,6 +86,9 @@ class RandonautState extends State<Randonaut> {
   ///Attractor points
   LatLng attractorCoordinates;
 
+  ///Point retrieved from API used as a reference
+  var retrievedPointType;
+
   ///Tutorial targets list
   List<TargetFocus> targets = List();
 
@@ -97,6 +102,9 @@ class RandonautState extends State<Randonaut> {
   ///Map controller
   Completer<GoogleMapController> _controller = Completer();
   GoogleMapController controller;
+
+  ///Location retrieved from local geolocator used as a reference
+  var GeoLocatorlocation;
 
   ///Markers
   Set<Marker> _markers = Set<Marker>();
@@ -139,6 +147,7 @@ class RandonautState extends State<Randonaut> {
   Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
   MarkerId selectedMarker;
   int _markerIdCounter = 1;
+
 
   void callbackGoButtonMainPage(bool pressGoButton) {
     //controller.setMapStyle(MapStyles.DarkStyle);
@@ -456,10 +465,10 @@ class RandonautState extends State<Randonaut> {
   void showTutorial() {
     //findingPointFailedDialog(context);
     //gpsDisabledDialog(context);
-    // notEnoughTokensDialog(context);
-    randonauticaStreakDialog(
-        context, globals.currentUser.currentSignedInStreak);
-    signInStreak();
+     notEnoughTokensDialog(context);
+//    randonauticaStreakDialog(
+//        context, globals.currentUser.currentSignedInStreak);
+    //signInStreak();
 //    TutorialCoachMark(context,
 //        targets: targets,
 //        colorShadow: Colors.blue,
@@ -524,7 +533,7 @@ class RandonautState extends State<Randonaut> {
                     : SizeConfig.blockSizeVertical * 50),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(45.0)),
-                  border: Border.all(width: 15, color: Colors.white),
+                  border: Border.all(width: SizeConfig.blockSizeHorizontal * 3.5, color: Colors.white),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black.withOpacity(0.2),
@@ -593,31 +602,39 @@ class RandonautState extends State<Randonaut> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            Text(
-                              'Address of Point',
+                            Container(
+                                width: SizeConfig.blockSizeHorizontal * 40,
+                              height: SizeConfig.blockSizeHorizontal * 5,
+
+                            child: AutoSizeText(
+                              GeoLocatorlocation[0].administrativeArea.toString(),
                               textAlign: TextAlign.left,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
+                                  fontSize: 19,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.white),
-                            ),
-                            Text(
-                              'POINT TYPE',
+                            ),),
+                            AutoSizeText(
+                              retrievedPointType,
                               textAlign: TextAlign.left,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Color(0xff5987E3)),
+                                  fontSize: 12,
+                                  color: Colors.white),
                             ),
+                            SizedBox(height: SizeConfig.blockSizeVertical * 1),
                             Row(
                               children: [
+                                OpenMapsButton(
+                                    this.callbackOpenMaps, pressOpenMapsButton),
+                                SizedBox(
+                                    width: SizeConfig.blockSizeHorizontal * 2),
                                 //Buttons
                                 StartOverButton(this.callbackStartOver,
                                     pressStartOverButton),
                                 SizedBox(
                                     width: SizeConfig.blockSizeHorizontal * 5),
-                                OpenMapsButton(
-                                    this.callbackOpenMaps, pressOpenMapsButton),
                               ],
                             ),
                             SizedBox(height: SizeConfig.blockSizeVertical * 1),
@@ -626,8 +643,8 @@ class RandonautState extends State<Randonaut> {
                                 //Buttons
                                 SizedBox(
                                     width: SizeConfig.blockSizeHorizontal * 15),
-                                ShareLocationButton(
-                                    this.callbackOpenMaps, pressOpenMapsButton),
+                                ShareLocationButton(this.callbackShareLocation,
+                                    pressShareLocationButton),
                               ],
                             ),
                           ],
@@ -657,76 +674,76 @@ class RandonautState extends State<Randonaut> {
                           Container(
                             child: HelpButton(this.callbackhelp),
                           ),
-                          Container(
-                              height: SizeConfig.blockSizeVertical * 10,
-                              child: Column(
-                                children: <Widget>[
-                                  IconButton(
-                                    iconSize: 32,
-                                    icon: ImageIcon(
-                                      AssetImage('assets/img/Owl_Token.png'),
-                                      color: Colors.white,
-                                    ),
-                                    onPressed: () {
-                                      showModalBottomSheet(
-                                          isScrollControlled: true,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: new BorderRadius.only(
-                                                topLeft:
-                                                    const Radius.circular(60.0),
-                                                topRight: const Radius.circular(
-                                                    60.0)),
-                                          ),
-                                          useRootNavigator: false,
-                                          context: context,
-                                          builder: (context) => Container(
-                                                height: SizeConfig
-                                                        .blockSizeVertical *
-                                                    90,
-                                                decoration: new BoxDecoration(
-                                                    gradient: LinearGradient(
-                                                        begin: Alignment
-                                                            .topCenter,
-                                                        end: Alignment
-                                                            .bottomCenter,
-                                                        stops: [
-                                                          0,
-                                                          5.0
-                                                        ],
-                                                        colors: [
-                                                          Color(0xff383B46),
-                                                          Color(0xff5786E1)
-                                                        ]),
-                                                    color: Theme.of(context)
-                                                        .primaryColor,
-                                                    borderRadius:
-                                                        new BorderRadius.only(
-                                                            topLeft: const Radius
-                                                                .circular(60.0),
-                                                            topRight: const Radius
-                                                                    .circular(
-                                                                60.0))),
-                                                child: Container(
-                                                  height: SizeConfig
-                                                          .blockSizeVertical *
-                                                      90,
-                                                  child: TokenInfo(),
-                                                ),
-                                              ));
-                                    },
-                                  ),
-                                  Container(
-                                      child: AutoSizeText(
-                                          globals.currentUser.points.toString(),
-                                          maxLines: 1,
-                                          minFontSize: 12,
-                                          maxFontSize: 23,
-                                          style: TextStyle(
-                                              fontSize: 23,
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.bold))),
-                                ],
-                              )),
+//                          Container(
+//                              height: SizeConfig.blockSizeVertical * 10,
+//                              child: Column(
+//                                children: <Widget>[
+//                                  IconButton(
+//                                    iconSize: 32,
+//                                    icon: ImageIcon(
+//                                      AssetImage('assets/img/Owl_Token.png'),
+//                                      color: Colors.white,
+//                                    ),
+//                                    onPressed: () {
+//                                      showModalBottomSheet(
+//                                          isScrollControlled: true,
+//                                          shape: RoundedRectangleBorder(
+//                                            borderRadius: new BorderRadius.only(
+//                                                topLeft:
+//                                                    const Radius.circular(60.0),
+//                                                topRight: const Radius.circular(
+//                                                    60.0)),
+//                                          ),
+//                                          useRootNavigator: false,
+//                                          context: context,
+//                                          builder: (context) => Container(
+//                                                height: SizeConfig
+//                                                        .blockSizeVertical *
+//                                                    90,
+//                                                decoration: new BoxDecoration(
+//                                                    gradient: LinearGradient(
+//                                                        begin: Alignment
+//                                                            .topCenter,
+//                                                        end: Alignment
+//                                                            .bottomCenter,
+//                                                        stops: [
+//                                                          0,
+//                                                          5.0
+//                                                        ],
+//                                                        colors: [
+//                                                          Color(0xff383B46),
+//                                                          Color(0xff5786E1)
+//                                                        ]),
+//                                                    color: Theme.of(context)
+//                                                        .primaryColor,
+//                                                    borderRadius:
+//                                                        new BorderRadius.only(
+//                                                            topLeft: const Radius
+//                                                                .circular(60.0),
+//                                                            topRight: const Radius
+//                                                                    .circular(
+//                                                                60.0))),
+//                                                child: Container(
+//                                                  height: SizeConfig
+//                                                          .blockSizeVertical *
+//                                                      90,
+//                                                  child: TokenInfo(),
+//                                                ),
+//                                              ));
+//                                    },
+//                                  ),
+//                                  Container(
+//                                      child: AutoSizeText(
+//                                          globals.currentUser.points.toString(),
+//                                          maxLines: 1,
+//                                          minFontSize: 12,
+//                                          maxFontSize: 23,
+//                                          style: TextStyle(
+//                                              fontSize: 23,
+//                                              color: Colors.white,
+//                                              fontWeight: FontWeight.bold))),
+//                                ],
+//                              )),
                         ]),
                     SizedBox(width: SizeConfig.blockSizeHorizontal * 3),
                     Column(
@@ -767,16 +784,27 @@ class RandonautState extends State<Randonaut> {
     }
 
     if (hasAccess) {
+
       Navigator.push(
           context,
           FadeRoute(
-              page: LoadingPoints(
+              page: WarningScreens(
                   callbackLoadingPoints,
                   radius,
                   currentLocation,
                   selectedPoint,
                   selectedRandomness,
                   checkWater)));
+//      Navigator.push(
+//          context,
+//          FadeRoute(
+//              page: LoadingPoints(
+//                  callbackLoadingPoints,
+//                  radius,
+//                  currentLocation,
+//                  selectedPoint,
+//                  selectedRandomness,
+//                  checkWater)));
     } else {
       setBuyDialog(context);
     }
@@ -831,23 +859,21 @@ class RandonautState extends State<Randonaut> {
 
       ///Todo add localidentifier as optional as it doesn't pick it up somehow
       ///https://pub.dev/packages/geolocator
-      var location = await Geolocator().placemarkFromCoordinates(
+      GeoLocatorlocation = await Geolocator().placemarkFromCoordinates(
         attractors.center.point.latitude,
         attractors.center.point.longitude,
 
         ///Locale for Local GeoLocator
         //  localeIdentifier: "fi_FI"
       );
-
-      print('location' +location[0].administrativeArea.toString() );
-
+      retrievedPointType =  (attractors.type == 1 ? "Attractor" : "Void");
       //Log trips
       final unloggedTrip = UnloggedTrip(
         is_visited: 0,
         is_logged: 0,
         is_favorite: 0,
-        rng_type: 0,
-        point_type: 0,
+        rng_type: selectedRandomness,
+        point_type: selectedPoint,
         title: null,
         report: 0.toString(),
         what_3_words_address: null,
@@ -856,7 +882,7 @@ class RandonautState extends State<Randonaut> {
         center: attractors.gID.toString(),
         latitude: attractors.gID.toString(),
         longitude: attractors.gID.toString(),
-        location: (location[0].administrativeArea.toString() != '' ? location[0].administrativeArea : location[0].country.toString()),
+        location: (GeoLocatorlocation[0].administrativeArea.toString() != '' ? GeoLocatorlocation[0].administrativeArea : GeoLocatorlocation[0].country.toString()),
         gid: attractors.gID.toString(),
         tid: attractors.gID.toString(),
         lid: attractors.gID.toString(),
@@ -934,7 +960,6 @@ class RandonautState extends State<Randonaut> {
   Future<bool> enableGPS() async {
     await location.requestService();
     setInitialLocation();
-
 
   }
 
