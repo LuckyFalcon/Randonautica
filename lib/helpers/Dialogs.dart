@@ -6,6 +6,7 @@ import 'package:app/utils/size_config.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_inapp_purchase/flutter_inapp_purchase.dart';
 
 import '../old/RadiusSlider.dart';
 import 'AppLocalizations.dart';
@@ -727,7 +728,45 @@ gpsDisabledDialog(BuildContext context, Function enableGPSCallback) {
 }
 
 notEnoughTokensDialog(BuildContext context) {
-  dialogRetrievePointCallback() {}
+  dialogRetrievePointCallback() {
+
+    Navigator.pop(context);
+
+    showModalBottomSheet(
+        isScrollControlled: true,
+        shape: RoundedRectangleBorder(
+          borderRadius: new BorderRadius.only(
+              topLeft: const Radius.circular(60.0),
+              topRight: const Radius.circular(60.0)),
+        ),
+        useRootNavigator: false,
+        context: context,
+        builder: (context) => Container(
+          height: SizeConfig.blockSizeVertical * 90,
+          decoration: new BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  stops: [
+                    0,
+                    5.0
+                  ],
+                  colors: [
+                    Color(0xff383B46),
+                    Color(0xff5786E1)
+                  ]),
+              color: Theme.of(context).primaryColor,
+              borderRadius: new BorderRadius.only(
+                  topLeft:
+                  const Radius.circular(60.0),
+                  topRight:
+                  const Radius.circular(60.0))),
+          child: Shop(),
+        )).whenComplete(() async {
+      await FlutterInappPurchase.instance.endConnection;
+    });
+
+  }
 
   dialogCancelCallback() {
     Navigator.pop(context);

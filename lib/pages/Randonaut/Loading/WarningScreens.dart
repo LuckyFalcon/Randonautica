@@ -3,10 +3,12 @@ import 'dart:async';
 import 'package:app/api/getAttractors.dart';
 import 'package:app/components/Warnings/slide_warning_dots.dart';
 import 'package:app/components/Warnings/slide_warning_item.dart';
+import 'package:app/helpers/AppLocalizations.dart';
 import 'package:app/models/Attractors.dart';
 import 'package:app/models/slide_warnings.dart';
 import 'package:app/utils/BackgroundColor.dart' as backgrounds;
 import 'package:app/utils/size_config.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:location/location.dart';
 
@@ -35,7 +37,7 @@ class _WarningScreensState extends State<WarningScreens> {
   @override
   void initState() {
     super.initState();
-    Timer.periodic(Duration(seconds: 10), (Timer timer) {
+    Timer.periodic(Duration(seconds: 5), (Timer timer) {
       if (_currentPage < 2) {
         _currentPage++;
       } else {
@@ -44,7 +46,7 @@ class _WarningScreensState extends State<WarningScreens> {
 
       _pageController.animateToPage(
         _currentPage,
-        duration: Duration(milliseconds: 500),
+        duration: Duration(milliseconds: 1000),
         curve: Curves.easeIn,
       );
     });
@@ -52,8 +54,8 @@ class _WarningScreensState extends State<WarningScreens> {
 
   @override
   void dispose() {
-    super.dispose();
     _pageController.dispose();
+    super.dispose();
   }
 
   _onPageChanged(int index) {
@@ -66,7 +68,9 @@ class _WarningScreensState extends State<WarningScreens> {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
 
-    return Scaffold(
+    return new WillPopScope(
+        onWillPop: () async => false,
+    child:  Scaffold(
       resizeToAvoidBottomPadding: false,
       extendBodyBehindAppBar: true,
       extendBody: true,
@@ -98,8 +102,7 @@ class _WarningScreensState extends State<WarningScreens> {
                   this.widget.callback(snapshot.data);
                 });
               }
-              return Padding(
-                padding: const EdgeInsets.all(20),
+              return Center(
                 child: Column(
                   children: <Widget>[
                     SizedBox(height: SizeConfig.blockSizeVertical * 3),
@@ -121,6 +124,20 @@ class _WarningScreensState extends State<WarningScreens> {
                         ),
                       ),
                     ),
+                    SizedBox(height: SizeConfig.blockSizeVertical * 5),
+                    Container(
+                      width: SizeConfig.blockSizeHorizontal * 50,
+                      child: AutoSizeText(
+                          AppLocalizations.of(context)
+                              .translate('generating_point'),
+                          textAlign: TextAlign.center,
+                          maxLines: 2,
+                          style: TextStyle(
+                              fontSize: 40,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold)),
+                    ),
+                    SizedBox(height: SizeConfig.blockSizeVertical * 5),
                     Container(
                       height: SizeConfig.blockSizeHorizontal * 75,
                       width: SizeConfig.blockSizeHorizontal * 80,
@@ -175,28 +192,13 @@ class _WarningScreensState extends State<WarningScreens> {
                         ],
                       ),
                     ),
-                    SizedBox(
-                      height: 50,
 
-                      ///Todo
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        FadingCircleLoading(
-                          color: Colors.white,
-                          size: 75.0,
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 50,
-                    ),
+
                   ],
                 ),
               );
             }),
       ),
-    );
+    ));
   }
 }

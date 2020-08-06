@@ -1,11 +1,14 @@
 import 'package:app/models/slide_warnings.dart';
 import 'package:app/utils/size_config.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
 class SlideWarningItem extends StatelessWidget {
   final int index;
 
   SlideWarningItem(this.index);
+
+  var AutoSizeTextGroup = AutoSizeGroup();
 
   @override
   Widget build(BuildContext context) {
@@ -18,31 +21,33 @@ class SlideWarningItem extends StatelessWidget {
         Container(
             child: Image(image: AssetImage(slideWarningList[index].imageUrl))),
         Container(
-            width: SizeConfig.blockSizeHorizontal * 60,
+            width: SizeConfig.blockSizeHorizontal * 65,
             height: SizeConfig.blockSizeVertical * 10,
             child: Column(
               children: <Widget>[
                 SizedBox(
                   height: SizeConfig.blockSizeVertical * 1,
                 ),
-                Text(
+                AutoSizeText(
                   returnWarningSlide(index, context).firstLine,
                   textAlign: TextAlign.center,
+                  group: AutoSizeTextGroup,
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.blueAccent,
-                      fontSize: 16),
+                      fontSize: 15),
                 ),
                 SizedBox(
-                  height: SizeConfig.blockSizeVertical * 2,
+                  height: SizeConfig.blockSizeVertical * 1,
                 ),
-                Text(
+                AutoSizeText(
                   returnWarningSlide(index, context).secondLine,
                   textAlign: TextAlign.center,
+                  group: AutoSizeTextGroup,
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.blueAccent,
-                      fontSize: 16),
+                      fontSize: 15),
                 )
               ],
             ))

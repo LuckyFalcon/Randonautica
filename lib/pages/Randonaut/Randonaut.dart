@@ -89,6 +89,9 @@ class RandonautState extends State<Randonaut> {
   ///Point retrieved from API used as a reference
   var retrievedPointType;
 
+  ///Reached point
+  bool reachedPoint = false;
+
   ///Tutorial targets list
   List<TargetFocus> targets = List();
 
@@ -189,6 +192,7 @@ class RandonautState extends State<Randonaut> {
     setState(() {
       this.pressStartOverButton = pressOpenMapsButton;
       pointsSucesfullyGenerated = false;
+      reachedPoint = false;
       attractorCoordinates = null;
       _markers = {};
       _polylines = {};
@@ -605,10 +609,8 @@ class RandonautState extends State<Randonaut> {
                             Container(
                                 width: SizeConfig.blockSizeHorizontal * 40,
                               height: SizeConfig.blockSizeHorizontal * 5,
-
                             child: AutoSizeText(
-                              GeoLocatorlocation[0].administrativeArea.toString(),
-                              textAlign: TextAlign.left,
+                              (GeoLocatorlocation[0].administrativeArea.toString() != '' ? GeoLocatorlocation[0].administrativeArea : GeoLocatorlocation[0].country.toString()),                              textAlign: TextAlign.left,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                   fontSize: 19,
@@ -784,27 +786,31 @@ class RandonautState extends State<Randonaut> {
     }
 
     if (hasAccess) {
-
-      Navigator.push(
+      //Choose randomly between loading screens
+      int RandomNumber = new Random().nextInt(2);
+      if(RandomNumber == 1){
+              Navigator.push(
           context,
           FadeRoute(
-              page: WarningScreens(
+              page: LoadingPoints(
                   callbackLoadingPoints,
                   radius,
                   currentLocation,
                   selectedPoint,
                   selectedRandomness,
                   checkWater)));
-//      Navigator.push(
-//          context,
-//          FadeRoute(
-//              page: LoadingPoints(
-//                  callbackLoadingPoints,
-//                  radius,
-//                  currentLocation,
-//                  selectedPoint,
-//                  selectedRandomness,
-//                  checkWater)));
+      } else {
+        Navigator.push(
+            context,
+            FadeRoute(
+                page: WarningScreens(
+                    callbackLoadingPoints,
+                    radius,
+                    currentLocation,
+                    selectedPoint,
+                    selectedRandomness,
+                    checkWater)));
+      }
     } else {
       setBuyDialog(context);
     }
@@ -1016,6 +1022,8 @@ class RandonautState extends State<Randonaut> {
       print(distanceInMeters);
       if (distanceInMeters <= 30) {
         print('attractorreached');
+        reachedPoint = true;
+
       }
     }
 
