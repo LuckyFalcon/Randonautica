@@ -99,28 +99,21 @@ flutter:
     - i18n/es.json
     - i18n/zh_TW.json
     - i18n/zh.json
-    - assets/img/List.svg
-    - assets/img/Globe.svg
-    - assets/img/Labs.svg
-    - assets/img/Pin_Point.svg
+    - assets/img/Navigation/List.svg
+    - assets/img/Navigation/Globe.svg
+    - assets/img/Navigation/Labs.svg
+    - assets/img/Navigation/Pin_Point.svg
     - assets/img/Help.svg
     - assets/img/Add_media.svg
     - assets/img/Profile.svg
-    - assets/img/Andronaut.png
     - assets/img/Owlking.png
-    - assets/img/earth.png
     - assets/img/navigate.png
     - assets/img/share.png
     - assets/img/Owl.png
     - assets/img/pods.png
-    - assets/img/Profile.png
-    - assets/img/driving_pin.png
-    - assets/img/destination_map_marker.png
     - assets/img/owls.png
     - assets/img/add_media.png
-    - assets/img/navigate_round.png
     - assets/img/tripplaceholder.png
-    - assets/img/inboxicon.png
     - assets/img/Warnings/Warning1.png
     - assets/img/Warnings/Warning2.png
     - assets/img/Warnings/Warning3.png
@@ -128,8 +121,12 @@ flutter:
     - assets/img/Shop.png
     - assets/img/Home.png
     - assets/img/double_arrow.png
-    - assets/img/Google_icon.png
-    - assets/img/Apple_icon.png
+    - assets/img/Login/Google_icon.png
+    - assets/img/Login/Apple_icon.png
+    - assets/img/Dialogs/GPSFailed.png
+    - assets/img/Dialogs/LoginFailed.png
+    - assets/img/Dialogs/TokensFailed.png
+    - assets/img/Markers/marker.png
     - assets/img/double_arrow_left.png
     - assets/img/Loading_owl/FlyingOwl-27.png
     - assets/img/Loading_owl/FlyingOwl-28.png
@@ -139,6 +136,14 @@ flutter:
     - assets/img/Loading_owl/FlyingOwl-32.png
     - assets/img/Loading_owl/FlyingOwl-33.png
     - assets/img/Loading_owl/FlyingOwl-34.png
+    - assets/img/Stamps/Stamp_1.png
+    - assets/img/Profile/Change.png
+    - assets/img/Profile/Postcard.png
+    - assets/img/Profile/Profile.png
+    - assets/img/Profile/Settings.png
+    - assets/img/Profile/Down_Arrow.png
+    - assets/img/Profile/Arrow_Line.png
+    -
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

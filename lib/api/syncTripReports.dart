@@ -46,17 +46,19 @@ print(response.statusCode);
           var location;
 
           try {
-            location = await Geolocator().placemarkFromCoordinates(
-              syncUnloggedTrips.trips[0][i].latitude,
-              syncUnloggedTrips.trips[0][i].longitude,
+            await Future.delayed(const Duration(milliseconds: 500), () async {
+              location = await Geolocator().placemarkFromCoordinates(
+                syncUnloggedTrips.trips[0][i].latitude,
+                syncUnloggedTrips.trips[0][i].longitude,
 
-              ///Locale for Local GeoLocator
-              //  localeIdentifier: "fi_FI"
-            );
+                ///Locale for Local GeoLocator
+                //  localeIdentifier: "fi_FI"
+              );
+            });
             print(location);
           } catch (error) {
             print(error);
-            location = null;
+            location = '';
           }
 
           if(syncUnloggedTrips.trips[0][i].isLogged == 1){
@@ -89,9 +91,11 @@ print(response.statusCode);
               what_3_nearest_place: null,
               what_3_words_country: null,
               center: '3333',
-              latitude: syncUnloggedTrips.trips[0][i].longitude.toString(),
+              latitude: syncUnloggedTrips.trips[0][i].latitude.toString(),
               longitude: syncUnloggedTrips.trips[0][i].longitude.toString(),
-              location: (location != null ? location[0].administrativeArea.toString() : ''),
+              location:  (location[0].administrativeArea.toString() != ''
+                  ? location[0].administrativeArea
+                  : location[0].country.toString()),
               gid: syncUnloggedTrips.trips[0][i].newtonlibGid.toString(),
               tid: '3333',
               lid: '3333',
@@ -136,7 +140,9 @@ print(response.statusCode);
             center: '3333',
             latitude: syncUnloggedTrips.trips[0][i].longitude.toString(),
             longitude: syncUnloggedTrips.trips[0][i].longitude.toString(),
-            location: (location != null ? location[0].administrativeArea.toString() : ''),
+            location: (location[0].administrativeArea.toString() != ''
+                ? location[0].administrativeArea
+                : location[0].country.toString()),
             gid: syncUnloggedTrips.trips[0][i].newtonlibGid.toString(),
             tid: '3333',
             lid: '3333',

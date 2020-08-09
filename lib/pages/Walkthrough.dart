@@ -69,8 +69,7 @@ class _WalkthroughState extends State<Walkthrough> {
               ),
               Container(
                 height: SizeConfig.blockSizeVertical * 60,
-                child:   Expanded(
-                  child:
+                child:
                   Stack(
                     alignment: AlignmentDirectional.bottomCenter,
                     children: <Widget>[
@@ -83,7 +82,7 @@ class _WalkthroughState extends State<Walkthrough> {
                       ),
                     ],
                   ),
-                ),
+
               ),
               Container(
                 margin: const EdgeInsets.only(bottom: 30),

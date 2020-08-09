@@ -1,13 +1,13 @@
 import 'package:app/helpers/AppLocalizations.dart';
 import 'package:app/helpers/FadeRoute.dart';
-import '../../pages/Invite/Invite.dart';
 import 'package:app/utils/currentUser.dart' as user;
 import 'package:app/utils/size_config.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
-class TokenInfo extends StatefulWidget {
+import '../../pages/Invite/Invite.dart';
 
+class TokenInfo extends StatefulWidget {
   @override
   State<TokenInfo> createState() => TokenInfoState();
 }
@@ -15,7 +15,6 @@ class TokenInfo extends StatefulWidget {
 class TokenInfoState extends State<TokenInfo> {
   var AutoSizeTextGroupTop = AutoSizeGroup();
   var AutoSizeTextGroupItems = AutoSizeGroup();
-
 
   @override
   void initState() {
@@ -61,13 +60,15 @@ class TokenInfoState extends State<TokenInfo> {
         ),
         Container(
           height: SizeConfig.blockSizeVertical * 10,
-          child: Row(children: [
-            Container(width: SizeConfig.blockSizeHorizontal * 33.3),
+          child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
             Container(
-                width: SizeConfig.blockSizeHorizontal * 33.3,
-                child: Image.asset('assets/img/Owl_Token.png')),
+                child: Image.asset('assets/img/Owl_Token.png',
+                    height: 128, width: 128)),
           ]),
         ),
+        SizedBox(height: SizeConfig.blockSizeVertical * 1),
+
+        ///Owl tokens
         Container(
           height: SizeConfig.blockSizeVertical * 5,
           child: Row(
@@ -83,6 +84,7 @@ class TokenInfoState extends State<TokenInfo> {
                   style: TextStyle(
                     fontSize: 23,
                     color: Colors.white,
+                      fontWeight: FontWeight.bold
                   )),
               SizedBox(width: 10),
               AutoSizeText(user.currentUser.points.toString(),
@@ -97,7 +99,7 @@ class TokenInfoState extends State<TokenInfo> {
           ),
         ),
 
-        ///Owl Tokens
+        ///Daily Allowence
         Container(
             height: SizeConfig.blockSizeVertical * 5,
             child: Row(
@@ -110,30 +112,32 @@ class TokenInfoState extends State<TokenInfo> {
                         .toUpperCase(),
                     group: AutoSizeTextGroupTop,
                     maxLines: 1,
-                    style: TextStyle(fontSize: 23, color: Colors.white)),
+                    style: TextStyle(fontSize: 23, color: Colors.white, fontWeight: FontWeight.bold)),
                 SizedBox(width: 10),
                 AutoSizeText('20',
                     group: AutoSizeTextGroupTop,
                     maxLines: 1,
-                    style: TextStyle(fontSize: 20, color: Colors.white)),
+                    style: TextStyle(fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold)),
               ],
             )),
 
-        ///Daily Allowence
-        SizedBox(height: 20),
+        SizedBox(height: SizeConfig.blockSizeVertical * 1.5),
 
+        ///Owl Token Info
         Container(
           height: SizeConfig.blockSizeVertical * 5,
           child: AutoSizeText(
               AppLocalizations.of(context).translate('owl_token_info'),
               maxLines: 1,
               style: TextStyle(
-                  fontSize: 33,
+                  fontSize: 40,
                   fontWeight: FontWeight.bold,
                   color: Colors.white)),
         ),
 
-        ///Owl Token Info
+        SizedBox(height: SizeConfig.blockSizeVertical * 1.5),
+
+        ///Random point
         Container(
             height: SizeConfig.blockSizeVertical * 5,
             child: Row(
@@ -148,10 +152,8 @@ class TokenInfoState extends State<TokenInfo> {
                             AppLocalizations.of(context)
                                 .translate('random_point'),
                             group: AutoSizeTextGroupItems,
-                            style: TextStyle(
-                                fontSize: 23,
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold)),
+                            style:
+                                TextStyle(fontSize: 21, color: Colors.white)),
                       ],
                     )),
                 Padding(
@@ -162,61 +164,15 @@ class TokenInfoState extends State<TokenInfo> {
                         padding: const EdgeInsets.only(top: 0.0, left: 30),
                         child: Row(
                           children: <Widget>[
-                            AutoSizeText('1',
+                            AutoSizeText('1 ',
                                 group: AutoSizeTextGroupItems,
                                 style: TextStyle(
-                                    fontSize: 23,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold)),
+                                    fontSize: 23, color: Color(0xff37CDDC))),
                             Image.asset(
                               'assets/img/Owl_Token.png',
-                              width: 40,
-                            )
-                          ],
-                        )),
-                  ),
-                ),
-              ],
-            )),
-
-        ///Random Point
-        Container(
-            height: SizeConfig.blockSizeVertical * 5,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Padding(
-                    padding: const EdgeInsets.only(top: 15.0, left: 30),
-                    child: Row(
-                      children: <Widget>[
-                        AutoSizeText(
-                            AppLocalizations.of(context)
-                                .translate('quantum_random_point'),
-                            group: AutoSizeTextGroupItems,
-                            style: TextStyle(
-                                fontSize: 23,
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold)),
-                      ],
-                    )),
-                Padding(
-                  padding: const EdgeInsets.only(top: 15.0, right: 30),
-                  child: Align(
-                    alignment: Alignment.topLeft,
-                    child: Padding(
-                        padding: const EdgeInsets.only(top: 0.0, left: 30),
-                        child: Row(
-                          children: <Widget>[
-                            AutoSizeText('2',
-                                group: AutoSizeTextGroupItems,
-                                style: TextStyle(
-                                    fontSize: 23,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold)),
-                            Image.asset(
-                              'assets/img/Owl_Token.png',
-                              width: 40,
+                              color: Color(0xff37CDDC),
+                              width: 28,
+                              height: 28
                             )
                           ],
                         )),
@@ -238,12 +194,10 @@ class TokenInfoState extends State<TokenInfo> {
                       children: <Widget>[
                         AutoSizeText(
                             AppLocalizations.of(context)
-                                .translate('amplification_bias'),
+                                .translate('quantum_random_point'),
                             group: AutoSizeTextGroupItems,
-                            style: TextStyle(
-                                fontSize: 23,
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold)),
+                            style:
+                                TextStyle(fontSize: 23, color: Colors.white)),
                       ],
                     )),
                 Padding(
@@ -254,15 +208,15 @@ class TokenInfoState extends State<TokenInfo> {
                         padding: const EdgeInsets.only(top: 0.0, left: 30),
                         child: Row(
                           children: <Widget>[
-                            AutoSizeText('2',
+                            AutoSizeText('2 ',
                                 group: AutoSizeTextGroupItems,
                                 style: TextStyle(
-                                    fontSize: 23,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold)),
+                                    fontSize: 23, color: Color(0xff37CDDC))),
                             Image.asset(
                               'assets/img/Owl_Token.png',
-                              width: 40,
+                              color: Color(0xff37CDDC),
+                                width: 28,
+                                height: 28
                             )
                           ],
                         )),
@@ -272,6 +226,50 @@ class TokenInfoState extends State<TokenInfo> {
             )),
 
         /// Amplification Bias
+        Container(
+            height: SizeConfig.blockSizeVertical * 5,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Padding(
+                    padding: const EdgeInsets.only(top: 15.0, left: 30),
+                    child: Row(
+                      children: <Widget>[
+                        AutoSizeText(
+                            AppLocalizations.of(context)
+                                .translate('amplification_bias'),
+                            group: AutoSizeTextGroupItems,
+                            style:
+                                TextStyle(fontSize: 23, color: Colors.white)),
+                      ],
+                    )),
+                Padding(
+                  padding: const EdgeInsets.only(top: 15.0, right: 30),
+                  child: Align(
+                    alignment: Alignment.topLeft,
+                    child: Padding(
+                        padding: const EdgeInsets.only(top: 0.0, left: 30),
+                        child: Row(
+                          children: <Widget>[
+                            AutoSizeText('5 ',
+                                group: AutoSizeTextGroupItems,
+                                style: TextStyle(
+                                    fontSize: 23, color: Color(0xff37CDDC))),
+                            Image.asset(
+                                'assets/img/Owl_Token.png',
+                                color: Color(0xff37CDDC),
+                                width: 28,
+                                height: 28
+                            )
+                          ],
+                        )),
+                  ),
+                ),
+              ],
+            )),
+
+        ///Ways to earn
         SizedBox(height: 30),
         Container(
           height: SizeConfig.blockSizeVertical * 5,
@@ -322,15 +320,15 @@ class TokenInfoState extends State<TokenInfo> {
                         padding: const EdgeInsets.only(top: 0.0, left: 30),
                         child: Row(
                           children: <Widget>[
-                            AutoSizeText('5',
+                            AutoSizeText('5 ',
                                 group: AutoSizeTextGroupItems,
                                 style: TextStyle(
-                                  fontSize: 23,
-                                  color: Colors.green,
-                                )),
+                                    fontSize: 23, color: Color(0xff37CDDC))),
                             Image.asset(
-                              'assets/img/Owl_Token.png',
-                              width: 40,
+                                'assets/img/Owl_Token.png',
+                                color: Color(0xff37CDDC),
+                                width: 28,
+                                height: 28
                             )
                           ],
                         )),
@@ -364,9 +362,7 @@ class TokenInfoState extends State<TokenInfo> {
                               size: 64.0,
                               color: Colors.white),
                           onPressed: () {
-                            Navigator.push(
-                                context,
-                                FadeRoute(page: Invite()));
+                            Navigator.push(context, FadeRoute(page: Invite()));
                           },
                         ),
                       ],
@@ -379,15 +375,15 @@ class TokenInfoState extends State<TokenInfo> {
                         padding: const EdgeInsets.only(top: 0.0, left: 30),
                         child: Row(
                           children: <Widget>[
-                            AutoSizeText('5',
+                            AutoSizeText('5 ',
                                 group: AutoSizeTextGroupItems,
                                 style: TextStyle(
-                                  fontSize: 23,
-                                  color: Colors.green,
-                                )),
+                                    fontSize: 23, color: Color(0xff37CDDC))),
                             Image.asset(
-                              'assets/img/Owl_Token.png',
-                              width: 40,
+                                'assets/img/Owl_Token.png',
+                                color: Color(0xff37CDDC),
+                                width: 28,
+                                height: 28
                             )
                           ],
                         )),
@@ -395,58 +391,6 @@ class TokenInfoState extends State<TokenInfo> {
                 ),
               ],
             )),
-
-        /// Watch ad
-        Container(
-            height: SizeConfig.blockSizeVertical * 5,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Padding(
-                    padding: const EdgeInsets.only(top: 0.0, left: 30),
-                    child: Row(
-                      children: <Widget>[
-                        AutoSizeText(
-                            AppLocalizations.of(context).translate('watch_ad'),
-                            group: AutoSizeTextGroupItems,
-                            style: TextStyle(
-                              fontSize: 23,
-                              color: Colors.white,
-                            )),
-                        IconButton(
-                          icon: ImageIcon(
-                              AssetImage('assets/img/double_arrow.png'),
-                              size: 64.0,
-                              color: Colors.white),
-                          onPressed: () {},
-                        ),
-                      ],
-                    )),
-                Padding(
-                  padding: const EdgeInsets.only(top: 15.0, right: 30),
-                  child: Align(
-                    alignment: Alignment.topLeft,
-                    child: Padding(
-                        padding: const EdgeInsets.only(top: 0.0, left: 30),
-                        child: Row(
-                          children: <Widget>[
-                            AutoSizeText('5',
-                                group: AutoSizeTextGroupItems,
-                                style: TextStyle(
-                                    fontSize: 23, color: Colors.green)),
-                            Image.asset(
-                              'assets/img/Owl_Token.png',
-                              width: 40,
-                            )
-                          ],
-                        )),
-                  ),
-                ),
-              ],
-            )),
-
-        /// Watch An AD
       ],
     ));
   }

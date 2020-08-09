@@ -1,3 +1,4 @@
+import 'package:app/pages/Profile/Profile.dart';
 import 'package:app/pages/Shop/Shop.dart';
 import 'package:app/pages/Token/TokenInfo.dart';
 import 'package:app/utils/currentUser.dart' as globals;
@@ -6,6 +7,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inapp_purchase/flutter_inapp_purchase.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class TopBar extends StatefulWidget {
 
@@ -34,58 +36,20 @@ class _TopBarState extends State<TopBar> {
                       children: <Widget>[
                         IconButton(
                           iconSize: 32,
-                          icon: ImageIcon(
-                            AssetImage('assets/img/Profile.png'),
+                          icon:
+                          SvgPicture.asset(
+                            'assets/img/Profile.svg',
+                            height: 42,
+                            width: 42,
                             color: Colors.white,
                           ),
                           onPressed: () {
-                            showModalBottomSheet(
-                                isScrollControlled: true,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: new BorderRadius.only(
-                                      topLeft: const Radius.circular(60.0),
-                                      topRight: const Radius.circular(60.0)),
-                                ),
-                                useRootNavigator: false,
-                                context: context,
-                                builder: (context) => Container(
-                                      height: SizeConfig.blockSizeVertical * 90,
-                                      decoration: new BoxDecoration(
-                                          gradient: LinearGradient(
-                                              begin: Alignment.topCenter,
-                                              end: Alignment.bottomCenter,
-                                              stops: [
-                                                0,
-                                                5.0
-                                              ],
-                                              colors: [
-                                                Color(0xff383B46),
-                                                Color(0xff5786E1)
-                                              ]),
-                                          color: Theme.of(context).primaryColor,
-                                          borderRadius: new BorderRadius.only(
-                                              topLeft:
-                                                  const Radius.circular(60.0),
-                                              topRight:
-                                                  const Radius.circular(60.0))),
-                                      child: Container(
-                                        height:
-                                            SizeConfig.blockSizeVertical * 90,
-                                        child: TokenInfo(),
-                                      ),
-                                    ));
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => Profile()),
+                            );
                           },
                         ),
-                        Container(
-                            child: AutoSizeText(
-                                globals.currentUser.points.toString(),
-                                maxLines: 1,
-                                minFontSize: 12,
-                                maxFontSize: 17,
-                                style: TextStyle(
-                                    fontSize: 17,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold))),
                       ],
                     ))),
           ),
@@ -116,9 +80,13 @@ class _TopBarState extends State<TopBar> {
             child: Align(
               alignment: Alignment.topRight,
               child: IconButton(
-                iconSize: 32,
-                icon: ImageIcon(AssetImage('assets/img/pods.png'),
-                    size: 64.0, color: Colors.white),
+                icon: Icon(
+                  Icons.shopping_cart,
+                  color: Colors.white,
+                  size: 32.0,
+                  semanticLabel:
+                  'Text to announce in accessibility modes',
+                ),
                 onPressed: () {
                   showModalBottomSheet(
                       isScrollControlled: true,

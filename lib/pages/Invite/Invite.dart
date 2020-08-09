@@ -7,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:app/utils/currentUser.dart' as user;
+import 'package:app/utils/BackgroundColor.dart' as backgrounds;
 
 class Invite extends StatefulWidget {
   @override
@@ -15,6 +16,7 @@ class Invite extends StatefulWidget {
 
 class _InviteState extends State<Invite> {
 
+  //Points gained from sharing
   var SharedWithFriendsPoints = 3;
 
   @override
@@ -23,8 +25,13 @@ class _InviteState extends State<Invite> {
   }
 
   void enableShareWithFriends() async {
+    //Send request to server side
     await shareWithFriends().then((value) => {
+
+      //Update user in database
       enableIsSharedWithFriends(),
+
+      //Increase user points for the current logged in user
       user.currentUser.points = user.currentUser.points + SharedWithFriendsPoints
     });
   }
@@ -37,12 +44,7 @@ class _InviteState extends State<Invite> {
       extendBodyBehindAppBar: true,
       extendBody: true,
       body: Container(
-          decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomRight,
-                  stops: [0, 100],
-                  colors: [Color(0xff5A87E4), Color(0xff37CDDC)])),
+          decoration: backgrounds.normal,
           child: Center(
             child:
               Column(mainAxisAlignment: MainAxisAlignment.start, children: [

@@ -3,14 +3,17 @@ import 'dart:io';
 import 'package:app/api/signInBackend.dart';
 import 'package:app/components/FadingCircleLoading.dart';
 import 'package:app/helpers/AppLocalizations.dart';
+import 'package:app/helpers/Dialogs.dart';
 import 'package:app/helpers/FadeRoute.dart';
 import 'package:app/models/User.dart';
-import 'package:app/pages/Failed/FailedInternet.dart';
+import 'package:app/models/UserStats.dart';
 import 'package:app/storage/setupDatabases.dart';
 import 'package:app/storage/userDatabase.dart';
+import 'package:app/storage/userStatsDatabase.dart';
 import 'package:app/utils/BackgroundColor.dart' as backgrounds;
 import 'package:app/utils/currentUser.dart' as globals;
 import 'package:app/utils/size_config.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:device_info/device_info.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -36,8 +39,12 @@ class _LoadingState extends State<Loading> {
   //Set SharedPreferences
   Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
+  //Firebase authentication instance
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  //Google/iOS Application App Store URLs
   var APP_STORE_URL =
-      'https://phobos.apple.com/WebObjects/MZStore.woa/wa/viewSoftwareUpdate?id=YOUR-APP-ID&mt=8';
+      'https://apps.apple.com/us/app/randonautica/id1493743521';
   var PLAY_STORE_URL =
       'https://play.google.com/store/apps/details?id=com.randonautica.app';
 
@@ -56,18 +63,34 @@ class _LoadingState extends State<Loading> {
       var sdkInt = androidInfo.version.sdkInt;
       if (sdkInt >= 23) {
         //Ask for permissions
-        var Permissions = await LocationPermissions().requestPermissions().then((value) => {
-          print(value)
-        });
+        var Permissions = await LocationPermissions()
+            .requestPermissions()
+            .then((value) => {print(value)});
       }
     }
 
     //Check for Internet Connection
     bool result = await DataConnectionChecker().hasConnection;
     if (result != true) {
-      Navigator.pushAndRemoveUntil(context, FadeRoute(page: FailedToInternet()),
-          ModalRoute.withName("/FailedToInternet"));
+      noInternetConnectionDialog(context, _enableInternet);
     }
+
+//    UserStats userStats;
+//    userStats = UserStats(
+//      id: 0,
+//      anomalies: 0,
+//      attractors: 0,
+//      voids: 0,
+//      chains: 0,
+//      distance: 0,
+//      loggedtrips: 0,
+//      sharewithfriends: 0,
+//      maximumpower: 0,
+//      maximumstreak: 0
+//    );
+//
+//    insertUserStats(userStats);
+
 
     try {
       // Using default duration to force fetching from remote server.
@@ -78,43 +101,51 @@ class _LoadingState extends State<Loading> {
           .getString('force_update_current_version')
           .trim()
           .replaceAll(".", ""));
+
+      //A new version is available in the Google/Apple Store
       if (newVersion > currentVersion) {
         _showVersionDialog(context);
       } else {
-        ///No new version -> Continue to App
+        ///No new version -> Get User -> Continue to App
         await getCurrentUser()
-            .then((value) => Future.delayed(Duration(seconds: 1), () {
+            .then((value) => {
                   if (value != null) {
                     Navigator.pushAndRemoveUntil(
                         context,
                         FadeRoute(page: HomePage()),
-                        ModalRoute.withName("/HomePage"));
+                        ModalRoute.withName("/HomePage"))
                   } else {
                     //Setup Databases
                     setupDatabases().then(
-                        (value) => Future.delayed(Duration(seconds: 1), () {
+                        (value) => Future.delayed(Duration(seconds: 3), () {
                               Navigator.pushAndRemoveUntil(
                                   context,
                                   FadeRoute(page: Login()),
                                   ModalRoute.withName("/Login"));
-                            }));
+                            }))
                   }
-                }))
-            .catchError((onError) =>
-            Future.delayed(Duration(seconds: 3), () {
-              print(onError);
-
-              Navigator.pushAndRemoveUntil(context,
+                })
+            .catchError((onError) => Future.delayed(Duration(seconds: 3), () {
+                  print(onError);
+                  Navigator.pushAndRemoveUntil(context,
                       FadeRoute(page: Login()), ModalRoute.withName("/Login"));
                 }));
       }
     } on FetchThrottledException catch (exception) {
       // Fetch throttled.
-      print(exception);
+      print('fetchTrotttledException' + exception.toString());
+
     } catch (exception) {
       print('Unable to fetch remote config. Cached or default values will be '
           'used');
     }
+  }
+
+  _enableInternet() async {
+    //A delay so the user gets feedback from turning on their Internet connection
+    Future.delayed(const Duration(milliseconds: 2000), () {
+      _versionCheck(context);
+    });
   }
 
   _showVersionDialog(context) async {
@@ -168,41 +199,37 @@ class _LoadingState extends State<Loading> {
     }
   }
 
-  Future getCurrentUser() async {
+  getCurrentUser() async {
     //Await SharedPreferences future object
     final SharedPreferences prefs = await _prefs;
 
     if (prefs.getBool("Account") == true) {
       //Get current user
-      print('trytogetaccount');
-      FirebaseUser _user = await FirebaseAuth.instance.currentUser();
-      print('trytogetaccount2' + _user.toString());
+      FirebaseUser _user = await _auth.onAuthStateChanged.first;
 
       if (_user != null) {
         //Get token
-        var token = await _user.getIdToken();
-        print('token' + token.token.toString());
+        return await _user.getIdToken().then((token) async => {
+              //Store Token in SharedPreferences
+              await prefs.setString("authToken", token.token),
+              await signBackendGoogle(token.token.toString())
+                  .then((statusCode) async {
+                    print(statusCode);
+                //Status codes: 409 Account Already exists, 200 Account successfully created
+                if (statusCode == 200 || statusCode == 409) {
+                  //Get user from DB
+                  User user = await RetrieveUser();
+                  //Set Global User
+                  globals.currentUser = user;
 
-        //Store Token in SharedPreferences
-        await prefs.setString("authToken", token.token);
+                  return 1;
 
-        //Sign in on backend
-        await signBackendGoogle(token.token.toString())
-            .then((statusCode) async {
-          //Status codes: 409 Account Already exists, 200 Account successfully created
-          if (statusCode == 200 || statusCode == 409) {
-            //Get user from DB
-            User user = await RetrieveUser();
-
-            //Set Global User
-            globals.currentUser = user;
-          } else {
-            print('failedtosignin');
-            //An error occurred running the above logic
-            throw Exception('Failed to get User');
-          }
-        });
-        return _user;
+                } else {
+                  //An error occurred running the above logic
+                  throw Exception('Failed to get User');
+                }
+              })
+            });
       } else {
         //No current user
         throw Exception('Failed to get User');
@@ -242,13 +269,16 @@ class _LoadingState extends State<Loading> {
                   color: Colors.white,
                   size: 128.0,
                 ),
-                SizedBox(height: 10),
-                Text(AppLocalizations.of(context).translate('title'),
-                    style: TextStyle(
-                        fontSize: 40,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold)),
-                SizedBox(height: SizeConfig.blockSizeVertical * 3),
+                SizedBox(height: SizeConfig.blockSizeVertical * 1),
+                Container(
+                    width: SizeConfig.blockSizeHorizontal * 60,
+                    height: SizeConfig.blockSizeHorizontal * 13,
+                    child: AutoSizeText(AppLocalizations.of(context).translate('title'),
+                        maxLines: 1,
+                        style: TextStyle(
+                            fontSize: 40,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold))),
                 SizedBox(height: SizeConfig.blockSizeVertical * 3),
                 FadingCircleLoading(
                   color: Colors.white,

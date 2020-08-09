@@ -13,7 +13,7 @@ Future<int> signBackendApple(String token) async {
 
   try {
     final response = await http.get(
-      'https://randonautica-v2.azure-api.net/auth/signInUser?platform=$platform',
+      'https://randonautica-v2.azure-api.net/user/signInUser?platform=$platform',
       //  'http://192.168.1.217:7071/api/signInUser?platform=$platform',
 
       headers: {
@@ -54,8 +54,8 @@ Future<int> signBackendGoogle(String token) async {
 
   try {
     final response = await http.get(
-      'https://randonautica-v2.azure-api.net/auth/signInUser?platform=$platform',
-    //  'http://192.168.1.217:7071/api/signInUser?platform=$platform',
+      'https://randonautica-v2.azure-api.net/user/signInUser?platform=$platform',
+     //'http://192.168.1.217:7071/api/signInUser?platform=$platform',
 
       headers: {
         'Content-Type': 'application/json',

@@ -12,7 +12,7 @@
 //import 'package:app/components/Randonaut/ButtonsRowMainPage.dart';
 //import 'package:app/components/Randonaut/OpenMapsButton.dart';
 //import 'package:app/components/Randonaut/RandonautMap.dart';
-//import 'package:app/components/Randonaut/StartOverButton.dart';
+//import 'package:app/components/Randonaut/FinishTripButton.dart';
 //import 'package:app/components/TopBar.dart';
 //import 'package:app/helpers/OpenGoogleMaps.dart';
 //

@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:app/api/syncTripReports.dart';
 import 'package:app/components/BottomBar.dart';
 import 'package:app/components/TopBar.dart';
 import 'package:app/helpers/SignInStreak.dart';
@@ -39,12 +38,11 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    SignInStreak(context);
+    //SignInStreak(context);
 
     super.initState();
+    updateToken();
 
-   // updateToken();
-   // timer = Timer.periodic(Duration(minutes: 56), (Timer t) => updateToken());
   }
 
   void selectedNavigationIndexCallback(int selectedNavigationIndex) {
@@ -65,8 +63,9 @@ class _HomePageState extends State<HomePage> {
     FirebaseUser _user = await FirebaseAuth.instance.currentUser();
 
     if (_user != null) {
+
       //Get token
-      var token = await _user.getIdToken();
+      var token = await _user.getIdToken(refresh: true);
 
       print(token.token);
       //Store Token in SharedPreferences

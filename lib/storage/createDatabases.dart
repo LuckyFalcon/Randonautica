@@ -394,3 +394,45 @@ void createUserDatabase() async {
   );
 
 }
+void createUserStatsDatabase() async {
+
+  String userStatsTable  = 'userstats';
+  String userStatsDB = 'userStats.db';
+
+  final String COL0 =   "anomalies";
+  final String COL1 =   "attractors";
+  final String COL2 =   "voids";
+  final String COL3 =   "chains";
+  final String COL4 =   "distance";
+  final String COL5 =   "loggedtrips"; //Image location
+  final String COL6 =   "maximumpower";
+  final String COL7 =   "sharewithfriends";
+  final String COL8 =   "maximumstreak";
+
+  String createAchievementsTable = "CREATE TABLE " + userStatsTable  + " (ID INTEGER PRIMARY KEY NOT NULL, " +
+      COL0 + " INTEGER, " +
+      COL1 + " INTEGER, " +
+      COL2 + " INTEGER, " +
+      COL3 + " INTEGER, " +
+      COL4 + " INTEGER, " +
+      COL5 + " INTEGER, " +
+      COL6 + " INTEGER, " +
+      COL7 + " INTEGER, " +
+      COL8 + " INTEGER)";
+
+  final Future<Database> database = openDatabase(
+    // Set the path to the database.
+    join(await getDatabasesPath(), userStatsDB),
+    // When the database is first created, create a table to store dogs.
+    onCreate: (db, version) {
+      // Run the CREATE TABLE statement on the database.
+      return db.execute(
+          createAchievementsTable
+      );
+    },
+    // Set the version. This executes the onCreate function and provides a
+    // path to perform database upgrades and downgrades.
+    version: 1,
+  );
+
+}

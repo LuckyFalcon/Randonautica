@@ -1,14 +1,11 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:io';
 
-import 'package:app/storage/userDatabase.dart';
-import 'package:app/models/User.dart';
 import 'package:http/http.dart' as http;
-import 'package:app/utils/currentUser.dart' as globals;
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<int> shareWithFriends() async {
+
   //Set SharedPreferences
   Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
@@ -20,7 +17,7 @@ Future<int> shareWithFriends() async {
 
   try {
     final response = await http.get(
-      'https://192.168.1.217:7071/api/shareWithFriends',
+      'https://192.168.1.217:7071/users/shareWithFriends',
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
@@ -30,10 +27,12 @@ Future<int> shareWithFriends() async {
 
     //Successfully got a success from sharing
     if (response.statusCode == 200) {
+
+      //Return response code
       return response.statusCode;
     } else {
       //Error from API call
-      throw Exception('Failed to share');
+      throw Exception('Failed to enable sharing');
     }
   } on TimeoutException catch (_) {
     // A timeout occurred.

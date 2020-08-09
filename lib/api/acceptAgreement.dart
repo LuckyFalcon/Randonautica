@@ -16,7 +16,7 @@ Future<int> acceptAgreement() async {
 
   try {
     final response = await http.get(
-      'https://randonautica-v2.azure-api.net/legal/agreement',
+      'https://randonautica-v2.azure-api.net/user/agreement',
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',

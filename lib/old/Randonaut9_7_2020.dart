@@ -13,7 +13,7 @@
 //import 'package:app/components/Randonaut/SetRandomness.dart';
 //import 'package:app/components/Randonaut/SetRadius.dart';
 //import 'package:app/components/Randonaut/SetWaterPoints.dart';
-//import 'package:app/components/Randonaut/StartOverButton.dart';
+//import 'package:app/components/Randonaut/FinishTripButton.dart';
 //import 'package:app/helpers/AppLocalizations.dart';
 //import 'package:app/helpers/FadeRoute.dart';
 //import 'package:app/helpers/OpenGoogleMaps.dart';

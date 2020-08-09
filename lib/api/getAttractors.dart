@@ -35,7 +35,6 @@ Future<Attractors> fetchAttractors(int radius, double x, double y, selectedPoint
       //Error from
       throw Exception('Failed to get Attractors');
     }
-
   } on TimeoutException catch (_) {
     // A timeout occurred.
     throw Exception('Failed to get Attractors');

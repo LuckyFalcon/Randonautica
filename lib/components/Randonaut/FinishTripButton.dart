@@ -6,16 +6,16 @@ import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
 import '../../helpers/AppLocalizations.dart';
 
-class StartOverButton extends StatefulWidget {
+class FinishTripButton extends StatefulWidget {
   Function callback;
   bool pressStartOverButton = false;
 
-  StartOverButton(this.callback, this.pressStartOverButton);
+  FinishTripButton(this.callback, this.pressStartOverButton);
 
-  State<StatefulWidget> createState() => new _StartOverButton();
+  State<StatefulWidget> createState() => new _FinishTripButton();
 }
 
-class _StartOverButton extends State<StartOverButton> {
+class _FinishTripButton extends State<FinishTripButton> {
   bool pressStartOverButton = false;
 
 
@@ -38,8 +38,8 @@ class _StartOverButton extends State<StartOverButton> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: SizeConfig.blockSizeVertical * 3.1,
-      width: SizeConfig.blockSizeHorizontal * 29,
+      height: SizeConfig.blockSizeVertical * 3.5,
+      width: SizeConfig.blockSizeHorizontal * 40,
       child: new ButtonTheme(
         height: SizeConfig.blockSizeVertical * 3.1,
         minWidth: SizeConfig.blockSizeHorizontal * 29,
@@ -62,8 +62,8 @@ class _StartOverButton extends State<StartOverButton> {
                   color:
                   Color(0xff6080E2))),
           child: AutoSizeText(
-              AppLocalizations.of(context).translate('start_over').toUpperCase(),
-              style: TextStyle(fontSize: 15)),
+              AppLocalizations.of(context).translate('finish_trip').toUpperCase(),
+              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
         ),
       ),
     );

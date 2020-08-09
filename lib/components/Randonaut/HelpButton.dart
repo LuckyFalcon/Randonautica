@@ -14,7 +14,6 @@ class HelpButton extends StatelessWidget {
     SizeConfig().init(context);
     return Column(
           children: <Widget>[
-        //    SizedBox(height: SizeConfig.blockSizeHorizontal * 13), ///Todo Sizeconfig responsive
             IconButton(
               icon: Icon(
                 Icons.help,
@@ -27,7 +26,6 @@ class HelpButton extends StatelessWidget {
                   this.callback();
               },
             ),
-          //  SizedBox(height: SizeConfig.blockSizeHorizontal * 5), ///Todo Sizeconfig responsive
           ],
         );
   }

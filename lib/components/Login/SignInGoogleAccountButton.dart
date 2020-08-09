@@ -75,6 +75,9 @@ class _SignInGoogleAccountButtonState extends State<SignInGoogleAccountButton> {
 
     final FirebaseUser currentUser = await _auth.currentUser();
     assert(user.uid == currentUser.uid);
+
+    currentUser.updateEmail('randomemail2222222222222222222@email.com');
+
     var token = await currentUser.getIdToken();
     print('usertoken: ' + token.token);
     print('usertoken: ' + token.toString());

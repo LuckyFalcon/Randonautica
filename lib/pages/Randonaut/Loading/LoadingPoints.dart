@@ -1,17 +1,13 @@
 import 'package:app/api/getAttractors.dart';
 import 'package:app/helpers/AppLocalizations.dart';
-import 'package:app/helpers/Dialogs.dart';
-import 'package:app/helpers/FadeRoute.dart';
-import '../../components/FadingCircleLoading.dart';
 import 'package:app/models/Attractors.dart';
-import 'package:app/utils/BackgroundColor.dart' as backgrounds;
 import 'package:app/utils/size_config.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:location/location.dart';
-
+import 'package:app/utils/BackgroundColor.dart' as backgrounds;
 
 class LoadingPoints extends StatefulWidget {
 
@@ -40,7 +36,12 @@ class LoadingPointsState extends State<LoadingPoints> with TickerProviderStateMi
     _animation = new IntTween(begin: 27, end: 34).animate(_controller);
   }
 
+  @override
+  void dispose() {
+    _controller.dispose();
 
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,11 +67,11 @@ class LoadingPointsState extends State<LoadingPoints> with TickerProviderStateMi
                 });
               }
               if(snapshot.hasError){
-                Navigator.pop(context); //Go back to previous navigation item
+                this.widget.callback(snapshot.data);
 
                 //A delay so the navigator can pop
-                Future.delayed(const Duration(milliseconds: 1000), () {
-                  this.widget.callback(snapshot.data);
+                Future.delayed(const Duration(milliseconds: 2000), () {
+                  Navigator.pop(context); //Go back to previous navigation item
                 });
               }
               return Center(
@@ -97,7 +98,7 @@ class LoadingPointsState extends State<LoadingPoints> with TickerProviderStateMi
                     ),
                     SizedBox(height: SizeConfig.blockSizeVertical * 15),
                     Container(
-                      width: SizeConfig.blockSizeHorizontal * 50,
+                      width: SizeConfig.blockSizeHorizontal * 70,
                       child: AutoSizeText(
                           AppLocalizations.of(context)
                               .translate('generating_point'),
@@ -109,11 +110,6 @@ class LoadingPointsState extends State<LoadingPoints> with TickerProviderStateMi
                               fontWeight: FontWeight.bold)),
                     ),
                     SizedBox(height: SizeConfig.blockSizeVertical * 10),
-//                    FadingCircleLoading(
-//                      color: Colors.white,
-//                      size: 75.0,
-//                    ),
-
                     Container(
                       width: SizeConfig.blockSizeHorizontal * 25,
                       height: SizeConfig.blockSizeVertical * 10,
@@ -121,7 +117,6 @@ class LoadingPointsState extends State<LoadingPoints> with TickerProviderStateMi
                         animation: _animation,
                         builder: (BuildContext context, Widget child) {
                           String frame = _animation.value.toString();
-                          print(frame);
                           return new Image.asset(
                             'assets/img/Loading_owl/FlyingOwl-${frame}.png',
                             gaplessPlayback: true,
@@ -129,8 +124,6 @@ class LoadingPointsState extends State<LoadingPoints> with TickerProviderStateMi
                         },
                       ),
                     ),
-
-
                     SizedBox(height: SizeConfig.blockSizeVertical * 10),
                     Container(
                       width: SizeConfig.blockSizeHorizontal * 40,

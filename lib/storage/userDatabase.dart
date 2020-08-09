@@ -104,23 +104,3 @@ Future<User> enableIsSharedWithFriends() async {
   return UserList[0];
 
 }
-
-
-// A method that retrieves all the dogs from the dogs table.
-void DeleteUnloggedTrip(int id) async {
-
-  String Table = 'unloggedTrips';
-
-  // Get a reference to the database.
-  final Database db = await openDatabase(
-      join(await getDatabasesPath(), 'unloggedTrips.db'));
-
-  // Delete row from database
-  String dbQuery = ('''
-          DELETE FROM $Table
-          WHERE ID = $id;
-          ''');
-
-  // Execute the query
-  return db.execute(dbQuery);
-}

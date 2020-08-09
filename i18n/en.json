@@ -46,7 +46,8 @@
   "see_route": "see route",
   "open_maps": "open maps",
   "share_location": "share location",
-  "start_over": "start over",
+  "save_point": "save point",
+  "finish_trip": "finish trip",
   "change_radius": "Change Radius",
   "change_radius_dialog_text": "We recommend keeping under 5 miles, but it's completely up to you.",
   "radius_initial_text": "Radius",
@@ -148,7 +149,13 @@
   "not_enough_tokens_description": "you do not have enough tokens",
   "not_enough_tokens_description_yes": "take me to the store",
   "not_enough_tokens_description_no": "go back",
+  "no_internet_connection_description": "please check your internet connection",
+  "no_internet_connection_try_again": "try again",
+  "login_failed_title": "login failed",
+  "login_failed_description": "please check your internet connection",
   "randonaut_streak": "randonaut streak",
   "continue_your_streak": "Continue your streak!",
-  "day": "day"
+  "day": "day",
+  "stamps": "stamps",
+  "achievement_1": "Generate 5 attractors"
 }

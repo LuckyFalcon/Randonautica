@@ -8,9 +8,7 @@ import 'package:app/components/Login/SignInAppleAccountButton.dart';
 import 'package:app/components/Login/SignInGoogleAccountButton.dart';
 import 'package:app/helpers/AppLocalizations.dart';
 import 'package:app/helpers/Dialogs.dart';
-import 'package:app/pages/Failed/FailedToLogin.dart';
 import 'package:app/utils/BackgroundColor.dart' as backgrounds;
-import 'package:app/utils/currentUser.dart' as user;
 import 'package:app/utils/size_config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -92,27 +90,17 @@ class _LoginState extends State<Login> {
                         prefs.setBool("Account", false),
 
                         //Failed Login Screen
-                        Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                            builder: (context) {
-                              return FailedToLogin();
-                            },
-                          ),
-                        )
-                      }
+                        loginFailedDailog(context, isSigningInCallback)
+
+                        }
                   })
               .catchError((onError) => {
                     //Account is not active
                     prefs.setBool("Account", false),
 
                     //Failed Login Screen
-                    Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(
-                        builder: (context) {
-                          return FailedToLogin();
-                        },
-                      ),
-                    )
+                    loginFailedDailog(context, isSigningInCallback)
+
                   });
         } else {
           //Account is active
@@ -147,13 +135,7 @@ class _LoginState extends State<Login> {
       prefs.setBool("Account", false);
 
       //Failed Login Screen
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (context) {
-            return FailedToLogin();
-          },
-        ),
-      );
+      loginFailedDailog(context, isSigningInCallback);
     }
   }
 

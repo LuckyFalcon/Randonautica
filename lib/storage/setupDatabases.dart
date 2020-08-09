@@ -11,6 +11,7 @@ Future<bool> setupDatabases() async {
   String feedDB = 'feed.db';
   String achievementsDB = 'achievements.db';
   String userDB = 'user.db';
+  String userStatsDB = 'userStats.db';
 
   bool unloggedTripsDBExists;
   bool loggedTripsDBExists;
@@ -18,6 +19,7 @@ Future<bool> setupDatabases() async {
   bool feedDBExists;
   bool achievementsDBExists;
   bool userDBExists;
+  bool userStatsDBExists;
 
   unloggedTripsDBExists = await databaseFactory.databaseExists(join(await getDatabasesPath(), loggedTripsDB));
   loggedTripsDBExists = await databaseFactory.databaseExists(join(await getDatabasesPath(), unloggedTripsDB));
@@ -25,6 +27,7 @@ Future<bool> setupDatabases() async {
   feedDBExists = await databaseFactory.databaseExists(join(await getDatabasesPath(), feedDB));
   achievementsDBExists = await databaseFactory.databaseExists(join(await getDatabasesPath(), achievementsDB));
   userDBExists = await databaseFactory.databaseExists(join(await getDatabasesPath(), userDB));
+  userStatsDBExists = await databaseFactory.databaseExists(join(await getDatabasesPath(), userStatsDB));
 
   if(unloggedTripsDBExists == false){
     await createUnloggedTripsDatabase();
@@ -43,6 +46,9 @@ Future<bool> setupDatabases() async {
   }
   if(userDBExists == false){
     await createUserDatabase();
+  }
+  if(userStatsDBExists == false){
+    await createUserStatsDatabase();
   }
 
   ///Needs some more work

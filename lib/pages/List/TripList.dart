@@ -94,6 +94,7 @@ class TripListState extends State<TripList> {
     return (unloggedTripsloaded && LoggedTripList
         ? (unloggedTrips.length > 0 || _LoggedTripList.length > 0
             ?
+   // NoTripsFound()
 
     Container(
                 height: SizeConfig.blockSizeVertical * 78, ///78 tied to Randonaut.dart

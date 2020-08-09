@@ -60,43 +60,6 @@ Future<int> verifyIAPConsumableGoogle(PurchasedItem productItem) async {
   );
   print(response);
   return response.statusCode;
-  //
-//  try {
-//    final response = await http.post(
-//      'http://192.168.1.217:7071/api/IAPurchases?platform=$platform',
-//      headers: {
-//        'Content-Type': 'application/json',
-//        'Accept': 'application/json',
-//        'Authorization': 'Bearer $token',
-//      },
-//      body: jsonEncode(<String, String>{
-//        'packageName': 'com.randonautica.app',
-//        'productId': productItem.productId.toString(),
-//        'purchaseToken': productItem.purchaseToken.toString(),
-//        'subscription': "false",
-//      }),
-//    ); //60 Second timeout
-//    print('productId'+ productItem.productId);
-//
-//    print('purchaseToken'+ productItem.purchaseToken);
-//    print('testresponse'+response.toString());
-//
-//
-//    if (response.statusCode == 200 || response.statusCode == 409) {
-//      print('test'+response.toString());
-////      User user = User.fromJson(json.decode(response.body));
-////      if (user != null) {
-////        await insertUser(user);
-////        user = await RetrieveUser();
-////        print('respect'+user.points.toString());
-////        globals.currentUser = user;
-////        print('respectresec'+globals.currentUser.points.toString());
-//        return response.statusCode;
-//     // }
-//    }
-//
-//  } catch(error) {
-//    print('error'+error);
-//  }
+
 
 }

@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:app/api/logMyTrip.dart';
+import 'package:app/api/logTrip.dart';
 import 'package:app/components/TopBar.dart';
 import 'package:app/components/Trips/SubmitReportButton.dart';
 import 'package:app/helpers/AppLocalizations.dart';
@@ -76,7 +76,7 @@ class UnloggedTripDetailsState extends State<UnloggedTripDetails> {
 
   callback(bool labButtonPress) async {
     await submiteReport();
-    await logMyTrip(unloggedTrip, _title.text, _text.text, base64Image)
+    await logTrip(unloggedTrip, _title.text, _text.text, base64Image)
         .then((value) => {
             DeleteUnloggedTrip(id),
             this.widget.callback(),

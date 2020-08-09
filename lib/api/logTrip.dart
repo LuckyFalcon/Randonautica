@@ -1,11 +1,10 @@
 import 'dart:convert';
-import 'dart:io';
 import 'package:app/models/Attractors.dart';
 import 'package:app/models/UnloggedTrip.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-Future<Attractors> logMyTrip(UnloggedTrip unloggedTrip, String title, String report, String base64image) async {
+Future<Attractors> logTrip(UnloggedTrip unloggedTrip, String title, String report, String base64image) async {
   //Set SharedPreferences
   Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 

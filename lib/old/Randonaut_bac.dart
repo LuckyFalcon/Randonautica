@@ -3,7 +3,7 @@
 //import 'package:app/api/getAttractors.dart';
 //import 'package:app/components/Randonaut/ButtonGoMainPage.dart';
 //import 'package:app/components/Randonaut/OpenMapsButton.dart';
-//import 'package:app/components/Randonaut/StartOverButton.dart';
+//import 'package:app/components/Randonaut/FinishTripButton.dart';
 //
 //import 'package:app/components/TopBar.dart';
 //import 'package:app/helpers/OpenGoogleMaps.dart';

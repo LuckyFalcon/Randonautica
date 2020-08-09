@@ -690,7 +690,7 @@ gpsDisabledDialog(BuildContext context, Function enableGPSCallback) {
                             SizedBox(height: SizeConfig.blockSizeVertical * 1),
                             Container(
                               height: SizeConfig.blockSizeVertical * 9.5,
-                              child: ImageIcon(AssetImage('assets/img/Owl.png'),
+                              child: ImageIcon(AssetImage('assets/img/Dialogs/GPSFailed.png'),
                                   color: Color(0xff6081E2), size: 96),
                             ),
                             SizedBox(height: SizeConfig.blockSizeVertical * 0.5),
@@ -808,15 +808,14 @@ notEnoughTokensDialog(BuildContext context) {
                           children: <Widget>[
                             SizedBox(height: SizeConfig.blockSizeVertical * 1),
                             Container(
-                              height: SizeConfig.blockSizeVertical * 9.5,
-                              child: ImageIcon(AssetImage('assets/img/Owl.png'),
+                              height: SizeConfig.blockSizeVertical * 12.5,
+                              child: ImageIcon(AssetImage('assets/img/Dialogs/TokensFailed.png'),
                                   color: Color(0xff6081E2), size: 96),
                             ),
                             SizedBox(height: SizeConfig.blockSizeVertical * 0.5),
-                            SizedBox(height: SizeConfig.blockSizeVertical * 1),
                             Container(
-                              height: SizeConfig.blockSizeVertical * 5,
-                              width: SizeConfig.blockSizeHorizontal * 55,
+                              height: SizeConfig.blockSizeVertical * 3,
+                              width: SizeConfig.blockSizeHorizontal * 80,
                               child: Material(
                                   color: Colors.white,
                                   child: AutoSizeText(
@@ -831,7 +830,7 @@ notEnoughTokensDialog(BuildContext context) {
                                           fontSize: 15,
                                           color: Color(0xff6081E2)))),
                             ),
-                            SizedBox(height: SizeConfig.blockSizeVertical * 2),
+                            SizedBox(height: SizeConfig.blockSizeVertical * 0.5),
                             DialogButton(dialogRetrievePointCallback, "not_enough_tokens_description_yes"),
                             SizedBox(height: SizeConfig.blockSizeVertical * 1.5),
                             DialogButton(dialogCancelCallback, "not_enough_tokens_description_no"),
@@ -1114,6 +1113,263 @@ randonauticaStreakDialog(BuildContext context, int currentSignedInStreak) {
                                 ),
                               ],
                             ),
+                            SizedBox(height: SizeConfig.blockSizeVertical * 1.5),
+                            DialogButton(dialogCancelCallback, "not_enough_tokens_description_no"),
+                          ],
+                        ),
+                      )),
+                ],
+              ),
+            ),
+          ),
+        );
+      });
+}
+
+noInternetConnectionDialog(BuildContext context, Function tryAgainCallback) {
+  dialogRetrievePointCallback() {
+    tryAgainCallback();
+    Navigator.pop(context);
+  }
+
+  showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return new BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+          child: Align(
+            alignment: Alignment.center,
+            child: Container(
+              height: SizeConfig.blockSizeVertical * 35,
+              width: SizeConfig.blockSizeHorizontal * 80,
+              child: Stack(
+                children: <Widget>[
+                  Container(
+                      height: SizeConfig.blockSizeVertical * 35,
+                      width: SizeConfig.blockSizeHorizontal * 80,
+                      ///This is 70% of the Vertical / Height for this container in this class
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(45.0)),
+                        boxShadow: [
+                          BoxShadow(
+                              blurRadius: 8,
+                              offset: Offset(0, 15),
+                              color: Colors.black.withOpacity(.6),
+                              spreadRadius: -9)
+                        ],
+                      ),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.all(Radius.circular(45.0)),
+                        ),
+                        child: Column(
+                          children: <Widget>[
+                            SizedBox(height: SizeConfig.blockSizeVertical * 1),
+                            Container(
+                              height: SizeConfig.blockSizeVertical * 9.5,
+                              child: ImageIcon(AssetImage('assets/img/Owl.png'),
+                                  color: Color(0xff6081E2), size: 96),
+                            ),
+                            SizedBox(height: SizeConfig.blockSizeVertical * 0.5),
+                            SizedBox(height: SizeConfig.blockSizeVertical * 1),
+                            Container(
+                              height: SizeConfig.blockSizeVertical * 5,
+                              width: SizeConfig.blockSizeHorizontal * 50,
+                              child: Material(
+                                  color: Colors.white,
+                                  child: Text(
+                                      AppLocalizations.of(context)
+                                          .translate(
+                                          'no_internet_connection_description')
+                                          .toUpperCase(),
+                                      maxLines: 2,
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15,
+                                          color: Color(0xff6081E2)))),
+                            ),
+                            SizedBox(height: SizeConfig.blockSizeVertical * 2),
+                            DialogButton(dialogRetrievePointCallback, "no_internet_connection_try_again"),
+                            SizedBox(height: SizeConfig.blockSizeVertical * 1.5),
+                          ],
+                        ),
+                      )),
+                ],
+              ),
+            ),
+          ),
+        );
+      });
+}
+
+loginFailedDailog(BuildContext context, Function isSigningInCallback) {
+  dialogTryAgain() {
+    isSigningInCallback(false);
+    Navigator.pop(context);
+  }
+
+  showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return new BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+          child: Align(
+            alignment: Alignment.center,
+            child: Container(
+              height: SizeConfig.blockSizeVertical * 35,
+              width: SizeConfig.blockSizeHorizontal * 80,
+              child: Stack(
+                children: <Widget>[
+                  Container(
+                      height: SizeConfig.blockSizeVertical * 35,
+                      width: SizeConfig.blockSizeHorizontal * 80,
+                      ///This is 70% of the Vertical / Height for this container in this class
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(45.0)),
+                        boxShadow: [
+                          BoxShadow(
+                              blurRadius: 8,
+                              offset: Offset(0, 15),
+                              color: Colors.black.withOpacity(.6),
+                              spreadRadius: -9)
+                        ],
+                      ),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.all(Radius.circular(45.0)),
+                        ),
+                        child: Column(
+                          children: <Widget>[
+                            SizedBox(height: SizeConfig.blockSizeVertical * 1),
+                            Container(
+                              height: SizeConfig.blockSizeVertical * 10.5,
+                              child: ImageIcon(AssetImage('assets/img/Dialogs/LoginFailed.png'),
+                                  color: Color(0xff6081E2), size: 96),
+                            ),
+                            SizedBox(height: SizeConfig.blockSizeVertical * 0.5),
+                            Container(
+                              height: SizeConfig.blockSizeVertical * 2,
+                              width: SizeConfig.blockSizeHorizontal * 50,
+                              child: Material(
+                                  color: Colors.white,
+                                  child: Text(
+                                      AppLocalizations.of(context)
+                                          .translate(
+                                          'login_failed_title')
+                                          .toUpperCase(),
+                                      maxLines: 2,
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15,
+                                          color: Color(0xff6081E2)))),
+                            ),
+                            SizedBox(height: SizeConfig.blockSizeVertical * 0.5),
+                            Container(
+                              height: SizeConfig.blockSizeVertical * 5,
+                              width: SizeConfig.blockSizeHorizontal * 50,
+                              child: Material(
+                                  color: Colors.white,
+                                  child: Text(
+                                      AppLocalizations.of(context)
+                                          .translate(
+                                          'login_failed_description')
+                                          .toUpperCase(),
+                                      maxLines: 2,
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15,
+                                          color: Color(0xff6081E2)))),
+                            ),
+                            SizedBox(height: SizeConfig.blockSizeVertical * 2),
+                            DialogButton(dialogTryAgain, "no_internet_connection_try_again"),
+                            SizedBox(height: SizeConfig.blockSizeVertical * 1.5),
+                          ],
+                        ),
+                      )),
+                ],
+              ),
+            ),
+          ),
+        );
+      });
+}
+
+pointReached(BuildContext context) {
+  dialogOkButtonCallback() {
+    Navigator.pop(context);
+  }
+
+  dialogCancelCallback() {
+    Navigator.pop(context);
+  }
+
+  showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return new BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+          child: Align(
+            alignment: Alignment.center,
+            child: Container(
+              height: SizeConfig.blockSizeVertical * 40,
+              width: SizeConfig.blockSizeHorizontal * 80,
+              child: Stack(
+                children: <Widget>[
+                  Container(
+                      height: SizeConfig.blockSizeVertical * 40,
+                      width: SizeConfig.blockSizeHorizontal * 80,
+                      ///This is 70% of the Vertical / Height for this container in this class
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(45.0)),
+                        boxShadow: [
+                          BoxShadow(
+                              blurRadius: 8,
+                              offset: Offset(0, 15),
+                              color: Colors.black.withOpacity(.6),
+                              spreadRadius: -9)
+                        ],
+                      ),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.all(Radius.circular(45.0)),
+                        ),
+                        child: Column(
+                          children: <Widget>[
+                            SizedBox(height: SizeConfig.blockSizeVertical * 1),
+                            Container(
+                              height: SizeConfig.blockSizeVertical * 12.5,
+                              child: ImageIcon(AssetImage('assets/img/Dialogs/TokensFailed.png'),
+                                  color: Color(0xff6081E2), size: 96),
+                            ),
+                            SizedBox(height: SizeConfig.blockSizeVertical * 0.5),
+                            Container(
+                              height: SizeConfig.blockSizeVertical * 3,
+                              width: SizeConfig.blockSizeHorizontal * 80,
+                              child: Material(
+                                  color: Colors.white,
+                                  child: AutoSizeText(
+                                      AppLocalizations.of(context)
+                                          .translate(
+                                          'not_enough_tokens_description')
+                                          .toUpperCase(),
+                                      maxLines: 2,
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15,
+                                          color: Color(0xff6081E2)))),
+                            ),
+                            SizedBox(height: SizeConfig.blockSizeVertical * 0.5),
+                            DialogButton(dialogOkButtonCallback, "not_enough_tokens_description_yes"),
                             SizedBox(height: SizeConfig.blockSizeVertical * 1.5),
                             DialogButton(dialogCancelCallback, "not_enough_tokens_description_no"),
                           ],

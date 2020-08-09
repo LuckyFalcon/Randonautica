@@ -74,8 +74,8 @@ class _SetWater extends State<SetWaterPoints> {
               SizedBox(height: SizeConfig.blockSizeVertical * 1),
               (waterPointsBought
                   ? Container(
-                      height: SizeConfig.blockSizeVertical * 7.5,
-                      width: SizeConfig.blockSizeHorizontal * 5,
+                      height: SizeConfig.blockSizeVertical * 4.5,
+                      width: SizeConfig.blockSizeHorizontal * 15,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[

@@ -7,13 +7,8 @@ import 'package:flutter/material.dart';
 
 import '../../helpers/AppLocalizations.dart';
 
-class EnterRandonauticaButton extends StatefulWidget {
-  EnterRandonauticaButton();
+class EnterRandonauticaButton extends StatelessWidget {
 
-  State<StatefulWidget> createState() => new _EnterRandonauticaButton();
-}
-
-class _EnterRandonauticaButton extends State<EnterRandonauticaButton> {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);

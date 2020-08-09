@@ -39,7 +39,7 @@ class OpenMapsButton extends StatelessWidget {
               side: BorderSide(color: Color(0xff6BE5FE))),
           child: AutoSizeText(
               AppLocalizations.of(context).translate('open_maps').toUpperCase(),
-              style: TextStyle(fontSize: 15)),
+              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
         ),
       ),
     );

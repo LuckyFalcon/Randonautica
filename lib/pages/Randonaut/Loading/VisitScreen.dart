@@ -2,6 +2,7 @@ import 'package:app/components/Introduction/EnterRandonauticaButton.dart';
 import 'package:app/helpers/AppLocalizations.dart';
 import 'package:app/utils/size_config.dart';
 import 'package:flutter/material.dart';
+import 'package:app/utils/BackgroundColor.dart' as backgrounds;
 
 class VisitScreen extends StatefulWidget {
   @override
@@ -32,12 +33,7 @@ class VisitScreenState extends State<VisitScreen> {
       extendBody: true,
       backgroundColor: Colors.yellow[200],
       body: Container(
-          decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomRight,
-                  stops: [0, 100],
-                  colors: [Color(0xff5A87E4), Color(0xff37CDDC)])),
+          decoration: backgrounds.normal,
           child: Center(
             child: Column(children: <Widget>[
               Column(mainAxisAlignment: MainAxisAlignment.start, children: [
