@@ -8,6 +8,7 @@ import 'package:app/components/Login/SignInAppleAccountButton.dart';
 import 'package:app/components/Login/SignInGoogleAccountButton.dart';
 import 'package:app/helpers/AppLocalizations.dart';
 import 'package:app/helpers/Dialogs.dart';
+import 'package:app/pages/Walkthrough.dart';
 import 'package:app/utils/BackgroundColor.dart' as backgrounds;
 import 'package:app/utils/size_config.dart';
 import 'package:flutter/cupertino.dart';
@@ -79,7 +80,7 @@ class _LoginState extends State<Login> {
                         Navigator.of(context).pushReplacement(
                           MaterialPageRoute(
                             builder: (context) {
-                              return HomePage();
+                              return Walkthrough();
                             },
                           ),
                         )

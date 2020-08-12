@@ -27,7 +27,6 @@ class WarningScreens extends StatefulWidget {
 }
 
 class _WarningScreensState extends State<WarningScreens> {
-
   int _currentPage = 0;
 
   final PageController _pageController = PageController(initialPage: 0);
@@ -62,27 +61,28 @@ class _WarningScreensState extends State<WarningScreens> {
   }
 
   _fetchAttractors() async {
-    await fetchAttractors(
-            this.widget.radius,
-            this.widget.currentLocation.latitude,
-            this.widget.currentLocation.longitude,
-            this.widget.selectedPoint,
-            this.widget.selectedRandomness,
-            this.widget.checkWater)
-        .then((value) => {
-              this.widget.callback(value),
-              //A delay so the navigator can pop
-              Future.delayed(const Duration(milliseconds: 2000), () {
-                Navigator.pop(context); //Go back to previous navigation item
-              })
-            })
-        .catchError((onError) => {
-              this.widget.callback(null),
-              //A delay so the navigator can pop
-              Future.delayed(const Duration(milliseconds: 2000), () {
-                Navigator.pop(context); //Go back to previous navigation item
-              })
-            });
+    try {
+      await fetchAttractors(
+              this.widget.radius,
+              this.widget.currentLocation.latitude,
+              this.widget.currentLocation.longitude,
+              this.widget.selectedPoint,
+              this.widget.selectedRandomness,
+              this.widget.checkWater)
+          .then((value) => {
+                this.widget.callback(value),
+                //A delay so the navigator can pop
+                Future.delayed(const Duration(milliseconds: 2000), () {
+                  Navigator.pop(context); //Go back to previous navigation item
+                })
+              });
+    } catch (error) {
+      this.widget.callback(null);
+      //A delay so the navigator can pop
+      Future.delayed(const Duration(milliseconds: 2000), () {
+        Navigator.pop(context); //Go back to previous navigation item
+      });
+    }
   }
 
   @override

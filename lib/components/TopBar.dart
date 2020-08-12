@@ -1,4 +1,5 @@
 import 'package:app/pages/Profile/Profile.dart';
+import 'package:app/pages/Randonaut/Trip/FinishTrip.dart';
 import 'package:app/pages/Shop/Shop.dart';
 import 'package:app/pages/Token/TokenInfo.dart';
 import 'package:app/utils/currentUser.dart' as globals;
@@ -46,7 +47,8 @@ class _TopBarState extends State<TopBar> {
                           onPressed: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => Profile()),
+                             // MaterialPageRoute(builder: (context) => Profile()),
+                              MaterialPageRoute(builder: (context) => FinishTrip())
                             );
                           },
                         ),

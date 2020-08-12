@@ -620,7 +620,13 @@ class RandonautState extends State<Randonaut> {
         break;
     }
 
-    if (hasAccess) {
+    //User doesn't have enough points to continue
+    if (!hasAccess) {
+      setBuyDialog(context);
+    }
+
+    //Check if the current location is not empty
+    if(currentLocation.latitude != null && currentLocation.longitude != null){
       //Choose randomly between loading screens
       int RandomNumber = new Random().nextInt(2);
       if (RandomNumber == 1) {
@@ -635,7 +641,6 @@ class RandonautState extends State<Randonaut> {
                     selectedRandomness,
                     checkWater)));
       } else {
-        print('pushwarning');
         Navigator.push(
             context,
             FadeRoute(
@@ -648,7 +653,8 @@ class RandonautState extends State<Randonaut> {
                     checkWater)));
       }
     } else {
-      setBuyDialog(context);
+      //Otherwise re-enable location
+      setInitialLocation();
     }
   }
 

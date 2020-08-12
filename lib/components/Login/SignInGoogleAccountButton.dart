@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:uuid/uuid.dart';
 
 import '../../helpers/AppLocalizations.dart';
 
@@ -76,7 +77,8 @@ class _SignInGoogleAccountButtonState extends State<SignInGoogleAccountButton> {
     final FirebaseUser currentUser = await _auth.currentUser();
     assert(user.uid == currentUser.uid);
 
-    currentUser.updateEmail('randomemail2222222222222222222@email.com');
+    //Update Firebase Email to a random uneidentifiable email address.
+    currentUser.updateEmail(Uuid().v4().toString() + '@email.com');
 
     var token = await currentUser.getIdToken();
     print('usertoken: ' + token.token);

@@ -73,6 +73,7 @@ dependencies:
   theme_provider: ^0.4.0+1
   tutorial_coach_mark: ^0.3.0
   auto_size_text: ^2.1.0
+  uuid: 2.2.0
 
 dev_dependencies:
   flutter_test:
@@ -143,7 +144,7 @@ flutter:
     - assets/img/Profile/Settings.png
     - assets/img/Profile/Down_Arrow.png
     - assets/img/Profile/Arrow_Line.png
-    -
+    - assets/img/Trip/Trip_1.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
