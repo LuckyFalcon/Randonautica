@@ -48,7 +48,6 @@ android {
     }
 
     defaultConfig {
-        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "com.randonautica.app"
         minSdkVersion 16
         targetSdkVersion 28
@@ -56,17 +55,15 @@ android {
         versionName flutterVersionName
     }
 
-    // TODO: remove this later
     signingConfigs {
         release {
-            keyAlias keystoreProperties['keyAlias']
-            keyPassword keystoreProperties['keyPassword']
-            storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
-            storePassword keystoreProperties['storePassword']
+            keyAlias System.getenv("BITRISEIO_ANDROID_KEYSTORE_ALIAS")
+            keyPassword System.getenv("BITRISEIO_ANDROID_KEYSTORE_PRIVATE_KEY_PASSWORD")
+            storeFile file(System.getenv("HOME") + "/keystores/my_keystore.jks")
+            storePassword System.getenv("BITRISEIO_ANDROID_KEYSTORE_PASSWORD")
         }
     }
 
-    // TODO: remove this later
     buildTypes {
         release {
             signingConfig signingConfigs.release
