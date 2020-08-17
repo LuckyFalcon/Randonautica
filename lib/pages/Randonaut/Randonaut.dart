@@ -344,10 +344,12 @@ class RandonautState extends State<Randonaut> {
                                 SizedBox(
                                     width: SizeConfig.blockSizeHorizontal * 2),
                                 (savingPoint
-                                    ? SizedBox(width: SizeConfig.blockSizeHorizontal * 29)
+                                    ? SaveLocationButton(
+                                    this.callbackSaveLocation,
+                                    savingPoint)
                                     : SaveLocationButton(
                                     this.callbackSaveLocation,
-                                    pressShareLocationButton)),
+                                    savingPoint)),
                                 SizedBox(
                                     width: SizeConfig.blockSizeHorizontal * 5),
                               ],
@@ -387,43 +389,10 @@ class RandonautState extends State<Randonaut> {
                           IconButton(
                             icon: new Image.asset('assets/img/Owl_Token.png'),
                             onPressed: () {
-                              showModalBottomSheet(
-                                  isScrollControlled: true,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: new BorderRadius.only(
-                                        topLeft: const Radius.circular(60.0),
-                                        topRight: const Radius.circular(60.0)),
-                                  ),
-                                  useRootNavigator: false,
-                                  context: context,
-                                  builder: (context) => Container(
-                                    height:
-                                    SizeConfig.blockSizeVertical * 90,
-                                    decoration: new BoxDecoration(
-                                        gradient: LinearGradient(
-                                            begin: Alignment.topCenter,
-                                            end: Alignment.bottomCenter,
-                                            stops: [
-                                              0,
-                                              5.0
-                                            ],
-                                            colors: [
-                                              Color(0xff383B46),
-                                              Color(0xff5786E1)
-                                            ]),
-                                        color:
-                                        Theme.of(context).primaryColor,
-                                        borderRadius: new BorderRadius.only(
-                                            topLeft:
-                                            const Radius.circular(60.0),
-                                            topRight: const Radius.circular(
-                                                60.0))),
-                                    child: Container(
-                                      height:
-                                      SizeConfig.blockSizeVertical * 90,
-                                      child: TokenInfo(),
-                                    ),
-                                  ));
+                              Navigator.push(
+                                  context,
+                                  FadeRoute(
+                                      page: TokenInfo()));
                             },
                           ),
                           Container(
@@ -523,62 +492,65 @@ class RandonautState extends State<Randonaut> {
   }
 
   void callbackSaveLocation(bool saveLocation) async {
-    setState(() {
-      savingPoint = true;
-    });
 
-    UnloggedTrip unloggedTrip;
-    await saveTrip(currentAttractors.gID.toString()).then((value) async => {
-      if (value == 200)
-        {
-          //Log trips
-          unloggedTrip = UnloggedTrip(
-            is_visited: 0,
-            is_logged: 0,
-            is_favorite: 0,
-            rng_type: selectedRandomness,
-            point_type: selectedPoint,
-            title: null,
-            report: 0.toString(),
-            what_3_words_address: null,
-            what_3_nearest_place: null,
-            what_3_words_country: null,
-            center: currentAttractors.gID.toString(),
-            latitude: currentAttractors.gID.toString(),
-            longitude: currentAttractors.gID.toString(),
-            location:
-            (geoLocatorlocation[0].administrativeArea.toString() != ''
-                ? geoLocatorlocation[0].administrativeArea
-                : geoLocatorlocation[0].country.toString()),
-            gid: currentAttractors.gID.toString(),
-            tid: currentAttractors.gID.toString(),
-            lid: currentAttractors.gID.toString(),
-            type: currentAttractors.gID.toString(),
-            x: currentAttractors.gID.toString(),
-            y: currentAttractors.gID.toString(),
-            distance: currentAttractors.gID.toString(),
-            initial_bearing: currentAttractors.gID.toString(),
-            final_bearing: currentAttractors.gID.toString(),
-            side: currentAttractors.gID.toString(),
-            distance_err: currentAttractors.gID.toString(),
-            radiusM: currentAttractors.gID.toString(),
-            number_points: currentAttractors.gID.toString(),
-            mean: currentAttractors.gID.toString(),
-            rarity: currentAttractors.gID.toString(),
-            power_old: currentAttractors.gID.toString(),
-            power: currentAttractors.gID.toString(),
-            z_score: currentAttractors.gID.toString(),
-            probability_single: currentAttractors.gID.toString(),
-            integral_score: currentAttractors.gID.toString(),
-            significance: currentAttractors.gID.toString(),
-            probability: currentAttractors.gID.toString(),
-            created: DateTime.now().toIso8601String(),
-          ),
+    if(savingPoint == false){
+      setState(() {
+        savingPoint = true;
+      });
+      UnloggedTrip unloggedTrip;
+      await saveTrip(currentAttractors.gID.toString()).then((value) async => {
+        if (value == 200)
+          {
+            //Log trips
+            unloggedTrip = UnloggedTrip(
+              is_visited: 0,
+              is_logged: 0,
+              is_favorite: 0,
+              rng_type: selectedRandomness,
+              point_type: selectedPoint,
+              title: null,
+              report: 0.toString(),
+              what_3_words_address: null,
+              what_3_nearest_place: null,
+              what_3_words_country: null,
+              center: currentAttractors.gID.toString(),
+              latitude: currentAttractors.gID.toString(),
+              longitude: currentAttractors.gID.toString(),
+              location:
+              (geoLocatorlocation[0].administrativeArea.toString() != ''
+                  ? geoLocatorlocation[0].administrativeArea
+                  : geoLocatorlocation[0].country.toString()),
+              gid: currentAttractors.gID.toString(),
+              tid: currentAttractors.gID.toString(),
+              lid: currentAttractors.gID.toString(),
+              type: currentAttractors.gID.toString(),
+              x: currentAttractors.gID.toString(),
+              y: currentAttractors.gID.toString(),
+              distance: currentAttractors.gID.toString(),
+              initial_bearing: currentAttractors.gID.toString(),
+              final_bearing: currentAttractors.gID.toString(),
+              side: currentAttractors.gID.toString(),
+              distance_err: currentAttractors.gID.toString(),
+              radiusM: currentAttractors.gID.toString(),
+              number_points: currentAttractors.gID.toString(),
+              mean: currentAttractors.gID.toString(),
+              rarity: currentAttractors.gID.toString(),
+              power_old: currentAttractors.gID.toString(),
+              power: currentAttractors.gID.toString(),
+              z_score: currentAttractors.gID.toString(),
+              probability_single: currentAttractors.gID.toString(),
+              integral_score: currentAttractors.gID.toString(),
+              significance: currentAttractors.gID.toString(),
+              probability: currentAttractors.gID.toString(),
+              created: DateTime.now().toIso8601String(),
+            ),
 
-          //Insert trip into db
-          await insertUnloggedTrip(unloggedTrip)
-        }
-    });
+            //Insert trip into db
+            await insertUnloggedTrip(unloggedTrip)
+          }
+      });
+    }
+
   }
 
   void pointsGeneratedCallback(bool pointsSuccesfullyGenerated) {
@@ -697,8 +669,6 @@ class RandonautState extends State<Randonaut> {
       this.pointsSucesfullyGenerated = true;
 
       currentAttractors = attractors;
-
-      updatePointStats(selectedPoint);
 
       //Store attractor coordinates
       attractorCoordinates = new LatLng(
@@ -1073,25 +1043,25 @@ class RandonautState extends State<Randonaut> {
 
   void showTutorial() {
     //findingPointFailedDialog(context);
-    gpsDisabledDialog(context, callbackSelectedPoint);
+    //gpsDisabledDialog(context, callbackSelectedPoint);
     //loginFailedDailog(context, enableGPS);
     //noInternetConnectionDialog(context, enableGPS);
     //  notEnoughTokensDialog(context);
 //    randonauticaStreakDialog(
 //        context, globals.currentUser.currentSignedInStreak);
     //signInStreak();
-//    TutorialCoachMark(context,
-//        targets: targets,
-//        colorShadow: Colors.blue,
-//        textSkip: "SKIP",
-//        paddingFocus: 10,
-//        opacityShadow: 0.8, finish: () {
-//      print("finish");
-//    }, clickTarget: (target) {
-//      print(target);
-//    }, clickSkip: () {
-//      print("skip");
-//    })
-//      ..show();
+    TutorialCoachMark(context,
+        targets: targets,
+        colorShadow: Colors.blue,
+        textSkip: "SKIP",
+        paddingFocus: 10,
+        opacityShadow: 0.8, finish: () {
+      print("finish");
+    }, clickTarget: (target) {
+      print(target);
+    }, clickSkip: () {
+      print("skip");
+    })
+      ..show();
   }
 }

@@ -160,5 +160,11 @@
   "continue_your_streak": "Continue your streak!",
   "day": "day",
   "stamps": "stamps",
-  "achievement_1": "Generate 5 attractors"
+  "achievement_1": "Generate 5 attractors",
+
+  "navigate_to_bot": "Randonautica Classic",
+  "privacy_enquiry": "Privacy Enquiry",
+  "bug_report": "Report a bug",
+  "privacy_policy": "Privacy Policy"
+
 }

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+//import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:theme_provider/theme_provider.dart';
 
 import 'helpers/AppLocalizations.dart';
@@ -23,6 +24,9 @@ class Randonautica extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ///Include this in main() so purchases are enabled
+ //   InAppPurchaseConnection.enablePendingPurchases();
+
     return ThemeProvider(
         themes: [
           AppTheme(

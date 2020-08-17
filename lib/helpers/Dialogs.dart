@@ -212,12 +212,12 @@ setBuyDialog(BuildContext context) {
           child: Align(
             alignment: Alignment.center,
             child: Container(
-              height: SizeConfig.blockSizeVertical * 40,
+              height: SizeConfig.blockSizeVertical * 50,
               width: SizeConfig.blockSizeHorizontal * 80,
               child: Stack(
                 children: <Widget>[
                   Container(
-                      height: SizeConfig.blockSizeVertical * 30,
+                      height: SizeConfig.blockSizeVertical * 33,
                       width: SizeConfig.blockSizeHorizontal * 80,
 
                       ///This is 70% of the Vertical / Height for this container in this class
@@ -258,7 +258,7 @@ setBuyDialog(BuildContext context) {
                             group: AutoSizeTextGroup,
                             style: TextStyle(
                                     fontSize: 13,
-                                    color: Colors.blue)))),
+                                    color: Colors.blue, fontWeight: FontWeight.bold)))),
                             SizedBox(height: SizeConfig.blockSizeVertical * 1),
                       Container(
                         height: SizeConfig.blockSizeVertical * 5,
@@ -273,7 +273,7 @@ setBuyDialog(BuildContext context) {
                                 maxLines: 3,
                                 group: AutoSizeTextGroup,
                                 style: TextStyle(
-                                    fontSize: 13,
+                                    fontSize: 15,
                                     color: Colors.blue)))),
                             SizedBox(height: SizeConfig.blockSizeVertical * 3),
                             Container(

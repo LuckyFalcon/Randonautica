@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:app/helpers/FadeRoute.dart';
 import 'package:app/pages/List/UnloggedTripDetails.dart';
+import 'package:app/pages/Randonaut/Trip/FinishTrip.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -73,7 +74,7 @@ class UnloggedListWidget extends StatelessWidget {
                     Navigator.push(
                       context,
                       FadeRoute(
-                          page: UnloggedTripDetails(
+                          page: FinishTrip(
                             this.callback,
                             this.id,
                             this.location,

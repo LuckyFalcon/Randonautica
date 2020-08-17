@@ -1,4 +1,5 @@
 import 'package:app/pages/Profile/Profile.dart';
+import 'package:app/pages/Profile/Settings.dart';
 import 'package:app/pages/Randonaut/Trip/FinishTrip.dart';
 import 'package:app/pages/Shop/Shop.dart';
 import 'package:app/pages/Token/TokenInfo.dart';
@@ -38,17 +39,16 @@ class _TopBarState extends State<TopBar> {
                         IconButton(
                           iconSize: 32,
                           icon:
-                          SvgPicture.asset(
-                            'assets/img/Profile.svg',
-                            height: 42,
-                            width: 42,
-                            color: Colors.white,
-                          ),
+                          ImageIcon(
+                              AssetImage(
+                                  'assets/img/Profile/Settings.png'),
+                              size: 30.0,
+                              color: Colors.white,),
                           onPressed: () {
                             Navigator.push(
                               context,
-                             // MaterialPageRoute(builder: (context) => Profile()),
-                              MaterialPageRoute(builder: (context) => FinishTrip())
+                              MaterialPageRoute(builder: (context) => Settings()),
+                           //   MaterialPageRoute(builder: (context) => FinishTrip())
                             );
                           },
                         ),
@@ -69,7 +69,9 @@ class _TopBarState extends State<TopBar> {
                   AssetImage('assets/img/Owl.png'),
                   color: Colors.white,
                 ),
-                onPressed: () {},
+                onPressed: () {
+
+                },
               ),
             ),
           ),

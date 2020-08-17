@@ -9,7 +9,7 @@ class SaveLocationButton extends StatelessWidget {
 
   SaveLocationButton(this.callback, this.pressSaveLocationButton);
 
-  void _togglePressShareLocationButton() {
+  void _togglePressSaveLocationButton() {
     if (pressSaveLocationButton) {
       pressSaveLocationButton = false;
     } else {
@@ -27,16 +27,16 @@ class SaveLocationButton extends StatelessWidget {
         minWidth: SizeConfig.blockSizeHorizontal * 29,
         child: RaisedButton(
           elevation: 0,
-          color: Color(0xff6BE5FE),
+          color: (pressSaveLocationButton ? Color(0xff6BD9FF) : Color(0xff6BE5FE)),
           onPressed: () {
             //Rebuild state with the selectedNavigationIndex that was tapped in bottom navbar
-            _togglePressShareLocationButton();
+            _togglePressSaveLocationButton();
             callback(pressSaveLocationButton); //Callback to Main
           },
           textColor: Colors.white,
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(30.0),
-              side: BorderSide(color: Color(0xff6BE5FE))),
+              side: BorderSide(color: (pressSaveLocationButton ? Color(0xff6BD9FF) : Color(0xff6BE5FE)))),
           child: AutoSizeText(
               AppLocalizations.of(context).translate('save_point').toUpperCase(),
               maxLines: 1,

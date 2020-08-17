@@ -78,6 +78,7 @@ class _SignInGoogleAccountButtonState extends State<SignInGoogleAccountButton> {
     assert(user.uid == currentUser.uid);
 
     //Update Firebase Email to a random uneidentifiable email address.
+    //Create a unique hash of the email address
     currentUser.updateEmail(Uuid().v4().toString() + '@email.com');
 
     var token = await currentUser.getIdToken();
