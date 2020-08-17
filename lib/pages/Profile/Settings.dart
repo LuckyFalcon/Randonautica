@@ -1,5 +1,4 @@
 import 'package:app/helpers/FadeRoute.dart';
-import 'package:app/pages/Bot/bot_webview.dart';
 import 'package:app/pages/Profile/Profile.dart';
 import 'package:flutter/material.dart';
 
