@@ -1,3 +1,4 @@
+import 'package:app/helpers/FadeRoute.dart';
 import 'package:app/pages/Profile/Profile.dart';
 import 'package:app/pages/Profile/Settings.dart';
 import 'package:app/pages/Randonaut/Trip/FinishTrip.dart';
@@ -45,11 +46,10 @@ class _TopBarState extends State<TopBar> {
                               size: 30.0,
                               color: Colors.white,),
                           onPressed: () {
+                            //open settings
                             Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => Settings()),
-                           //   MaterialPageRoute(builder: (context) => FinishTrip())
-                            );
+                                context,
+                                FadeRoute(page: Settings()));
                           },
                         ),
                       ],

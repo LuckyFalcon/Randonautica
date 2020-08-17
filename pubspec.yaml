@@ -74,9 +74,14 @@ dependencies:
   tutorial_coach_mark: ^0.3.0
   auto_size_text: ^2.1.0
   uuid: 2.2.0
+  flutter_email_sender: ^3.0.1
 
-  #Randonautica Classic
+  #For Randonautic classic -> Bot
+  webview_flutter: ^0.3.22+1
   in_app_purchase: ^0.3.4+1
+  toast: ^0.1.5
+  flutter_udid: ^1.0.1
+
 
 
 dev_dependencies:
@@ -149,6 +154,7 @@ flutter:
     - assets/img/Profile/Down_Arrow.png
     - assets/img/Profile/Arrow_Line.png
     - assets/img/Trip/Trip_1.jpg
+    - assets/img/Prices.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

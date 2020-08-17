@@ -39,8 +39,8 @@ class _WalkthroughState extends State<Walkthrough> {
 
   @override
   void dispose() {
-    super.dispose();
     _pageController.dispose();
+    super.dispose();
   }
 
   _onPageChanged(int index) {

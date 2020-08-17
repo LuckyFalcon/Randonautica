@@ -1,8 +1,10 @@
 import 'package:app/helpers/AppLocalizations.dart';
 import 'package:app/helpers/FadeRoute.dart';
-import 'package:app/pages/Profile/Profile.dart';
+import 'package:app/pages/Bot/bot_webview.dart';
+import 'package:app/utils/BackgroundColor.dart' as backgrounds;
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:in_app_purchase/in_app_purchase.dart';
 
 class Settings extends StatefulWidget {
   static final String path = "lib/src/pages/settings/settings1.dart";
@@ -26,13 +28,10 @@ class _SettingsState extends State<Settings> {
 
   @override
   Widget build(BuildContext context) {
-    return Theme(
-      isMaterialAppTheme: true,
-      data: ThemeData(
-        brightness: _getBrightness(),
-      ),
-      child: Scaffold(
+    return Scaffold(
         backgroundColor: _dark ? null : Colors.grey.shade200,
+        resizeToAvoidBottomPadding: false,
+        extendBody: true,
         appBar: AppBar(
           elevation: 0,
           brightness: _getBrightness(),
@@ -44,76 +43,82 @@ class _SettingsState extends State<Settings> {
           ),
           actions: <Widget>[],
         ),
-        body: Stack(
-          fit: StackFit.expand,
-          children: <Widget>[
-            SingleChildScrollView(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Card(
-                    elevation: 4.0,
-                    margin: const EdgeInsets.fromLTRB(10.0, 8.0, 10.0, 16.0),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0)),
-                    child: Column(
-                      children: <Widget>[
-                        ListTile(
-                          leading: Icon(
-                            Icons.lock_outline,
-                            color: Colors.purple,
-                          ),
-                          title: AutoSizeText(
-                            AppLocalizations.of(context)
-                                .translate('navigate_to_bot'),
+        body: Container(
+          decoration: backgrounds.normal,
+          child: Stack(
+            fit: StackFit.expand,
+            children: <Widget>[
+              SingleChildScrollView(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Card(
+                      elevation: 4.0,
+                      margin: const EdgeInsets.fromLTRB(10.0, 8.0, 10.0, 16.0),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0)),
+                      child: Column(
+                        children: <Widget>[
+                          ListTile(
+                            leading: Icon(
+                              Icons.lock_outline,
+                              color: Colors.purple,
+                            ),
+                            title: AutoSizeText(
+                              AppLocalizations.of(context)
+                                  .translate('navigate_to_bot'),
+                            ),
+                            trailing: Icon(Icons.keyboard_arrow_right),
+                            onTap: () {
+                              ///Include this in main() so purchases are enabled
+                              InAppPurchaseConnection.enablePendingPurchases();
 
+                              //open change password
+                              Navigator.pushAndRemoveUntil(
+                                  context,
+                                  FadeRoute(page: BotWebView()),
+                                  ModalRoute.withName('/'));
+                            },
                           ),
-                          trailing: Icon(Icons.keyboard_arrow_right),
-                          onTap: () {
+                          _buildDivider(),
+                          ListTile(
+                            leading: Icon(
+                              Icons.arrow_forward_ios,
+                              color: Colors.purple,
+                            ),
+                            title: AutoSizeText(
+                              AppLocalizations.of(context)
+                                  .translate('bug_report'),
+                            ),
+                            trailing: Icon(Icons.keyboard_arrow_right),
+                            onTap: () {
+                              //open change language
 
-                            //open change password
-                            Navigator.push(
-                                context,
-                        //        MaterialPageRoute(builder: (context) => BotWebView()));
-                                MaterialPageRoute(builder: (context) => Profile()));
-                          },
-                        ),
-                        _buildDivider(),
-                        ListTile(
-                          leading: Icon(
-                            Icons.arrow_forward_ios,
-                            color: Colors.purple,
-                          ),
-                          title: Text("Change Language"),
-                          trailing: Icon(Icons.keyboard_arrow_right),
-                          onTap: () {
-                            //open change language
 
-                          },
-                        ),
-                        _buildDivider(),
-                        ListTile(
-                          leading: Icon(
-                            Icons.location_on,
-                            color: Colors.purple,
+                            },
                           ),
-                          title: Text("Change Location"),
-                          trailing: Icon(Icons.keyboard_arrow_right),
-                          onTap: () {
-                            //open change location
-                          },
-                        ),
-                      ],
+                          _buildDivider(),
+                          ListTile(
+                            leading: Icon(
+                              Icons.location_on,
+                              color: Colors.purple,
+                            ),
+                            title: Text("Change Location"),
+                            trailing: Icon(Icons.keyboard_arrow_right),
+                            onTap: () {
+                              //open change location
+                            },
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
-        ),
-      ),
-    );
+            ],
+          ),
+        ));
   }
 
   Container _buildDivider() {

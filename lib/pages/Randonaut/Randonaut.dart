@@ -142,6 +142,10 @@ class RandonautState extends State<Randonaut> {
   /// Wrapper around the location API
   Location location;
 
+  ///Location listener
+  StreamSubscription<LocationData> locationSubscription;
+
+
   double pinPillPosition = -100;
 
   PinInformation currentlySelectedPin = PinInformation(
@@ -179,6 +183,13 @@ class RandonautState extends State<Randonaut> {
         .then((onValue) {
       pinLocationIcon = onValue;
     });
+  }
+
+  @override
+  void dispose() {
+    locationSubscription.cancel();
+
+    super.dispose();
   }
 
   @override
@@ -749,10 +760,9 @@ class RandonautState extends State<Randonaut> {
       currentLocation = await location.getLocation();
 
       //polylinePoints = PolylinePoints();
-
       // subscribe to changes in the user's location
       // by "listening" to the location's onLocationChanged event
-      location.onLocationChanged().listen((LocationData cLoc) {
+      locationSubscription = location.onLocationChanged().listen((LocationData cLoc) {
         // cLoc contains the lat and long of the
         // current user's position in real time,
         // so we're holding on to it
