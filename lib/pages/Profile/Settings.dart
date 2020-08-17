@@ -1,5 +1,7 @@
+import 'package:app/helpers/AppLocalizations.dart';
 import 'package:app/helpers/FadeRoute.dart';
 import 'package:app/pages/Profile/Profile.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
 class Settings extends StatefulWidget {
@@ -62,7 +64,11 @@ class _SettingsState extends State<Settings> {
                             Icons.lock_outline,
                             color: Colors.purple,
                           ),
-                          title: Text("Change Password"),
+                          title: AutoSizeText(
+                            AppLocalizations.of(context)
+                                .translate('navigate_to_bot'),
+
+                          ),
                           trailing: Icon(Icons.keyboard_arrow_right),
                           onTap: () {
 
@@ -83,6 +89,7 @@ class _SettingsState extends State<Settings> {
                           trailing: Icon(Icons.keyboard_arrow_right),
                           onTap: () {
                             //open change language
+
                           },
                         ),
                         _buildDivider(),
