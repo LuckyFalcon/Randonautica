@@ -1,6 +1,4 @@
 import 'package:app/utils/size_config.dart';
-import 'package:audioplayers/audio_cache.dart';
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -17,15 +15,12 @@ class ButtonGoMainPage extends StatefulWidget {
 
 class _ButtonGoMainPage extends State<ButtonGoMainPage> {
   bool pressGoButton = false;
-  AudioCache _audioCache;
 
   @override
   void initState() {
     super.initState();
-
-    ///Todo do some audio stuff or something
-    _audioCache = AudioCache(prefix: "audio/", fixedPlayer: AudioPlayer()..setReleaseMode(ReleaseMode.STOP));
   }
+
   void _toggleGoPressButton() {
     setState(() {
       if (pressGoButton) {

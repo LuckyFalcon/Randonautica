@@ -2,7 +2,6 @@ import 'package:app/utils/size_config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_shine/flutter_shine.dart';
 
 class BottomBar extends StatefulWidget {
   Function callback;
