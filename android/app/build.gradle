@@ -53,12 +53,6 @@ android {
         targetSdkVersion 28
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
-    }
-
-    signingConfigs {
-    }
-
-    buildTypes {
         multiDexEnabled true
     }
 
@@ -79,7 +73,6 @@ dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava'
-
     implementation 'com.android.support:multidex:1.0.1'
 }
 
