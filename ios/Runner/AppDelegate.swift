@@ -10,7 +10,7 @@ import GoogleMaps
   ) -> Bool {
     
     // For google_maps_flutter
-    GMSServices.provideAPIKey("AIzaSyAOnd_RLDnvFHjA9PXdYjMSNvE8ALp7ly0")
+    GMSServices.provideAPIKey("AIzaSyCjthUQUWhEsIF6ZS86MPaTPfFlqBOccxI")
 
     GeneratedPluginRegistrant.register(with: self)
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
