@@ -162,9 +162,16 @@
   "stamps": "stamps",
   "achievement_1": "Generate 5 attractors",
 
+
+
+
   "navigate_to_bot": "Randonautica Classic",
   "privacy_enquiry": "Privacy Enquiry",
   "bug_report": "Report a bug",
-  "privacy_policy": "Privacy Policy"
+  "privacy_policy": "Privacy Policy",
+  "privacy_enquiry": "Privacy enquiry",
+  "report_bug": "Bug Report",
+  "type_privacy_request": "Type your privacy request here",
+  "type_bug_report": "Type your bug report here"
 
 }

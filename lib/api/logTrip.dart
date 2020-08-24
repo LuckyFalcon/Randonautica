@@ -4,7 +4,7 @@ import 'package:app/models/UnloggedTrip.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-Future<Attractors> logTrip(UnloggedTrip unloggedTrip, String title, String report, String base64image) async {
+Future<int> logTrip(UnloggedTrip unloggedTrip, String title, String report, String base64image) async {
   //Set SharedPreferences
   Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
@@ -34,7 +34,7 @@ Future<Attractors> logTrip(UnloggedTrip unloggedTrip, String title, String repor
   );
 
   if (response.statusCode == 200) {
-    return Attractors.fromJson(json.decode(response.body));
+    return 200;
   } else {
     throw Exception('Failed to load album');
   }

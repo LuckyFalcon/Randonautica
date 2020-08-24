@@ -2,12 +2,11 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:app/api/verifyIAP.dart';
-import 'package:app/components/Shop/GoPremiumButton.dart';
-import 'package:app/components/Shop/UnlockPremiumButton.dart';
+import 'package:app/components/FadingCircleLoading.dart';
 import 'package:app/helpers/AppLocalizations.dart';
-import '../../components/FadingCircleLoading.dart';
 import 'package:app/storage/userDatabase.dart';
-import 'package:app/utils/currentUser.dart' as currentUser;
+import 'package:app/utils/BackgroundColor.dart' as backgrounds;
+import 'package:app/utils/currentUser.dart' as user;
 import 'package:app/utils/currentUser.dart' as globals;
 import 'package:app/utils/size_config.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -134,9 +133,10 @@ class ShopState extends State<Shop> {
         //FlutterInappPurchase.instance.consumePurchaseAndroid(productItem.purchaseToken);
         //print('Acknowledged:' + productItem.originalJsonAndroid);
         print('Acknowledged:' + productItem.isAcknowledgedAndroid.toString());
-        FlutterInappPurchase.instance.acknowledgePurchaseAndroid(productItem.purchaseToken, developerPayload: "");
+        FlutterInappPurchase.instance.acknowledgePurchaseAndroid(
+            productItem.purchaseToken,
+            developerPayload: "");
         print('Acknowledged:' + productItem.isAcknowledgedAndroid.toString());
-
       }
     });
 
@@ -234,600 +234,418 @@ class ShopState extends State<Shop> {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    return (shoploaded
-        ? premiumShop
-            ? Container(
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                    Center(
-                        child: Column(
-                      children: <Widget>[
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 15, left: 60),
-                                child: Align(
-                                  alignment: Alignment.topLeft,
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 20.0),
-                                child: Align(
-                                  alignment: Alignment.center,
+    return shoploaded ? Scaffold(
+      resizeToAvoidBottomPadding: false,
+      extendBodyBehindAppBar: true,
+      extendBody: true,
+      body: Container(
+        height: SizeConfig.blockSizeVertical * 100,
+        width: SizeConfig.blockSizeHorizontal * 100,
+        decoration: backgrounds.normal,
+        child: Align(
+          alignment: Alignment.center,
+          child: Container(
+            height: SizeConfig.blockSizeVertical * 60,
+            width: SizeConfig.blockSizeHorizontal * 80,
+            child: Stack(
+              children: <Widget>[
+                Container(
+                    height: SizeConfig.blockSizeVertical * 90,
+                    width: SizeConfig.blockSizeHorizontal * 80,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(45.0)),
+                      boxShadow: [
+                        BoxShadow(
+                            blurRadius: 8,
+                            offset: Offset(0, 15),
+                            color: Colors.black.withOpacity(.6),
+                            spreadRadius: -9)
+                      ],
+                    ),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(45.0)),
+                      ),
+                      child: Column(
+                        children: <Widget>[
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SizedBox(
+                                    width: SizeConfig.blockSizeHorizontal * 20),
+                                Container(
+                                  width: SizeConfig.blockSizeHorizontal * 33.3,
                                   child: IconButton(
                                     iconSize: 64,
                                     icon: Icon(
                                       Icons.keyboard_arrow_down,
-                                      color: Colors.white,
+                                      color: Color(0xff5988E3),
                                       size: 64.0,
-                                      semanticLabel:
-                                          'Text to announce in accessibility modes',
                                     ),
                                     onPressed: () {
                                       Navigator.pop(context);
                                     },
                                   ),
                                 ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 80),
-                                child: Align(
-                                  alignment: Alignment.topCenter,
-                                ),
-                              ),
-                            ]),
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 15, left: 15),
-                                child: IconButton(
+                                IconButton(
                                   iconSize: 64,
-                                  icon: Icon(
-                                    Icons.keyboard_arrow_left,
-                                    color: Colors.white,
-                                    size: 64.0,
-                                    semanticLabel:
-                                        'Text to announce in accessibility modes',
-                                  ),
-                                  onPressed: () {
-                                    goPremiumButton(false);
-                                  },
+                                  icon: ImageIcon(
+                                      AssetImage('assets/img/Home.png'),
+                                      size: 64.0,
+                                      color: Color(0xff5988E3)),
+                                  onPressed: () {},
                                 ),
+                              ]),
+                          Row(
+                            children: <Widget>[
+                              SizedBox(
+                                  width: SizeConfig.blockSizeHorizontal * 15),
+                              Container(
+                                height: SizeConfig.blockSizeVertical * 10,
+                                child:  Container(
+                                    child: Image.asset(
+                                        'assets/img/Owl_Token.png',
+                                        color: Color(0xff5988E3),
+                                        height: 128,
+                                        width: 128))
                               ),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 60),
-                                child: Align(
-                                    alignment: Alignment.center,
-                                    child:
-                                        Image.asset('assets/img/Owlking.png')),
-                              ),
-                            ]),
-                        SizedBox(height: 10),
-                        Text(
-                            AppLocalizations.of(context)
-                                .translate('premium')
-                                .toUpperCase(),
-                            style: TextStyle(
-                              fontSize: 33,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            )),
-                        SizedBox(height: 10),
-                        Text(
-                            AppLocalizations.of(context)
-                                .translate('membership')
-                                .toUpperCase(),
-                            style: TextStyle(
-                              fontSize: 33,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            )),
-                        SizedBox(height: 10),
-                        Text('4.99/ month',
-                            style: TextStyle(
-                              fontSize: 23,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            )),
-                        SizedBox(height: 5),
-                        Text('49.99/ year',
-                            style: TextStyle(
-                              fontSize: 23,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            )),
-                      ],
+                              Container(
+                                  height: SizeConfig.blockSizeVertical * 6,
+                                  child: AutoSizeText(
+                                      user.currentUser.points.toString(),
+                                      maxLines: 1,
+                                      style: TextStyle(
+                                          fontSize: 64,
+                                          color: Color(0xff37CDDC),
+                                          fontWeight: FontWeight.bold))),
+                            ],
+                          ),
+                          SizedBox(height: SizeConfig.blockSizeVertical * 2),
+                          Container(
+                              height: SizeConfig.blockSizeVertical * 5,
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Padding(
+                                      padding: const EdgeInsets.only(
+                                          top: 0.0, left: 30),
+                                      child: Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: <Widget>[
+                                          AutoSizeText(
+                                              _productListTokenAmount[1],
+                                              group: AutoSizeTextGroupItems,
+                                              style: TextStyle(
+                                                  fontSize: 23,
+                                                  color: Color(0xff37CDDC))),
+                                          Image.asset(
+                                              'assets/img/Owl_Token.png',
+                                              color: Color(0xff37CDDC),
+                                              height: 32,
+                                              width: 32),
+                                        ],
+                                      )),
+                                  Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Row(
+                                      children: <Widget>[
+                                        AutoSizeText(
+                                            _items[sixtyOwlTokenIndex]
+                                                .localizedPrice
+                                                .toString(),
+                                            group: AutoSizeTextGroupItems,
+                                            style: TextStyle(
+                                                fontSize: 21,
+                                                color: Color(0xff37CDDC))),
+                                        IconButton(
+                                          icon: ImageIcon(
+                                              AssetImage(
+                                                  'assets/img/double_arrow.png'),
+                                              size: 40.0,
+                                              color: Color(0xff37CDDC)),
+                                          onPressed: () {},
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              )),
+                          Container(
+                              height: SizeConfig.blockSizeVertical * 5,
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment:
+                                MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Padding(
+                                      padding: const EdgeInsets.only(
+                                          top: 0.0, left: 30),
+                                      child: Row(
+                                        crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.start,
+                                        children: <Widget>[
+                                          AutoSizeText(
+                                              _productListTokenAmount[1],
+                                              group: AutoSizeTextGroupItems,
+                                              style: TextStyle(
+                                                  fontSize: 23,
+                                                  color: Color(0xff37CDDC))),
+                                          Image.asset(
+                                              'assets/img/Owl_Token.png',
+                                              color: Color(0xff37CDDC),
+                                              height: 32,
+                                              width: 32),
+                                        ],
+                                      )),
+                                  Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Row(
+                                      children: <Widget>[
+                                        AutoSizeText(
+                                            _items[sixtyOwlTokenIndex]
+                                                .localizedPrice
+                                                .toString(),
+                                            group: AutoSizeTextGroupItems,
+                                            style: TextStyle(
+                                                fontSize: 21,
+                                                color: Color(0xff37CDDC))),
+                                        IconButton(
+                                          icon: ImageIcon(
+                                              AssetImage(
+                                                  'assets/img/double_arrow.png'),
+                                              size: 40.0,
+                                              color: Color(0xff37CDDC)),
+                                          onPressed: () {},
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              )),
+                          Container(
+                              height: SizeConfig.blockSizeVertical * 5,
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment:
+                                MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Padding(
+                                      padding: const EdgeInsets.only(
+                                          top: 0.0, left: 30),
+                                      child: Row(
+                                        crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.start,
+                                        children: <Widget>[
+                                          AutoSizeText(
+                                              _productListTokenAmount[1],
+                                              group: AutoSizeTextGroupItems,
+                                              style: TextStyle(
+                                                  fontSize: 23,
+                                                  color: Color(0xff37CDDC))),
+                                          Image.asset(
+                                              'assets/img/Owl_Token.png',
+                                              color: Color(0xff37CDDC),
+                                              height: 32,
+                                              width: 32),
+                                        ],
+                                      )),
+                                  Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Row(
+                                      children: <Widget>[
+                                        AutoSizeText(
+                                            _items[sixtyOwlTokenIndex]
+                                                .localizedPrice
+                                                .toString(),
+                                            group: AutoSizeTextGroupItems,
+                                            style: TextStyle(
+                                                fontSize: 21,
+                                                color: Color(0xff37CDDC))),
+                                        IconButton(
+                                          icon: ImageIcon(
+                                              AssetImage(
+                                                  'assets/img/double_arrow.png'),
+                                              size: 40.0,
+                                              color: Color(0xff37CDDC)),
+                                          onPressed: () {},
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              )),
+                          Container(
+                              height: SizeConfig.blockSizeVertical * 5,
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment:
+                                MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Padding(
+                                      padding: const EdgeInsets.only(
+                                          top: 0.0, left: 30),
+                                      child: Row(
+                                        crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.start,
+                                        children: <Widget>[
+                                          AutoSizeText(
+                                              _productListTokenAmount[1],
+                                              group: AutoSizeTextGroupItems,
+                                              style: TextStyle(
+                                                  fontSize: 23,
+                                                  color: Color(0xff37CDDC))),
+                                          Image.asset(
+                                              'assets/img/Owl_Token.png',
+                                              color: Color(0xff37CDDC),
+                                              height: 32,
+                                              width: 32),
+                                        ],
+                                      )),
+                                  Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Row(
+                                      children: <Widget>[
+                                        AutoSizeText(
+                                            _items[sixtyOwlTokenIndex]
+                                                .localizedPrice
+                                                .toString(),
+                                            group: AutoSizeTextGroupItems,
+                                            style: TextStyle(
+                                                fontSize: 21,
+                                                color: Color(0xff37CDDC))),
+                                        IconButton(
+                                          icon: ImageIcon(
+                                              AssetImage(
+                                                  'assets/img/double_arrow.png'),
+                                              size: 40.0,
+                                              color: Color(0xff37CDDC)),
+                                          onPressed: () {},
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              )),
+                          SizedBox(height: SizeConfig.blockSizeVertical * 2),
+                          Container(
+                              height: SizeConfig.blockSizeVertical * 5,
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Padding(
+                                      padding: const EdgeInsets.only(
+                                          top: 0.0, left: 30),
+                                      child: Row(
+                                        children: <Widget>[
+                                          AutoSizeText(
+                                              AppLocalizations.of(context)
+                                                  .translate('extend_radius'),
+                                              group: AutoSizeTextGroupItems,
+                                              style: TextStyle(
+                                                fontSize: 23,
+                                                color: Color(0xff37CDDC),
+                                              )),
+                                        ],
+                                      )),
+                                  Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Row(
+                                      children: <Widget>[
+                                        AutoSizeText(
+                                            _items[sixtyOwlTokenIndex]
+                                                .localizedPrice
+                                                .toString(),
+                                            group: AutoSizeTextGroupItems,
+                                            style: TextStyle(
+                                                fontSize: 21,
+                                                color: Color(0xff37CDDC))),
+                                        IconButton(
+                                          icon: ImageIcon(
+                                              AssetImage(
+                                                  'assets/img/double_arrow.png'),
+                                              size: 40.0,
+                                              color: Color(0xff37CDDC)),
+                                          onPressed: () {},
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              )),
+                          Container(
+                              height: SizeConfig.blockSizeVertical * 5,
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment:
+                                MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Padding(
+                                      padding: const EdgeInsets.only(
+                                          top: 0.0, left: 30),
+                                      child: Row(
+                                        children: <Widget>[
+                                          AutoSizeText(
+                                              AppLocalizations.of(context)
+                                                  .translate('extend_radius'),
+                                              group: AutoSizeTextGroupItems,
+                                              style: TextStyle(
+                                                fontSize: 23,
+                                                color: Color(0xff37CDDC),
+                                              )),
+                                        ],
+                                      )),
+                                  Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Row(
+                                      children: <Widget>[
+                                        AutoSizeText(
+                                            _items[sixtyOwlTokenIndex]
+                                                .localizedPrice
+                                                .toString(),
+                                            group: AutoSizeTextGroupItems,
+                                            style: TextStyle(
+                                                fontSize: 21,
+                                                color: Color(0xff37CDDC))),
+                                        IconButton(
+                                          icon: ImageIcon(
+                                              AssetImage(
+                                                  'assets/img/double_arrow.png'),
+                                              size: 40.0,
+                                              color: Color(0xff37CDDC)),
+                                          onPressed: () {},
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              )),
+                        ],
+                      ),
                     )),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 15, left: 30),
-                      child: Text(
-                          AppLocalizations.of(context)
-                              .translate('set_your_radius'),
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                              fontSize: 18,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold)),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 15, left: 30),
-                      child: Text(
-                          AppLocalizations.of(context)
-                              .translate('get_800_points_per_month'),
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                              fontSize: 18,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold)),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 15, left: 30),
-                      child: Text(
-                          AppLocalizations.of(context)
-                              .translate('access_quantum_power'),
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                              fontSize: 18,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold)),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 15, left: 30),
-                      child: Text(
-                          AppLocalizations.of(context)
-                              .translate('labs_coming_soon'),
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                              fontSize: 18,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold)),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 15, left: 30),
-                      child: Text(
-                          AppLocalizations.of(context)
-                              .translate('access_quantum_power'),
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                              fontSize: 18,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold)),
-                    ),
-                    SizedBox(height: 50),
-                    Align(
-                        alignment: Alignment.center,
-                        child:
-                            UnlockPremiumButton(this.goPremiumButton)),
-                  ]))
-            : Center(
-                child: Column(
-                children: <Widget>[
-                  Container(
-                    height: SizeConfig.blockSizeVertical * 10,
-                    child: Row(children: [
-                      Container(width: SizeConfig.blockSizeHorizontal * 33.3),
-                      Container(
-                        width: SizeConfig.blockSizeHorizontal * 33.3,
-                        child: IconButton(
-                          iconSize: 64,
-                          icon: Icon(
-                            Icons.keyboard_arrow_down,
-                            color: Colors.white,
-                            size: 64.0,
-                          ),
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                        ),
-                      ),
-                      Container(width: SizeConfig.blockSizeHorizontal * 10.3),
-                      IconButton(
-                        iconSize: 64,
-                        icon: ImageIcon(AssetImage('assets/img/Shop.png'),
-                            size: 64.0, color: Colors.white),
-                        onPressed: () {
-                          //                openAlertBox(context);
-                          //   goToShop(true);
-                        },
-                      ),
-                    ]),
-                  ), ///Arrow & Shop icon
-                  Container(
-                    height: SizeConfig.blockSizeVertical * 10,
-                    child: Row(children: [
-                      Container(width: SizeConfig.blockSizeHorizontal * 33.3),
-                      Container(
-                          width: SizeConfig.blockSizeHorizontal * 33.3,
-                          child: Image.asset('assets/img/Owl_Token.png')),
-                    ]),
-                  ), ///OWL Token Icon
-                  Container(
-                    height: SizeConfig.blockSizeVertical * 5,
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        AutoSizeText(
-                            AppLocalizations.of(context)
-                                .translate('owl_tokens')
-                                .toUpperCase(),
-                            group: AutoSizeTextGroupTop,
-                            maxLines: 1,
-                            style: TextStyle(
-                              fontSize: 23,
-                              color: Colors.white,
-                            )),
-                        SizedBox(width: 10),
-                        AutoSizeText(currentUser.currentUser.points.toString(),
-                            group: AutoSizeTextGroupTop,
-                            maxLines: 1,
-                            style: TextStyle(
-                              fontSize: 23,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            )),
-                      ],
-                    ),
-                  ), ///Amount of Owl Tokens
-                  Container(
-                      height: SizeConfig.blockSizeVertical * 5,
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          AutoSizeText(
-                              AppLocalizations.of(context)
-                                  .translate('daily_allowence')
-                                  .toUpperCase(),
-                              group: AutoSizeTextGroupTop,
-                              maxLines: 1,
-                              style:
-                                  TextStyle(fontSize: 23, color: Colors.white)),
-                          SizedBox(width: 10),
-                          AutoSizeText('20',
-                              group: AutoSizeTextGroupTop,
-                              maxLines: 1,
-                              style:
-                                  TextStyle(fontSize: 20, color: Colors.white)),
-                        ],
-                      )), ///Daily Allowence
-                  SizedBox(height: 15),
-                  Container(
-                    height: SizeConfig.blockSizeVertical * 5,
-                    child: AutoSizeText(
-                        AppLocalizations.of(context).translate('store'),
-                        maxLines: 1,
-                        style: TextStyle(
-                            fontSize: 33,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white)),
-                  ), ///Store text
-                  SizedBox(height: 15),
-                  Container(
-                      height: SizeConfig.blockSizeVertical * 5,
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 0.0, left: 30),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: <Widget>[
-                                  AutoSizeText(_productListTokenAmount[0],
-                                      group: AutoSizeTextGroupItems,
-                                      style: TextStyle(
-                                          fontSize: 23,
-                                          color: Colors.green)),
-                                  Image.asset(
-                                    'assets/img/Owl_Token.png',
-                                    width: 40,
-                                  ),
-                                  IconButton(
-                                    icon: ImageIcon(
-                                        AssetImage(
-                                            'assets/img/double_arrow.png'),
-                                        size: 64.0,
-                                        color: Colors.white),
-                                    onPressed: () {
-                                      purchase(sixtyOwlTokenIndex);
-                                    },
-                                  ),
-                                ],
-                              )),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 0.0, right: 50),
-                            child: Align(
-                              alignment: Alignment.centerLeft,
-                              child: AutoSizeText(
-                                  _items[sixtyOwlTokenIndex]
-                                          .localizedPrice
-                                      .toString(),
-
-                                  group: AutoSizeTextGroupItems,
-                                  style: TextStyle(
-                                      fontSize: 23,
-                                      color: Colors.white)),
-                            ),
-                          ),
-                        ],
-                      )), ///60_owl_tokens
-                  Container(
-                      height: SizeConfig.blockSizeVertical * 5,
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 0.0, left: 30),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: <Widget>[
-                                  AutoSizeText(_productListTokenAmount[1],
-                                      group: AutoSizeTextGroupItems,
-                                      style: TextStyle(
-                                          fontSize: 23,
-                                          color: Colors.green)),
-                                  Image.asset(
-                                    'assets/img/Owl_Token.png',
-                                    width: 40,
-                                  ),
-                                  IconButton(
-                                    icon: ImageIcon(
-                                        AssetImage(
-                                            'assets/img/double_arrow.png'),
-                                        size: 64.0,
-                                        color: Colors.white),
-                                    onPressed: () {
-                                      purchase(sixtyOwlTokenIndex);
-                                    },
-                                  ),
-                                ],
-                              )),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 0.0, right: 50),
-                            child: Align(
-                              alignment: Alignment.centerLeft,
-                              child: AutoSizeText(
-                                  _items[sixtyOwlTokenIndex]
-                                          .localizedPrice
-                                      .toString(),
-
-                                  group: AutoSizeTextGroupItems,
-                                  style: TextStyle(
-                                      fontSize: 21,
-                                      color: Colors.white)),
-                            ),
-                          ),
-                        ],
-                      )), ///150_owl_tokens
-                  Container(
-                      height: SizeConfig.blockSizeVertical * 5,
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 0.0, left: 30),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: <Widget>[
-                                  AutoSizeText(_productListTokenAmount[1],
-                                      group: AutoSizeTextGroupItems,
-                                      style: TextStyle(
-                                          fontSize: 23, color: Colors.green)),
-                                  Image.asset(
-                                    'assets/img/Owl_Token.png',
-                                    width: 40,
-                                  ),
-                                  IconButton(
-                                    icon: ImageIcon(
-                                        AssetImage(
-                                            'assets/img/double_arrow.png'),
-                                        size: 64.0,
-                                        color: Colors.white),
-                                    onPressed: () {
-                                      purchase(sixtyOwlTokenIndex);
-                                    },
-                                  ),
-                                ],
-                              )),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 0.0, right: 50),
-                            child: Align(
-                              alignment: Alignment.centerLeft,
-                              child: AutoSizeText(
-                                  _items[sixtyOwlTokenIndex]
-                                          .localizedPrice
-                                      .toString(),
-                                  group: AutoSizeTextGroupItems,
-                                  style: TextStyle(
-                                    fontSize: 23,
-                                    color: Colors.white,
-                                  )),
-                            ),
-                          ),
-                        ],
-                      )), ///500_owl_tokens
-                  Container(
-                      height: SizeConfig.blockSizeVertical * 5,
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 0.0, left: 30),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: <Widget>[
-                                  AutoSizeText(_productListTokenAmount[3],
-                                      group: AutoSizeTextGroupItems,
-                                      style: TextStyle(
-                                          fontSize: 23, color: Colors.green)),
-                                  Image.asset(
-                                    'assets/img/Owl_Token.png',
-                                    width: 40,
-                                  ),
-                                  IconButton(
-                                    icon: ImageIcon(
-                                        AssetImage(
-                                            'assets/img/double_arrow.png'),
-                                        size: 64.0,
-                                        color: Colors.white),
-                                    onPressed: () {
-                                      purchase(fifteenhundredOwlTokenIndex);
-                                    },
-                                  ),
-                                ],
-                              )),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 0.0, right: 50),
-                            child: Align(
-                              alignment: Alignment.centerLeft,
-                              child: AutoSizeText(
-                                  _items[fifteenhundredOwlTokenIndex]
-                                          .localizedPrice
-                                          .toString(),
-                                  group: AutoSizeTextGroupItems,
-                                  maxLines: 1,
-                                  style: TextStyle(
-                                    fontSize: 23,
-                                    color: Colors.white,
-                                  )),
-                            ),
-                          ),
-                        ],
-                      )), ///1500_owl_tokens
-                  SizedBox(height: 30),
-                  Container(
-                      height: SizeConfig.blockSizeVertical * 5,
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 0.0, left: 30),
-                              child: Row(
-                                children: <Widget>[
-                                  AutoSizeText(
-                                      AppLocalizations.of(context)
-                                          .translate('extend_radius'),
-                                      group: AutoSizeTextGroupItems,
-                                      style: TextStyle(
-                                        fontSize: 23,
-                                        color: Colors.white,
-                                      )),
-                                  IconButton(
-                                    icon: ImageIcon(
-                                        AssetImage(
-                                            'assets/img/double_arrow.png'),
-                                        size: 64.0,
-                                        color: Colors.white),
-                                    onPressed: () {
-                                      purchase(extendradiusIndex);
-                                    },
-                                  ),
-                                ],
-                              )),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 0.0, right: 50),
-                            child: Align(
-                              alignment: Alignment.centerLeft,
-                              child: Padding(
-                                  padding:
-                                      const EdgeInsets.only(top: 0.0, left: 0),
-                                  child: Row(
-                                    children: <Widget>[
-                                      AutoSizeText(
-                                          _items[extendradiusIndex]
-                                              .localizedPrice,
-                                          group: AutoSizeTextGroupItems,
-                                          style: TextStyle(
-                                            fontSize: 23,
-                                            color: Colors.white,
-                                          )),
-                                    ],
-                                  )),
-                            ),
-                          ),
-                        ],
-                      )), ///Extend_radius
-                  Container(
-                      height: SizeConfig.blockSizeVertical * 5,
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 0.0, left: 30),
-                              child: Row(
-                                children: <Widget>[
-                                  AutoSizeText(
-                                      AppLocalizations.of(context)
-                                          .translate('skip_water_points'),
-                                      group: AutoSizeTextGroupItems,
-                                      style: TextStyle(
-                                        fontSize: 23,
-                                        color: Colors.white,
-                                      )),
-                                  IconButton(
-                                    icon: ImageIcon(
-                                        AssetImage(
-                                            'assets/img/double_arrow.png'),
-                                        size: 64.0,
-                                        color: Colors.white),
-                                    onPressed: () {
-                                      purchase(skipwaterpointsIndex);
-                                    },
-                                  ),
-                                ],
-                              )),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 0.0, right: 50),
-                            child: Align(
-                              alignment: Alignment.centerLeft,
-                              child: Padding(
-                                  padding:
-                                      const EdgeInsets.only(top: 0.0, left: 0),
-                                  child: Row(
-                                    children: <Widget>[
-                                      AutoSizeText(
-                                          _items[skipwaterpointsIndex]
-                                              .localizedPrice,
-                                          group: AutoSizeTextGroupItems,
-                                          style: TextStyle(
-                                            fontSize: 23,
-                                            color: Colors.white,
-                                          )),
-                                    ],
-                                  )),
-                            ),
-                          ),
-                        ],
-                      )), ///Skip_water_points
-                  SizedBox(height: 30),
-                  GoPremiumButton(this.goPremiumButton)
-                ],
-              ))
-        : FadingCircleLoading(
-            color: Colors.white,
-            size: 75.0,
-          ));
+              ],
+            ),
+          ),
+        ),
+      ),
+    ) : FadingCircleLoading(
+    color: Colors.white,
+    size: 75.0,
+    );
   } //Funct
 
 }

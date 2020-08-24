@@ -129,9 +129,11 @@ class FinishTripState extends State<FinishTrip>
 //  }
 
   writeTitle(String text) {
-    setState(() {
-      _title = text;
-    });
+    if(text != ''){
+      setState(() {
+        _title = text;
+      });
+    }
   }
 
   finishTripButtonCallback() async {
@@ -227,6 +229,14 @@ class FinishTripState extends State<FinishTrip>
     await insertLoggedTrip(fido);
   }
 
+  Future getImage() async {
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+
+    setState(() {
+      _image = File(pickedFile.path);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -266,14 +276,18 @@ class FinishTripState extends State<FinishTrip>
                       child: Column(
                         children: <Widget>[
                           SizedBox(height: SizeConfig.blockSizeVertical * 1),
-                          Container(
+                          GestureDetector(
+                            onTap: () {
+                              getImage();
+                            },
+                            child: Container(
                             height: SizeConfig.blockSizeVertical * 50,
                             width: SizeConfig.blockSizeHorizontal * 73,
                             decoration: BoxDecoration(
                               color: Colors.black,
-                              image: DecorationImage(
-                                  image: new AssetImage(
-                                      'assets/img/Trip/Trip_1.jpg'),
+                              image:  DecorationImage(
+                                  image: (_image == null ? new AssetImage(
+                                      'assets/img/Trip/Trip_1.jpg') : new FileImage(_image)),
                                   colorFilter: ColorFilter.mode(
                                       Colors.black.withOpacity(0.2),
                                       BlendMode.srcOver),
@@ -320,7 +334,7 @@ class FinishTripState extends State<FinishTrip>
                                               tooltip: 'Increase volume by 10',
                                               color: Colors.white,
                                               onPressed: () {
-                                                setRadiusDialog(
+                                                setTitleDialog(
                                                     context, writeTitle);
                                               },
                                             ),
@@ -346,22 +360,22 @@ class FinishTripState extends State<FinishTrip>
                                     )),
                               ],
                             ),
-                          ),
+                          ),),
                           SizedBox(height: SizeConfig.blockSizeVertical * 1),
                           Padding(
                             padding: EdgeInsets.only(
                                 left: SizeConfig.blockSizeHorizontal * 10,
                                 right: SizeConfig.blockSizeHorizontal * 10),
                             child: Container(
-                                height: SizeConfig.blockSizeVertical * 10,
+                                height: SizeConfig.blockSizeVertical * 25,
                                 width: SizeConfig.blockSizeHorizontal * 80,
                                 child: Container(
                                     decoration: BoxDecoration(
-                                      color: Colors.white,
                                       borderRadius: BorderRadius.circular(30),
                                     ),
                                     child: TextField(
                                         keyboardType: TextInputType.multiline,
+                                        maxLines: null,
                                         controller: _text,
                                         style: TextStyle(
                                           color: Colors.blue,
@@ -380,7 +394,7 @@ class FinishTripState extends State<FinishTrip>
                                                 fontWeight:
                                                     FontWeight.bold))))),
                           ),
-                          SizedBox(height: SizeConfig.blockSizeVertical * 15),
+                          SizedBox(height: SizeConfig.blockSizeVertical * 1),
 
 //                          Padding(
 //                              padding: EdgeInsets.only(

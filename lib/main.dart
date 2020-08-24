@@ -31,11 +31,23 @@ class Randonautica extends StatelessWidget {
         themes: [
           AppTheme(
               id: "default_theme", // Id(or name) of the theme(Has to be unique)
-              data:
-                  ThemeData(brightness: _brightness, fontFamily: 'Interstate'),
+              data: ThemeData(
+                brightness: _brightness,
+                fontFamily: 'Interstate',
+                primaryColor: Color(0xff5A87E4),
+                accentColor:  Color(0xff36CCDB),
+              ),
               description: 'Randonautica Theme'),
           // This is standard dark theme (id is default_dark_theme)
-          AppTheme.dark(),
+          AppTheme(
+              id: "dark_theme", // Id(or name) of the theme(Has to be unique)
+              data: ThemeData(
+                brightness: _brightness,
+                fontFamily: 'Interstate',
+                primaryColor: Color(0xff383B46),
+                accentColor:  Color(0xff5786E1),
+              ),
+              description: 'Randonautica Theme'),
         ],
         child: ThemeConsumer(
             child: Builder(

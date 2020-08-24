@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:app/components/TopBar.dart';
 import 'package:app/helpers/AppLocalizations.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tags/flutter_tags.dart';
 
@@ -130,9 +131,9 @@ class LoggedTripDetailsState extends State<LoggedTripDetails> {
                           margin: const EdgeInsets.only(left: 20.0, right: 20.0),  ///Todo use sizeconfig to make responsive
                           width: 48.0,
                           height: 48.0,
-                          child:   Text(
+                          child:   AutoSizeText(
                             title,
-                            textAlign: TextAlign.center,
+                            maxLines: 4,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 26, color: Colors.white),
                           ),
@@ -141,120 +142,16 @@ class LoggedTripDetailsState extends State<LoggedTripDetails> {
                           alignment: Alignment.centerLeft,
                           margin: const EdgeInsets.only(left: 20.0, right: 20.0),  ///Todo use sizeconfig to make responsive
                           width: 48.0,
-                          height: 48.0,
+                          height: 180.0,
                           child: Expanded(
-                            child: Text(
+                            child: AutoSizeText(
                               text,
+                              maxLines: 8,
                               overflow: TextOverflow.clip,
-                              style: TextStyle(color: Colors.white),
-
+                              style: TextStyle(color: Colors.white,  fontSize: 16),
                             ),
                           ),
                         ),
-                        Container(
-                          alignment: Alignment.centerLeft,
-                          margin: const EdgeInsets.only(left: 20.0, right: 20.0),  ///Todo use sizeconfig to make responsive
-                          width: 48.0,
-                          height: 48.0,
-                          child: Text(
-                            AppLocalizations.of(context)
-                                .translate('trip_tags'),
-                            textAlign: TextAlign.center,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 26),
-                          ),
-                        ),
-                        Container(
-                          alignment: Alignment.centerLeft,
-                          margin: const EdgeInsets.only(left: 20.0, right: 20.0),  ///Todo use sizeconfig to make responsive
-                          width: 48.0,
-                          height: 48.0,
-                          child: Tags(
-                            key: _tagStateKey,
-                            symmetry: _symmetry,
-                            columns: _column,
-                            horizontalScroll: _horizontalScroll,
-                            heightHorizontalScroll: 60 * (_fontSize / 14),
-                            itemCount: tagList.length,
-                            itemBuilder: (index) {
-                              final item = tagList[index];
-                              return ItemTags(
-                                key: Key(index.toString()),
-                                index: index,
-                                title: item,
-                                pressEnabled: true,
-                                activeColor: Color(0xff6080E2),
-                                singleItem: _singleItem,
-                                splashColor: Colors.green,
-                                combine: ItemTagsCombine.withTextBefore,
-                                icon: (item == '0' || item == '1' || item == '2')
-                                    ? ItemTagsIcon(
-                                  icon: _icon[int.parse(item)],
-                                )
-                                    : null,
-                                removeButton: _removeButton
-                                    ? ItemTagsRemoveButton(
-                                  onRemoved: () {
-                                    setState(() {
-                                      _items.removeAt(index);
-                                    });
-                                    return true;
-                                  },
-                                )
-                                    : null,
-                                textScaleFactor:
-                                utf8.encode(item.substring(0, 1)).length > 2 ? 0.8 : 1,
-                                textStyle: TextStyle(
-                                  fontSize: _fontSize,
-                                ),
-                                onPressed: (item) => print(item),
-                              );
-                            },
-                          ),
-                        ),
-                        SizedBox(height: 50), ///Todo use sizeconfig to make responsive
-                        Container(
-                            width: 50, ///Todo use sizeconfig to make responsive
-                            height: 60, ///Todo use sizeconfig to make responsive
-                            decoration: BoxDecoration(
-                                color: Color(0xff5D7FE0),
-                                borderRadius: BorderRadius.circular(30),
-                                boxShadow: [
-                                  BoxShadow(
-                                      blurRadius: 8,
-                                      offset: Offset(0, 15),
-                                      color: Colors.black.withOpacity(.6),
-                                      spreadRadius: -9)
-                                ]),
-                            child: RaisedButton(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30.0),
-                              ),
-                              padding: EdgeInsets.zero,
-                              child: Center(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    SizedBox(width: 6),
-                                    Text(
-                                        AppLocalizations.of(context)
-                                            .translate('submit_report')
-                                            .toUpperCase(),
-                                        style: TextStyle(
-                                            fontSize: 14,
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold)),
-                                    SizedBox(width: 10),
-                                    Icon(
-                                      Icons.shopping_cart,
-                                      size: 12,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              onPressed: () {},
-                              color: Color(0xff44C5DB),
-                            ))
                       ],
                     ),
                   ],

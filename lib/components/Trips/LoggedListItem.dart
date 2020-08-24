@@ -122,16 +122,20 @@ class LoggedListItem extends StatelessWidget {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: <Widget>[
-                                  Align(
+                                  Container(
+                                    width: SizeConfig.blockSizeHorizontal * 30,
+                                    child: Align(
                                     alignment: Alignment.topLeft,
                                     child: AutoSizeText(
                                       this.title,
+                                      maxLines: 1,
                                       group: AutoSizeTextTitleGroup,
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontSize: 18,
                                           fontWeight: FontWeight.bold),
                                     ),
+                                  ),
                                   ),
                                   Align(
                                     alignment: Alignment.bottomRight,
@@ -164,7 +168,7 @@ class LoggedListItem extends StatelessWidget {
                                       alignment: Alignment.topLeft,
                                       child: Flexible(
                                         child: AutoSizeText(
-                                          'hello my name is david hello my name is david  hello my name is david hello my name is david hello my name is david ',
+                                          text,
                                           maxLines: 4,
                                           overflow: TextOverflow.fade,
                                           group: AutoSizeTextGroup,

@@ -1,10 +1,14 @@
+import 'dart:io';
+
 import 'package:app/helpers/AppLocalizations.dart';
 import 'package:app/helpers/FadeRoute.dart';
 import 'package:app/pages/Bot/bot_webview.dart';
 import 'package:app/utils/BackgroundColor.dart' as backgrounds;
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Settings extends StatefulWidget {
   static final String path = "lib/src/pages/settings/settings1.dart";
@@ -16,30 +20,112 @@ class Settings extends StatefulWidget {
 class _SettingsState extends State<Settings> {
   bool _dark;
 
+  //Firebase authentication instance
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  String email;
+
+  _reportABug() async {
+    var currentUser = await _auth.currentUser();
+    var platform;
+
+    if(Platform.isAndroid){
+      platform = "Android";
+    } else {
+      platform = "Apple";
+    }
+
+    Uri _emailLaunchUri = Uri(
+        scheme: 'mailto',
+        path: 'support@randonautica.com',
+        queryParameters: {
+          'subject': "Bug report",
+          'body': 'Type your report here ' +
+              '<br></br>' +
+              '<br></br>' +
+              '   These are your user details to identify your acccount. Depending on the request you can remove these: ' +
+              '<br></br>' +
+              '   id: ' + currentUser.uid +
+              '<br></br>' +
+              '   email: ' + currentUser.email +
+              '<br></br>' +
+              '   platform: ' + platform
+    });
+
+    email =  _emailLaunchUri.toString().replaceAll("+", "%20");
+
+    if (await canLaunch(email)) {
+      await launch(email);
+    } else {
+      throw 'Could not open repot a bug.';
+    }
+  }
+
+  _privacyEnquiry() async {
+    var currentUser = await _auth.currentUser();
+    var platform;
+
+    if(Platform.isAndroid){
+      platform = "Android";
+    } else {
+      platform = "Apple";
+    }
+
+    Uri _emailLaunchUri = Uri(
+        scheme: 'mailto',
+        path: 'support@randonautica.com',
+        queryParameters: {
+          'subject': AppLocalizations.of(context)
+              .translate('navigate_to_bot'),
+          'body': 'Type your privacy request here ' +
+              '<br></br>' +
+              '<br></br>' +
+              '   These are your user details to identify your acccount. Depending on the request you can remove these: ' +
+              '<br></br>' +
+              '   id: ' + currentUser.uid +
+              '<br></br>' +
+              '   email: ' + currentUser.email +
+              '<br></br>' +
+              '   platform: ' + platform
+        });
+
+    email =  _emailLaunchUri.toString().replaceAll("+", "%20");
+
+    if (await canLaunch(email)) {
+      await launch(email);
+    } else {
+      throw 'Could not open repot a bug.';
+    }
+  }
+
+  _OpenPrivacyPolicy() async {
+
+    String privacyPolicyUrl = "https://bot.randonauts.com/privacy-and-terms.html";
+
+    if (await canLaunch(privacyPolicyUrl)) {
+      await launch(privacyPolicyUrl);
+    } else {
+      throw 'Could not open privacy policy.';
+    }
+  }
+
   @override
   void initState() {
     super.initState();
-    _dark = false;
-  }
-
-  Brightness _getBrightness() {
-    return _dark ? Brightness.dark : Brightness.light;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: _dark ? null : Colors.grey.shade200,
         resizeToAvoidBottomPadding: false,
         extendBody: true,
         appBar: AppBar(
           elevation: 0,
-          brightness: _getBrightness(),
-          iconTheme: IconThemeData(color: _dark ? Colors.white : Colors.black),
+          iconTheme: IconThemeData(color: Colors.black),
           backgroundColor: Colors.transparent,
           title: Text(
             'Settings',
-            style: TextStyle(color: _dark ? Colors.white : Colors.black),
+            style: TextStyle(color: Colors.black),
           ),
           actions: <Widget>[],
         ),
@@ -71,10 +157,10 @@ class _SettingsState extends State<Settings> {
                             ),
                             trailing: Icon(Icons.keyboard_arrow_right),
                             onTap: () {
-                              ///Include this in main() so purchases are enabled
+                              ///Include this in here so purchases are enabled within the bot
                               InAppPurchaseConnection.enablePendingPurchases();
 
-                              //open change password
+                              //Open Bot
                               Navigator.pushAndRemoveUntil(
                                   context,
                                   FadeRoute(page: BotWebView()),
@@ -93,9 +179,7 @@ class _SettingsState extends State<Settings> {
                             ),
                             trailing: Icon(Icons.keyboard_arrow_right),
                             onTap: () {
-                              //open change language
-
-
+                              _reportABug();
                             },
                           ),
                           _buildDivider(),
@@ -104,10 +188,30 @@ class _SettingsState extends State<Settings> {
                               Icons.location_on,
                               color: Colors.purple,
                             ),
-                            title: Text("Change Location"),
+                            title: AutoSizeText(
+                              AppLocalizations.of(context)
+                                  .translate('privacy_enquiry'),
+                            ),
                             trailing: Icon(Icons.keyboard_arrow_right),
                             onTap: () {
-                              //open change location
+                              //open email
+                              _privacyEnquiry();
+                            },
+                          ),
+                          _buildDivider(),
+                          ListTile(
+                            leading: Icon(
+                              Icons.location_on,
+                              color: Colors.purple,
+                            ),
+                            title: AutoSizeText(
+                              AppLocalizations.of(context)
+                                  .translate('privacy_policy'),
+                            ),
+                            trailing: Icon(Icons.keyboard_arrow_right),
+                            onTap: () {
+                              //open privacy policy
+                              _OpenPrivacyPolicy();
                             },
                           ),
                         ],
