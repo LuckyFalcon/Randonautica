@@ -100,7 +100,9 @@ class _SetWater extends State<SetWaterPoints> {
                       width: SizeConfig.blockSizeHorizontal * 15,
                       child: Stack(
                         children: <Widget>[
-                          Container(
+                      Align(
+                      alignment: Alignment.center,
+                        child:  Container(
                             width: SizeConfig.blockSizeHorizontal * 12,
                             child: SwitchButton(
                               activeColor: Colors.white,
@@ -113,15 +115,15 @@ class _SetWater extends State<SetWaterPoints> {
                                 });
                               },
                             ),
-                          ),
+                          ),),
                           Align(
                             alignment: Alignment.center,
                             child: ClipRect(
                               // <-- clips to the 200x200 [Container] below
                               child: BackdropFilter(
                                 filter: ui.ImageFilter.blur(
-                                  sigmaX: 15.0,
-                                  sigmaY: 15.0,
+                                  sigmaX: 0.0,
+                                  sigmaY: 0.0,
                                 ),
                                 child: Container(
                                   alignment: Alignment.center,
@@ -131,8 +133,8 @@ class _SetWater extends State<SetWaterPoints> {
                                       },
                                       child: Icon(
                                         Icons.lock,
-                                        color: Colors.white,
-                                        size: 30.0,
+                                        color: Colors.transparent,
+                                        size: 64.0,
                                       )),
                                 ),
                               ),

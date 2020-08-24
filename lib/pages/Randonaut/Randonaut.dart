@@ -262,6 +262,7 @@ class RandonautState extends State<Randonaut> {
                           },
                           circles: _circles,
                           onMapCreated: (GoogleMapController controller) {
+                            controller.setMapStyle(Utils.MapStyles.NightSTyle);
                             _controller.complete(controller);
                           }),
                     ],

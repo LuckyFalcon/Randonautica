@@ -1382,3 +1382,44 @@ pointReached(BuildContext context) {
         );
       });
 }
+
+setTitleDialog(BuildContext context, callback) {
+  var _TitleInputController = TextEditingController();
+
+  showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return CupertinoAlertDialog(
+          title: Text(
+            AppLocalizations.of(context).translate('change_radius'),
+          ),
+          content: Text(
+            AppLocalizations.of(context).translate('change_radius_dialog_text'),
+          ),
+          actions: <Widget>[
+            CupertinoTextField(
+                placeholder: AppLocalizations.of(context)
+                    .translate('radius_initial_text'),
+                controller: _TitleInputController),
+            CupertinoDialogAction(
+              isDefaultAction: true,
+              onPressed: () {
+                Navigator.pop(context);
+                callback(_TitleInputController.text);
+              },
+              child: Text(
+                AppLocalizations.of(context).translate('ok_button'),
+              ),
+            ),
+            CupertinoDialogAction(
+              child: Text(
+                AppLocalizations.of(context).translate('cancel_button'),
+              ),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            )
+          ],
+        );
+      });
+}
