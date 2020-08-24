@@ -48,7 +48,7 @@ class _AppLocalizationsDelegate
 
   @override
   bool isSupported(Locale locale) {
-    print('currentLanguage'  + locale.languageCode);
+    print('currentLanguage: '  + locale.languageCode);
     // Include all of your supported language codes here
     return ['en', 'ja', 'es', 'zh_TW', 'zh'].contains(locale.languageCode);
   }
