@@ -53,5 +53,13 @@
                     </array>
             </dict>
     </array>
+    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+    <string>To generate IDAs and blind spots</string>
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>To generate IDAs and blind spots</string>
+    <key>NSLocationUsageDescription</key>
+    <string>To generate IDAs and blind spots</string>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>To generate IDAs and blind spots</string>
 </dict>
 </plist>
