@@ -399,14 +399,15 @@ class RandonautState extends State<Randonaut> {
                           ),
                           Container(
                               child: AutoSizeText(
-                                  globals.currentUser.points.toString(),
+                                  (globals.currentUser.points != -333 ? globals.currentUser.points.toString() : '∞'),
                                   maxLines: 1,
                                   minFontSize: 12,
                                   maxFontSize: 23,
                                   style: TextStyle(
                                       fontSize: 16,
                                       color: Colors.white,
-                                      fontWeight: FontWeight.bold))),
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: ''))),
                         ])),
                     SizedBox(width: SizeConfig.blockSizeHorizontal * 3),
                     Column(
@@ -574,19 +575,20 @@ class RandonautState extends State<Randonaut> {
     bool hasAccess = false;
 
     //Verifiy if the point selected is the following and whether the user has enough points
+    //Infnite point users are noted as having -333 points
     switch (selectedRandomness.toString()) {
       case '1':
-        if ((globals.currentUser.points >= randomPointCost)) {
+        if (globals.currentUser.points >= randomPointCost || globals.currentUser.points == -333) {
           hasAccess = true;
         }
         break;
       case '2':
-        if (globals.currentUser.points >= quantumPointCost) {
+        if (globals.currentUser.points >= quantumPointCost || globals.currentUser.points == -333) {
           hasAccess = true;
         }
         break;
       case '3':
-        if (globals.currentUser.points >= amplificationBiasPointCost) {
+        if (globals.currentUser.points >= amplificationBiasPointCost || globals.currentUser.points == -333) {
           hasAccess = true;
         }
         break;
@@ -594,7 +596,7 @@ class RandonautState extends State<Randonaut> {
 
     //User doesn't have enough points to continue
     if (!hasAccess) {
-      return setBuyDialog(context);
+      return notEnoughTokensDialog(context);
     }
 
     //Check if the current location is not empty
@@ -643,22 +645,22 @@ class RandonautState extends State<Randonaut> {
     }
     //Remove points locally
     //Verifiy if the point selected is the following and whether the user has enough points
+    //Infnite point users are noted as having -333 points
     switch (selectedRandomness.toString()) {
       case '1':
-        print('shouldremove1');
-        if (globals.currentUser.points >= randomPointCost) {
+        if (globals.currentUser.points >= randomPointCost && globals.currentUser.points != -333) {
           globals.currentUser.points =
               globals.currentUser.points - randomPointCost;
         }
         break;
       case '2':
-        if (globals.currentUser.points >= quantumPointCost) {
+        if (globals.currentUser.points >= quantumPointCost && globals.currentUser.points != -333) {
           globals.currentUser.points =
               globals.currentUser.points - quantumPointCost;
         }
         break;
       case '3':
-        if (globals.currentUser.points >= amplificationBiasPointCost) {
+        if (globals.currentUser.points >= amplificationBiasPointCost && globals.currentUser.points != -333) {
           globals.currentUser.points =
               globals.currentUser.points - amplificationBiasPointCost;
         }

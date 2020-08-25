@@ -102,9 +102,10 @@ class TokenInfoState extends State<TokenInfo> {
                               ),
                               Container(
                                   height: SizeConfig.blockSizeVertical * 6,
-                                  child: AutoSizeText(user.currentUser.points.toString(),
+                                  child: AutoSizeText(
+                                      (user.currentUser.points != -333 ? user.currentUser.points.toString() : "∞"),
                                       maxLines: 1,
-                                      style: TextStyle(fontSize: 64, color: Color(0xff37CDDC), fontWeight: FontWeight.bold))),
+                                      style: TextStyle(fontSize: 64, color: Color(0xff37CDDC), fontWeight: FontWeight.bold, fontFamily: ''))),
                             ],
                           ),
                           SizedBox(height: SizeConfig.blockSizeVertical * 2),

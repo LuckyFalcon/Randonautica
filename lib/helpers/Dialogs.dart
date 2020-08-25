@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:app/components/Dialogs/DialogButton.dart';
+import 'package:app/helpers/FadeRoute.dart';
 import 'package:app/pages/Shop/Shop.dart';
 import 'package:app/utils/size_config.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -732,39 +733,10 @@ notEnoughTokensDialog(BuildContext context) {
 
     Navigator.pop(context);
 
-    showModalBottomSheet(
-        isScrollControlled: true,
-        shape: RoundedRectangleBorder(
-          borderRadius: new BorderRadius.only(
-              topLeft: const Radius.circular(60.0),
-              topRight: const Radius.circular(60.0)),
-        ),
-        useRootNavigator: false,
-        context: context,
-        builder: (context) => Container(
-          height: SizeConfig.blockSizeVertical * 90,
-          decoration: new BoxDecoration(
-              gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  stops: [
-                    0,
-                    5.0
-                  ],
-                  colors: [
-                    Color(0xff383B46),
-                    Color(0xff5786E1)
-                  ]),
-              color: Theme.of(context).primaryColor,
-              borderRadius: new BorderRadius.only(
-                  topLeft:
-                  const Radius.circular(60.0),
-                  topRight:
-                  const Radius.circular(60.0))),
-          child: Shop(),
-        )).whenComplete(() async {
-      await FlutterInappPurchase.instance.endConnection;
-    });
+    //open shop
+    Navigator.push(
+        context,
+        FadeRoute(page: Shop()));
 
   }
 

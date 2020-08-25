@@ -92,7 +92,7 @@ class _TopBarState extends State<TopBar> {
                   'Text to announce in accessibility modes',
                 ),
                 onPressed: () {
-                  //open settings
+                  //open shop
                   Navigator.push(
                       context,
                       FadeRoute(page: Shop()));
