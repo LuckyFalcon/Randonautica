@@ -181,7 +181,7 @@ class RandonautState extends State<Randonaut> {
   @override
   void dispose() {
     locationSubscription.cancel();
-
+    controller.dispose();
     super.dispose();
   }
 

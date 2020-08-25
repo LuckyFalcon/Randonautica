@@ -37,7 +37,7 @@ dependencies:
   latlong: ^0.6.1
   geolocator: ^5.1.5
   location: ^2.5.3
-  google_maps_flutter: ^0.5.28+1
+  google_maps_flutter: ^0.5.30
   share: ^0.6.4+3
   flutter_tags: "^0.4.8+2"
   image_picker: ^0.6.7+1
