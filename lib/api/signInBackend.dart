@@ -8,8 +8,15 @@ import 'package:http/http.dart' as http;
 import 'package:app/utils/currentUser.dart' as globals;
 
 Future<int> signBackendApple(String token) async {
-  //Apple platform id
-  int platform = 1;
+  //Platform id
+  int platform;
+
+  //iOS is 1, Android = 2
+  if(Platform.isIOS){
+    platform = 1;
+  } else {
+    platform = 2;
+  }
 
   try {
     final response = await http.get(
@@ -27,14 +34,11 @@ Future<int> signBackendApple(String token) async {
       if (user != null) {
         try {
           await insertUser(user);
-          print('success');
         } catch (err){
-          print(err);
+          return 500;
         }
         user = await RetrieveUser();
-        print('respect'+user.points.toString());
         globals.currentUser = user;
-        print('respectresec'+globals.currentUser.points.toString());
         return response.statusCode;
       }
     }
@@ -49,8 +53,15 @@ Future<int> signBackendApple(String token) async {
 }
 
 Future<int> signBackendGoogle(String token) async {
-  //Google platform id
-  int platform = 2;
+  //Platform id
+  int platform;
+
+  //Android = 2, iOS is 1
+  if(Platform.isAndroid){
+    platform = 2;
+  } else {
+    platform = 1;
+  }
 
   try {
     final response = await http.get(
@@ -68,14 +79,11 @@ Future<int> signBackendGoogle(String token) async {
       if (user != null) {
         try {
           await insertUser(user);
-          print('success');
         } catch (err){
-          print(err);
+          return 500;
         }
         user = await RetrieveUser();
-        print('respect'+user.points.toString());
         globals.currentUser = user;
-        print('respectresec'+globals.currentUser.points.toString());
         return response.statusCode;
       }
     }

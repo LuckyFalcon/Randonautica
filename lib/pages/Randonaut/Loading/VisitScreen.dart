@@ -33,7 +33,7 @@ class VisitScreenState extends State<VisitScreen> {
       extendBody: true,
       backgroundColor: Colors.yellow[200],
       body: Container(
-          decoration: backgrounds.normal,
+          decoration: backgrounds.dark,
           child: Center(
             child: Column(children: <Widget>[
               Column(mainAxisAlignment: MainAxisAlignment.start, children: [

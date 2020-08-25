@@ -240,7 +240,7 @@ class _LoadingState extends State<Loading> {
   @override
   void initState() {
     //Remove Status & Navigation bar
-    SystemChrome.setEnabledSystemUIOverlays([]);
+  //  SystemChrome.setEnabledSystemUIOverlays([]);
 
     try {
       _versionCheck(context);

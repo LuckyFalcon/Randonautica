@@ -85,9 +85,7 @@ class _HomePageState extends State<HomePage> {
       body: Container(
           height: SizeConfig.blockSizeVertical * 100,
           width: SizeConfig.blockSizeHorizontal * 100,
-          decoration: (selectedNavigationIndex == 3
-              ? backgrounds.dark
-              : backgrounds.normal),
+          decoration: backgrounds.dark,
           child: Column(children: <Widget>[
             TopBar(),
             IndexedStack(

@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-//import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:theme_provider/theme_provider.dart';
 
 import 'helpers/AppLocalizations.dart';
@@ -24,14 +23,13 @@ class Randonautica extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ///Include this in main() so purchases are enabled
- //   InAppPurchaseConnection.enablePendingPurchases();
-
     return ThemeProvider(
         themes: [
           AppTheme(
               id: "default_theme", // Id(or name) of the theme(Has to be unique)
               data: ThemeData(
+                highlightColor: Colors.transparent,
+                splashColor: Colors.transparent,
                 brightness: _brightness,
                 fontFamily: 'Interstate',
                 primaryColor: Color(0xff5A87E4),
@@ -42,6 +40,8 @@ class Randonautica extends StatelessWidget {
           AppTheme(
               id: "dark_theme", // Id(or name) of the theme(Has to be unique)
               data: ThemeData(
+                highlightColor: Colors.transparent,
+                splashColor: Colors.transparent,
                 brightness: _brightness,
                 fontFamily: 'Interstate',
                 primaryColor: Color(0xff383B46),

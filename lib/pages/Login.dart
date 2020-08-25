@@ -149,7 +149,7 @@ class _LoginState extends State<Login> {
       extendBody: true,
       backgroundColor: Colors.yellow[200],
       body: Container(
-          decoration: backgrounds.normal,
+          decoration: backgrounds.dark,
           child: (signingIn
               ? Center(
                   child: Column(children: <Widget>[

@@ -51,19 +51,19 @@ class _BottomBarState extends State<BottomBar> {
                 child: Container(
                     color: Colors.white,
                     child: DefaultTabController(
-                        length: 4, // Added
+                        length: 2, // Added
                         initialIndex: 0, //Added
                         child: new TabBar(
                           tabs: [
                             (this.widget.selectedNavigationIndex == 0 ? _individualTab('assets/img/Navigation/Pin_Point.svg', selectedColor) : _individualTab('assets/img/Navigation/Pin_Point.svg', unselectedColor)),
                             (this.widget.selectedNavigationIndex == 1 ? _individualTab('assets/img/Navigation/List.svg', selectedColor) : _individualTab('assets/img/Navigation/List.svg', unselectedColor)),
-                            (this.widget.selectedNavigationIndex == 2 ? _individualTab('assets/img/Navigation/Globe.svg', selectedColor) : _individualTab('assets/img/Navigation/Globe.svg', unselectedColor)),
-                            Tab(icon: SvgPicture.asset(
-                                'assets/img/Navigation/Labs.svg',
-                                height: 42,
-                                width: 42,
-                                color: (this.widget.selectedNavigationIndex == 3 ? selectedColor : unselectedColor),
-                            ))
+//                            (this.widget.selectedNavigationIndex == 2 ? _individualTab('assets/img/Navigation/Globe.svg', selectedColor) : _individualTab('assets/img/Navigation/Globe.svg', unselectedColor)),
+//                            Tab(icon: SvgPicture.asset(
+//                                'assets/img/Navigation/Labs.svg',
+//                                height: 42,
+//                                width: 42,
+//                                color: (this.widget.selectedNavigationIndex == 3 ? selectedColor : unselectedColor),
+//                            ))
                           ],
                           onTap: (int _selectedNavigationIndex) {
                             //Rebuild state with the selectedNavigationIndex that was tapped in bottom navbar

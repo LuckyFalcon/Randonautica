@@ -73,7 +73,7 @@ class _ButtonGoMainPage extends State<ButtonGoMainPage> {
               this.widget.callback(pressGoButton); //Callback to Main
             });
           },
-          color: Color(0xff45C5DB),
+          color: Color(0xff4E86EA),
         ));
   }
 }

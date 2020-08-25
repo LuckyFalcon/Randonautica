@@ -130,7 +130,7 @@ class _SettingsState extends State<Settings> {
           actions: <Widget>[],
         ),
         body: Container(
-          decoration: backgrounds.normal,
+          decoration: backgrounds.dark,
           child: Stack(
             fit: StackFit.expand,
             children: <Widget>[

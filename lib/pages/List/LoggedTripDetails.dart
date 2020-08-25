@@ -6,6 +6,7 @@ import 'package:app/helpers/AppLocalizations.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tags/flutter_tags.dart';
+import 'package:app/utils/BackgroundColor.dart' as backgrounds;
 
 class LoggedTripDetails extends StatefulWidget {
 
@@ -83,12 +84,7 @@ class LoggedTripDetailsState extends State<LoggedTripDetails> {
       extendBodyBehindAppBar: true,
       extendBody: true,
       body: Container(
-        decoration: BoxDecoration(
-            gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomRight,
-                stops: [0, 1],
-                colors: [Color(0xff6081E3), Color(0xff44CBDB)])),
+        decoration: backgrounds.dark,
         child: new Container(
           child: Column(
             mainAxisSize: MainAxisSize.min,
