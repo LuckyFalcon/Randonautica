@@ -104,20 +104,20 @@ class _WarningScreensState extends State<WarningScreens> {
                   Container(
                     height: SizeConfig.blockSizeVertical * 10,
                     width: SizeConfig.blockSizeHorizontal * 33.3,
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 0.0, right: 0),
-                      child: Align(
-                        alignment: Alignment.center,
-                        child: IconButton(
-                          iconSize: SizeConfig.blockSizeVertical * 100,
-                          icon: ImageIcon(
-                            AssetImage('assets/img/Owl.png'),
-                            color: Colors.white,
-                          ),
-                          onPressed: () {},
-                        ),
-                      ),
-                    ),
+//                    child: Padding(
+//                      padding: const EdgeInsets.only(top: 0.0, right: 0),
+//                      child: Align(
+//                        alignment: Alignment.center,
+//                        child: IconButton(
+//                          iconSize: SizeConfig.blockSizeVertical * 100,
+//                          icon: ImageIcon(
+//                            AssetImage('assets/img/Owl.png'),
+//                            color: Colors.white,
+//                          ),
+//                          onPressed: () {},
+//                        ),
+//                      ),
+//                    ),
                   ),
                   SizedBox(height: SizeConfig.blockSizeVertical * 5),
                   Container(

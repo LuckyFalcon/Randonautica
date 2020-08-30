@@ -22,6 +22,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:loading_animations/loading_animations.dart';
 import 'package:location_permissions/location_permissions.dart';
 import 'package:package_info/package_info.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -52,7 +53,7 @@ class _LoadingState extends State<Loading> {
     //Get Current installed version of app
     final PackageInfo info = await PackageInfo.fromPlatform();
     double currentVersion =
-        double.parse(info.version.trim().replaceAll(".", ""));
+    double.parse(info.version.trim().replaceAll(".", ""));
 
     //Get Latest version info from firebase config
     final RemoteConfig remoteConfig = await RemoteConfig.instance;
@@ -108,33 +109,32 @@ class _LoadingState extends State<Loading> {
       } else {
         ///No new version -> Get User -> Continue to App
         await getCurrentUser()
-            .then((value) => {
-                  if (value != null) {
-                    Navigator.pushAndRemoveUntil(
-                        context,
-                        FadeRoute(page: HomePage()),
-                        ModalRoute.withName("/HomePage"))
-                  } else {
-                    //Setup Databases
-                    setupDatabases().then(
-                        (value) => Future.delayed(Duration(seconds: 3), () {
-                              Navigator.pushAndRemoveUntil(
-                                  context,
-                                  FadeRoute(page: Login()),
-                                  ModalRoute.withName("/Login"));
-                            }))
-                  }
-                })
-            .catchError((onError) => Future.delayed(Duration(seconds: 3), () {
-                  print(onError);
-                  Navigator.pushAndRemoveUntil(context,
-                      FadeRoute(page: Login()), ModalRoute.withName("/Login"));
-                }));
+            .then((value) =>
+        {
+          if (value != null) {
+          } else
+            {
+              //Setup Databases
+              setupDatabases().then(
+                      (value) =>
+                      Future.delayed(Duration(seconds: 3), () {
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            FadeRoute(page: Login()),
+                            ModalRoute.withName("/Login"));
+                      }))
+            }
+        })
+            .catchError((onError) =>
+            Future.delayed(Duration(seconds: 3), () {
+              print(onError);
+              Navigator.pushAndRemoveUntil(context,
+                  FadeRoute(page: Login()), ModalRoute.withName("/Login"));
+            }));
       }
     } on FetchThrottledException catch (exception) {
       // Fetch throttled.
       print('fetchTrotttledException' + exception.toString());
-
     } catch (exception) {
       print('Unable to fetch remote config. Cached or default values will be '
           'used');
@@ -160,33 +160,33 @@ class _LoadingState extends State<Loading> {
         String btnLabelCancel = "Later";
         return Platform.isIOS
             ? new CupertinoAlertDialog(
-                title: Text(title),
-                content: Text(message),
-                actions: <Widget>[
-                  FlatButton(
-                    child: Text(btnLabel),
-                    onPressed: () => _launchURL(APP_STORE_URL),
-                  ),
-                  FlatButton(
-                    child: Text(btnLabelCancel),
-                    onPressed: () => Navigator.pop(context),
-                  ),
-                ],
-              )
+          title: Text(title),
+          content: Text(message),
+          actions: <Widget>[
+            FlatButton(
+              child: Text(btnLabel),
+              onPressed: () => _launchURL(APP_STORE_URL),
+            ),
+            FlatButton(
+              child: Text(btnLabelCancel),
+              onPressed: () => Navigator.pop(context),
+            ),
+          ],
+        )
             : new AlertDialog(
-                title: Text(title),
-                content: Text(message),
-                actions: <Widget>[
-                  FlatButton(
-                    child: Text(btnLabel),
-                    onPressed: () => _launchURL(PLAY_STORE_URL),
-                  ),
-                  FlatButton(
-                    child: Text(btnLabelCancel),
-                    onPressed: () => Navigator.pop(context),
-                  ),
-                ],
-              );
+          title: Text(title),
+          content: Text(message),
+          actions: <Widget>[
+            FlatButton(
+              child: Text(btnLabel),
+              onPressed: () => _launchURL(PLAY_STORE_URL),
+            ),
+            FlatButton(
+              child: Text(btnLabelCancel),
+              onPressed: () => Navigator.pop(context),
+            ),
+          ],
+        );
       },
     );
   }
@@ -209,27 +209,27 @@ class _LoadingState extends State<Loading> {
 
       if (_user != null) {
         //Get token
-        return await _user.getIdToken().then((token) async => {
-              //Store Token in SharedPreferences
-              await prefs.setString("authToken", token.token),
-              await signBackendGoogle(token.token.toString())
-                  .then((statusCode) async {
-                    print(statusCode);
-                //Status codes: 409 Account Already exists, 200 Account successfully created
-                if (statusCode == 200 || statusCode == 409) {
-                  //Get user from DB
-                  User user = await RetrieveUser();
-                  //Set Global User
-                  globals.currentUser = user;
+        return await _user.getIdToken().then((token) async =>
+        {
+          //Store Token in SharedPreferences
+          await prefs.setString("authToken", token.token),
+          await signBackendGoogle(token.token.toString())
+              .then((statusCode) async {
+            print(statusCode);
+            //Status codes: 409 Account Already exists, 200 Account successfully created
+            if (statusCode == 200 || statusCode == 409) {
+              //Get user from DB
+              User user = await RetrieveUser();
+              //Set Global User
+              globals.currentUser = user;
 
-                  return 1;
-
-                } else {
-                  //An error occurred running the above logic
-                  throw Exception('Failed to get User');
-                }
-              })
-            });
+              return 1;
+            } else {
+              //An error occurred running the above logic
+              throw Exception('Failed to get User');
+            }
+          })
+        });
       } else {
         //No current user
         throw Exception('Failed to get User');
@@ -239,15 +239,18 @@ class _LoadingState extends State<Loading> {
 
   @override
   void initState() {
-    //Remove Status & Navigation bar
-  //  SystemChrome.setEnabledSystemUIOverlays([]);
-
-    try {
-      _versionCheck(context);
-    } catch (e) {
-      print(e);
-    }
     super.initState();
+
+
+    //Remove Status & Navigation bar
+    //  SystemChrome.setEnabledSystemUIOverlays([]);
+    Future.delayed(Duration(seconds: 5), () {
+      Navigator.pushAndRemoveUntil(
+          context,
+          FadeRoute(page: HomePage()),
+          ModalRoute.withName("/HomePage"));
+    }
+    );
   }
 
   @override
@@ -261,32 +264,39 @@ class _LoadingState extends State<Loading> {
       body: Container(
           decoration: backgrounds.dark,
           child: Center(
-            child: Column(children: <Widget>[
+              child: Column(children: <Widget>[
               Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-                SizedBox(height: SizeConfig.blockSizeVertical * 25),
-                ImageIcon(
-                  AssetImage('assets/img/Owl.png'),
-                  color: Colors.white,
-                  size: 128.0,
-                ),
-                SizedBox(height: SizeConfig.blockSizeVertical * 1),
+              SizedBox(height: SizeConfig.blockSizeVertical * 25),
+              ImageIcon(
+                AssetImage('assets/img/Owl.png'),
+                color: Colors.white,
+                size: 128.0,
+              ),
+              SizedBox(height: SizeConfig.blockSizeVertical * 1),
+              Container(
+                  width: SizeConfig.blockSizeHorizontal * 60,
+                  height: SizeConfig.blockSizeHorizontal * 13,
+                  child: AutoSizeText(
+                      AppLocalizations.of(context).translate('title'),
+                      maxLines: 1,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontSize: 40,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold))),
+              SizedBox(height: SizeConfig.blockSizeVertical * 3),
                 Container(
                     width: SizeConfig.blockSizeHorizontal * 60,
                     height: SizeConfig.blockSizeHorizontal * 13,
-                    child: AutoSizeText(AppLocalizations.of(context).translate('title'),
-                        maxLines: 1,
-                        style: TextStyle(
-                            fontSize: 40,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold))),
-                SizedBox(height: SizeConfig.blockSizeVertical * 3),
-                FadingCircleLoading(
-                  color: Colors.white,
-                  size: 75.0,
-                )
+                    child: LoadingBouncingGrid.square(
+                      borderColor: Colors.cyan,
+                      borderSize: 3.0,
+                      backgroundColor: Colors.cyanAccent,
+                      duration: Duration(milliseconds: 500),
+                    )),
               ])
-            ]),
-          )),
+          ]),
+    )),
     );
   } //Functions
 }

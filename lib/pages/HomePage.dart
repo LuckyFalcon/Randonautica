@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:app/components/BottomBar.dart';
 import 'package:app/components/TopBar.dart';
+import 'package:app/components/TopBarV2.dart';
 import 'package:app/helpers/SignInStreak.dart';
 import 'package:app/pages/Feed/TripFeed.dart';
 import 'package:app/pages/Lab/Lab.dart';
@@ -13,6 +14,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'Randonaut/RandonautV2.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key, this.homePageTitle}) : super(key: key);
@@ -41,7 +44,7 @@ class _HomePageState extends State<HomePage> {
     //SignInStreak(context);
 
     super.initState();
-    updateToken();
+   // updateToken();
 
   }
 
@@ -87,18 +90,11 @@ class _HomePageState extends State<HomePage> {
           width: SizeConfig.blockSizeHorizontal * 100,
           decoration: backgrounds.dark,
           child: Column(children: <Widget>[
-            TopBar(),
-            IndexedStack(
-              children: <Widget>[
-                Randonaut(this.updateStateCallback),
-                TripList(key: _TripListKey),
-                TripFeed(),
-                Lab(),
-              ],
-              index: selectedNavigationIndex,
-            ),
-            BottomBar(
-                this.selectedNavigationIndexCallback, selectedNavigationIndex),
+           // TopBarV2(),
+            Randonaut(this.updateStateCallback),
+
+//            BottomBar(
+//                this.selectedNavigationIndexCallback, selectedNavigationIndex),
           ])),
     );
   }

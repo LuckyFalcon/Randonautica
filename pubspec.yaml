@@ -59,6 +59,7 @@ dependencies:
   auto_size_text: ^2.1.0
   uuid: 2.2.0
   flutter_email_sender: ^3.0.1
+  loading_animations: ^2.1.0
 
   #For Randonautic classic -> Bot
   webview_flutter: ^0.3.22+1

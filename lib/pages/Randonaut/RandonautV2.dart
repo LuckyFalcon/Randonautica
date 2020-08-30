@@ -43,16 +43,16 @@ const double CAMERA_BEARING = 0;
 const LatLng SOURCE_LOCATION = LatLng(42.747932, -71.167889);
 const LatLng DEST_LOCATION = LatLng(37.422, -122.084);
 
-class Randonaut extends StatefulWidget {
+class RandonautV2 extends StatefulWidget {
   Function callback;
 
-  Randonaut(this.callback);
+  RandonautV2(this.callback);
 
   @override
-  State<Randonaut> createState() => RandonautState();
+  State<RandonautV2> createState() => RandonautState();
 }
 
-class RandonautState extends State<Randonaut> {
+class RandonautState extends State<RandonautV2> {
   /*
     Random point = 1 token
     Quantum random point = 2 token
@@ -209,73 +209,45 @@ class RandonautState extends State<Randonaut> {
 
     return Column(
       children: <Widget>[
-        SizedBox(height: SizeConfig.blockSizeVertical * 5),
         Container(
           ///This is 60% of the Vertical / Height for this container in this class
           height: (pointsSucesfullyGenerated
-              ? SizeConfig.blockSizeVertical * 70
-              : SizeConfig.blockSizeVertical * 65),
+              ? SizeConfig.blockSizeVertical * 60
+              : SizeConfig.blockSizeVertical * 53),
 
           ///This is 80% of the Horizontal / Width for this container in this class
-          width: SizeConfig.blockSizeHorizontal * 80,
+          width: SizeConfig.blockSizeHorizontal * 100,
           child: Stack(
             children: <Widget>[
               Container(
                 height: (pointsSucesfullyGenerated
-                    ? SizeConfig.blockSizeVertical * 69
-                    : SizeConfig.blockSizeVertical * 62),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(45.0)),
-                  border: Border.all(
-                      width: SizeConfig.blockSizeHorizontal * 3.5,
-                      color: Colors.white),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.2),
-                      spreadRadius: 4,
-                      blurRadius: 10,
-                      offset: Offset(0, 6), // changes position of shadow
-                    ),
-                  ],
+                    ? SizeConfig.blockSizeVertical * 57
+                    : SizeConfig.blockSizeVertical * 50),
+                child: GoogleMap(
+                      mapToolbarEnabled: false,
+                      myLocationEnabled: true,
+                      compassEnabled: true,
+                      tiltGesturesEnabled: false,
+                      markers: _markers,
+                      polylines: _polylines,
+                      mapType: MapType.normal,
+                      initialCameraPosition: initialCameraPosition,
+                      onTap: (LatLng loc) {
+                        pinPillPosition = -100;
+                      },
+                      circles: _circles,
+                      onMapCreated: (GoogleMapController controller) {
+                        controller.setMapStyle(Utils.MapStyles.NightSTyle);
+                        _controller.complete(controller);
+                      }),
                 ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.all(Radius.circular(30.0)),
-                  child: Stack(
-                    children: <Widget>[
-                      GoogleMap(
-                          mapToolbarEnabled: false,
-                          myLocationEnabled: true,
-                          compassEnabled: true,
-                          tiltGesturesEnabled: false,
-                          markers: _markers,
-                          polylines: _polylines,
-                          mapType: MapType.normal,
-                          initialCameraPosition: initialCameraPosition,
-                          onTap: (LatLng loc) {
-                            pinPillPosition = -100;
-                          },
-                          circles: _circles,
-                          onMapCreated: (GoogleMapController controller) {
-                            controller.setMapStyle(Utils.MapStyles.NightSTyle);
-                            _controller.complete(controller);
-                          }),
-                    ],
-                  ),
-                ),
-              ),
-              Align(
-                  alignment: Alignment.bottomCenter,
-                  child: (pointsSucesfullyGenerated
-                      ? SizedBox(height: 0)
-                      : ButtonGoMainPage(this.callbackGoButtonMainPage,
-                          pointsSucesfullyGenerated)))
             ],
           ),
         ),
         SizedBox(height: SizeConfig.blockSizeVertical * 2),
         Container(
           height: (pointsSucesfullyGenerated
-              ? SizeConfig.blockSizeVertical * 18.5
+              ? SizeConfig.blockSizeVertical * 14.5
               : SizeConfig.blockSizeVertical * 21.5),
           width: SizeConfig.blockSizeHorizontal * 100,
           child: (pointsSucesfullyGenerated
@@ -321,7 +293,12 @@ class RandonautState extends State<Randonaut> {
                               width: SizeConfig.blockSizeHorizontal * 40,
                               height: SizeConfig.blockSizeHorizontal * 5,
                               child: AutoSizeText(
-                                retrievedPointType,
+                                (geoLocatorlocation[0]
+                                            .administrativeArea
+                                            .toString() !=
+                                        ''
+                                    ? geoLocatorlocation[0].administrativeArea
+                                    : geoLocatorlocation[0].country.toString()),
                                 textAlign: TextAlign.left,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
@@ -329,6 +306,13 @@ class RandonautState extends State<Randonaut> {
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white),
                               ),
+                            ),
+                            AutoSizeText(
+                              retrievedPointType,
+                              textAlign: TextAlign.left,
+                              overflow: TextOverflow.ellipsis,
+                              style:
+                                  TextStyle(fontSize: 12, color: Colors.white),
                             ),
                             SizedBox(height: SizeConfig.blockSizeVertical * 1),
                             Row(
@@ -374,34 +358,33 @@ class RandonautState extends State<Randonaut> {
                     Container(
                         height: SizeConfig.blockSizeVertical * 100,
                         child: Column(children: <Widget>[
-                          SizedBox(height: SizeConfig.blockSizeHorizontal * 10),
+                          SizedBox(height: SizeConfig.blockSizeHorizontal * 2),
                           Container(
                             child: HelpButton(this.callbackHelp),
                           ),
                           SizedBox(height: SizeConfig.blockSizeHorizontal * 4),
-//                          IconButton(
-//                            icon: new Image.asset('assets/img/Owl_Token.png'),
-//                            onPressed: () {
-//                              Navigator.push(
-//                                  context, FadeRoute(page: TokenInfo()));
-//                            },
-//                          ),
-//                          Container(
-//                              child: AutoSizeText(
-//                                  '∞',
-//                                  maxLines: 1,
-//                                  minFontSize: 12,
-//                                  maxFontSize: 23,
-//                                  style: TextStyle(
-//                                      fontSize: 16,
-//                                      color: Colors.white,
-//                                      fontWeight: FontWeight.bold,
-//                                      fontFamily: ''))),
+                          IconButton(
+                            icon: new Image.asset('assets/img/Owl_Token.png'),
+                            onPressed: () {
+                              Navigator.push(
+                                  context, FadeRoute(page: TokenInfo()));
+                            },
+                          ),
+                          Container(
+                              child: AutoSizeText(
+                                  '∞',
+                                  maxLines: 1,
+                                  minFontSize: 12,
+                                  maxFontSize: 23,
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: ''))),
                         ])),
                     SizedBox(width: SizeConfig.blockSizeHorizontal * 3),
                     Column(
                       children: <Widget>[
-                        SetWaterPoints(this.setCheckWaterCallback),
                         SizedBox(height: SizeConfig.blockSizeVertical * 1),
                         PointsButtons(this.callbackSelectedPoint)
                       ],
@@ -561,27 +544,27 @@ class RandonautState extends State<Randonaut> {
   }
 
   void onAddMarkerButtonPressed() async {
-    bool hasAccess = true;
+    bool hasAccess = false;
 
     //Verifiy if the point selected is the following and whether the user has enough points
     //Infnite point users are noted as having -333 points
-//    switch (selectedRandomness.toString()) {
-//      case '1':
-//        if (globals.currentUser.points >= randomPointCost || globals.currentUser.points == -333) {
-//          hasAccess = true;
-//        }
-//        break;
-//      case '2':
-//        if (globals.currentUser.points >= quantumPointCost || globals.currentUser.points == -333) {
-//          hasAccess = true;
-//        }
-//        break;
-//      case '3':
-//        if (globals.currentUser.points >= amplificationBiasPointCost || globals.currentUser.points == -333) {
-//          hasAccess = true;
-//        }
-//        break;
-//    }
+    switch (selectedRandomness.toString()) {
+      case '1':
+        if (globals.currentUser.points >= randomPointCost || globals.currentUser.points == -333) {
+          hasAccess = true;
+        }
+        break;
+      case '2':
+        if (globals.currentUser.points >= quantumPointCost || globals.currentUser.points == -333) {
+          hasAccess = true;
+        }
+        break;
+      case '3':
+        if (globals.currentUser.points >= amplificationBiasPointCost || globals.currentUser.points == -333) {
+          hasAccess = true;
+        }
+        break;
+    }
 
     //User doesn't have enough points to continue
     if (!hasAccess) {
@@ -635,26 +618,26 @@ class RandonautState extends State<Randonaut> {
     //Remove points locally
     //Verifiy if the point selected is the following and whether the user has enough points
     //Infnite point users are noted as having -333 points
-//    switch (selectedRandomness.toString()) {
-//      case '1':
-//        if (globals.currentUser.points >= randomPointCost && globals.currentUser.points != -333) {
-//          globals.currentUser.points =
-//              globals.currentUser.points - randomPointCost;
-//        }
-//        break;
-//      case '2':
-//        if (globals.currentUser.points >= quantumPointCost && globals.currentUser.points != -333) {
-//          globals.currentUser.points =
-//              globals.currentUser.points - quantumPointCost;
-//        }
-//        break;
-//      case '3':
-//        if (globals.currentUser.points >= amplificationBiasPointCost && globals.currentUser.points != -333) {
-//          globals.currentUser.points =
-//              globals.currentUser.points - amplificationBiasPointCost;
-//        }
-//        break;
-//    }
+    switch (selectedRandomness.toString()) {
+      case '1':
+        if (globals.currentUser.points >= randomPointCost && globals.currentUser.points != -333) {
+          globals.currentUser.points =
+              globals.currentUser.points - randomPointCost;
+        }
+        break;
+      case '2':
+        if (globals.currentUser.points >= quantumPointCost && globals.currentUser.points != -333) {
+          globals.currentUser.points =
+              globals.currentUser.points - quantumPointCost;
+        }
+        break;
+      case '3':
+        if (globals.currentUser.points >= amplificationBiasPointCost && globals.currentUser.points != -333) {
+          globals.currentUser.points =
+              globals.currentUser.points - amplificationBiasPointCost;
+        }
+        break;
+    }
 
     //Set sucessfully generated
     this.pointsSucesfullyGenerated = true;
@@ -670,10 +653,10 @@ class RandonautState extends State<Randonaut> {
 
     try {
       await Future.delayed(const Duration(milliseconds: 500), () async {
-//        geoLocatorlocation = await Geolocator().placemarkFromCoordinates(
-//          attractors.center.point.latitude,
-//          attractors.center.point.longitude,
-//        );
+        geoLocatorlocation = await Geolocator().placemarkFromCoordinates(
+          attractors.center.point.latitude,
+          attractors.center.point.longitude,
+        );
       });
     } catch (error) {
       geoLocatorlocation = '';

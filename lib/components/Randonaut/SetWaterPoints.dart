@@ -23,18 +23,18 @@ class _SetWater extends State<SetWaterPoints> {
   double _sigmaY = 0.0; // from 0-10
   double _opacity = 0.1; // from 0-1.0
 
-  bool waterPointsEnabled = false;
-  bool waterPointsBought = false;
-  bool status = false;
+  bool waterPointsEnabled = true;
+  bool waterPointsBought = true;
+  bool status = true;
 
   @override
   void initState() {
     ///TODO isSubscriptionEnabled
-    if (globals.currentUser.isIapSkipWaterPoints != 0) {
-      waterPointsBought = true;
-    } else {
-      waterPointsBought = false;
-    }
+//    if (globals.currentUser.isIapSkipWaterPoints != 0) {
+//      waterPointsBought = true;
+//    } else {
+//      waterPointsBought = false;
+//    }
     super.initState();
   }
 

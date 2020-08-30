@@ -7,6 +7,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:loading_animations/loading_animations.dart';
 import 'package:location/location.dart';
 
 class LoadingPoints extends StatefulWidget {
@@ -92,21 +93,21 @@ class LoadingPointsState extends State<LoadingPoints>
                           Container(
                             height: SizeConfig.blockSizeVertical * 10,
                             width: SizeConfig.blockSizeHorizontal * 33.3,
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 0.0, right: 0),
-                              child: Align(
-                                alignment: Alignment.center,
-                                child: IconButton(
-                                  iconSize: SizeConfig.blockSizeVertical * 100,
-                                  icon: ImageIcon(
-                                    AssetImage('assets/img/Owl.png'),
-                                    color: Colors.white,
-                                  ),
-                                  onPressed: () {},
-                                ),
-                              ),
-                            ),
+//                            child: Padding(
+//                              padding:
+//                                  const EdgeInsets.only(top: 0.0, right: 0),
+//                              child: Align(
+//                                alignment: Alignment.center,
+//                                child: IconButton(
+//                                  iconSize: SizeConfig.blockSizeVertical * 100,
+//                                  icon: ImageIcon(
+//                                    AssetImage('assets/img/Owl.png'),
+//                                    color: Colors.white,
+//                                  ),
+//                                  onPressed: () {},
+//                                ),
+//                              ),
+//                            ),
                           ),
                           SizedBox(height: SizeConfig.blockSizeVertical * 15),
                           Container(
@@ -125,16 +126,7 @@ class LoadingPointsState extends State<LoadingPoints>
                           Container(
                             width: SizeConfig.blockSizeHorizontal * 25,
                             height: SizeConfig.blockSizeVertical * 10,
-                            child: new AnimatedBuilder(
-                              animation: _animation,
-                              builder: (BuildContext context, Widget child) {
-                                String frame = _animation.value.toString();
-                                return new Image.asset(
-                                  'assets/img/Loading_owl/FlyingOwl-${frame}.png',
-                                  gaplessPlayback: true,
-                                );
-                              },
-                            ),
+                            child: LoadingBouncingGrid.circle()
                           ),
                           SizedBox(height: SizeConfig.blockSizeVertical * 10),
                           Container(
