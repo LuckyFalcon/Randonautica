@@ -275,7 +275,7 @@ class RandonautState extends State<Randonaut> {
         Container(
           height: (pointsSucesfullyGenerated
               ? SizeConfig.blockSizeVertical * 18.5
-              : SizeConfig.blockSizeVertical * 21.5),
+              : SizeConfig.blockSizeVertical * 23.5),
           width: SizeConfig.blockSizeHorizontal * 100,
           child: (pointsSucesfullyGenerated
               ? Row(
@@ -765,7 +765,9 @@ class RandonautState extends State<Randonaut> {
     //Set everything to true
     bool evertyhingDialogAccepted = prefs.getBool("everything");
     if (evertyhingDialogAccepted != true) {
-      await giveEverything(context);
+      Future.delayed(Duration(seconds: 3), () async {
+        await giveEverything(context);
+      });
     }
   }
 

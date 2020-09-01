@@ -94,6 +94,11 @@ flutter:
     - i18n/es.json
     - i18n/zh_TW.json
     - i18n/zh.json
+    - i18n/ru.json
+    - i18n/de.json
+    - i18n/fr.json
+    - i18n/kor.json
+    - i18n/nl.json
     - assets/img/Navigation/List.svg
     - assets/img/Navigation/Globe.svg
     - assets/img/Navigation/Labs.svg

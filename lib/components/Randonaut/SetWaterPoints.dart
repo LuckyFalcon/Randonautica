@@ -67,6 +67,7 @@ class _SetWater extends State<SetWaterPoints> {
             children: <Widget>[
               AutoSizeText(
                   AppLocalizations.of(context).translate('water').toUpperCase(),
+                  maxLines: 1,
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 15,

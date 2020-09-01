@@ -91,6 +91,7 @@ class _SetRandomness extends State<SetRandomness> {
                   AppLocalizations.of(context)
                       .translate('random')
                       .toUpperCase(),
+                  maxLines: 1,
                   style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
             ),
           ),
@@ -136,6 +137,7 @@ class _SetRandomness extends State<SetRandomness> {
                   AppLocalizations.of(context)
                       .translate('bias')
                       .toUpperCase(),
+                  maxLines: 1,
                   style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
             ),
           ),

@@ -32,6 +32,7 @@ class SlideWarningItem extends StatelessWidget {
                   returnWarningSlide(index, context).firstLine,
                   textAlign: TextAlign.center,
                   group: AutoSizeTextGroup,
+                  maxLines: 1,
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.blueAccent,
@@ -44,6 +45,7 @@ class SlideWarningItem extends StatelessWidget {
                   returnWarningSlide(index, context).secondLine,
                   textAlign: TextAlign.center,
                   group: AutoSizeTextGroup,
+                  maxLines: 1,
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.blueAccent,

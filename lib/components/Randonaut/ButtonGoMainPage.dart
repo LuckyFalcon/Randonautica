@@ -1,4 +1,5 @@
 import 'package:app/utils/size_config.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -56,7 +57,8 @@ class _ButtonGoMainPage extends State<ButtonGoMainPage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Text(AppLocalizations.of(context).translate('go').toUpperCase(),
+                AutoSizeText(AppLocalizations.of(context).translate('go').toUpperCase(),
+                    maxLines: 1,
                     style: TextStyle(
                         fontSize: 40,
                         color: Colors.white,
