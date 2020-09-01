@@ -126,7 +126,12 @@ class LoadingPointsState extends State<LoadingPoints>
                           Container(
                             width: SizeConfig.blockSizeHorizontal * 25,
                             height: SizeConfig.blockSizeVertical * 10,
-                            child: LoadingBouncingGrid.circle()
+                            child: LoadingBouncingGrid.square(
+                              borderColor: Colors.cyan,
+                              borderSize: 3.0,
+                              backgroundColor: Colors.cyanAccent,
+                              duration: Duration(milliseconds: 500),
+                            )
                           ),
                           SizedBox(height: SizeConfig.blockSizeVertical * 10),
                           Container(
