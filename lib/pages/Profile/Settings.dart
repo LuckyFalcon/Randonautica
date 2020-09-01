@@ -168,38 +168,38 @@ class _SettingsState extends State<Settings> {
                               _reportABug();
                             },
                           ),
-                          _buildDivider(),
-                          ListTile(
-                            leading: Icon(
-                              Icons.location_on,
-                              color: Colors.purple,
-                            ),
-                            title: AutoSizeText(
-                              AppLocalizations.of(context)
-                                  .translate('privacy_enquiry'),
-                            ),
-                            trailing: Icon(Icons.keyboard_arrow_right),
-                            onTap: () {
-                              //open email
-                              _privacyEnquiry();
-                            },
-                          ),
-                          _buildDivider(),
-                          ListTile(
-                            leading: Icon(
-                              Icons.location_on,
-                              color: Colors.purple,
-                            ),
-                            title: AutoSizeText(
-                              AppLocalizations.of(context)
-                                  .translate('privacy_policy'),
-                            ),
-                            trailing: Icon(Icons.keyboard_arrow_right),
-                            onTap: () {
-                              //open privacy policy
-                              _OpenPrivacyPolicy();
-                            },
-                          ),
+//                          _buildDivider(),
+//                          ListTile(
+//                            leading: Icon(
+//                              Icons.location_on,
+//                              color: Colors.purple,
+//                            ),
+//                            title: AutoSizeText(
+//                              AppLocalizations.of(context)
+//                                  .translate('privacy_enquiry'),
+//                            ),
+//                            trailing: Icon(Icons.keyboard_arrow_right),
+//                            onTap: () {
+//                              //open email
+//                              _privacyEnquiry();
+//                            },
+//                          ),
+//                          _buildDivider(),
+//                          ListTile(
+//                            leading: Icon(
+//                              Icons.location_on,
+//                              color: Colors.purple,
+//                            ),
+//                            title: AutoSizeText(
+//                              AppLocalizations.of(context)
+//                                  .translate('privacy_policy'),
+//                            ),
+//                            trailing: Icon(Icons.keyboard_arrow_right),
+//                            onTap: () {
+//                              //open privacy policy
+//                              _OpenPrivacyPolicy();
+//                            },
+//                          ),
                         ],
                       ),
                     ),
