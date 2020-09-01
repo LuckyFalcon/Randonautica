@@ -13,7 +13,7 @@
 
   "random": "ANU",
   "quantum": "Temporal",
-  "bias": "CamRNG",
+  "bias": "Local",
   "anomaly": "anomaly",
   "attractor": "attractor",
   "void": "void",
