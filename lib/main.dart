@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:theme_provider/theme_provider.dart';
 
 import 'helpers/AppLocalizations.dart';
@@ -32,7 +33,7 @@ class Randonautica extends StatelessWidget {
                 highlightColor: Colors.transparent,
                 splashColor: Colors.transparent,
                 brightness: _brightness,
-                fontFamily: 'Interstate',
+           //     fontFamily: 'Interstate',
                 primaryColor: Color(0xff5A87E4),
                 accentColor:  Color(0xff36CCDB),
               ),
@@ -44,7 +45,7 @@ class Randonautica extends StatelessWidget {
                 highlightColor: Colors.transparent,
                 splashColor: Colors.transparent,
                 brightness: _brightness,
-                fontFamily: 'Interstate',
+              //  fontFamily: 'Interstate',
                 primaryColor: Color(0xff383B46),
                 accentColor:  Color(0xff5786E1),
               ),

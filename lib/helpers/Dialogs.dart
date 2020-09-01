@@ -2,14 +2,13 @@ import 'dart:ui';
 
 import 'package:app/components/Dialogs/DialogButton.dart';
 import 'package:app/helpers/FadeRoute.dart';
-import 'package:app/pages/Shop/Shop.dart';
 import 'package:app/utils/size_config.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inapp_purchase/flutter_inapp_purchase.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-import '../old/RadiusSlider.dart';
 import 'AppLocalizations.dart';
 
 showAlertDialog(BuildContext context) {
@@ -56,80 +55,6 @@ showAlertDialog(BuildContext context) {
                           "Great! Now carefully go to the point. Always procceed with caution. Do not attempt to enter or explore unsafe environments!",
                           style: TextStyle(color: Colors.black),
                         )
-                      ],
-                    ),
-                  ),
-                  Align(
-                      alignment: Alignment.bottomCenter,
-                      child: SizedBox(
-                        width: 320.0,
-                        child: RaisedButton(
-                          elevation: 5,
-                          onPressed: () => Navigator.pop(context, true),
-                          child: Text(
-                            "Ok",
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          color: const Color(0xFF1BC0C5),
-                        ),
-                      )),
-                ],
-              ),
-            ),
-          ),
-        );
-      }).then((exit) {
-    if (exit == null) return;
-
-    if (exit) {
-      // user pressed Yes button
-    } else {
-      // user pressed No button
-    }
-  });
-}
-
-setSliderDialog(BuildContext context) {
-  showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return Dialog(
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20.0)), //this right here
-          child: Container(
-            height: 350,
-            child: Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Stack(
-                children: [
-                  Align(
-                      alignment: Alignment.topCenter,
-                      child: Container(
-                        height: 120.0,
-                        width: 120.0,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage('assets/img/Andronaut.png'),
-                            fit: BoxFit.fill,
-                          ),
-                          shape: BoxShape.circle,
-                        ),
-                      )),
-                  Align(
-                    alignment: Alignment.center,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Anomaly Found",
-                          style: TextStyle(
-                              color: Colors.blue,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 25),
-                        ),
-                        SizedBox(height: 15),
-                        RadiusSlider()
                       ],
                     ),
                   ),
@@ -354,7 +279,7 @@ setBuyDialog(BuildContext context) {
                                                 height: SizeConfig
                                                         .blockSizeVertical *
                                                     90,
-                                                child: Shop(),
+                                                //child: Shop(),
                                               ),
                                             ));
                                   },
@@ -732,11 +657,11 @@ notEnoughTokensDialog(BuildContext context) {
   dialogRetrievePointCallback() {
 
     Navigator.pop(context);
-
-    //open shop
-    Navigator.push(
-        context,
-        FadeRoute(page: Shop()));
+//
+//    //open shop
+//    Navigator.push(
+//        context,
+//        FadeRoute(page: Shop()));
 
   }
 
@@ -1392,6 +1317,145 @@ setTitleDialog(BuildContext context, callback) {
               },
             )
           ],
+        );
+      });
+}
+
+giveEverything(BuildContext context) {
+
+  dialogRetrievePointCallback() {
+
+    Navigator.pop(context);
+
+  }
+
+  dialogCancelCallback() async {
+
+    //Set SharedPreferences
+    Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+
+    //Await SharedPreferences future object
+    final SharedPreferences prefs = await _prefs;
+
+    //Set everything to true
+    prefs.setBool("everything", true);
+
+    Navigator.pop(context);
+  }
+
+  showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return new BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+          child: Align(
+            alignment: Alignment.center,
+            child: Container(
+              height: SizeConfig.blockSizeVertical * 80,
+              width: SizeConfig.blockSizeHorizontal * 80,
+              child: Stack(
+                children: <Widget>[
+                  Container(
+                      height: SizeConfig.blockSizeVertical * 80,
+                      width: SizeConfig.blockSizeHorizontal * 80,
+                      ///This is 70% of the Vertical / Height for this container in this class
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(45.0)),
+                        boxShadow: [
+                          BoxShadow(
+                              blurRadius: 8,
+                              offset: Offset(0, 15),
+                              color: Colors.black.withOpacity(.6),
+                              spreadRadius: -9)
+                        ],
+                      ),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.all(Radius.circular(45.0)),
+                        ),
+                        child: Column(
+                          children: <Widget>[
+                            SizedBox(height: SizeConfig.blockSizeVertical * 1),
+                            Container(
+                              height: SizeConfig.blockSizeVertical * 12.5,
+                              child: Material(
+                                color: Colors.white,
+                                child:  AutoSizeText(
+                                  '∞',
+                                  maxLines: 1,
+                                  minFontSize: 12,
+                                  maxFontSize: 256,
+                                  style: TextStyle(
+                                      fontSize: 256,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: '')),),
+                            ),
+                            SizedBox(height: SizeConfig.blockSizeVertical * 0.5),
+                            Container(
+                              height: SizeConfig.blockSizeVertical * 20,
+                              width: SizeConfig.blockSizeHorizontal * 75,
+                              child: Material(
+                                  color: Colors.white,
+                                  child: AutoSizeText(
+                                      AppLocalizations.of(context)
+                                          .translate(
+                                          'give_everything'),
+                                          //.toUpperCase(),
+                                      maxLines: 20,
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15,
+                                          color: Color(0xff6081E2)))),
+                            ),
+                            Container(
+                              height: SizeConfig.blockSizeVertical * 12,
+                              width: SizeConfig.blockSizeHorizontal * 75,
+                              child: Material(
+                                  color: Colors.white,
+                                  child: AutoSizeText(
+                                      AppLocalizations.of(context)
+                                          .translate(
+                                          'give_everything_2'),
+                                      //.toUpperCase(),
+                                      maxLines: 20,
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15,
+                                          color: Color(0xff6081E2)))),
+                            ),
+                            Container(
+                              height: SizeConfig.blockSizeVertical * 3,
+                              width: SizeConfig.blockSizeHorizontal * 75,
+                              child: Material(
+                                  color: Colors.white,
+                                  child: AutoSizeText(
+                                      AppLocalizations.of(context)
+                                          .translate(
+                                          'give_everything_3'),
+                                      //.toUpperCase(),
+                                      maxLines: 20,
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15,
+                                          color: Color(0xff6081E2)))),
+                            ),
+                            SizedBox(height: SizeConfig.blockSizeVertical * 5),
+                            DialogButton(dialogRetrievePointCallback, "understood"),
+                            SizedBox(height: SizeConfig.blockSizeVertical * 1.5),
+                            DialogButton(dialogCancelCallback, "understood_and_save"),
+                          ],
+                        ),
+                      )),
+                ],
+              ),
+            ),
+          ),
         );
       });
 }

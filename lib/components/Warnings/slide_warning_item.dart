@@ -18,8 +18,8 @@ class SlideWarningItem extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
-        Container(
-            child: Image(image: AssetImage(slideWarningList[index].imageUrl))),
+//        Container(
+//            child: Image(image: AssetImage(slideWarningList[index].imageUrl))),
         Container(
             width: SizeConfig.blockSizeHorizontal * 65,
             height: SizeConfig.blockSizeVertical * 10,

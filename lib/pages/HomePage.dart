@@ -3,10 +3,8 @@ import 'dart:async';
 import 'package:app/components/BottomBar.dart';
 import 'package:app/components/TopBar.dart';
 import 'package:app/components/TopBarV2.dart';
+import 'package:app/helpers/Dialogs.dart';
 import 'package:app/helpers/SignInStreak.dart';
-import 'package:app/pages/Feed/TripFeed.dart';
-import 'package:app/pages/Lab/Lab.dart';
-import 'package:app/pages/List/TripList.dart';
 import 'package:app/pages/Randonaut/Randonaut.dart';
 import 'package:app/utils/BackgroundColor.dart' as backgrounds;
 import 'package:app/utils/size_config.dart';
@@ -14,8 +12,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import 'Randonaut/RandonautV2.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key, this.homePageTitle}) : super(key: key);
@@ -30,7 +26,7 @@ class _HomePageState extends State<HomePage> {
   /// TODO Check if this is legit: https://stackoverflow.com/questions/56639529/duplicate-class-com-google-common-util-concurrent-listenablefuture-found-in-modu
   int selectedNavigationIndex = 0;
 
-  final GlobalKey<TripListState> _TripListKey = GlobalKey();
+  //final GlobalKey<TripListState> _TripListKey = GlobalKey();
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -45,7 +41,6 @@ class _HomePageState extends State<HomePage> {
 
     super.initState();
    // updateToken();
-
   }
 
   void selectedNavigationIndexCallback(int selectedNavigationIndex) {
@@ -56,7 +51,7 @@ class _HomePageState extends State<HomePage> {
 
   void updateStateCallback() {
     //Update list state
-    _TripListKey.currentState.updateState();
+  //  _TripListKey.currentState.updateState();
   }
 
   void updateToken() async {
@@ -91,7 +86,7 @@ class _HomePageState extends State<HomePage> {
           decoration: backgrounds.dark,
           child: Column(children: <Widget>[
            // TopBarV2(),
-            Randonaut(this.updateStateCallback),
+            Randonaut(),
 
 //            BottomBar(
 //                this.selectedNavigationIndexCallback, selectedNavigationIndex),

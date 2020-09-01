@@ -37,19 +37,12 @@ class _SettingsState extends State<Settings> {
 
     Uri _emailLaunchUri = Uri(
         scheme: 'mailto',
-        path: 'support@randonautica.com',
+        path: 'funxcorp@gmail.com',
         queryParameters: {
           'subject': "Bug report",
           'body': 'Type your report here ' +
               '<br></br>' +
-              '<br></br>' +
-              '   These are your user details to identify your acccount. Depending on the request you can remove these: ' +
-              '<br></br>' +
-              '   id: ' + currentUser.uid +
-              '<br></br>' +
-              '   email: ' + currentUser.email +
-              '<br></br>' +
-              '   platform: ' + platform
+              '<br></br>'
     });
 
     email =  _emailLaunchUri.toString().replaceAll("+", "%20");
@@ -73,20 +66,13 @@ class _SettingsState extends State<Settings> {
 
     Uri _emailLaunchUri = Uri(
         scheme: 'mailto',
-        path: 'support@randonautica.com',
+        path: 'funxcorp@gmail.com',
         queryParameters: {
           'subject': AppLocalizations.of(context)
               .translate('navigate_to_bot'),
           'body': 'Type your privacy request here ' +
               '<br></br>' +
-              '<br></br>' +
-              '   These are your user details to identify your acccount. Depending on the request you can remove these: ' +
-              '<br></br>' +
-              '   id: ' + currentUser.uid +
-              '<br></br>' +
-              '   email: ' + currentUser.email +
-              '<br></br>' +
-              '   platform: ' + platform
+              '<br></br>'
         });
 
     email =  _emailLaunchUri.toString().replaceAll("+", "%20");

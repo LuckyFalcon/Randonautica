@@ -18,7 +18,7 @@ Future<Attractors> fetchAttractors(int radius, double x, double y, selectedPoint
   try {
     //Get Attractors from API
     final response = await http.get(
-        'http://192.168.248.241:7071/getAttractors?radius=' + radius.toString() +
+        'https://randonautica-v2.azure-api.net/getAttractors?radius=' + radius.toString() +
             '&x=' + x.toString() + '&y=' + y.toString() +
             '&selected=$selectedPoint&source=$selectedRandomness&checkwater=$checkWater',
         headers: {

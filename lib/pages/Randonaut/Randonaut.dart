@@ -1,8 +1,6 @@
 import 'dart:async';
 import 'dart:math';
 
-import 'package:app/api/saveTrip.dart';
-import 'package:app/api/visitTrip.dart';
 import 'package:app/components/Randonaut/ButtonGoMainPage.dart';
 import 'package:app/components/Randonaut/FinishTripButton.dart';
 import 'package:app/components/Randonaut/HelpButton.dart';
@@ -19,9 +17,8 @@ import 'package:app/helpers/OpenGoogleMaps.dart';
 import 'package:app/models/Attractors.dart';
 import 'package:app/models/UnloggedTrip.dart';
 import 'package:app/models/pin_pill_info.dart';
-import 'package:app/pages/Token/TokenInfo.dart';
+import 'package:app/pages/Profile/Settings.dart';
 import 'package:app/utils/MapStyles.dart' as Utils;
-import 'package:app/utils/currentUser.dart' as globals;
 import 'package:app/utils/size_config.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
@@ -30,11 +27,11 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:share/share.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tutorial_coach_mark/animated_focus_light.dart';
 import 'package:tutorial_coach_mark/target_position.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 
-import '../../storage/unloggedTripsDatabase.dart';
 import 'Loading/LoadingPoints.dart';
 import 'Loading/WarningScreens.dart';
 
@@ -44,9 +41,11 @@ const LatLng SOURCE_LOCATION = LatLng(42.747932, -71.167889);
 const LatLng DEST_LOCATION = LatLng(37.422, -122.084);
 
 class Randonaut extends StatefulWidget {
-  Function callback;
+  //Function callback;
 
-  Randonaut(this.callback);
+  //Randonaut(this.callback);
+
+  Randonaut();
 
   @override
   State<Randonaut> createState() => RandonautState();
@@ -214,7 +213,7 @@ class RandonautState extends State<Randonaut> {
           ///This is 60% of the Vertical / Height for this container in this class
           height: (pointsSucesfullyGenerated
               ? SizeConfig.blockSizeVertical * 70
-              : SizeConfig.blockSizeVertical * 65),
+              : SizeConfig.blockSizeVertical * 66),
 
           ///This is 80% of the Horizontal / Width for this container in this class
           width: SizeConfig.blockSizeHorizontal * 80,
@@ -421,9 +420,7 @@ class RandonautState extends State<Randonaut> {
   }
 
   void callbackHelp() {
-    setState(() {
-      showTutorial();
-    });
+    Navigator.push(context, FadeRoute(page: Settings()));
   }
 
   void setRadiusCallback(int setRadius) {
@@ -489,57 +486,53 @@ class RandonautState extends State<Randonaut> {
         savingPoint = true;
       });
       UnloggedTrip unloggedTrip;
-      await saveTrip(currentAttractors.gID.toString()).then((value) async => {
-            if (value == 200)
-              {
-                //Log trips
-                unloggedTrip = UnloggedTrip(
-                  is_visited: 0,
-                  is_logged: 0,
-                  is_favorite: 0,
-                  rng_type: selectedRandomness,
-                  point_type: selectedPoint,
-                  title: null,
-                  report: 0.toString(),
-                  what_3_words_address: null,
-                  what_3_nearest_place: null,
-                  what_3_words_country: null,
-                  center: currentAttractors.gID.toString(),
-                  latitude: currentAttractors.gID.toString(),
-                  longitude: currentAttractors.gID.toString(),
-                  location:
-                      (geoLocatorlocation[0].administrativeArea.toString() != ''
-                          ? geoLocatorlocation[0].administrativeArea
-                          : geoLocatorlocation[0].country.toString()),
-                  gid: currentAttractors.gID.toString(),
-                  tid: currentAttractors.gID.toString(),
-                  lid: currentAttractors.gID.toString(),
-                  type: currentAttractors.gID.toString(),
-                  x: currentAttractors.gID.toString(),
-                  y: currentAttractors.gID.toString(),
-                  distance: currentAttractors.gID.toString(),
-                  initial_bearing: currentAttractors.gID.toString(),
-                  final_bearing: currentAttractors.gID.toString(),
-                  side: currentAttractors.gID.toString(),
-                  distance_err: currentAttractors.gID.toString(),
-                  radiusM: currentAttractors.gID.toString(),
-                  number_points: currentAttractors.gID.toString(),
-                  mean: currentAttractors.gID.toString(),
-                  rarity: currentAttractors.gID.toString(),
-                  power_old: currentAttractors.gID.toString(),
-                  power: currentAttractors.gID.toString(),
-                  z_score: currentAttractors.gID.toString(),
-                  probability_single: currentAttractors.gID.toString(),
-                  integral_score: currentAttractors.gID.toString(),
-                  significance: currentAttractors.gID.toString(),
-                  probability: currentAttractors.gID.toString(),
-                  created: DateTime.now().toIso8601String(),
-                ),
 
-                //Insert trip into db
-                await insertUnloggedTrip(unloggedTrip)
-              }
-          });
+      //Log trips
+      unloggedTrip = UnloggedTrip(
+        is_visited: 0,
+        is_logged: 0,
+        is_favorite: 0,
+        rng_type: selectedRandomness,
+        point_type: selectedPoint,
+        title: null,
+        report: 0.toString(),
+        what_3_words_address: null,
+        what_3_nearest_place: null,
+        what_3_words_country: null,
+        center: currentAttractors.gID.toString(),
+        latitude: currentAttractors.gID.toString(),
+        longitude: currentAttractors.gID.toString(),
+        location:
+        (geoLocatorlocation[0].administrativeArea.toString() != ''
+            ? geoLocatorlocation[0].administrativeArea
+            : geoLocatorlocation[0].country.toString()),
+        gid: currentAttractors.gID.toString(),
+        tid: currentAttractors.gID.toString(),
+        lid: currentAttractors.gID.toString(),
+        type: currentAttractors.gID.toString(),
+        x: currentAttractors.gID.toString(),
+        y: currentAttractors.gID.toString(),
+        distance: currentAttractors.gID.toString(),
+        initial_bearing: currentAttractors.gID.toString(),
+        final_bearing: currentAttractors.gID.toString(),
+        side: currentAttractors.gID.toString(),
+        distance_err: currentAttractors.gID.toString(),
+        radiusM: currentAttractors.gID.toString(),
+        number_points: currentAttractors.gID.toString(),
+        mean: currentAttractors.gID.toString(),
+        rarity: currentAttractors.gID.toString(),
+        power_old: currentAttractors.gID.toString(),
+        power: currentAttractors.gID.toString(),
+        z_score: currentAttractors.gID.toString(),
+        probability_single: currentAttractors.gID.toString(),
+        integral_score: currentAttractors.gID.toString(),
+        significance: currentAttractors.gID.toString(),
+        probability: currentAttractors.gID.toString(),
+        created: DateTime.now().toIso8601String(),
+      );
+
+      //Insert trip into db
+     // await insertUnloggedTrip(unloggedTrip);
     }
   }
 
@@ -725,7 +718,7 @@ class RandonautState extends State<Randonaut> {
     controller.showMarkerInfoWindow(attractorPointMarkerId);
 
     //Update TripList state with callback to main
-    this.widget.callback();
+    //this.widget.callback();
   }
 
   Future<bool> enableGPS() async {
@@ -763,6 +756,17 @@ class RandonautState extends State<Randonaut> {
     } else {
       await gpsDisabledDialog(context, enableGPS);
     }
+    //Set SharedPreferences
+    Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+
+    //Await SharedPreferences future object
+    final SharedPreferences prefs = await _prefs;
+
+    //Set everything to true
+    bool evertyhingDialogAccepted = prefs.getBool("everything");
+    if (evertyhingDialogAccepted != true) {
+      await giveEverything(context);
+    }
   }
 
   void updatePinOnMap() async {
@@ -785,7 +789,7 @@ class RandonautState extends State<Randonaut> {
             reachedPoint = true;
             pointReached(context);
             //update trip on backend and set to visited
-            await visitTrip(currentAttractors.gID.toString());
+           // await visitTrip(currentAttractors.gID.toString());
           }
         }
       } catch (error) {
