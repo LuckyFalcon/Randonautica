@@ -60,7 +60,10 @@
   "warning_2_1": "awareness on all adventures.",
   "warning_3_1": "Bring a trash bag!",
   "warning_3_2": "Help pick up litter on your Journey.",
-
+  "failed_dialog_description_1": "finding a point has failed",
+  "failed_dialog_description_2": "receive another?",
+  "failed_dialog_yes": "yes please!",
+  "failed_dialog_no": "no, go back",
 
   "navigate_to_bot": "Randonautica Classic",
   "privacy_enquiry": "Privacy Enquiry",

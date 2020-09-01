@@ -24,7 +24,7 @@ class _SetWater extends State<SetWaterPoints> {
   double _opacity = 0.1; // from 0-1.0
 
   bool waterPointsEnabled = false;
-  bool waterPointsBought = false;
+  bool waterPointsBought = true;
   bool status = false;
 
   @override
