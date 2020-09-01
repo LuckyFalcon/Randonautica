@@ -97,7 +97,7 @@ flutter:
     - i18n/ru.json
     - i18n/de.json
     - i18n/fr.json
-    - i18n/kor.json
+    - i18n/ko.json
     - i18n/nl.json
     - assets/img/Navigation/List.svg
     - assets/img/Navigation/Globe.svg
