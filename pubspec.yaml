@@ -127,7 +127,6 @@ flutter:
     - assets/img/double_arrow.png
     - assets/img/Login/Google_icon.png
     - assets/img/Login/Apple_icon.png
-    - assets/img/Dialogs/GPSFailed.png
     - assets/img/Dialogs/LoginFailed.png
     - assets/img/Dialogs/TokensFailed.png
     - assets/img/Markers/marker.png
