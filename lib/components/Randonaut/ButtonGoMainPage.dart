@@ -39,7 +39,7 @@ class _ButtonGoMainPage extends State<ButtonGoMainPage> {
         height: SizeConfig.blockSizeVertical * 10,
         width: SizeConfig.blockSizeHorizontal * 30,
         decoration: BoxDecoration(
-            color: Color(0xff5D7FE0),
+            color: Color(0xff3B4B6C),
             borderRadius: BorderRadius.circular(90),
             boxShadow: [
               BoxShadow(
@@ -75,7 +75,7 @@ class _ButtonGoMainPage extends State<ButtonGoMainPage> {
               this.widget.callback(pressGoButton); //Callback to Main
             });
           },
-          color: Color(0xff4E86EA),
+          color: Color(0xff3B4B6C),
         ));
   }
 }
