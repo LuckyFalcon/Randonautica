@@ -765,7 +765,7 @@ class RandonautState extends State<Randonaut> {
     //Set everything to true
     bool evertyhingDialogAccepted = prefs.getBool("everything");
     if (evertyhingDialogAccepted != true) {
-      Future.delayed(Duration(seconds: 3), () async {
+      Future.delayed(Duration(seconds: 10), () async {
         await giveEverything(context);
       });
     }

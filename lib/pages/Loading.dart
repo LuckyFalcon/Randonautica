@@ -276,7 +276,7 @@ class _LoadingState extends State<Loading> {
                 SizedBox(height: SizeConfig.blockSizeVertical * 3),
                 Container(
                     width: SizeConfig.blockSizeHorizontal * 60,
-                    height: SizeConfig.blockSizeHorizontal * 13,
+                    height: SizeConfig.blockSizeHorizontal * 18,
                     child: LoadingBouncingGrid.square(
                       borderColor: Colors.cyan,
                       borderSize: 3.0,

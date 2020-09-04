@@ -31,10 +31,10 @@ BoxDecoration dark = BoxDecoration(
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
         stops: [0, 6.0],
-        colors: [Color(0xff383B46), Color(0xff42567F)]));
+        colors: [Color(0xff383B46), Color(0xff465D8B)]));
 
 LinearGradient darkGradient = LinearGradient(
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
         stops: [0, 6.0],
-        colors: [Color(0xff383B46), Color(0xff42567F)]);
+        colors: [Color(0xff383B46), Color(0xff465D8B)]);
