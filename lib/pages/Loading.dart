@@ -221,25 +221,25 @@ class _LoadingState extends State<Loading> {
 
   void doCheck(context) async {
     //Await SharedPreferences future object
-    final SharedPreferences prefs = await _prefs;
+//    final SharedPreferences prefs = await _prefs;
+//
+//    //Get Token
+//    bool seenTutorial = prefs.getBool("tutorial");
 
-    //Get Token
-    bool seenTutorial = prefs.getBool("tutorial");
-
-    if (seenTutorial != null) {
+  //  if (seenTutorial != null) {
       //Go to homepage
       Future.delayed(Duration(seconds: 3), () {
         Navigator.pushAndRemoveUntil(context, FadeRoute(page: HomePage()),
             ModalRoute.withName("/HomePage"));
       });
-    } else {
-      //Go to walktrhough
-       await prefs.setBool("tutorial", true);
-       Future.delayed(Duration(seconds: 3), () {
-        Navigator.pushAndRemoveUntil(context, FadeRoute(page: Walkthrough()),
-            ModalRoute.withName("/Walkthrough"));
-      });
-    }
+//    } else {
+//      //Go to walktrhough
+//       await prefs.setBool("tutorial", true);
+//       Future.delayed(Duration(seconds: 3), () {
+//        Navigator.pushAndRemoveUntil(context, FadeRoute(page: Walkthrough()),
+//            ModalRoute.withName("/Walkthrough"));
+//      });
+//    }
   }
 
   @override
