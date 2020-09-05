@@ -759,11 +759,11 @@ class RandonautState extends State<Randonaut> {
 
       //Await SharedPreferences future object
       final SharedPreferences prefs = await _prefs;
-      
+
       //Set everything to true
       bool evertyhingDialogAccepted = prefs.getBool("everything");
       if (evertyhingDialogAccepted != true) {
-        Future.delayed(Duration(seconds: 10), () async {
+        Future.delayed(Duration(seconds: 5), () async {
           await giveEverything(context);
         });
       }
