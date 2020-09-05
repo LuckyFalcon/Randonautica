@@ -61,5 +61,7 @@
     <string>To generate IDAs and blind spots</string>
     <key>NSLocationWhenInUseUsageDescription</key>
     <string>To generate IDAs and blind spots</string>
+    <key>io.flutter.embedded_views_preview</key>
+    <true/>
 </dict>
 </plist>
