@@ -31,7 +31,7 @@ class _WalkthroughState extends State<Walkthrough> {
 
       _pageController.animateToPage(
         _currentPage,
-        duration: Duration(milliseconds: 1000),
+        duration: Duration(milliseconds: 5000),
         curve: Curves.easeIn,
       );
     });

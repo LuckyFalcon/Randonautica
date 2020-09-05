@@ -24,17 +24,17 @@ class _SetWater extends State<SetWaterPoints> {
   double _opacity = 0.1; // from 0-1.0
 
   bool waterPointsEnabled = false;
-  bool waterPointsBought = false;
+  bool waterPointsBought = true;
   bool status = false;
 
   @override
   void initState() {
     ///TODO isSubscriptionEnabled
-    if (globals.currentUser.isIapSkipWaterPoints != 0) {
-      waterPointsBought = true;
-    } else {
-      waterPointsBought = false;
-    }
+//    if (globals.currentUser.isIapSkipWaterPoints != 0) {
+//      waterPointsBought = true;
+//    } else {
+//      waterPointsBought = false;
+//    }
     super.initState();
   }
 
@@ -67,6 +67,7 @@ class _SetWater extends State<SetWaterPoints> {
             children: <Widget>[
               AutoSizeText(
                   AppLocalizations.of(context).translate('water').toUpperCase(),
+                  maxLines: 1,
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 15,
@@ -106,7 +107,7 @@ class _SetWater extends State<SetWaterPoints> {
                             width: SizeConfig.blockSizeHorizontal * 12,
                             child: SwitchButton(
                               activeColor: Colors.white,
-                              inactiveColor: Color(0xff6FDDFE),
+                              inactiveColor: Color(0xff5987E3),
                               value: waterPointsEnabled,
                               onChanged: (value) {
                                 print("VALUE : $value");

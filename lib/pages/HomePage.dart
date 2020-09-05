@@ -2,10 +2,9 @@ import 'dart:async';
 
 import 'package:app/components/BottomBar.dart';
 import 'package:app/components/TopBar.dart';
+import 'package:app/components/TopBarV2.dart';
+import 'package:app/helpers/Dialogs.dart';
 import 'package:app/helpers/SignInStreak.dart';
-import 'package:app/pages/Feed/TripFeed.dart';
-import 'package:app/pages/Lab/Lab.dart';
-import 'package:app/pages/List/TripList.dart';
 import 'package:app/pages/Randonaut/Randonaut.dart';
 import 'package:app/utils/BackgroundColor.dart' as backgrounds;
 import 'package:app/utils/size_config.dart';
@@ -27,7 +26,7 @@ class _HomePageState extends State<HomePage> {
   /// TODO Check if this is legit: https://stackoverflow.com/questions/56639529/duplicate-class-com-google-common-util-concurrent-listenablefuture-found-in-modu
   int selectedNavigationIndex = 0;
 
-  final GlobalKey<TripListState> _TripListKey = GlobalKey();
+  //final GlobalKey<TripListState> _TripListKey = GlobalKey();
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -41,8 +40,7 @@ class _HomePageState extends State<HomePage> {
     //SignInStreak(context);
 
     super.initState();
-    updateToken();
-
+   // updateToken();
   }
 
   void selectedNavigationIndexCallback(int selectedNavigationIndex) {
@@ -53,7 +51,7 @@ class _HomePageState extends State<HomePage> {
 
   void updateStateCallback() {
     //Update list state
-    _TripListKey.currentState.updateState();
+  //  _TripListKey.currentState.updateState();
   }
 
   void updateToken() async {
@@ -85,22 +83,13 @@ class _HomePageState extends State<HomePage> {
       body: Container(
           height: SizeConfig.blockSizeVertical * 100,
           width: SizeConfig.blockSizeHorizontal * 100,
-          decoration: (selectedNavigationIndex == 3
-              ? backgrounds.dark
-              : backgrounds.normal),
+          decoration: backgrounds.dark,
           child: Column(children: <Widget>[
-            TopBar(),
-            IndexedStack(
-              children: <Widget>[
-                Randonaut(this.updateStateCallback),
-                TripList(key: _TripListKey),
-                TripFeed(),
-                Lab(),
-              ],
-              index: selectedNavigationIndex,
-            ),
-            BottomBar(
-                this.selectedNavigationIndexCallback, selectedNavigationIndex),
+           // TopBarV2(),
+            Randonaut(),
+
+//            BottomBar(
+//                this.selectedNavigationIndexCallback, selectedNavigationIndex),
           ])),
     );
   }

@@ -86,7 +86,7 @@ class _PoinstButtons extends State<PointsButtons> {
             height: SizeConfig.blockSizeVertical * 3.1,
             child: RaisedButton(
               elevation: 0,
-              color: pressAttention1 ? Color(0xff5987E3) : Color(0xff6BE5FE),
+              color: pressAttention1 ? Color(0xffA2D0FF) : Color(0xff769BE3),
               onPressed: () => buttonCheck(1),
               textColor: Colors.white,
               shape: RoundedRectangleBorder(
@@ -110,7 +110,7 @@ class _PoinstButtons extends State<PointsButtons> {
             height: SizeConfig.blockSizeVertical * 3.1,
             child: RaisedButton(
               elevation: 0,
-              color: pressAttention2 ? Color(0xff5987E3) : Color(0xff6BE5FE),
+              color: pressAttention2 ? Color(0xffA2D0FF) : Color(0xff769BE3),
               onPressed: () => buttonCheck(2),
               textColor: Colors.white,
               shape: RoundedRectangleBorder(
@@ -134,7 +134,7 @@ class _PoinstButtons extends State<PointsButtons> {
             height: SizeConfig.blockSizeVertical * 3.1,
             child: RaisedButton(
               elevation: 0,
-              color: pressAttention3 ? Color(0xff5987E3) : Color(0xff6BE5FE),
+              color: pressAttention3 ? Color(0xffA2D0FF) : Color(0xff769BE3),
               onPressed: () => buttonCheck(3),
               textColor: Colors.white,
               shape: RoundedRectangleBorder(

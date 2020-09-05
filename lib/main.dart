@@ -1,8 +1,9 @@
+import 'package:app/pages/HomePage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-//import 'package:in_app_purchase/in_app_purchase.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:theme_provider/theme_provider.dart';
 
 import 'helpers/AppLocalizations.dart';
@@ -24,16 +25,15 @@ class Randonautica extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ///Include this in main() so purchases are enabled
- //   InAppPurchaseConnection.enablePendingPurchases();
-
     return ThemeProvider(
         themes: [
           AppTheme(
               id: "default_theme", // Id(or name) of the theme(Has to be unique)
               data: ThemeData(
+                highlightColor: Colors.transparent,
+                splashColor: Colors.transparent,
                 brightness: _brightness,
-                fontFamily: 'Interstate',
+           //     fontFamily: 'Interstate',
                 primaryColor: Color(0xff5A87E4),
                 accentColor:  Color(0xff36CCDB),
               ),
@@ -42,8 +42,10 @@ class Randonautica extends StatelessWidget {
           AppTheme(
               id: "dark_theme", // Id(or name) of the theme(Has to be unique)
               data: ThemeData(
+                highlightColor: Colors.transparent,
+                splashColor: Colors.transparent,
                 brightness: _brightness,
-                fontFamily: 'Interstate',
+              //  fontFamily: 'Interstate',
                 primaryColor: Color(0xff383B46),
                 accentColor:  Color(0xff5786E1),
               ),
@@ -61,6 +63,12 @@ class Randonautica extends StatelessWidget {
                       Locale('en', 'US'),
                       Locale('ja', ''),
                       Locale('es', ''),
+                      Locale('ru', ''),
+                      Locale('ja', ''),
+                      Locale('de', ''),
+                      Locale('fr', ''),
+                      Locale('nl', ''),
+                      Locale('ko', ''),
                       Locale('zh', '')
                     ],
                     localizationsDelegates: [

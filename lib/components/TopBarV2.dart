@@ -12,48 +12,70 @@
 //import 'package:flutter_inapp_purchase/flutter_inapp_purchase.dart';
 //import 'package:flutter_svg/flutter_svg.dart';
 //
-//class TopBar extends StatefulWidget {
+//class TopBarV2 extends StatefulWidget {
 //
 //  State<StatefulWidget> createState() => new _TopBarState();
 //}
 //
 //
-//class _TopBarState extends State<TopBar> {
+//class _TopBarState extends State<TopBarV2> {
+//
 //  @override
 //  Widget build(BuildContext context) {
+//    double statusBarHeight = MediaQuery.of(context).padding.top;
+//    print(statusBarHeight);
 //    SizeConfig().init(context);
-//    return Container(
+//    return Padding(
+//        padding: new EdgeInsets.only(top: statusBarHeight, left: 0),
+//    child: Container(
 //      height: SizeConfig.blockSizeVertical * 10,
 //      width: SizeConfig.blockSizeHorizontal * 100,
-//      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+//      child: Row(children: [
 //        Container(
 //          height: SizeConfig.blockSizeVertical * 10,
 //          width: SizeConfig.blockSizeHorizontal * 33.3,
 //          child: Padding(
-//            padding: const EdgeInsets.only(top: 15, left: 15),
+//            padding: new EdgeInsets.only(top: statusBarHeight, left: 0),
 //            child: Align(
 //                alignment: Alignment.topLeft,
 //                child: Container(
 //                    width: SizeConfig.blockSizeHorizontal * 100,
-//                    child: Row(
-//                      children: <Widget>[
-//                        IconButton(
-//                          iconSize: 32,
-//                          icon:
-//                          ImageIcon(
-//                              AssetImage(
-//                                  'assets/img/Profile/Settings.png'),
-//                              size: 30.0,
-//                              color: Colors.white,),
-//                          onPressed: () {
-//                            //open settings
-//                            Navigator.push(
-//                                context,
-//                                FadeRoute(page: Settings()));
-//                          },
+//                    height: SizeConfig.blockSizeVertical * 5,
+//                  child:
+//                    Stack(
+//                      children: [
+//                        Container(
+//                          width: SizeConfig.blockSizeHorizontal * 40,
+//
+//                          decoration: BoxDecoration(
+//                            color: const Color(0xff5F6676),
+//                          ),
 //                        ),
+//                        Row(
+//                          children: <Widget>[
+//                            IconButton(
+//                              icon: new Image.asset('assets/img/Owl_Token.png'),
+//                              onPressed: () {
+//                                Navigator.push(
+//                                    context, FadeRoute(page: TokenInfo()));
+//                              },
+//                            ),
+//                            Container(
+//                                child: AutoSizeText(
+//                                    '∞',
+//                                    maxLines: 1,
+//                                    minFontSize: 12,
+//                                    maxFontSize: 23,
+//                                    style: TextStyle(
+//                                        fontSize: 16,
+//                                        color: Colors.white,
+//                                        fontWeight: FontWeight.bold,
+//                                        fontFamily: '')))
+//                          ],
+//                        )
 //                      ],
-//                    ))),
+//                    ),
+//                  )),
 //          ),
 //        ),
 //        Container(
@@ -70,38 +92,12 @@
 //                  color: Colors.white,
 //                ),
 //                onPressed: () {
-//
-//                },
-//              ),
-//            ),
-//          ),
-//        ),
-//        Container(
-//          height: SizeConfig.blockSizeVertical * 10,
-//          width: SizeConfig.blockSizeHorizontal * 33.3,
-//          child: Padding(
-//            padding: const EdgeInsets.only(top: 15, right: 15),
-//            child: Align(
-//              alignment: Alignment.topRight,
-//              child: IconButton(
-//                icon: Icon(
-//                  Icons.shopping_cart,
-//                  color: Colors.white,
-//                  size: 32.0,
-//                  semanticLabel:
-//                  'Text to announce in accessibility modes',
-//                ),
-//                onPressed: () {
-//                  //open shop
-//                  Navigator.push(
-//                      context,
-//                      FadeRoute(page: Shop()));
 //                },
 //              ),
 //            ),
 //          ),
 //        ),
 //      ]),
-//    );
+//    ));
 //  }
 //}

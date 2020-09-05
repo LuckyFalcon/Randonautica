@@ -79,8 +79,8 @@ class _SetRadius extends State<SetRadius> {
                           setRadiusDialog(context, this.setRadiusCallback);
                         },
                         child: IconButton(
-                          icon: ImageIcon(AssetImage('assets/img/double_arrow_left.png'),
-                              size: 64.0, color: Colors.white),
+                          icon:  Icon(Icons.arrow_back_ios,
+                              size: 16.0, color: Colors.white),
                           onPressed: () {
                             decreaseRadius();
                           },
@@ -109,8 +109,8 @@ class _SetRadius extends State<SetRadius> {
                           setRadiusDialog(context, this.setRadiusCallback);
                         },
                         child: IconButton(
-                          icon: ImageIcon(AssetImage('assets/img/double_arrow.png'),
-                              size: 64.0, color: Colors.white),
+                          icon:  Icon(Icons.arrow_forward_ios,
+                              size: 16.0, color: Colors.white),
                           onPressed: () {
                             increaseRadius();
                           },

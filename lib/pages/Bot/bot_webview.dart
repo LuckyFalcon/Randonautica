@@ -1,14 +1,15 @@
 import 'dart:async';
 import 'dart:io' show Platform;
 
-import 'package:app/pages/Bot/addons_shop.dart';
-import 'package:app/pages/Bot/getLocation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_udid/flutter_udid.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:location_permissions/location_permissions.dart';
+import 'package:app/pages/Bot/addons_shop.dart';
+import 'package:app/pages/Bot/getLocation.dart';
+
 import 'package:toast/toast.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -34,7 +35,7 @@ final String piEverythingPack = 'fatumbot.addons.nc.everything_pack.v4';
 
 class BotWebView extends StatelessWidget {
   final Completer<WebViewController> _controller =
-      Completer<WebViewController>();
+  Completer<WebViewController>();
   WebViewController webView;
 
   //
@@ -88,16 +89,28 @@ class BotWebView extends StatelessWidget {
       var eval = "currentLocationCallback(" + lat + "," + lon + ");";
       webView.evaluateJavascript(eval);
     } on TimeoutException catch (_) {
-      requestLocationService();
-      Toast.show("Please try again", context, duration: Toast.LENGTH_LONG, gravity:  Toast.BOTTOM);
+      try {
+        Position position = await Geolocator()
+            .getCurrentPosition()
+            .timeout(Duration(seconds: 10));
+        print(position);
+        lat = position.latitude?.toString();
+        lon = position.longitude?.toString();
+        var eval = "currentLocationCallback(" + lat + "," + lon + ");";
+        webView.evaluateJavascript(eval);
+      } on TimeoutException catch (_) {
+        requestLocationService();
+        Toast.show("Please try again", context,
+            duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+      }
     }
   }
 
 
-//  //
-//  // Add-ons shop
-//  //
-//  // C# Fatumbot -> javascript/html webbot client front end -> javascript/flutter bridge -> flutter native IAP screen
+  //
+  // Add-ons shop
+  //
+  // C# Fatumbot -> javascript/html webbot client front end -> javascript/flutter bridge -> flutter native IAP screen
   Future<void> _navToShop(BuildContext context, String userId) async {
     final result = await Navigator.push(
         context,
@@ -154,8 +167,8 @@ class BotWebView extends StatelessWidget {
       isStreetView = true;
       coords = coords
           .replaceAll(
-              "https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=",
-              "")
+          "https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=",
+          "")
           .replaceAll("&fov=90&heading=235&pitch=10", "");
     } else if (url.contains("maps/dir")) {
       // Multiple points route
@@ -206,7 +219,7 @@ class BotWebView extends StatelessWidget {
 
   _openSpotify(String url) async {
     var spotifyAppUrl =
-        url.replaceAll("https://open.spotify.com/", "spotify://");
+    url.replaceAll("https://open.spotify.com/", "spotify://");
     if (await canLaunch(spotifyAppUrl)) {
       // Open in Spotify app
       await launch(spotifyAppUrl);
@@ -250,11 +263,11 @@ class BotWebView extends StatelessWidget {
 
   _initLocationPermissions() async {
     GeolocationStatus geolocationStatus =
-        await Geolocator().checkGeolocationPermissionStatus();
+    await Geolocator().checkGeolocationPermissionStatus();
     print("location permission granted? ${geolocationStatus.value}");
     if (geolocationStatus.value == 0) {
       PermissionStatus permission =
-          await LocationPermissions().requestPermissions();
+      await LocationPermissions().requestPermissions();
     }
   }
 
@@ -388,6 +401,8 @@ class BotWebView extends StatelessWidget {
     // Check availability of In App Purchases
     _available = await _iap.isAvailable();
 
+    print('isitavailable' + _available.toString());
+
     if (_available) {
       await _getProducts();
       await _getPastPurchases();
@@ -445,9 +460,6 @@ class BotWebView extends StatelessWidget {
 //        appBar: AppBar(
 //          title: Text("Randonautica"),
 //        ),
-        resizeToAvoidBottomPadding: false,
-        extendBodyBehindAppBar: false,
-        extendBody: false,
         body: WebView(
             initialUrl: botUrl,
             javascriptMode: JavascriptMode.unrestricted,
@@ -488,12 +500,12 @@ class BotWebView extends StatelessWidget {
                   page.contains("devbotdl.html") ||
                   page.contains("index3.html")) {
                 _initWebBot();
-             //   _initOneSignal();
+               // _initOneSignal();
               }
             },
             navigationDelegate: (NavigationRequest request) {
               if (request.url
-                      .startsWith("https://www.google.com/maps/place/") ||
+                  .startsWith("https://www.google.com/maps/place/") ||
                   request.url
                       .startsWith("https://www.google.com/maps/search/") ||
                   request.url.startsWith("https://www.google.com/maps/dir/") ||

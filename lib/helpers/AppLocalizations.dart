@@ -22,6 +22,7 @@ class AppLocalizations {
   Map<String, String> _localizedStrings;
 
   Future<bool> load() async {
+    print(this.locale);
     // Load the language JSON file from the "lang" folder
     String jsonString =
     await rootBundle.loadString('i18n/${locale.languageCode}.json');
@@ -50,7 +51,7 @@ class _AppLocalizationsDelegate
   bool isSupported(Locale locale) {
     print('currentLanguage: '  + locale.languageCode);
     // Include all of your supported language codes here
-    return ['en', 'ja', 'es', 'zh_TW', 'zh'].contains(locale.languageCode);
+    return ['en', 'ja', 'es', 'zh_TW', 'zh', 'ru', 'fr', 'nl', 'de', 'ko'].contains(locale.languageCode);
   }
 
   @override

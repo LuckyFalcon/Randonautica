@@ -18,8 +18,8 @@ class SlideWarningItem extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
-        Container(
-            child: Image(image: AssetImage(slideWarningList[index].imageUrl))),
+//        Container(
+//            child: Image(image: AssetImage(slideWarningList[index].imageUrl))),
         Container(
             width: SizeConfig.blockSizeHorizontal * 65,
             height: SizeConfig.blockSizeVertical * 10,
@@ -32,6 +32,7 @@ class SlideWarningItem extends StatelessWidget {
                   returnWarningSlide(index, context).firstLine,
                   textAlign: TextAlign.center,
                   group: AutoSizeTextGroup,
+                  maxLines: 1,
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.blueAccent,
@@ -44,6 +45,7 @@ class SlideWarningItem extends StatelessWidget {
                   returnWarningSlide(index, context).secondLine,
                   textAlign: TextAlign.center,
                   group: AutoSizeTextGroup,
+                  maxLines: 1,
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.blueAccent,

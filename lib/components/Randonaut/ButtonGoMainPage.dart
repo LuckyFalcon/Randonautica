@@ -1,4 +1,5 @@
 import 'package:app/utils/size_config.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -35,10 +36,10 @@ class _ButtonGoMainPage extends State<ButtonGoMainPage> {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return Container(
-        height: SizeConfig.blockSizeVertical * 9,
+        height: SizeConfig.blockSizeVertical * 10,
         width: SizeConfig.blockSizeHorizontal * 30,
         decoration: BoxDecoration(
-            color: Color(0xff5D7FE0),
+            color: Color(0xff3B4B6C),
             borderRadius: BorderRadius.circular(90),
             boxShadow: [
               BoxShadow(
@@ -56,7 +57,8 @@ class _ButtonGoMainPage extends State<ButtonGoMainPage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Text(AppLocalizations.of(context).translate('go').toUpperCase(),
+                AutoSizeText(AppLocalizations.of(context).translate('go').toUpperCase(),
+                    maxLines: 1,
                     style: TextStyle(
                         fontSize: 40,
                         color: Colors.white,
@@ -73,7 +75,7 @@ class _ButtonGoMainPage extends State<ButtonGoMainPage> {
               this.widget.callback(pressGoButton); //Callback to Main
             });
           },
-          color: Color(0xff45C5DB),
+          color: Color(0xff3B4B6C),
         ));
   }
 }

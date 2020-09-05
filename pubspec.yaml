@@ -15,7 +15,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.1.0+100100005
+version: 1.1.2+100100200
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
@@ -59,19 +59,24 @@ dependencies:
   auto_size_text: ^2.1.0
   uuid: 2.2.0
   flutter_email_sender: ^3.0.1
+  loading_animations: ^2.1.0
 
   #For Randonautic classic -> Bot
   webview_flutter: ^0.3.22+1
   in_app_purchase: ^0.3.4+1
   toast: ^0.1.5
   flutter_udid: ^1.0.1
-
+  flutter_launcher_icons: "^0.7.3"
 
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icon/icon.png"
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
@@ -93,6 +98,11 @@ flutter:
     - i18n/es.json
     - i18n/zh_TW.json
     - i18n/zh.json
+    - i18n/ru.json
+    - i18n/de.json
+    - i18n/fr.json
+    - i18n/ko.json
+    - i18n/nl.json
     - assets/img/Navigation/List.svg
     - assets/img/Navigation/Globe.svg
     - assets/img/Navigation/Labs.svg
@@ -117,7 +127,6 @@ flutter:
     - assets/img/double_arrow.png
     - assets/img/Login/Google_icon.png
     - assets/img/Login/Apple_icon.png
-    - assets/img/Dialogs/GPSFailed.png
     - assets/img/Dialogs/LoginFailed.png
     - assets/img/Dialogs/TokensFailed.png
     - assets/img/Markers/marker.png

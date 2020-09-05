@@ -16,7 +16,7 @@ class HelpButton extends StatelessWidget {
           children: <Widget>[
             IconButton(
               icon: Icon(
-                Icons.help,
+                Icons.settings,
                 color: Colors.white,
                 size: 35.0,
                 semanticLabel: 'Text to announce in accessibility modes',

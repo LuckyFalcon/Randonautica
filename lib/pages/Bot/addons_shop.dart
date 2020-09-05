@@ -75,7 +75,7 @@ class AddonsShopState extends State<AddonsShop> {
   @override
   Widget build(BuildContext context) {
     this.context = context;
-
+    print('reached');
     return Scaffold(
       appBar: AppBar(
         title: Text(_available ? 'Add-ons Shop' : 'Shop not available'),
