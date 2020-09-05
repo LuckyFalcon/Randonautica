@@ -753,22 +753,27 @@ class RandonautState extends State<Randonaut> {
 
       controller = await _controller.future;
       controller.animateCamera(CameraUpdate.newCameraPosition(cPosition));
+
+      //Set SharedPreferences
+      Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+
+      //Await SharedPreferences future object
+      final SharedPreferences prefs = await _prefs;
+      
+      //Set everything to true
+      bool evertyhingDialogAccepted = prefs.getBool("everything");
+      if (evertyhingDialogAccepted != true) {
+        Future.delayed(Duration(seconds: 10), () async {
+          await giveEverything(context);
+        });
+      }
+
     } else {
       await gpsDisabledDialog(context, enableGPS);
     }
-    //Set SharedPreferences
-    Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
-    //Await SharedPreferences future object
-    final SharedPreferences prefs = await _prefs;
 
-    //Set everything to true
-    bool evertyhingDialogAccepted = prefs.getBool("everything");
-    if (evertyhingDialogAccepted != true) {
-      Future.delayed(Duration(seconds: 10), () async {
-        await giveEverything(context);
-      });
-    }
+
   }
 
   void updatePinOnMap() async {
