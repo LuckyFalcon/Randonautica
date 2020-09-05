@@ -50,7 +50,7 @@ class _LoadingState extends State<Loading> {
 //      }
 //    }
 
-    //Check for Internet Connection
+  //Check for Internet Connection
 //    bool result = await DataConnectionChecker().hasConnection;
 //    if (result != true) {
 //      noInternetConnectionDialog(context, _enableInternet);
@@ -116,7 +116,7 @@ class _LoadingState extends State<Loading> {
 //      print('Unable to fetch remote config. Cached or default values will be '
 //          'used');
 //    }
- // }
+  // }
 
 //  _enableInternet() async {
 //    //A delay so the user gets feedback from turning on their Internet connection
@@ -185,7 +185,7 @@ class _LoadingState extends State<Loading> {
 //      FirebaseUser _user = await _auth.onAuthStateChanged.first;
 //
 //      if (_user != null) {
-        //Get token
+  //Get token
 //        return await _user.getIdToken().then((token) async => {
 //              //Store Token in SharedPreferences
 //              await prefs.setString("authToken", token.token),
@@ -215,11 +215,6 @@ class _LoadingState extends State<Loading> {
 
   @override
   void initState() {
-    try {
-      _versionCheck(context);
-    } catch (e) {
-      print(e);
-    }
     super.initState();
     doCheck(context);
   }
@@ -231,12 +226,12 @@ class _LoadingState extends State<Loading> {
 //    //Get Token
 //    bool seenTutorial = prefs.getBool("tutorial");
 
-  //  if (seenTutorial != null) {
-      //Go to homepage
-      Future.delayed(Duration(seconds: 3), () {
-        Navigator.pushAndRemoveUntil(context, FadeRoute(page: HomePage()),
-            ModalRoute.withName("/HomePage"));
-      });
+    //  if (seenTutorial != null) {
+    //Go to homepage
+    Future.delayed(Duration(seconds: 3), () {
+      Navigator.pushAndRemoveUntil(context, FadeRoute(page: HomePage()),
+          ModalRoute.withName("/HomePage"));
+    });
 //    } else {
 //      //Go to walktrhough
 //       await prefs.setBool("tutorial", true);
