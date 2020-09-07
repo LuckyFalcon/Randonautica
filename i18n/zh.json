@@ -1,7 +1,7 @@
 {
   "title": "Fatumbot",
   "fatum_project": "通过Fatum项目可以实现",
-  "enter_randonautica": "输入randonautica",
+  "enter_randonautica": "输入fatumbot",
   "welcome_randonaut_1": "欢迎",
   "welcome_randonaut_2": "Randonaut",
   "gps_not_enabled_description": "未启用gps",
@@ -38,7 +38,7 @@
   "walktrhough_1_1": "您将踏上一段让您的想象力与宇宙碰撞的旅程。",
   "walktrhough_1_2": "作为一名randonaut,您可以冒险创建量子生成的随机坐标,从而实时创建自己的图例。",
   "walktrhough_1_3": "专心冒险,接下来的事情一定很神奇...",
-  "walktrhough_2_1": "通过对fatum项目的研究,randonautica探索了一种思想和物质（周围的世界）以一种迷人的方式联系在一起的想法。",
+  "walktrhough_2_1": "通过对fatum项目的研究,fatumbot探索了一种思想和物质（周围的世界）以一种迷人的方式联系在一起的想法。",
   "walktrhough_2_2": "randonauting可以提高您的意识,训练您的大脑以防不可预测,最重要的是,可以使您摆脱概率隧道...。",
   "walktrhough_2_3": "",
   "walktrhough_3_1": "您将偏离预定的路线。",
