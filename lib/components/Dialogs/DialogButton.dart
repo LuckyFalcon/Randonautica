@@ -32,7 +32,7 @@ class DialogButton extends StatelessWidget {
                     begin: Alignment.bottomCenter,
                     end: Alignment.topCenter,
                     stops: [0, 1],
-                    colors: [Color(0xff5F7FDF), Color(0xff44CADB)]),
+                    colors: [Color(0xff5F7FDF), Color(0xff5F7FDF)]),
                 borderRadius: BorderRadius.circular(60.0)),
             child: Center(
               child: Row(
