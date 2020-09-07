@@ -1,5 +1,5 @@
 {
-  "title": "Randonautica",
+  "title": "Fatumbot",
   "fatum_project": "Made possible by The Fatum Project",
 
   "enter_randonautica": "enter randonautica",
@@ -66,7 +66,7 @@
   "failed_dialog_yes": "yes please!",
   "failed_dialog_no": "no, go back",
 
-  "navigate_to_bot": "Randonautica Classic",
+  "navigate_to_bot": "Fatumbot Classic",
   "privacy_enquiry": "Privacy Enquiry",
   "bug_report": "Report a bug",
   "privacy_policy": "Privacy Policy",
@@ -76,8 +76,8 @@
   "type_bug_report": "Type your bug report here",
   "Notice": "Important Notice",
   "give_everything": "We've given you access to all functionality. Your purchases are not lost! While we transition in the new version, for every purchase you make and/or have made you will be heavily rewarded in the future!",
-  "give_everything_2": "We apologize for the inconvenience, you can use the bot by going to settings -> Randonautica classic",
-  "give_everything_3": "Kind regards, Randonautica Creators",
+  "give_everything_2": "We apologize for the inconvenience, you can use the bot by going to settings -> Fatumbot classic",
+  "give_everything_3": "Kind regards, Fatumbot Creators",
   "understood": "Understood",
   "understood_and_save": "Understood and remember choice"
 }
