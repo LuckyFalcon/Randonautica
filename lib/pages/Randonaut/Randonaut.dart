@@ -339,10 +339,9 @@ class RandonautState extends State<Randonaut> {
                                     width: SizeConfig.blockSizeHorizontal * 2),
                                 (savingPoint
                                     ? ShareLocationButton(
-                                        this.callbackSaveLocation, savingPoint)
+                                        this.callbackShareLocation, false)
                                     : ShareLocationButton(
-                                        this.callbackSaveLocation,
-                                        savingPoint)),
+                                        this.callbackShareLocation, false)),
                                 SizedBox(
                                     width: SizeConfig.blockSizeHorizontal * 5),
                               ],
