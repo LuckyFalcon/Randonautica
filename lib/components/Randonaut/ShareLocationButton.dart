@@ -40,7 +40,7 @@ class ShareLocationButton extends StatelessWidget {
           child: AutoSizeText(
               AppLocalizations.of(context).translate('share_location').toUpperCase(),
               maxLines: 1,
-              style: TextStyle(fontSize: 11)),
+              style: TextStyle(fontSize: 15)),
         ),
       ),
     );
