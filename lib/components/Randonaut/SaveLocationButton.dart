@@ -35,7 +35,7 @@ class SaveLocationButton extends StatelessWidget {
           },
           textColor: Colors.white,
           shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(30.0),
+              borderRadius: BorderRadius.circular(0.0),
               side: BorderSide(color: (pressSaveLocationButton ? Color(0xff6BD9FF) : Color(0xff6BE5FE)))),
           child: AutoSizeText(
               AppLocalizations.of(context).translate('save_point').toUpperCase(),

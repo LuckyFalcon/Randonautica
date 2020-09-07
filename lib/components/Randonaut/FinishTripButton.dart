@@ -56,7 +56,7 @@ class _FinishTripButton extends State<FinishTripButton> {
           },
           textColor: Colors.white,
           shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(30.0),
+              borderRadius: BorderRadius.circular(0.0),
               side: BorderSide(
                   color:
                   Color(0xff6080E2))),

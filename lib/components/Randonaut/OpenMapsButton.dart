@@ -35,7 +35,7 @@ class OpenMapsButton extends StatelessWidget {
           },
           textColor: Colors.white,
           shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(30.0),
+              borderRadius: BorderRadius.circular(0.0),
               side: BorderSide(color: Color(0xff6BE5FE))),
           child: AutoSizeText(
               AppLocalizations.of(context).translate('open_maps').toUpperCase(),

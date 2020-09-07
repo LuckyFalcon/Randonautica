@@ -10,6 +10,7 @@ import 'package:app/components/Randonaut/SaveLocationButton.dart';
 import 'package:app/components/Randonaut/SetRadius.dart';
 import 'package:app/components/Randonaut/SetRandomness.dart';
 import 'package:app/components/Randonaut/SetWaterPoints.dart';
+import 'package:app/components/Randonaut/ShareLocationButton.dart';
 import 'package:app/helpers/AppLocalizations.dart';
 import 'package:app/helpers/Dialogs.dart';
 import 'package:app/helpers/FadeRoute.dart';
@@ -337,9 +338,9 @@ class RandonautState extends State<Randonaut> {
                                 SizedBox(
                                     width: SizeConfig.blockSizeHorizontal * 2),
                                 (savingPoint
-                                    ? SaveLocationButton(
+                                    ? ShareLocationButton(
                                         this.callbackSaveLocation, savingPoint)
-                                    : SaveLocationButton(
+                                    : ShareLocationButton(
                                         this.callbackSaveLocation,
                                         savingPoint)),
                                 SizedBox(
