@@ -515,8 +515,8 @@ findingPointFailedDialog(BuildContext context, Function callback) async {
                             SizedBox(height: SizeConfig.blockSizeVertical * 1),
                             Container(
                               height: SizeConfig.blockSizeVertical * 7.5,
-                              child: ImageIcon(AssetImage('assets/img/Owl.png'),
-                                  color: Color(0xff6081E2), size: 64),
+//                              child: ImageIcon(AssetImage('assets/img/Owl.png'),
+//                                  color: Color(0xff6081E2), size: 64),
                             ),
                             SizedBox(height: SizeConfig.blockSizeVertical * 0.5),
                             Container(
@@ -1323,7 +1323,16 @@ setTitleDialog(BuildContext context, callback) {
 
 giveEverything(BuildContext context) {
 
-  dialogRetrievePointCallback() {
+  dialogRetrievePointCallback() async {
+
+    //Set SharedPreferences
+    Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+
+    //Await SharedPreferences future object
+    final SharedPreferences prefs = await _prefs;
+
+    //Set everything to true
+    prefs.setBool("everything", true);
 
     Navigator.pop(context);
 
@@ -1351,12 +1360,12 @@ giveEverything(BuildContext context) {
           child: Align(
             alignment: Alignment.center,
             child: Container(
-              height: SizeConfig.blockSizeVertical * 80,
+              height: SizeConfig.blockSizeVertical * 75,
               width: SizeConfig.blockSizeHorizontal * 80,
               child: Stack(
                 children: <Widget>[
                   Container(
-                      height: SizeConfig.blockSizeVertical * 80,
+                      height: SizeConfig.blockSizeVertical * 75,
                       width: SizeConfig.blockSizeHorizontal * 80,
                       ///This is 70% of the Vertical / Height for this container in this class
                       decoration: BoxDecoration(
@@ -1445,10 +1454,10 @@ giveEverything(BuildContext context) {
                                           fontSize: 15,
                                           color: Color(0xff6081E2)))),
                             ),
-                            SizedBox(height: SizeConfig.blockSizeVertical * 5),
+                            SizedBox(height: SizeConfig.blockSizeVertical * 6.5),
                             DialogButton(dialogRetrievePointCallback, "understood"),
-                            SizedBox(height: SizeConfig.blockSizeVertical * 1.5),
-                            DialogButton(dialogCancelCallback, "understood_and_save"),
+                          //  SizedBox(height: SizeConfig.blockSizeVertical * 1.5),
+                        //    DialogButton(dialogCancelCallback, "understood_and_save"),
                           ],
                         ),
                       )),
