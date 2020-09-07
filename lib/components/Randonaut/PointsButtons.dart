@@ -90,7 +90,7 @@ class _PoinstButtons extends State<PointsButtons> {
               onPressed: () => buttonCheck(1),
               textColor: Colors.white,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30.0),),
+                borderRadius: BorderRadius.circular(0.0),),
               child: AutoSizeText(
                   AppLocalizations.of(context)
                       .translate('anomaly')
@@ -114,7 +114,7 @@ class _PoinstButtons extends State<PointsButtons> {
               onPressed: () => buttonCheck(2),
               textColor: Colors.white,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30.0),),
+                borderRadius: BorderRadius.circular(0.0),),
               child: AutoSizeText(
                   AppLocalizations.of(context)
                       .translate('attractor')
@@ -138,7 +138,7 @@ class _PoinstButtons extends State<PointsButtons> {
               onPressed: () => buttonCheck(3),
               textColor: Colors.white,
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30.0),),
+                  borderRadius: BorderRadius.circular(0.0),),
               child: AutoSizeText(
                   AppLocalizations.of(context)
                       .translate('void')

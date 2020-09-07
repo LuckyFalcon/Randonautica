@@ -86,7 +86,7 @@ class _SetRandomness extends State<SetRandomness> {
               onPressed: () => buttonCheck(1),
               textColor: Colors.white,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30.0),),
+                borderRadius: BorderRadius.circular(0.0),),
               child: AutoSizeText(
                   AppLocalizations.of(context)
                       .translate('random')
@@ -109,7 +109,7 @@ class _SetRandomness extends State<SetRandomness> {
               onPressed: () => buttonCheck(2),
               textColor: Colors.white,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30.0),),
+                borderRadius: BorderRadius.circular(0.0),),
               child: AutoSizeText(
                   AppLocalizations.of(context)
                       .translate('quantum')

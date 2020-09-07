@@ -40,17 +40,19 @@ class _ButtonGoMainPage extends State<ButtonGoMainPage> {
         width: SizeConfig.blockSizeHorizontal * 30,
         decoration: BoxDecoration(
             color: Color(0xff3B4B6C),
-            borderRadius: BorderRadius.circular(90),
+            borderRadius: BorderRadius.circular(0),
+
             boxShadow: [
               BoxShadow(
                   blurRadius: 14,
                   offset: Offset(10, 10),
                   color: Colors.black.withOpacity(.6),
-                  spreadRadius: -15)
+                  spreadRadius: -15),
+
             ]),
         child: RaisedButton(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(90.0),
+            borderRadius: BorderRadius.circular(0.0),
           ),
           padding: EdgeInsets.zero,
           child: Center(
