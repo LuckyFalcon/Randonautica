@@ -224,9 +224,9 @@ class RandonautState extends State<Randonaut> {
                     ? SizeConfig.blockSizeVertical * 69
                     : SizeConfig.blockSizeVertical * 62),
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(45.0)),
+                  borderRadius: BorderRadius.all(Radius.circular(0.0)),
                   border: Border.all(
-                      width: SizeConfig.blockSizeHorizontal * 3.5,
+                      width: SizeConfig.blockSizeHorizontal * 1.5,
                       color: Colors.white),
                   boxShadow: [
                     BoxShadow(
@@ -238,7 +238,7 @@ class RandonautState extends State<Randonaut> {
                   ],
                 ),
                 child: ClipRRect(
-                  borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                  borderRadius: BorderRadius.all(Radius.circular(0.0)),
                   child: Stack(
                     children: <Widget>[
                       GoogleMap(

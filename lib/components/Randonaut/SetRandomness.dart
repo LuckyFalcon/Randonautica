@@ -120,28 +120,6 @@ class _SetRandomness extends State<SetRandomness> {
           ),
         ),
         SizedBox(height: SizeConfig.blockSizeVertical * 0.5),
-        SizedBox(
-          height: SizeConfig.blockSizeVertical * 3.15,
-          width: SizeConfig.blockSizeHorizontal * 29,
-          child: new ButtonTheme(
-            minWidth: SizeConfig.blockSizeHorizontal * 29,
-            height: SizeConfig.blockSizeVertical * 3.1,
-            child: RaisedButton(
-              elevation: 0,
-              color: pressAttention3 ? Color(0xffA2D0FF) : Color(0xff769BE3),
-              onPressed: () => buttonCheck(3),
-              textColor: Colors.white,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30.0),),
-              child: AutoSizeText(
-                  AppLocalizations.of(context)
-                      .translate('bias')
-                      .toUpperCase(),
-                  maxLines: 1,
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
-            ),
-          ),
-        )
       ],
     );
   }
