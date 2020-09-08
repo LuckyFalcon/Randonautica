@@ -153,21 +153,21 @@ class _SettingsState extends State<Settings> {
                                   ModalRoute.withName('/'));
                             },
                           ),
-                          _buildDivider(),
-                          ListTile(
-                            leading: Icon(
-                              Icons.arrow_forward_ios,
-                              color: Colors.purple,
-                            ),
-                            title: AutoSizeText(
-                              AppLocalizations.of(context)
-                                  .translate('bug_report'),
-                            ),
-                            trailing: Icon(Icons.keyboard_arrow_right),
-                            onTap: () {
-                              _reportABug();
-                            },
-                          ),
+ //                         _buildDivider(),
+//                          ListTile(
+//                            leading: Icon(
+//                              Icons.arrow_forward_ios,
+//                              color: Colors.purple,
+//                            ),
+//                            title: AutoSizeText(
+//                              AppLocalizations.of(context)
+//                                  .translate('bug_report'),
+//                            ),
+//                            trailing: Icon(Icons.keyboard_arrow_right),
+//                            onTap: () {
+//                              _reportABug();
+//                            },
+//                          ),
 //                          _buildDivider(),
 //                          ListTile(
 //                            leading: Icon(
