@@ -486,7 +486,7 @@ findingPointFailedDialog(BuildContext context, Function callback) async {
           child: Align(
             alignment: Alignment.center,
             child: Container(
-              height: SizeConfig.blockSizeVertical * 35,
+              height: SizeConfig.blockSizeVertical * 32,
               width: SizeConfig.blockSizeHorizontal * 80,
               child: Stack(
                 children: <Widget>[
@@ -512,12 +512,12 @@ findingPointFailedDialog(BuildContext context, Function callback) async {
                         ),
                         child: Column(
                           children: <Widget>[
-                            SizedBox(height: SizeConfig.blockSizeVertical * 1),
-                            Container(
-                              height: SizeConfig.blockSizeVertical * 7.5,
-//                              child: ImageIcon(AssetImage('assets/img/Owl.png'),
-//                                  color: Color(0xff6081E2), size: 64),
-                            ),
+                            SizedBox(height: SizeConfig.blockSizeVertical * 2),
+//                            Container(
+//                              height: SizeConfig.blockSizeVertical * 7.5,
+////                              child: ImageIcon(AssetImage('assets/img/Owl.png'),
+////                                  color: Color(0xff6081E2), size: 64),
+//                            ),
                             SizedBox(height: SizeConfig.blockSizeVertical * 0.5),
                             Container(
                               height: SizeConfig.blockSizeVertical * 2,
