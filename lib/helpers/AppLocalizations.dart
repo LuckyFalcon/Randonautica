@@ -51,7 +51,7 @@ class _AppLocalizationsDelegate
   bool isSupported(Locale locale) {
     print('currentLanguage: '  + locale.languageCode);
     // Include all of your supported language codes here
-    return ['en', 'ja', 'es', 'zh_TW', 'zh', 'ru', 'fr', 'nl', 'de', 'ko'].contains(locale.languageCode);
+    return ['en', 'es', 'zh_TW', 'zh', 'ru', 'fr', 'nl', 'de', 'ko'].contains(locale.languageCode);
   //  return ['en', 'ru'].contains(locale.languageCode);
 
   }
