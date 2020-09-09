@@ -457,9 +457,16 @@ class BotWebView extends StatelessWidget {
     platform.setMethodCallHandler(
         _handleMethod); // for handling javascript->flutter callbacks
     return Scaffold(
-//        appBar: AppBar(
-//          title: Text("Randonautica"),
-//        ),
+        appBar: AppBar(
+          elevation: 0,
+          iconTheme: IconThemeData(color: Colors.black),
+          backgroundColor: Colors.transparent,
+          title: Text(
+            'Fatumbot Classic',
+            style: TextStyle(color: Colors.black),
+          ),
+          actions: <Widget>[],
+        ),
         body: WebView(
             initialUrl: botUrl,
             javascriptMode: JavascriptMode.unrestricted,

@@ -147,10 +147,10 @@ class _SettingsState extends State<Settings> {
                               InAppPurchaseConnection.enablePendingPurchases();
 
                               //Open Bot
-                              Navigator.pushAndRemoveUntil(
+                              Navigator.push(
                                   context,
-                                  FadeRoute(page: BotWebView()),
-                                  ModalRoute.withName('/'));
+                                  FadeRoute(page: BotWebView())
+                              );
                             },
                           ),
  //                         _buildDivider(),

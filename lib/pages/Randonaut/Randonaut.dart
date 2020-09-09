@@ -414,6 +414,11 @@ class RandonautState extends State<Randonaut> {
   }
 
   void callbackGoButtonMainPage(bool pressGoButton) async {
+    bool isServiceEnabled = await location.serviceEnabled();
+
+    if (!isServiceEnabled) {
+      return await gpsDisabledDialog(context, enableGPS);
+    }
 
     //Set SharedPreferences
     Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
