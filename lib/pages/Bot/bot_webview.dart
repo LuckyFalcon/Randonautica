@@ -460,7 +460,7 @@ class BotWebView extends StatelessWidget {
       botUrl = "https://bot.randonauts.com/index3.html?src=android";
     } else if (Platform.isIOS) {
 //      botUrl = "https://devbot.randonauts.com/devbotdl.html?src=ios";
-      botUrl = "https://bot.randonauts.com/index3.html?src=ios";
+      botUrl = "https://bot.randonauts.com/index4.html?src=ios";
     }
 
     _initLocationPermissions();
@@ -518,7 +518,6 @@ class BotWebView extends StatelessWidget {
               if (page.contains("index2.html") ||
                   page.contains("localbot.html") ||
                   page.contains("devbotdl.html") ||
-                  page.contains("index3.html")) {
                   page.contains("index4.html")) {
                 _initWebBot();
                // _initOneSignal();
