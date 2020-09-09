@@ -707,7 +707,6 @@ class RandonautState extends State<Randonaut> {
           title: (attractors.type == 1 ? "Attractor" : "Void"),
           snippet: "Radius: " + attractors.radiusM.toStringAsFixed(0),
         ),
-        icon: pinLocationIcon,
       ));
 
       _polylines.add(Polyline(
