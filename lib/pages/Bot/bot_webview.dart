@@ -75,23 +75,15 @@ class BotWebView extends StatelessWidget {
   //
   // flutter->ios(swift)/android. use native code, not webview/js to get the current location
   Future<void> _getCurrentLocation() async {
-    Position position;
-    var lat;
-    var lon;
-    var eval;
-    try {
-      Position position = await Geolocator()
-          .getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
-          .timeout(Duration(seconds: 10));
-      print(position);
-      lat = position.latitude?.toString();
-      lon = position.longitude?.toString();
-      var eval = "currentLocationCallback(" + lat + "," + lon + ");";
-      webView.evaluateJavascript(eval);
-    } on TimeoutException catch (_) {
+    if (Platform.isAndroid) {
+
+      Position position;
+      var lat;
+      var lon;
+      var eval;
       try {
         Position position = await Geolocator()
-            .getCurrentPosition()
+            .getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
             .timeout(Duration(seconds: 10));
         print(position);
         lat = position.latitude?.toString();
@@ -99,11 +91,32 @@ class BotWebView extends StatelessWidget {
         var eval = "currentLocationCallback(" + lat + "," + lon + ");";
         webView.evaluateJavascript(eval);
       } on TimeoutException catch (_) {
-        requestLocationService();
-        Toast.show("Please try again", context,
-            duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+        try {
+          Position position = await Geolocator()
+              .getCurrentPosition()
+              .timeout(Duration(seconds: 10));
+          print(position);
+          lat = position.latitude?.toString();
+          lon = position.longitude?.toString();
+          var eval = "currentLocationCallback(" + lat + "," + lon + ");";
+          webView.evaluateJavascript(eval);
+        } on TimeoutException catch (_) {
+          requestLocationService();
+          Toast.show("Please try again", context,
+              duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+        }
       }
+
+    } else if (Platform.isIOS) {
+
+      Position position = await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+      var lat = position.latitude?.toString();
+      var lon = position.longitude?.toString();
+      var eval = "currentLocationCallback(" + lat + "," + lon + ");";
+      webView.evaluateJavascript(eval);
+
     }
+
   }
 
 
@@ -506,6 +519,7 @@ class BotWebView extends StatelessWidget {
                   page.contains("localbot.html") ||
                   page.contains("devbotdl.html") ||
                   page.contains("index3.html")) {
+                  page.contains("index4.html")) {
                 _initWebBot();
                // _initOneSignal();
               }
