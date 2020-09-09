@@ -587,7 +587,7 @@ gpsDisabledDialog(BuildContext context, Function enableGPSCallback) {
           child: Align(
             alignment: Alignment.center,
             child: Container(
-              height: SizeConfig.blockSizeVertical * 35,
+              height: SizeConfig.blockSizeVertical * 32,
               width: SizeConfig.blockSizeHorizontal * 80,
               child: Stack(
                 children: <Widget>[
@@ -613,12 +613,12 @@ gpsDisabledDialog(BuildContext context, Function enableGPSCallback) {
                         ),
                         child: Column(
                           children: <Widget>[
-                            SizedBox(height: SizeConfig.blockSizeVertical * 1),
-                            Container(
-                              height: SizeConfig.blockSizeVertical * 9.5,
-//                              child: ImageIcon(AssetImage('assets/img/Dialogs/GPSFailed.png'),
-//                                  color: Color(0xff6081E2), size: 96),
-                            ),
+                            SizedBox(height: SizeConfig.blockSizeVertical * 2),
+//                            Container(
+//                              height: SizeConfig.blockSizeVertical * 9.5,
+////                              child: ImageIcon(AssetImage('assets/img/Dialogs/GPSFailed.png'),
+////                                  color: Color(0xff6081E2), size: 96),
+//                            ),
                             SizedBox(height: SizeConfig.blockSizeVertical * 0.5),
                             SizedBox(height: SizeConfig.blockSizeVertical * 1),
                             Container(
