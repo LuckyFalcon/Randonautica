@@ -710,7 +710,7 @@ class RandonautState extends State<Randonaut> {
         position: attractorCoordinates,
         infoWindow: InfoWindow(
           title: (attractors.type == 1 ? "Attractor" : "Void"),
-          snippet: "Radius: " + attractors.radiusM.toStringAsFixed(0),
+          snippet: "Radius: " + attractors.zScore.toStringAsFixed(0) + "\n" + "Power: " + attractors.power.toStringAsFixed(2) + "\n" + "Z_Score: " + attractors.zScore.toStringAsFixed(2),
         ),
       ));
 
