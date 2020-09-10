@@ -1,8 +1,8 @@
-import 'package:app/components/Introduction/EnterRandonauticaButton.dart';
-import 'package:app/helpers/AppLocalizations.dart';
-import 'package:app/utils/size_config.dart';
+import 'package:randonautica/components/Introduction/EnterRandonauticaButton.dart';
+import 'package:randonautica/helpers/AppLocalizations.dart';
+import 'package:randonautica/utils/size_config.dart';
 import 'package:flutter/material.dart';
-import 'package:app/utils/BackgroundColor.dart' as backgrounds;
+import 'package:randonautica/utils/BackgroundColor.dart' as backgrounds;
 
 class VisitScreen extends StatefulWidget {
   @override

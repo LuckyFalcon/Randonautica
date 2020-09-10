@@ -1,5 +1,5 @@
 
-import 'package:app/models/UserStats.dart';
+import 'package:randonautica/models/UserStats.dart';
 
 class AchievementController {
 

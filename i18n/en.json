@@ -1,8 +1,8 @@
 {
-  "title": "Fatumbot",
+  "title": "Randonautica",
   "fatum_project": "Made possible by The Fatum Project",
 
-  "enter_randonautica": "enter Fatumbot",
+  "enter_randonautica": "enter Randonautica",
   "welcome_randonaut_1": "Welcome,",
   "welcome_randonaut_2": "Randonaut",
 
@@ -47,7 +47,7 @@
   "walktrhough_1_1": "You are about to embark on a journey that allows your imagination to collide with the universe.",
   "walktrhough_1_2": "As a randonaut, you can create your own legend in real time as you venture to a quantumly generated random coordinate.",
   "walktrhough_1_3": "Set your mind out for adventure, what comes next is sure to be magical...",
-  "walktrhough_2_1": "Through the research of the fatum project, Fatumbot explores the idea that mind and matter (the world around you) are connected in an enchanting way.",
+  "walktrhough_2_1": "Through the research of the fatum project, Randonautica explores the idea that mind and matter (the world around you) are connected in an enchanting way.",
   "walktrhough_2_2": "randonauting can heighten your awareness, train your brain for unpredictability, and most importantly, break you out of your probability tunnel....",
   "walktrhough_2_3": "",
   "walktrhough_3_1": "you are about to deviate off the path you were predetermined to be on.",
@@ -67,7 +67,7 @@
   "failed_dialog_no": "no, go back",
 
 
-  "navigate_to_bot": "Fatumbot Classic",
+  "navigate_to_bot": "Randonautica Classic",
   "privacy_enquiry": "Privacy Enquiry",
   "bug_report": "Report a bug",
   "privacy_policy": "Privacy Policy",
@@ -77,8 +77,8 @@
   "type_bug_report": "Type your bug report here",
   "Notice": "Important Notice",
   "give_everything": "We've given you access to all functionality. Your purchases are not lost! While we transition in the new version, for every purchase you make and/or have made you will be heavily rewarded in the future!",
-  "give_everything_2": "We apologize for the inconvenience, you can use the bot by going to settings -> Fatumbot classic",
-  "give_everything_3": "Kind regards, Fatumbot Creators",
+  "give_everything_2": "We apologize for the inconvenience, you can use the bot by going to settings -> Randonautica classic",
+  "give_everything_3": "Kind regards, Randonautica Creators",
   "understood": "Understood",
   "understood_and_save": "Understood and save"
 }

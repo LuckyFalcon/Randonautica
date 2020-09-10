@@ -1,5 +1,5 @@
 {
-  "title": "Fatumbot",
+  "title": "Randonautica",
   "fatum_project": "Fatum 프로젝트로 가능",
 
   "enter_randonautica": "fatumbot 입력",
@@ -65,7 +65,7 @@
   "failed_dialog_description_2": "다른 것을 받습니까?",
   "failed_dialog_yes": "예, 제발!",
   "failed_dialog_no": "아니요, 돌아 가기",
-  "navigate_to_bot": "Fatumbot Classic",
+  "navigate_to_bot": "Randonautica Classic",
   "privacy_enquiry": "개인 정보 문의",
   "bug_report": "버그보고",
   "privacy_policy": "개인 정보 보호 정책",
@@ -75,8 +75,8 @@
   "type_bug_report": "여기에 버그 보고서 입력",
   "Notice": "중요 통지",
   "give_everything": "모든 기능에 대한 액세스 권한을 부여했습니다. 귀하의 구매는 손실되지 않습니다! 새 버전으로 전환하는 동안 귀하가 구매하거나 구매할 때마다 향후 큰 보상을 받게됩니다!",
-  "give_everything_2": "불편을 끼쳐 드려 죄송합니다. 설정-> Fatumbot 클래식으로 이동하여 봇을 사용할 수 있습니다.",
-  "give_everything_3": "친절합니다, Fatumbot Creators",
+  "give_everything_2": "불편을 끼쳐 드려 죄송합니다. 설정-> Randonautica 클래식으로 이동하여 봇을 사용할 수 있습니다.",
+  "give_everything_3": "친절합니다, Randonautica Creators",
   "understood": "이해",
   "understood_and_save": "선택을 이해하고 기억"
 }

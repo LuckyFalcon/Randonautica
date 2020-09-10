@@ -1,8 +1,8 @@
 import 'dart:ui' as ui;
 
-import 'package:app/helpers/Dialogs.dart';
-import 'package:app/utils/currentUser.dart' as globals;
-import 'package:app/utils/size_config.dart';
+import 'package:randonautica/helpers/Dialogs.dart';
+import 'package:randonautica/utils/currentUser.dart' as globals;
+import 'package:randonautica/utils/size_config.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

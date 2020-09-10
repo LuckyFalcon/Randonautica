@@ -1,26 +1,26 @@
 import 'dart:async';
 import 'dart:math';
 
-import 'package:app/components/Randonaut/ButtonGoMainPage.dart';
-import 'package:app/components/Randonaut/FinishTripButton.dart';
-import 'package:app/components/Randonaut/HelpButton.dart';
-import 'package:app/components/Randonaut/OpenMapsButton.dart';
-import 'package:app/components/Randonaut/PointsButtons.dart';
-import 'package:app/components/Randonaut/SaveLocationButton.dart';
-import 'package:app/components/Randonaut/SetRadius.dart';
-import 'package:app/components/Randonaut/SetRandomness.dart';
-import 'package:app/components/Randonaut/SetWaterPoints.dart';
-import 'package:app/components/Randonaut/ShareLocationButton.dart';
-import 'package:app/helpers/AppLocalizations.dart';
-import 'package:app/helpers/Dialogs.dart';
-import 'package:app/helpers/FadeRoute.dart';
-import 'package:app/helpers/OpenGoogleMaps.dart';
-import 'package:app/models/Attractors.dart';
-import 'package:app/models/UnloggedTrip.dart';
-import 'package:app/models/pin_pill_info.dart';
-import 'package:app/pages/Profile/Settings.dart';
-import 'package:app/utils/MapStyles.dart' as Utils;
-import 'package:app/utils/size_config.dart';
+import 'package:randonautica/components/Randonaut/ButtonGoMainPage.dart';
+import 'package:randonautica/components/Randonaut/FinishTripButton.dart';
+import 'package:randonautica/components/Randonaut/HelpButton.dart';
+import 'package:randonautica/components/Randonaut/OpenMapsButton.dart';
+import 'package:randonautica/components/Randonaut/PointsButtons.dart';
+import 'package:randonautica/components/Randonaut/SaveLocationButton.dart';
+import 'package:randonautica/components/Randonaut/SetRadius.dart';
+import 'package:randonautica/components/Randonaut/SetRandomness.dart';
+import 'package:randonautica/components/Randonaut/SetWaterPoints.dart';
+import 'package:randonautica/components/Randonaut/ShareLocationButton.dart';
+import 'package:randonautica/helpers/AppLocalizations.dart';
+import 'package:randonautica/helpers/Dialogs.dart';
+import 'package:randonautica/helpers/FadeRoute.dart';
+import 'package:randonautica/helpers/OpenGoogleMaps.dart';
+import 'package:randonautica/models/Attractors.dart';
+import 'package:randonautica/models/UnloggedTrip.dart';
+import 'package:randonautica/models/pin_pill_info.dart';
+import 'package:randonautica/pages/Profile/Settings.dart';
+import 'package:randonautica/utils/MapStyles.dart' as Utils;
+import 'package:randonautica/utils/size_config.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -710,7 +710,7 @@ class RandonautState extends State<Randonaut> {
         position: attractorCoordinates,
         infoWindow: InfoWindow(
           title: (attractors.type == 1 ? "Attractor" : "Void"),
-          snippet: "Radius: " + attractors.zScore.toStringAsFixed(0) + "\n" + "Power: " + attractors.power.toStringAsFixed(2) + "\n" + "Z_Score: " + attractors.zScore.toStringAsFixed(2),
+          snippet: "Radius: " + attractors.radiusM.toStringAsFixed(0),
         ),
       ));
 

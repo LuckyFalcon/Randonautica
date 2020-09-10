@@ -1,12 +1,12 @@
 import 'dart:async';
 
-import 'package:app/api/getAttractors.dart';
-import 'package:app/components/Warnings/slide_warning_dots.dart';
-import 'package:app/components/Warnings/slide_warning_item.dart';
-import 'package:app/helpers/AppLocalizations.dart';
-import 'package:app/models/slide_warnings.dart';
-import 'package:app/utils/BackgroundColor.dart' as backgrounds;
-import 'package:app/utils/size_config.dart';
+import 'package:randonautica/api/getAttractors.dart';
+import 'package:randonautica/components/Warnings/slide_warning_dots.dart';
+import 'package:randonautica/components/Warnings/slide_warning_item.dart';
+import 'package:randonautica/helpers/AppLocalizations.dart';
+import 'package:randonautica/models/slide_warnings.dart';
+import 'package:randonautica/utils/BackgroundColor.dart' as backgrounds;
+import 'package:randonautica/utils/size_config.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:location/location.dart';

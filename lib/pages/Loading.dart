@@ -1,8 +1,8 @@
-import 'package:app/helpers/AppLocalizations.dart';
-import 'package:app/helpers/FadeRoute.dart';
-import 'package:app/pages/Walkthrough.dart';
-import 'package:app/utils/BackgroundColor.dart' as backgrounds;
-import 'package:app/utils/size_config.dart';
+import 'package:randonautica/helpers/AppLocalizations.dart';
+import 'package:randonautica/helpers/FadeRoute.dart';
+import 'package:randonautica/pages/Walkthrough.dart';
+import 'package:randonautica/utils/BackgroundColor.dart' as backgrounds;
+import 'package:randonautica/utils/size_config.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

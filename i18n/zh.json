@@ -1,5 +1,5 @@
 {
-  "title": "Fatumbot",
+  "title": "Randonautica",
   "fatum_project": "通过Fatum项目可以实现",
   "enter_randonautica": "输入fatumbot",
   "welcome_randonaut_1": "欢迎",
@@ -54,7 +54,7 @@
   "failed_dialog_description_2": "收到另一个？",
   "failed_dialog_yes": "是的,请！",
   "failed_dialog_no": "不,回去",
-  "navigate_to_bot": "Fatumbot Classic",
+  "navigate_to_bot": "Randonautica Classic",
   "privacy_enquiry": "隐私查询",
   "bug_report": "报告错误",
   "privacy_policy": "隐私政策",
@@ -64,8 +64,8 @@
   "type_bug_report": "在这里输入您的错误报告",
   "Notice": "重要通知",
   "give_everything": "我们已为您提供所有功能的使用权。您的购买不会丢失！当我们过渡到新版本时,将来您进行和/或进行的每次购买都会获得丰厚的回报！",
-  "give_everything_2": "对于给您带来的不便,我们深表歉意,您可以通过进入设置-> Fatumbot classic使用该机器人",
-  "give_everything_3": "亲切的问候,Fatumbot创作者",
+  "give_everything_2": "对于给您带来的不便,我们深表歉意,您可以通过进入设置-> Randonautica classic使用该机器人",
+  "give_everything_3": "亲切的问候,Randonautica创作者",
   "understood": "了解",
   "understood_and_save": "了解并记住选择"
 }

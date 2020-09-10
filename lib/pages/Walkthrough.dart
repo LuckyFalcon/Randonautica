@@ -1,11 +1,11 @@
 import 'dart:async';
 
-import 'package:app/components/Introduction/EnterRandonauticaButton.dart';
-import 'package:app/components/Introduction/slide_dots.dart';
-import 'package:app/components/Introduction/slide_item.dart';
-import 'package:app/models/slide.dart';
-import 'package:app/utils/size_config.dart';
-import 'package:app/utils/BackgroundColor.dart' as backgrounds;
+import 'package:randonautica/components/Introduction/EnterRandonauticaButton.dart';
+import 'package:randonautica/components/Introduction/slide_dots.dart';
+import 'package:randonautica/components/Introduction/slide_item.dart';
+import 'package:randonautica/models/slide.dart';
+import 'package:randonautica/utils/size_config.dart';
+import 'package:randonautica/utils/BackgroundColor.dart' as backgrounds;
 import 'package:flutter/material.dart';
 
 class Walkthrough extends StatefulWidget {

@@ -1,5 +1,5 @@
 {
-  "title": "Fatumbot",
+  "title": "Randonautica",
   "fatum_project": "Mogelijk gemaakt door The Fatum Project",
 
   "enter_randonautica": "voer fatumbot in",
@@ -66,7 +66,7 @@
   "failed_dialog_yes": "ja graag!",
   "failed_dialog_no": "nee, ga terug",
 
-  "navigate_to_bot": "Fatumbot Classic",
+  "navigate_to_bot": "Randonautica Classic",
   "privacy_enquiry": "Privacyaanvraag",
   "bug_report": "Rapporteer een bug",
   "privacy_policy": "Privacybeleid",
@@ -76,7 +76,7 @@
   "type_bug_report": "Typ hier uw bugrapport",
   "Notice": "Belangrijke mededeling",
   "give_everything": "We hebben je toegang gegeven tot alle functionaliteit. Je aankopen gaan niet verloren! Terwijl we overstappen naar de nieuwe versie, wordt voor elke aankoop die je doet en / of hebt gedaan, je in de toekomst zwaar beloond!",  "give_everything_2": "Onze excuses voor het ongemak, u kunt de bot gebruiken door naar instellingen -> Fatumbot classic te gaan",
-  "give_everything_3": "Bedankt, De Fatumbot Creators",
+  "give_everything_3": "Bedankt, De Randonautica Creators",
   "understood": "Ik begrijp het",
   "understood_and_save": "Keuze begrepen en onthouden"
 }

@@ -1,9 +1,9 @@
 import 'dart:io';
 
-import 'package:app/helpers/AppLocalizations.dart';
-import 'package:app/helpers/FadeRoute.dart';
-import 'package:app/pages/Bot/bot_webview.dart';
-import 'package:app/utils/BackgroundColor.dart' as backgrounds;
+import 'package:randonautica/helpers/AppLocalizations.dart';
+import 'package:randonautica/helpers/FadeRoute.dart';
+import 'package:randonautica/pages/Bot/bot_webview.dart';
+import 'package:randonautica/utils/BackgroundColor.dart' as backgrounds;
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

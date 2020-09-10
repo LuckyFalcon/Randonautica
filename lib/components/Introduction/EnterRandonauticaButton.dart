@@ -1,6 +1,6 @@
-import 'package:app/helpers/FadeRoute.dart';
-import 'package:app/pages/HomePage.dart';
-import 'package:app/utils/size_config.dart';
+import 'package:randonautica/helpers/FadeRoute.dart';
+import 'package:randonautica/pages/HomePage.dart';
+import 'package:randonautica/utils/size_config.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

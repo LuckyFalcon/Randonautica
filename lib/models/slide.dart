@@ -1,4 +1,4 @@
-import 'package:app/helpers/AppLocalizations.dart';
+import 'package:randonautica/helpers/AppLocalizations.dart';
 import 'package:flutter/material.dart';
 
 ///Return slide

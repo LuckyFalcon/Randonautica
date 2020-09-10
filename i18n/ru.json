@@ -1,8 +1,8 @@
 {
-  "title": "Fatumbot",
+  "title": "Randonautica",
   "fatum_project": "Это стало возможным благодаря проекту Fatum",
 
-  "enter_randonautica": "войти в Fatumbot",
+  "enter_randonautica": "войти в Randonautica",
   "welcome_randonaut_1": "Добро пожаловать,",
   "welcome_randonaut_2": "Randonaut",
 
@@ -65,7 +65,7 @@
   "failed_dialog_yes": "да пожалуйста!",
   "failed_dialog_no": "нет, вернуться",
 
-  "navigate_to_bot": "Fatumbot Classic",
+  "navigate_to_bot": "Randonautica Classic",
   "privacy_enquiry": "Запрос о конфиденциальности",
   "bug_report": "Сообщить об ошибке",
   "privacy_policy": "Политика конфиденциальности",
@@ -75,8 +75,8 @@
   "type_bug_report": "Напишите здесь свой отчет об ошибке",
   "Notice": "Important Notice",
   "give_everything": "Мы предоставили вам доступ ко всем функциям. Ваши покупки не потеряны! Пока мы переходим на новую версию, за каждую покупку, которую вы сделаете и / или совершили, вы будете получать большие вознаграждения в будущем!",
-  "give_everything_2": "Приносим извинения за неудобства, вы можете использовать бот, зайдя в настройки -> Fatumbot classic",
-  "give_everything_3": "С уважением, создатели Fatumbot",
+  "give_everything_2": "Приносим извинения за неудобства, вы можете использовать бот, зайдя в настройки -> Randonautica classic",
+  "give_everything_3": "С уважением, создатели Randonautica",
   "understood": "Понял",
   "understood_and_save": "понял и запомнил выбор"
 }

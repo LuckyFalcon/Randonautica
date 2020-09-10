@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
-import 'package:app/pages/Bot/bot_webview.dart';
+import 'package:randonautica/pages/Bot/bot_webview.dart';
 
 class AddonsShop extends StatefulWidget {
   bool available = false;

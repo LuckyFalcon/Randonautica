@@ -1,5 +1,5 @@
-import 'package:app/helpers/Dialogs.dart';
-import 'package:app/utils/size_config.dart';
+import 'package:randonautica/helpers/Dialogs.dart';
+import 'package:randonautica/utils/size_config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../helpers/AppLocalizations.dart';
