@@ -86,7 +86,7 @@ class _SettingsState extends State<Settings> {
 
   _OpenPrivacyPolicy() async {
 
-    String privacyPolicyUrl = "https://bot.randonauts.com/privacy-and-terms.html";
+    String privacyPolicyUrl = "https://bot.fp2.dev/privacy-and-terms.html";
 
     if (await canLaunch(privacyPolicyUrl)) {
       await launch(privacyPolicyUrl);
