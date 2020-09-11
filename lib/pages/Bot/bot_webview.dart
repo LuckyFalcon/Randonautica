@@ -457,10 +457,10 @@ class BotWebView extends StatelessWidget {
     var botUrl = "";
     if (Platform.isAndroid) {
 //      botUrl = "https://devbot.randonauts.com/devbotdl.html?src=android";
-      botUrl = "https://bot.fp2.dev/index5.html?src=android";
+      botUrl = "https://fatumbotstaticsite.z20.web.core.windows.net/index5.html?src=android";
     } else if (Platform.isIOS) {
 //      botUrl = "https://devbot.randonauts.com/devbotdl.html?src=ios";
-      botUrl = "https://bot.fp2.dev/index5.html?src=ios";
+      botUrl = "https://fatumbotstaticsite.z20.web.core.windows.net/index5.html?src=ios";
     }
 
     _initLocationPermissions();
