@@ -1,6 +1,6 @@
-import 'package:randonautica/models/pin_pill_info.dart';
+import 'package:fatumbot/models/pin_pill_info.dart';
 import 'package:flutter/material.dart';
-import 'package:randonautica/models/pin_pill_info.dart';
+import 'package:fatumbot/models/pin_pill_info.dart';
 
 class MapPinPillComponent extends StatefulWidget {
 

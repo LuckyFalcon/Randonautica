@@ -1,4 +1,4 @@
-package com.randonautica.app
+package com.fatumbot.app
 
 import io.flutter.embedding.android.FlutterActivity
 

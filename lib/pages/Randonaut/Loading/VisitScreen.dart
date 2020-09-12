@@ -1,8 +1,8 @@
-import 'package:randonautica/components/Introduction/EnterRandonauticaButton.dart';
-import 'package:randonautica/helpers/AppLocalizations.dart';
-import 'package:randonautica/utils/size_config.dart';
+import 'package:fatumbot/components/Introduction/EnterRandonauticaButton.dart';
+import 'package:fatumbot/helpers/AppLocalizations.dart';
+import 'package:fatumbot/utils/size_config.dart';
 import 'package:flutter/material.dart';
-import 'package:randonautica/utils/BackgroundColor.dart' as backgrounds;
+import 'package:fatumbot/utils/BackgroundColor.dart' as backgrounds;
 
 class VisitScreen extends StatefulWidget {
   @override

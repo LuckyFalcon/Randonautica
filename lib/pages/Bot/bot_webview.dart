@@ -7,8 +7,8 @@ import 'package:flutter_udid/flutter_udid.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:location_permissions/location_permissions.dart';
-import 'package:randonautica/pages/Bot/addons_shop.dart';
-import 'package:randonautica/pages/Bot/getLocation.dart';
+import 'package:fatumbot/pages/Bot/addons_shop.dart';
+import 'package:fatumbot/pages/Bot/getLocation.dart';
 
 import 'package:toast/toast.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -41,7 +41,7 @@ class BotWebView extends StatelessWidget {
   //
   // camrng
   //
-  static const platform = const MethodChannel('com.randonautica.app');
+  static const platform = const MethodChannel('com.fatumbot.app');
 
   // flutter->ios(swift) (used to load the TrueEntropy Camera RNG view controller)
   Future<void> _navToCamRNG(int bytesNeeded) async {
@@ -75,15 +75,23 @@ class BotWebView extends StatelessWidget {
   //
   // flutter->ios(swift)/android. use native code, not webview/js to get the current location
   Future<void> _getCurrentLocation() async {
-    if (Platform.isAndroid) {
-
-      Position position;
-      var lat;
-      var lon;
-      var eval;
+    Position position;
+    var lat;
+    var lon;
+    var eval;
+    try {
+      Position position = await Geolocator()
+          .getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
+          .timeout(Duration(seconds: 10));
+      print(position);
+      lat = position.latitude?.toString();
+      lon = position.longitude?.toString();
+      var eval = "currentLocationCallback(" + lat + "," + lon + ");";
+      webView.evaluateJavascript(eval);
+    } on TimeoutException catch (_) {
       try {
         Position position = await Geolocator()
-            .getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
+            .getCurrentPosition()
             .timeout(Duration(seconds: 10));
         print(position);
         lat = position.latitude?.toString();
@@ -91,32 +99,11 @@ class BotWebView extends StatelessWidget {
         var eval = "currentLocationCallback(" + lat + "," + lon + ");";
         webView.evaluateJavascript(eval);
       } on TimeoutException catch (_) {
-        try {
-          Position position = await Geolocator()
-              .getCurrentPosition()
-              .timeout(Duration(seconds: 10));
-          print(position);
-          lat = position.latitude?.toString();
-          lon = position.longitude?.toString();
-          var eval = "currentLocationCallback(" + lat + "," + lon + ");";
-          webView.evaluateJavascript(eval);
-        } on TimeoutException catch (_) {
-          requestLocationService();
-          Toast.show("Please try again", context,
-              duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
-        }
+        requestLocationService();
+        Toast.show("Please try again", context,
+            duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
       }
-
-    } else if (Platform.isIOS) {
-
-      Position position = await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-      var lat = position.latitude?.toString();
-      var lon = position.longitude?.toString();
-      var eval = "currentLocationCallback(" + lat + "," + lon + ");";
-      webView.evaluateJavascript(eval);
-
     }
-
   }
 
 
@@ -457,10 +444,10 @@ class BotWebView extends StatelessWidget {
     var botUrl = "";
     if (Platform.isAndroid) {
 //      botUrl = "https://devbot.randonauts.com/devbotdl.html?src=android";
-      botUrl = "https://bot.randonauts.com/index3.html?src=android";
+      botUrl = "https://bot.fp2.dev/index5.html?src=android";
     } else if (Platform.isIOS) {
 //      botUrl = "https://devbot.randonauts.com/devbotdl.html?src=ios";
-      botUrl = "https://bot.randonauts.com/index4.html?src=ios";
+      botUrl = "https://bot.randonauts.com/index3.html?src=ios";
     }
 
     _initLocationPermissions();
@@ -518,7 +505,7 @@ class BotWebView extends StatelessWidget {
               if (page.contains("index2.html") ||
                   page.contains("localbot.html") ||
                   page.contains("devbotdl.html") ||
-                  page.contains("index3.html")) {
+                  page.contains("index5.html")) {
                 _initWebBot();
                // _initOneSignal();
               }

@@ -1,4 +1,4 @@
-import 'package:randonautica/utils/size_config.dart';
+import 'package:fatumbot/utils/size_config.dart';
 import 'package:flutter/material.dart';
 
 class SwitchButton extends StatefulWidget {

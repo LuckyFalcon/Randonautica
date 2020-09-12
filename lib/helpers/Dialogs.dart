@@ -1,8 +1,8 @@
 import 'dart:ui';
 
-import 'package:randonautica/components/Dialogs/DialogButton.dart';
-import 'package:randonautica/helpers/FadeRoute.dart';
-import 'package:randonautica/utils/size_config.dart';
+import 'package:fatumbot/components/Dialogs/DialogButton.dart';
+import 'package:fatumbot/helpers/FadeRoute.dart';
+import 'package:fatumbot/utils/size_config.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

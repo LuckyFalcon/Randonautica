@@ -1,5 +1,5 @@
 {
-  "title": "Randonautica",
+  "title": "Fatumbot",
   "fatum_project": "Hecho posible por The Fatum Project",
 
   "enter_randonautica": "entrar fatumbot",
@@ -61,7 +61,7 @@
   "warning_3_1": "¡Trae una bolsa de basura!",
   "warning_3_2": "Ayude a recoger la basura en su viaje.",
 
-  "failed_dialog_description_1": "no point found",
+  "failed_dialog_description_1": "finding a point has failed",
   "failed_dialog_description_2": "receive another?",
   "failed_dialog_yes": "yes please!",
   "failed_dialog_no": "no, go back",

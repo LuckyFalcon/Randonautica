@@ -1,13 +1,13 @@
 import 'dart:ui' as ui;
 
-import 'package:randonautica/helpers/Dialogs.dart';
-import 'package:randonautica/utils/size_config.dart';
+import 'package:fatumbot/helpers/Dialogs.dart';
+import 'package:fatumbot/utils/size_config.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../helpers/AppLocalizations.dart';
-import 'package:randonautica/utils/currentUser.dart' as globals;
+import 'package:fatumbot/utils/currentUser.dart' as globals;
 
 class SetRandomness extends StatefulWidget {
   Function callback;

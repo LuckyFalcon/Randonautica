@@ -1,4 +1,4 @@
-import 'package:randonautica/utils/size_config.dart';
+import 'package:fatumbot/utils/size_config.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

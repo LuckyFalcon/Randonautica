@@ -1,4 +1,4 @@
-import 'package:randonautica/pages/HomePage.dart';
+import 'package:fatumbot/pages/HomePage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -54,6 +54,8 @@ class Randonautica extends StatelessWidget {
         child: ThemeConsumer(
             child: Builder(
                 builder: (themeContext) => MaterialApp(
+                    debugShowCheckedModeBanner: false,
+
                     //Title
                     title: 'Randonautica',
                     //Theme Data

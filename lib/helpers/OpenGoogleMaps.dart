@@ -9,8 +9,7 @@ class MapUtils {
     if (await canLaunch(googleUrl)) {
       await launch(googleUrl);
     } else {
-      // Fall back to Apple Maps
-      String coords = latitude.toString() + "," + longitude.toString();
-      await launch("http://maps.apple.com/?daddr=" + coords);    }
+      throw 'Could not open the map.';
+    }
   }
 }

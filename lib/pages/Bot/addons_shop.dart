@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
-import 'package:randonautica/pages/Bot/bot_webview.dart';
+import 'package:fatumbot/pages/Bot/bot_webview.dart';
 
 class AddonsShop extends StatefulWidget {
   bool available = false;
@@ -75,7 +75,7 @@ class AddonsShopState extends State<AddonsShop> {
   @override
   Widget build(BuildContext context) {
     this.context = context;
-    print('reached');
+    print('package:fatumbot');
     return Scaffold(
       appBar: AppBar(
         title: Text(_available ? 'Add-ons Shop' : 'Shop not available'),

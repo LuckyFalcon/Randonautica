@@ -1,5 +1,5 @@
 
-import 'package:randonautica/models/UserStats.dart';
+import 'package:fatumbot/models/UserStats.dart';
 
 class AchievementController {
 

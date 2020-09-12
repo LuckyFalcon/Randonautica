@@ -1,13 +1,13 @@
 import 'dart:async';
 
-import 'package:randonautica/components/BottomBar.dart';
-import 'package:randonautica/components/TopBar.dart';
-import 'package:randonautica/components/TopBarV2.dart';
-import 'package:randonautica/helpers/Dialogs.dart';
-import 'package:randonautica/helpers/SignInStreak.dart';
-import 'package:randonautica/pages/Randonaut/Randonaut.dart';
-import 'package:randonautica/utils/BackgroundColor.dart' as backgrounds;
-import 'package:randonautica/utils/size_config.dart';
+import 'package:fatumbot/components/BottomBar.dart';
+import 'package:fatumbot/components/TopBar.dart';
+import 'package:fatumbot/components/TopBarV2.dart';
+import 'package:fatumbot/helpers/Dialogs.dart';
+import 'package:fatumbot/helpers/SignInStreak.dart';
+import 'package:fatumbot/pages/Randonaut/Randonaut.dart';
+import 'package:fatumbot/utils/BackgroundColor.dart' as backgrounds;
+import 'package:fatumbot/utils/size_config.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
