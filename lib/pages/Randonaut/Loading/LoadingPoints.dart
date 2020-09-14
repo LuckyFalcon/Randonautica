@@ -71,7 +71,7 @@ class LoadingPointsState extends State<LoadingPoints>
                   this.widget.callback(snapshot.data);
 
                   //A delay so the navigator can pop
-                  Future.delayed(const Duration(milliseconds: 2000), () {
+                  Future.delayed(const Duration(milliseconds: 50000), () {
                     Navigator.pop(
                         context); //Go back to previous navigation item
                   });
@@ -80,7 +80,7 @@ class LoadingPointsState extends State<LoadingPoints>
                   Navigator.pop(context); //Go back to previous navigation item
 
                   //Small delay for popup
-                  Future.delayed(const Duration(milliseconds: 500), () {
+                  Future.delayed(const Duration(milliseconds: 50000), () {
                     this.widget.callback(snapshot.data);
                   });
                 }
@@ -91,7 +91,7 @@ class LoadingPointsState extends State<LoadingPoints>
                         children: [
                           SizedBox(height: SizeConfig.blockSizeVertical * 3),
                           Container(
-                            height: SizeConfig.blockSizeVertical * 10,
+                            height: SizeConfig.blockSizeVertical * 5,
                             width: SizeConfig.blockSizeHorizontal * 33.3,
 //                            child: Padding(
 //                              padding:
@@ -118,11 +118,23 @@ class LoadingPointsState extends State<LoadingPoints>
                                 textAlign: TextAlign.center,
                                 maxLines: 2,
                                 style: TextStyle(
-                                    fontSize: 40,
+                                    fontSize: 26,
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold)),
                           ),
-                          SizedBox(height: SizeConfig.blockSizeVertical * 10),
+//                          Container(
+//                            width: SizeConfig.blockSizeHorizontal * 70,
+//                            child: AutoSizeText(
+//                                AppLocalizations.of(context)
+//                                    .translate('generating_point_2'),
+//                                textAlign: TextAlign.center,
+//                                maxLines: 1,
+//                                style: TextStyle(
+//                                    fontSize: 24,
+//                                    color: Colors.white,
+//                                    fontWeight: FontWeight.bold)),
+//                          ),
+                          SizedBox(height: SizeConfig.blockSizeVertical * 15),
                           Container(
                             width: SizeConfig.blockSizeHorizontal * 25,
                             height: SizeConfig.blockSizeVertical * 10,
@@ -133,15 +145,15 @@ class LoadingPointsState extends State<LoadingPoints>
                               duration: Duration(milliseconds: 500),
                             )
                           ),
-                          SizedBox(height: SizeConfig.blockSizeVertical * 10),
+                          SizedBox(height: SizeConfig.blockSizeVertical * 15),
                           Container(
-                            width: SizeConfig.blockSizeHorizontal * 40,
+                            width: SizeConfig.blockSizeHorizontal * 60,
                             child: AutoSizeText(
                                 AppLocalizations.of(context)
                                     .translate('use_this_moment'),
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
-                                    fontSize: 20,
+                                    fontSize: 14,
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold)),
                           ),

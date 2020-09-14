@@ -15,28 +15,29 @@ returnSlide(index, context){
         .translate('walktrhough_1_3')
         .toUpperCase();
     //Walkthrough 2
-  } else if(index == 1){
-    slideList[index].descriptionone =  AppLocalizations.of(context)
+  } else if(index == 1) {
+    slideList[index].descriptionone = AppLocalizations.of(context)
         .translate('walktrhough_2_1')
         .toUpperCase();
-    slideList[index].descriptiontwo =  AppLocalizations.of(context)
+    slideList[index].descriptiontwo = AppLocalizations.of(context)
         .translate('walktrhough_2_2')
         .toUpperCase();
-    slideList[index].descriptionthree =  AppLocalizations.of(context)
+    slideList[index].descriptionthree = AppLocalizations.of(context)
         .translate('walktrhough_2_3')
         .toUpperCase();
     //Walkthrough 3
-  } else if(index == 2){
-    slideList[index].descriptionone =  AppLocalizations.of(context)
-        .translate('walktrhough_3_1')
-        .toUpperCase();
-    slideList[index].descriptiontwo =  AppLocalizations.of(context)
-        .translate('walktrhough_3_2')
-        .toUpperCase();
-    slideList[index].descriptionthree =  AppLocalizations.of(context)
-        .translate('walktrhough_3_3')
-        .toUpperCase();
   }
+//  } else if(index == 2){
+//    slideList[index].descriptionone =  AppLocalizations.of(context)
+//        .translate('walktrhough_3_1')
+//        .toUpperCase();
+//    slideList[index].descriptiontwo =  AppLocalizations.of(context)
+//        .translate('walktrhough_3_2')
+//        .toUpperCase();
+//    slideList[index].descriptionthree =  AppLocalizations.of(context)
+//        .translate('walktrhough_3_3')
+//        .toUpperCase();
+//  }
 
   //Return list
   return slideList[index];
@@ -73,10 +74,10 @@ final slideList = [
     descriptionone: 'You are about to embark on a journey that allows your imagination to collide with the universe.',
     descriptiontwo: 'As a randonaut, you can create your own legend in real time as you venture to a quantumly generated random coordinate.',
     descriptionthree: 'Set your mind out for adventure, what comes next is sure to be magical...',  ),
-  Slide(
-    imageUrl: 'assets/img/Andronaut.jpg',
-    title: 'It\'s Just the Beginning',
-    descriptionone: 'You are about to embark on a journey that allows your imagination to collide with the universe.',
-    descriptiontwo: 'As a randonaut, you can create your own legend in real time as you venture to a quantumly generated random coordinate.',
-    descriptionthree: 'Set your mind out for adventure, what comes next is sure to be magical...',  ),
+//  Slide(
+//    imageUrl: 'assets/img/Andronaut.jpg',
+//    title: 'It\'s Just the Beginning',
+//    descriptionone: 'You are about to embark on a journey that allows your imagination to collide with the universe.',
+//    descriptiontwo: 'As a randonaut, you can create your own legend in real time as you venture to a quantumly generated random coordinate.',
+//    descriptionthree: 'Set your mind out for adventure, what comes next is sure to be magical...',  ),
 ];

@@ -23,7 +23,7 @@ class _WalkthroughState extends State<Walkthrough> {
   void initState() {
     super.initState();
     Timer.periodic(Duration(seconds: 10), (Timer timer) {
-      if (_currentPage < 2) {
+      if (_currentPage < 1) {
         _currentPage++;
       } else {
         _currentPage = 0;
@@ -82,7 +82,6 @@ class _WalkthroughState extends State<Walkthrough> {
                       ),
                     ],
                   ),
-
               ),
               Container(
                 margin: const EdgeInsets.only(bottom: 30),
@@ -98,7 +97,7 @@ class _WalkthroughState extends State<Walkthrough> {
                   ],
                 ),
               ),
-              (_currentPage == 2 ? EnterRandonauticaButton() : SizedBox(
+              (_currentPage == 1 ? EnterRandonauticaButton() : SizedBox(
                 height: 0,
               )),
             ],

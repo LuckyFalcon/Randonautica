@@ -30,8 +30,10 @@
   "points": "points",
 
   "go": "go",
-  "generating_point": "Generating Point...",
-  "use_this_moment": "Use this moment to relax.",
+  "generating_point": "Finding a location... focus on your intent",
+  "generating_point_2": "focus on your intent",
+
+  "use_this_moment": "Use common sense, do not put yourself or others in harm's way. Don't trespass. Obey all quarantine, curfew and social distancing regulations in your area.",
 
   "point_type": "point_type",
   "see_route": "see route",
@@ -44,12 +46,12 @@
   "ok_button": "Ok",
   "cancel_button": "Cancel",
 
-  "walktrhough_1_1": "You are about to embark on a journey that allows your imagination to collide with the universe.",
-  "walktrhough_1_2": "As a randonaut, you can create your own legend in real time as you venture to a quantumly generated random coordinate.",
-  "walktrhough_1_3": "Set your mind out for adventure, what comes next is sure to be magical...",
-  "walktrhough_2_1": "Through the research of the fatum project, Fatumbot explores the idea that mind and matter (the world around you) are connected in an enchanting way.",
-  "walktrhough_2_2": "randonauting can heighten your awareness, train your brain for unpredictability, and most importantly, break you out of your probability tunnel....",
-  "walktrhough_2_3": "",
+  "walktrhough_1_1": "It is theorized that your mind can influence Random Number Generators",
+  "walktrhough_1_2": "By use of a quantum random number generation a random geographic coordinate is generated",
+  "walktrhough_1_3": "Set your mind out for adventure of the outside world",
+  "walktrhough_2_1": "Press the GO button and generate a random coordinate",
+  "walktrhough_2_2": "While the process of generating a point takes place use your mind and focus on something.",
+  "walktrhough_2_3": "Then you venture out to the quantumly generated random coordinate and explore!",
   "walktrhough_3_1": "you are about to deviate off the path you were predetermined to be on.",
   "walktrhough_3_2": "as you venture into the quantum randomness or \"genesis field\", keep your senses open as the story unfolds around you",
   "walktrhough_3_3": "you were never supposed to be in this place at this time. you're writing the story now.",
