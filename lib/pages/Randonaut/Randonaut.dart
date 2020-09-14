@@ -375,23 +375,9 @@ class RandonautState extends State<Randonaut> {
       return await gpsDisabledDialog(context, enableGPS);
     }
 
-    //Set SharedPreferences
-    Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
-    //Await SharedPreferences future object
-    final SharedPreferences prefs = await _prefs;
-
-    //Set everything to true
-    bool evertyhingDialogAccepted = prefs.getBool("everything");
-    if (evertyhingDialogAccepted != true) {
-      Future.delayed(Duration(seconds: 0), () async {
-        await giveEverything(context);
-      });
-    } else {
-      setState(() {
-        onAddMarkerButtonPressed();
-      });
-    }
+    onAddMarkerButtonPressed();
+    
   }
 
   void callbackHelp() {
