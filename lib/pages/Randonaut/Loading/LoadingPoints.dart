@@ -80,7 +80,7 @@ class LoadingPointsState extends State<LoadingPoints>
                   Navigator.pop(context); //Go back to previous navigation item
 
                   //Small delay for popup
-                  Future.delayed(const Duration(milliseconds: 3000), () {
+                  Future.delayed(const Duration(milliseconds: 500), () {
                     this.widget.callback(snapshot.data);
                   });
                 }
