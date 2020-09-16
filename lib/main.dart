@@ -26,7 +26,7 @@ void main() {
   if (Platform.isIOS) {
     IronsourceFlutterAds.initialize("d6a68be9");
   } else if (Platform.isAndroid) {
-    IronsourceFlutterAds.initialize("TOOD: fill in");
+    IronsourceFlutterAds.initialize("d6a9eae1");
   }
 }
 
