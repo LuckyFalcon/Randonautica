@@ -1,4 +1,5 @@
 import 'package:app/pages/HomePage.dart';
+import 'package:firebase_admob/firebase_admob.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -18,6 +19,8 @@ void main() {
       .then((_) {
     runApp(new Randonautica());
   });
+
+  FirebaseAdMob.instance.initialize(appId: "ca-app-pub-7067096000528824~4541233902");
 }
 
 class Randonautica extends StatelessWidget {
