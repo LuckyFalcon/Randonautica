@@ -3,11 +3,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:ironsource_flutter_ads/IOS/ironsource_flutter_ads.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:theme_provider/theme_provider.dart';
 
 import 'helpers/AppLocalizations.dart';
 import 'pages/Loading.dart';
+
+import 'dart:io' show Platform;
 
 void main() {
   //Ensure initilization
@@ -18,6 +21,13 @@ void main() {
       .then((_) {
     runApp(new Randonautica());
   });
+
+  // Initialize IronSource ads
+  if (Platform.isIOS) {
+    IronsourceFlutterAds.initialize("d6a68be9");
+  } else if (Platform.isAndroid) {
+    IronsourceFlutterAds.initialize("TOOD: fill in");
+  }
 }
 
 class Randonautica extends StatelessWidget {

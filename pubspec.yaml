@@ -68,6 +68,9 @@ dependencies:
   flutter_udid: ^1.0.1
   flutter_launcher_icons: "^0.7.3"
 
+  # Ads
+  ironsource_flutter_ads: ^1.0.2
+
 
 dev_dependencies:
   flutter_test:
