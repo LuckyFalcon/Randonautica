@@ -43,13 +43,13 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>To generate IDAs and blind spots</string>
+	<string>To find a point nearby to explore</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>To generate IDAs and blind spots</string>
+	<string>To find a point nearby to explore</string>
 	<key>NSLocationUsageDescription</key>
-	<string>To generate IDAs and blind spots</string>
+	<string>To find a point nearby to explore</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>To generate IDAs and blind spots</string>
+	<string>To find a point nearby to explore</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>To save trip reports</string>
 	<key>UILaunchStoryboardName</key>
