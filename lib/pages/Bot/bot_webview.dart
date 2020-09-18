@@ -7,8 +7,8 @@ import 'package:flutter_udid/flutter_udid.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:location_permissions/location_permissions.dart';
-import 'package:app/pages/Bot/addons_shop.dart';
-import 'package:app/pages/Bot/getLocation.dart';
+import 'package:fatumbot/pages/Bot/addons_shop.dart';
+import 'package:fatumbot/pages/Bot/getLocation.dart';
 
 import 'package:toast/toast.dart';
 import 'package:url_launcher/url_launcher.dart';
