@@ -7,6 +7,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:theme_provider/theme_provider.dart';
 
+import 'dart:io' show Platform;
+
 import 'helpers/AppLocalizations.dart';
 import 'pages/Loading.dart';
 
@@ -20,7 +22,11 @@ void main() {
     runApp(new Randonautica());
   });
 
-  FirebaseAdMob.instance.initialize(appId: "ca-app-pub-7067096000528824~4541233902");
+  if (Platform.isIOS) {
+    FirebaseAdMob.instance.initialize(appId: "ca-app-pub-7067096000528824~4541233902");
+  } else if (Platform.isAndroid) {
+    FirebaseAdMob.instance.initialize(appId: "ca-app-pub-7067096000528824~2498961280");
+  }
 }
 
 class Randonautica extends StatelessWidget {

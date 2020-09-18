@@ -48,7 +48,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.randonautica.app"
+        applicationId "com.fatumbot.app"
         minSdkVersion 16
         targetSdkVersion 28
         versionCode flutterVersionCode.toInteger()

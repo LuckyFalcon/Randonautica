@@ -27,7 +27,7 @@ class _LoadingState extends State<Loading> {
 //  //Google/iOS Application App Store URLs
 //  var APP_STORE_URL = 'https://apps.apple.com/us/app/randonautica/id1493743521';
 //  var PLAY_STORE_URL =
-//      'https://play.google.com/store/apps/details?id=com.randonautica.app';
+//      'https://play.google.com/store/apps/details?id=com.fatumbot.app';
 
 //  _versionCheck(context) async {
 //    //Get Current installed version of app

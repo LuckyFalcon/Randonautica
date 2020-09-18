@@ -1,42 +1,42 @@
 {
   "project_info": {
-    "project_number": "798292909561",
-    "firebase_url": "https://randonautica.firebaseio.com",
-    "project_id": "randonautica",
-    "storage_bucket": "randonautica.appspot.com"
+    "project_number": "119508685448",
+    "firebase_url": "https://fatumbot.firebaseio.com",
+    "project_id": "fatumbot",
+    "storage_bucket": "fatumbot.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:798292909561:android:f83b87e149098a703cf128",
+        "mobilesdk_app_id": "1:119508685448:android:0fbccc1e677afcf537453d",
         "android_client_info": {
-          "package_name": "com.randonautica.app"
+          "package_name": "com.fatumbot.app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "798292909561-3s2goqk5nlt0ta7rsreajahf5d63v53t.apps.googleusercontent.com",
+          "client_id": "119508685448-877js0ptlo2k1l0fs10hg9ors9l5re0o.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.randonautica.app",
-            "certificate_hash": "fa2017b8353e51b4444d0408809cfb985069928b"
+            "package_name": "com.fatumbot.app",
+            "certificate_hash": "0c0b65b8c2187bca874477ebd4354afa2839d18d"
           }
         },
         {
-          "client_id": "798292909561-jkt66cii2g61bcr47jev5c05omv56t1c.apps.googleusercontent.com",
+          "client_id": "119508685448-33d4bh9791hgceeeuvamhbna71o541uf.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAIOiZaOji_p-F8eomDT3RMzRQbVjpNLmU"
+          "current_key": "AIzaSyC3Dn_1uV66aJEI0TTOqo_UcMRAp93WMZ0"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "798292909561-jkt66cii2g61bcr47jev5c05omv56t1c.apps.googleusercontent.com",
+              "client_id": "119508685448-33d4bh9791hgceeeuvamhbna71o541uf.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

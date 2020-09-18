@@ -22,6 +22,7 @@ import 'package:app/pages/Profile/Settings.dart';
 import 'package:app/utils/MapStyles.dart' as Utils;
 import 'package:app/utils/size_config.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:firebase_admob/firebase_admob.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
@@ -160,6 +161,9 @@ class RandonautState extends State<Randonaut> {
   ///Tutorial targets list
   List<TargetFocus> targets = List();
 
+  // AdMob banner ad
+  BannerAd bannerAd;
+
   @override
   void initState() {
     super.initState();
@@ -176,6 +180,8 @@ class RandonautState extends State<Randonaut> {
         .then((onValue) {
       pinLocationIcon = onValue;
     });
+
+    initAds();
   }
 
   @override
@@ -375,9 +381,7 @@ class RandonautState extends State<Randonaut> {
       return await gpsDisabledDialog(context, enableGPS);
     }
 
-
     onAddMarkerButtonPressed();
-
   }
 
   void callbackHelp() {
@@ -705,9 +709,6 @@ class RandonautState extends State<Randonaut> {
     } else {
       await gpsDisabledDialog(context, enableGPS);
     }
-
-
-
   }
 
   void updatePinOnMap() async {
@@ -747,6 +748,36 @@ class RandonautState extends State<Randonaut> {
       // and add it again at the updated location
       _markers.removeWhere((m) => m.markerId.value == 'sourcePin');
     });
+  }
+
+  void initAds() {
+    MobileAdTargetingInfo targetingInfo = MobileAdTargetingInfo(
+      keywords: <String>['flutterio', 'beautiful apps'],
+      contentUrl: 'https://flutter.io',
+      childDirected: false,
+      testDevices: <String>[], // Android emulators are considered test devices
+    );
+
+    bannerAd = BannerAd(
+      adUnitId: "ca-app-pub-7067096000528824/8392972714",
+      size: AdSize.smartBanner,
+      targetingInfo: targetingInfo,
+      listener: (MobileAdEvent event) {
+        print("BannerAd event is $event");
+      },
+    );
+
+    bannerAd
+    // typically this happens well before the ad is shown
+      ..load()
+      ..show(
+        // Positions the banner ad 60 pixels from the bottom of the screen
+        anchorOffset: 60.0,
+        // Positions the banner ad 10 pixels from the center of the screen to the right
+        horizontalCenterOffset: 10.0,
+        // Banner Position
+        anchorType: AnchorType.bottom,
+      );
   }
 
   void initTargets() {
