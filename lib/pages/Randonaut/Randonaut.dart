@@ -214,7 +214,7 @@ class RandonautState extends State<Randonaut> {
           ///This is 60% of the Vertical / Height for this container in this class
           height: (pointsSucesfullyGenerated
               ? SizeConfig.blockSizeVertical * 70
-              : SizeConfig.blockSizeVertical * 66),
+              : SizeConfig.blockSizeVertical * 80),
 
           ///This is 80% of the Horizontal / Width for this container in this class
           width: SizeConfig.blockSizeHorizontal * 80,
@@ -223,7 +223,7 @@ class RandonautState extends State<Randonaut> {
               Container(
                 height: (pointsSucesfullyGenerated
                     ? SizeConfig.blockSizeVertical * 69
-                    : SizeConfig.blockSizeVertical * 62),
+                    : SizeConfig.blockSizeVertical * 76),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(0.0)),
                   border: Border.all(
@@ -276,7 +276,7 @@ class RandonautState extends State<Randonaut> {
         Container(
           height: (pointsSucesfullyGenerated
               ? SizeConfig.blockSizeVertical * 18.5
-              : SizeConfig.blockSizeVertical * 23.5),
+              : SizeConfig.blockSizeVertical * 0.0),
           width: SizeConfig.blockSizeHorizontal * 100,
           child: (pointsSucesfullyGenerated
               ? Row(
@@ -359,52 +359,7 @@ class RandonautState extends State<Randonaut> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    SizedBox(width: 0),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        SetRadius(this.setRadiusCallback),
-                        SizedBox(height: SizeConfig.blockSizeVertical * 1),
-                        SetRandomness(this.callbackSelectedRandomness),
-                      ],
-                    ),
-                    SizedBox(width: SizeConfig.blockSizeHorizontal * 4),
-                    Container(
-                        height: SizeConfig.blockSizeVertical * 100,
-                        child: Column(children: <Widget>[
-                          SizedBox(height: SizeConfig.blockSizeHorizontal * 10),
-                          Container(
-                            child: HelpButton(this.callbackHelp),
-                          ),
-                          SizedBox(height: SizeConfig.blockSizeHorizontal * 4),
-//                          IconButton(
-//                            icon: new Image.asset('assets/img/Owl_Token.png'),
-//                            onPressed: () {
-//                              Navigator.push(
-//                                  context, FadeRoute(page: TokenInfo()));
-//                            },
-//                          ),
-//                          Container(
-//                              child: AutoSizeText(
-//                                  '∞',
-//                                  maxLines: 1,
-//                                  minFontSize: 12,
-//                                  maxFontSize: 23,
-//                                  style: TextStyle(
-//                                      fontSize: 16,
-//                                      color: Colors.white,
-//                                      fontWeight: FontWeight.bold,
-//                                      fontFamily: ''))),
-                        ])),
-                    SizedBox(width: SizeConfig.blockSizeHorizontal * 3),
-                    Column(
-                      children: <Widget>[
-                        SetWaterPoints(this.setCheckWaterCallback),
-                        SizedBox(height: SizeConfig.blockSizeVertical * 1),
-                        PointsButtons(this.callbackSelectedPoint)
-                      ],
-                    ),
+
                   ],
                 )),
         ),
@@ -420,23 +375,9 @@ class RandonautState extends State<Randonaut> {
       return await gpsDisabledDialog(context, enableGPS);
     }
 
-    //Set SharedPreferences
-    Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
-    //Await SharedPreferences future object
-    final SharedPreferences prefs = await _prefs;
+    onAddMarkerButtonPressed();
 
-    //Set everything to true
-    bool evertyhingDialogAccepted = prefs.getBool("everything");
-    if (evertyhingDialogAccepted != true) {
-      Future.delayed(Duration(seconds: 0), () async {
-        await giveEverything(context);
-      });
-    } else {
-      setState(() {
-        onAddMarkerButtonPressed();
-      });
-    }
   }
 
   void callbackHelp() {
@@ -604,8 +545,7 @@ class RandonautState extends State<Randonaut> {
     //Check if the current location is not empty
     if (currentLocation.latitude != null && currentLocation.longitude != null) {
       //Choose randomly between loading screens
-      int RandomNumber = new Random().nextInt(2);
-      if (RandomNumber == 1) {
+
         Navigator.push(
             context,
             FadeRoute(
@@ -616,18 +556,7 @@ class RandonautState extends State<Randonaut> {
                     selectedPoint,
                     selectedRandomness,
                     checkWater)));
-      } else {
-        Navigator.push(
-            context,
-            FadeRoute(
-                page: WarningScreens(
-                    callbackLoadingPoints,
-                    radius,
-                    currentLocation,
-                    selectedPoint,
-                    selectedRandomness,
-                    checkWater)));
-      }
+
     } else {
       //Otherwise re-enable location
       setInitialLocation();
@@ -710,7 +639,7 @@ class RandonautState extends State<Randonaut> {
         position: attractorCoordinates,
         infoWindow: InfoWindow(
           title: (attractors.type == 1 ? "Attractor" : "Void"),
-          snippet: "Radius: " + attractors.radiusM.toStringAsFixed(0),
+          snippet: "Radius: " + attractors.zScore.toStringAsFixed(0) + ", " + "Power: " + attractors.power.toStringAsFixed(2) + ", " + "z-Score: " + attractors.zScore.toStringAsFixed(2),
         ),
       ));
 

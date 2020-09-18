@@ -63,15 +63,15 @@ class Randonautica extends StatelessWidget {
                     //Localizations
                     supportedLocales: [
                       Locale('en', 'US'),
-                 //     Locale('ja', ''),
-                      Locale('es', ''),
-                      Locale('ru', ''),
-               //       Locale('ja', ''),
-                      Locale('de', ''),
-                      Locale('fr', ''),
-                      Locale('nl', ''),
-                      Locale('ko', ''),
-                      Locale('zh', '')
+//                 //     Locale('ja', ''),
+//                      Locale('es', ''),
+//                      Locale('ru', ''),
+//               //       Locale('ja', ''),
+//                      Locale('de', ''),
+//                      Locale('fr', ''),
+//                      Locale('nl', ''),
+//                      Locale('ko', ''),
+//                      Locale('zh', '')
                     ],
                     localizationsDelegates: [
                       AppLocalizations.delegate,
