@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "798292909561",
+    "firebase_url": "https://fatumbot.firebaseio.com",
+    "project_id": "fatumbot",
+    "storage_bucket": "fatumbot.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:798292909561:android:f83b87e149098a703cf128",
+        "android_client_info": {
+          "package_name": "com.fatumbot.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "798292909561-3s2goqk5nlt0ta7rsreajahf5d63v53t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fatumbot.app",
+            "certificate_hash": "fa2017b8353e51b4444d0408809cfb985069928b"
+          }
+        },
+        {
+          "client_id": "798292909561-jkt66cii2g61bcr47jev5c05omv56t1c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAIOiZaOji_p-F8eomDT3RMzRQbVjpNLmU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "798292909561-jkt66cii2g61bcr47jev5c05omv56t1c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
