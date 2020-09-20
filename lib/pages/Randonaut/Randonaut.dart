@@ -752,8 +752,8 @@ class RandonautState extends State<Randonaut> {
 
   void initAds() {
     MobileAdTargetingInfo targetingInfo = MobileAdTargetingInfo(
-      keywords: <String>['flutterio', 'beautiful apps'],
-      contentUrl: 'https://flutter.io',
+      keywords: <String>[],
+      contentUrl: '',
       childDirected: false,
       testDevices: <String>[], // Android emulators are considered test devices
     );
@@ -772,9 +772,9 @@ class RandonautState extends State<Randonaut> {
       ..load()
       ..show(
         // Positions the banner ad 60 pixels from the bottom of the screen
-        anchorOffset: 60.0,
+        anchorOffset: 0.0,
         // Positions the banner ad 10 pixels from the center of the screen to the right
-        horizontalCenterOffset: 10.0,
+        horizontalCenterOffset: 0.0,
         // Banner Position
         anchorType: AnchorType.bottom,
       );
