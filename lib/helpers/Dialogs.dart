@@ -592,6 +592,7 @@ loadingpoint(BuildContext context, Function callback, radius, currentLocation,
 
   showDialog(
       context: context,
+      barrierDismissible: false,
       builder: (BuildContext context) {
         return new BackdropFilter
           (
