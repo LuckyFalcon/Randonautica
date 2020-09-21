@@ -36,8 +36,8 @@ class _ButtonGoMainPage extends State<ButtonGoMainPage> {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return Container(
-        height: SizeConfig.blockSizeVertical * 10,
-        width: SizeConfig.blockSizeHorizontal * 30,
+        height: SizeConfig.blockSizeVertical * 5,
+        width: SizeConfig.blockSizeHorizontal * 60,
         decoration: BoxDecoration(
             color: Color(0xff3B4B6C),
             borderRadius: BorderRadius.circular(0),

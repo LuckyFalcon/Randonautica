@@ -22,9 +22,6 @@ class DialogButton extends StatelessWidget {
            ),
         child: RaisedButton(
           elevation: 15,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(60.0),
-          ),
           padding: EdgeInsets.zero,
           child: Ink(
             decoration: BoxDecoration(
@@ -33,7 +30,7 @@ class DialogButton extends StatelessWidget {
                     end: Alignment.topCenter,
                     stops: [0, 1],
                     colors: [Color(0xff5F7FDF), Color(0xff5F7FDF)]),
-                borderRadius: BorderRadius.circular(60.0)),
+            ),
             child: Center(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,

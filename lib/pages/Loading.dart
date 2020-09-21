@@ -20,6 +20,7 @@ class Loading extends StatefulWidget {
 class _LoadingState extends State<Loading> {
   //Set SharedPreferences
   Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+
 //
 //  //Firebase authentication instance
 //  final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -224,81 +225,86 @@ class _LoadingState extends State<Loading> {
     final SharedPreferences prefs = await _prefs;
 
     //Get Token
-    bool seenTutorial = prefs.getBool("tutorial");
+//    bool seenTutorial = prefs.getBool("tutorial");
 
-    if (seenTutorial != null) {
-    //Go to homepage
     Future.delayed(Duration(seconds: 3), () {
       Navigator.pushAndRemoveUntil(context, FadeRoute(page: HomePage()),
           ModalRoute.withName("/HomePage"));
+
+//    if (seenTutorial != null) {
+//    //Go to homepage
+//    Future.delayed(Duration(seconds: 3), () {
+//      Navigator.pushAndRemoveUntil(context, FadeRoute(page: HomePage()),
+//          ModalRoute.withName("/HomePage"));
+//    });
+//    } else {
+//      //Go to walktrhough
+//       await prefs.setBool("tutorial", true);
+//       Future.delayed(Duration(seconds: 3), () {
+//        Navigator.pushAndRemoveUntil(context, FadeRoute(page: Walkthrough()),
+//            ModalRoute.withName("/Walkthrough"));
+//      });
+//    }
     });
-    } else {
-      //Go to walktrhough
-       await prefs.setBool("tutorial", true);
-       Future.delayed(Duration(seconds: 3), () {
-        Navigator.pushAndRemoveUntil(context, FadeRoute(page: Walkthrough()),
-            ModalRoute.withName("/Walkthrough"));
-      });
-    }
   }
 
-  @override
-  Widget build(BuildContext context) {
-    SizeConfig().init(context);
-    return Scaffold(
-      resizeToAvoidBottomPadding: false,
-      extendBodyBehindAppBar: true,
-      extendBody: true,
-      backgroundColor: Colors.yellow[200],
-      body: Container(
-          decoration: backgrounds.dark,
-          child: Center(
-            child: Column(children: <Widget>[
-              Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-                SizedBox(height: SizeConfig.blockSizeVertical * 25),
-                ImageIcon(
-                  AssetImage('assets/img/Owl.png'),
-                  color: Colors.white,
-                  size: 128.0,
-                ),
-                SizedBox(height: SizeConfig.blockSizeVertical * 1),
-                Container(
-                    width: SizeConfig.blockSizeHorizontal * 60,
-                    height: SizeConfig.blockSizeHorizontal * 13,
-                    child: AutoSizeText(
-                        AppLocalizations.of(context).translate('title'),
-                        maxLines: 1,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontSize: 40,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold))),
-                SizedBox(height: SizeConfig.blockSizeVertical * 3),
-                Container(
-                    width: SizeConfig.blockSizeHorizontal * 60,
-                    height: SizeConfig.blockSizeHorizontal * 18,
-                    child: LoadingBouncingGrid.square(
-                      borderColor: Colors.cyan,
-                      borderSize: 3.0,
-                      backgroundColor: Colors.cyanAccent,
-                      duration: Duration(milliseconds: 500),
-                    )),
-                SizedBox(height: SizeConfig.blockSizeVertical * 18),
-                Container(
-                    width: SizeConfig.blockSizeHorizontal * 60,
-                    height: SizeConfig.blockSizeHorizontal * 13,
-                    child: AutoSizeText(
-                        AppLocalizations.of(context).translate('fatum_project'),
-                        maxLines: 1,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontSize: 12,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold))),
-              ])
-            ]),
-          )),
-    );
-  } //Functions
+    @override
+    Widget build(BuildContext context) {
+      SizeConfig().init(context);
+      return Scaffold(
+        resizeToAvoidBottomPadding: false,
+        extendBodyBehindAppBar: true,
+        extendBody: true,
+        backgroundColor: Colors.yellow[200],
+        body: Container(
+            decoration: backgrounds.dark,
+            child: Center(
+              child: Column(children: <Widget>[
+                Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+                  SizedBox(height: SizeConfig.blockSizeVertical * 35),
+                  ImageIcon(
+                    AssetImage('assets/img/Owl.png'),
+                    color: Colors.white,
+                    size: 128.0,
+                  ),
+                  SizedBox(height: SizeConfig.blockSizeVertical * 5),
+                  Container(
+                      width: SizeConfig.blockSizeHorizontal * 60,
+                      height: SizeConfig.blockSizeHorizontal * 13,
+                      child: AutoSizeText(
+                          AppLocalizations.of(context).translate('title'),
+                          maxLines: 1,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontSize: 40,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold))),
+                  SizedBox(height: SizeConfig.blockSizeVertical * 3),
+//                Container(
+//                    width: SizeConfig.blockSizeHorizontal * 60,
+//                    height: SizeConfig.blockSizeHorizontal * 18,
+//                    child: LoadingBouncingGrid.square(
+//                      borderColor: Colors.cyan,
+//                      borderSize: 3.0,
+//                      backgroundColor: Colors.cyanAccent,
+//                      duration: Duration(milliseconds: 500),
+//                    )),
+                  SizedBox(height: SizeConfig.blockSizeVertical * 25),
+//                Container(
+//                    width: SizeConfig.blockSizeHorizontal * 60,
+//                    height: SizeConfig.blockSizeHorizontal * 13,
+//                    child: AutoSizeText(
+//                        AppLocalizations.of(context).translate('fatum_project'),
+//                        maxLines: 1,
+//                        textAlign: TextAlign.center,
+//                        style: TextStyle(
+//                            fontSize: 12,
+//                            color: Colors.white,
+//                            fontWeight: FontWeight.bold))),
+                ])
+              ]),
+            )),
+      );
+    } //Functions
 
-}
+  }

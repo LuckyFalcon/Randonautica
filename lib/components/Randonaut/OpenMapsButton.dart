@@ -1,6 +1,6 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fatumbot/helpers/AppLocalizations.dart';
 import 'package:fatumbot/utils/size_config.dart';
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
 class OpenMapsButton extends StatelessWidget {
@@ -19,29 +19,43 @@ class OpenMapsButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: SizeConfig.blockSizeVertical * 3.1,
-      width: SizeConfig.blockSizeHorizontal * 29,
-      child: new ButtonTheme(
-        height: SizeConfig.blockSizeVertical * 3.1,
-        minWidth: SizeConfig.blockSizeHorizontal * 29,
+    return Container(
+        height: SizeConfig.blockSizeVertical * 5,
+        width: SizeConfig.blockSizeHorizontal * 60,
+        decoration: BoxDecoration(
+            color: Color(0xff3B4B6C),
+            borderRadius: BorderRadius.circular(0),
+            boxShadow: [
+              BoxShadow(
+                  blurRadius: 14,
+                  offset: Offset(10, 10),
+                  color: Colors.black.withOpacity(.6),
+                  spreadRadius: -15),
+            ]),
         child: RaisedButton(
-          elevation: 0,
-          color: Color(0xff6BE5FE),
-          onPressed: () {
-            //Rebuild state with the selectedNavigationIndex that was tapped in bottom navbar
-            _toggleGoPressButton();
-            callback(pressOpenMapsButton); //Callback to Main
-          },
-          textColor: Colors.white,
           shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(0.0),
-              side: BorderSide(color: Color(0xff6BE5FE))),
-          child: AutoSizeText(
-              AppLocalizations.of(context).translate('open_maps').toUpperCase(),
-              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
-        ),
-      ),
-    );
+            borderRadius: BorderRadius.circular(0.0),
+          ),
+          padding: EdgeInsets.zero,
+          child: Center(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                AutoSizeText(
+                    AppLocalizations.of(context).translate('open_maps').toUpperCase(),
+                    maxLines: 1,
+                    style: TextStyle(
+                        fontSize: 32,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold)),
+              ],
+            ),
+          ),
+          onPressed: () {
+            _toggleGoPressButton();
+            callback(pressOpenMapsButton);
+          },
+          color: Color(0xff3B4B6C),
+        ));
   }
 }

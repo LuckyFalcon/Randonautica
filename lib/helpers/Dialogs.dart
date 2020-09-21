@@ -1,12 +1,16 @@
 import 'dart:ui';
 
+import 'package:fatumbot/api/getAttractors.dart';
 import 'package:fatumbot/components/Dialogs/DialogButton.dart';
 import 'package:fatumbot/helpers/FadeRoute.dart';
+import 'package:fatumbot/models/Attractors.dart';
 import 'package:fatumbot/utils/size_config.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inapp_purchase/flutter_inapp_purchase.dart';
+import 'package:loading_animations/loading_animations.dart';
+import 'package:location/location.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'AppLocalizations.dart';
@@ -127,7 +131,6 @@ setRadiusDialog(BuildContext context, callback) {
 }
 
 setBuyDialog(BuildContext context) {
-
   var AutoSizeTextGroup = AutoSizeGroup();
 
   showDialog(
@@ -165,42 +168,43 @@ setBuyDialog(BuildContext context) {
                           color: Colors.white,
                           borderRadius: BorderRadius.all(Radius.circular(45.0)),
                           border:
-                              Border.all(width: 1, color: Color(0xffB1B1B1)),
+                          Border.all(width: 1, color: Color(0xffB1B1B1)),
                         ),
                         child: Column(
                           children: <Widget>[
                             ImageIcon(AssetImage('assets/img/Owl.png'),
                                 color: Colors.green, size: 64),
-                      Container(
-                        height: SizeConfig.blockSizeVertical * 2,
-                        width: SizeConfig.blockSizeHorizontal * 50,
-                        child: Material(
-                            color: Colors.white,
-                            child: AutoSizeText(
-                                AppLocalizations.of(context)
-                                    .translate('uh_oh')
-                                    .toUpperCase(),
-                                textAlign: TextAlign.center,
-                            group: AutoSizeTextGroup,
-                            style: TextStyle(
-                                    fontSize: 13,
-                                    color: Colors.blue, fontWeight: FontWeight.bold)))),
+                            Container(
+                                height: SizeConfig.blockSizeVertical * 2,
+                                width: SizeConfig.blockSizeHorizontal * 50,
+                                child: Material(
+                                    color: Colors.white,
+                                    child: AutoSizeText(
+                                        AppLocalizations.of(context)
+                                            .translate('uh_oh')
+                                            .toUpperCase(),
+                                        textAlign: TextAlign.center,
+                                        group: AutoSizeTextGroup,
+                                        style: TextStyle(
+                                            fontSize: 13,
+                                            color: Colors.blue,
+                                            fontWeight: FontWeight.bold)))),
                             SizedBox(height: SizeConfig.blockSizeVertical * 1),
-                      Container(
-                        height: SizeConfig.blockSizeVertical * 5,
-                        width: SizeConfig.blockSizeHorizontal * 50,
-                        child: Material(
-                            color: Colors.white,
-                            child: AutoSizeText(
-                                AppLocalizations.of(context)
-                                    .translate('access_when_premium')
-                                    .toUpperCase(),
-                                textAlign: TextAlign.center,
-                                maxLines: 3,
-                                group: AutoSizeTextGroup,
-                                style: TextStyle(
-                                    fontSize: 15,
-                                    color: Colors.blue)))),
+                            Container(
+                                height: SizeConfig.blockSizeVertical * 5,
+                                width: SizeConfig.blockSizeHorizontal * 50,
+                                child: Material(
+                                    color: Colors.white,
+                                    child: AutoSizeText(
+                                        AppLocalizations.of(context)
+                                            .translate('access_when_premium')
+                                            .toUpperCase(),
+                                        textAlign: TextAlign.center,
+                                        maxLines: 3,
+                                        group: AutoSizeTextGroup,
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            color: Colors.blue)))),
                             SizedBox(height: SizeConfig.blockSizeVertical * 3),
                             Container(
                                 width: SizeConfig.blockSizeHorizontal * 70,
@@ -218,7 +222,7 @@ setBuyDialog(BuildContext context) {
                                   child: Center(
                                     child: Row(
                                       mainAxisAlignment:
-                                          MainAxisAlignment.center,
+                                      MainAxisAlignment.center,
                                       children: <Widget>[
                                         SizedBox(width: 6),
                                         Text(
@@ -242,16 +246,17 @@ setBuyDialog(BuildContext context) {
                                         shape: RoundedRectangleBorder(
                                           borderRadius: new BorderRadius.only(
                                               topLeft:
-                                                  const Radius.circular(90.0),
+                                              const Radius.circular(90.0),
                                               topRight:
-                                                  const Radius.circular(90.0)),
+                                              const Radius.circular(90.0)),
                                         ),
                                         useRootNavigator: false,
                                         context: context,
-                                        builder: (context) => Container(
+                                        builder: (context) =>
+                                            Container(
                                               height:
-                                                  SizeConfig.blockSizeVertical *
-                                                      90,
+                                              SizeConfig.blockSizeVertical *
+                                                  90,
                                               decoration: new BoxDecoration(
                                                   gradient: LinearGradient(
                                                       begin: Alignment
@@ -266,18 +271,19 @@ setBuyDialog(BuildContext context) {
                                                         Color(0xff383B46),
                                                         Color(0xff5786E1)
                                                       ]),
-                                                  color: Theme.of(
-                                                          context)
+                                                  color: Theme
+                                                      .of(
+                                                      context)
                                                       .primaryColor,
                                                   borderRadius:
-                                                      new BorderRadius.only(
-                                                          topLeft: const Radius
-                                                              .circular(90.0),
-                                                          topRight: const Radius
-                                                              .circular(90.0))),
+                                                  new BorderRadius.only(
+                                                      topLeft: const Radius
+                                                          .circular(90.0),
+                                                      topRight: const Radius
+                                                          .circular(90.0))),
                                               child: Container(
                                                 height: SizeConfig
-                                                        .blockSizeVertical *
+                                                    .blockSizeVertical *
                                                     90,
                                                 //child: Shop(),
                                               ),
@@ -362,7 +368,7 @@ showAgreementDialog(BuildContext context, Function callback) {
                           color: Colors.white,
                           borderRadius: BorderRadius.all(Radius.circular(45.0)),
                           border:
-                              Border.all(width: 1, color: Color(0xffB1B1B1)),
+                          Border.all(width: 1, color: Color(0xffB1B1B1)),
                         ),
                         child: Column(
                           children: <Widget>[
@@ -404,7 +410,7 @@ showAgreementDialog(BuildContext context, Function callback) {
                                   child: Center(
                                     child: Row(
                                       mainAxisAlignment:
-                                          MainAxisAlignment.center,
+                                      MainAxisAlignment.center,
                                       children: <Widget>[
                                         SizedBox(width: 6),
                                         Text(
@@ -493,6 +499,7 @@ findingPointFailedDialog(BuildContext context, Function callback) async {
                   Container(
                       height: SizeConfig.blockSizeVertical * 35,
                       width: SizeConfig.blockSizeHorizontal * 80,
+
                       ///This is 70% of the Vertical / Height for this container in this class
                       decoration: BoxDecoration(
                         color: Colors.white,
@@ -508,7 +515,6 @@ findingPointFailedDialog(BuildContext context, Function callback) async {
                       child: Container(
                         decoration: BoxDecoration(
                           color: Colors.white,
-                          borderRadius: BorderRadius.all(Radius.circular(45.0)),
                         ),
                         child: Column(
                           children: <Widget>[
@@ -518,7 +524,8 @@ findingPointFailedDialog(BuildContext context, Function callback) async {
 ////                              child: ImageIcon(AssetImage('assets/img/Owl.png'),
 ////                                  color: Color(0xff6081E2), size: 64),
 //                            ),
-                            SizedBox(height: SizeConfig.blockSizeVertical * 0.5),
+                            SizedBox(height: SizeConfig.blockSizeVertical *
+                                0.5),
                             Container(
                               height: SizeConfig.blockSizeVertical * 2,
                               width: SizeConfig.blockSizeHorizontal * 50,
@@ -527,7 +534,7 @@ findingPointFailedDialog(BuildContext context, Function callback) async {
                                   child: Text(
                                       AppLocalizations.of(context)
                                           .translate(
-                                              'failed_dialog_description_1')
+                                          'failed_dialog_description_1')
                                           .toUpperCase(),
                                       maxLines: 2,
                                       textAlign: TextAlign.center,
@@ -555,9 +562,12 @@ findingPointFailedDialog(BuildContext context, Function callback) async {
                                           color: Color(0xff6081E2)))),
                             ),
                             SizedBox(height: SizeConfig.blockSizeVertical * 2),
-                            DialogButton(dialogRetrievePointCallback, "failed_dialog_yes"),
-                            SizedBox(height: SizeConfig.blockSizeVertical * 1.5),
-                            DialogButton(dialogCancelCallback, "failed_dialog_no"),
+                            DialogButton(dialogRetrievePointCallback,
+                                "failed_dialog_yes"),
+                            SizedBox(height: SizeConfig.blockSizeVertical *
+                                1.5),
+                            DialogButton(
+                                dialogCancelCallback, "failed_dialog_no"),
                           ],
                         ),
                       )),
@@ -565,6 +575,167 @@ findingPointFailedDialog(BuildContext context, Function callback) async {
               ),
             ),
           ),
+        );
+      });
+}
+
+
+loadingpoint(BuildContext context, Function callback, radius, currentLocation,
+    selectedPoint, selectedRandomness, checkWater) async {
+  dialogRetrievePointCallback() {
+    callback(); //Return retry to Randonaut page
+  }
+
+  dialogCancelCallback() {
+    Navigator.pop(context);
+  }
+
+  showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return new BackdropFilter
+          (
+          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+          child: Align(
+            alignment: Alignment.center,
+            child: Container(
+              height: SizeConfig.blockSizeVertical * 32,
+              width: SizeConfig.blockSizeHorizontal * 80,
+              child: Stack(
+                children: <Widget>[
+              Container(
+              height: SizeConfig.blockSizeVertical * 35,
+                width: SizeConfig.blockSizeHorizontal * 80,
+
+                ///This is 70% of the Vertical / Height for this container in this class
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(Radius.circular(45.0)),
+                  boxShadow: [
+                    BoxShadow(
+                        blurRadius: 8,
+                        offset: Offset(0, 15),
+                        color: Colors.black.withOpacity(.6),
+                        spreadRadius: -9)
+                  ],
+                ),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                  ),
+                  child: Column(
+                    children: [
+                      FutureBuilder<Attractors>(
+                          future: fetchAttractors(
+                              radius,
+                              currentLocation.latitude,
+                              currentLocation.longitude,
+                              selectedPoint,
+                              selectedRandomness,
+                              checkWater),
+                          builder:
+                              (BuildContext context, AsyncSnapshot<Attractors> snapshot) {
+                            if (snapshot.hasData) {
+                              callback(snapshot.data);
+
+                              //A delay so the navigator can pop
+                              Future.delayed(const Duration(milliseconds: 3000), () {
+                                Navigator.pop(
+                                    context); //Go back to previous navigation item
+                              });
+                            }
+                            if (snapshot.hasError) {
+                              Navigator.pop(context); //Go back to previous navigation item
+
+                              //Small delay for popup
+                              Future.delayed(const Duration(milliseconds: 500), () {
+                                callback(snapshot.data);
+                              });
+                            }
+                            return Center(
+                              child: Column(children: <Widget>[
+                                Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      SizedBox(height: SizeConfig.blockSizeVertical * 3),
+                                      Container(
+                                        height: SizeConfig.blockSizeVertical * 5,
+                                        width: SizeConfig.blockSizeHorizontal * 33.3,
+//                            child: Padding(
+//                              padding:
+//                                  const EdgeInsets.only(top: 0.0, right: 0),
+//                              child: Align(
+//                                alignment: Alignment.center,
+//                                child: IconButton(
+//                                  iconSize: SizeConfig.blockSizeVertical * 100,
+//                                  icon: ImageIcon(
+//                                    AssetImage('assets/img/Owl.png'),
+//                                    color: Colors.white,
+//                                  ),
+//                                  onPressed: () {},
+//                                ),
+//                              ),
+//                            ),
+                                      ),
+                                      Material(
+                                          color: Colors.white,
+                                          child: Container(
+                                        width: SizeConfig.blockSizeHorizontal * 70,
+                                        child: AutoSizeText(
+                                            AppLocalizations.of(context)
+                                                .translate('generating_point'),
+                                            textAlign: TextAlign.center,
+                                            maxLines: 2,
+                                            style: TextStyle(
+                                                fontSize: 26,
+                                                color: Color(0xff6081E2),
+                                                fontWeight: FontWeight.bold)),
+                                      ),),
+//                          Container(
+//                            width: SizeConfig.blockSizeHorizontal * 70,
+//                            child: AutoSizeText(
+//                                AppLocalizations.of(context)
+//                                    .translate('generating_point_2'),
+//                                textAlign: TextAlign.center,
+//                                maxLines: 1,
+//                                style: TextStyle(
+//                                    fontSize: 24,
+//                                    color: Colors.white,
+//                                    fontWeight: FontWeight.bold)),
+//                          ),
+                                      Container(
+                                          width: SizeConfig.blockSizeHorizontal * 25,
+                                          height: SizeConfig.blockSizeVertical * 10,
+                                          child: LoadingBouncingGrid.square(
+                                            borderColor: Colors.cyan,
+                                            borderSize: 3.0,
+                                            backgroundColor: Colors.cyanAccent,
+                                            duration: Duration(milliseconds: 500),
+                                          )
+                                      ),
+//                                      Container(
+//                                        width: SizeConfig.blockSizeHorizontal * 60,
+//                                        child: AutoSizeText(
+//                                            AppLocalizations.of(context)
+//                                                .translate('use_this_moment'),
+//                                            textAlign: TextAlign.center,
+//                                            style: TextStyle(
+//                                                fontSize: 14,
+//                                                color: Colors.white,
+//                                                fontWeight: FontWeight.bold)),
+//                                      ),
+                                    ])
+                              ]),
+                            );
+                          })
+                    ],
+                  ),),)
+                ],
+              ),
+            )
+            ,
+          )
+          ,
         );
       });
 }
@@ -594,6 +765,7 @@ gpsDisabledDialog(BuildContext context, Function enableGPSCallback) {
                   Container(
                       height: SizeConfig.blockSizeVertical * 35,
                       width: SizeConfig.blockSizeHorizontal * 80,
+
                       ///This is 70% of the Vertical / Height for this container in this class
                       decoration: BoxDecoration(
                         color: Colors.white,
@@ -619,7 +791,8 @@ gpsDisabledDialog(BuildContext context, Function enableGPSCallback) {
 ////                              child: ImageIcon(AssetImage('assets/img/Dialogs/GPSFailed.png'),
 ////                                  color: Color(0xff6081E2), size: 96),
 //                            ),
-                            SizedBox(height: SizeConfig.blockSizeVertical * 0.5),
+                            SizedBox(height: SizeConfig.blockSizeVertical *
+                                0.5),
                             SizedBox(height: SizeConfig.blockSizeVertical * 1),
                             Container(
                               height: SizeConfig.blockSizeVertical * 2,
@@ -639,9 +812,12 @@ gpsDisabledDialog(BuildContext context, Function enableGPSCallback) {
                                           color: Color(0xff6081E2)))),
                             ),
                             SizedBox(height: SizeConfig.blockSizeVertical * 2),
-                            DialogButton(dialogRetrievePointCallback, "gps_not_enabled_description_yes"),
-                            SizedBox(height: SizeConfig.blockSizeVertical * 1.5),
-                            DialogButton(dialogCancelCallback, "gps_not_enabled_description_no"),
+                            DialogButton(dialogRetrievePointCallback,
+                                "gps_not_enabled_description_yes"),
+                            SizedBox(height: SizeConfig.blockSizeVertical *
+                                1.5),
+                            DialogButton(dialogCancelCallback,
+                                "gps_not_enabled_description_no"),
                           ],
                         ),
                       )),
@@ -655,7 +831,6 @@ gpsDisabledDialog(BuildContext context, Function enableGPSCallback) {
 
 notEnoughTokensDialog(BuildContext context) {
   dialogRetrievePointCallback() {
-
     Navigator.pop(context);
 //
 //    //open shop
@@ -684,6 +859,7 @@ notEnoughTokensDialog(BuildContext context) {
                   Container(
                       height: SizeConfig.blockSizeVertical * 40,
                       width: SizeConfig.blockSizeHorizontal * 80,
+
                       ///This is 70% of the Vertical / Height for this container in this class
                       decoration: BoxDecoration(
                         color: Colors.white,
@@ -706,10 +882,12 @@ notEnoughTokensDialog(BuildContext context) {
                             SizedBox(height: SizeConfig.blockSizeVertical * 1),
                             Container(
                               height: SizeConfig.blockSizeVertical * 12.5,
-                              child: ImageIcon(AssetImage('assets/img/Dialogs/TokensFailed.png'),
+                              child: ImageIcon(AssetImage(
+                                  'assets/img/Dialogs/TokensFailed.png'),
                                   color: Color(0xff6081E2), size: 96),
                             ),
-                            SizedBox(height: SizeConfig.blockSizeVertical * 0.5),
+                            SizedBox(height: SizeConfig.blockSizeVertical *
+                                0.5),
                             Container(
                               height: SizeConfig.blockSizeVertical * 3,
                               width: SizeConfig.blockSizeHorizontal * 80,
@@ -727,10 +905,14 @@ notEnoughTokensDialog(BuildContext context) {
                                           fontSize: 15,
                                           color: Color(0xff6081E2)))),
                             ),
-                            SizedBox(height: SizeConfig.blockSizeVertical * 0.5),
-                            DialogButton(dialogRetrievePointCallback, "not_enough_tokens_description_yes"),
-                            SizedBox(height: SizeConfig.blockSizeVertical * 1.5),
-                            DialogButton(dialogCancelCallback, "not_enough_tokens_description_no"),
+                            SizedBox(height: SizeConfig.blockSizeVertical *
+                                0.5),
+                            DialogButton(dialogRetrievePointCallback,
+                                "not_enough_tokens_description_yes"),
+                            SizedBox(height: SizeConfig.blockSizeVertical *
+                                1.5),
+                            DialogButton(dialogCancelCallback,
+                                "not_enough_tokens_description_no"),
                           ],
                         ),
                       )),
@@ -743,7 +925,6 @@ notEnoughTokensDialog(BuildContext context) {
 }
 
 randonauticaStreakDialog(BuildContext context, int currentSignedInStreak) {
-
   dialogCancelCallback() {
     Navigator.pop(context);
   }
@@ -763,6 +944,7 @@ randonauticaStreakDialog(BuildContext context, int currentSignedInStreak) {
                   Container(
                       height: SizeConfig.blockSizeVertical * 35,
                       width: SizeConfig.blockSizeHorizontal * 80,
+
                       ///This is 70% of the Vertical / Height for this container in this class
                       decoration: BoxDecoration(
                         color: Colors.white,
@@ -805,7 +987,8 @@ randonauticaStreakDialog(BuildContext context, int currentSignedInStreak) {
                               child: ImageIcon(AssetImage('assets/img/Owl.png'),
                                   color: Color(0xff6081E2), size: 64),
                             ),
-                            SizedBox(height: SizeConfig.blockSizeVertical * 0.5),
+                            SizedBox(height: SizeConfig.blockSizeVertical *
+                                0.5),
                             Container(
                               height: SizeConfig.blockSizeVertical * 2,
                               width: SizeConfig.blockSizeHorizontal * 50,
@@ -833,36 +1016,45 @@ randonauticaStreakDialog(BuildContext context, int currentSignedInStreak) {
                                         height: 15,
                                         width: 15,
                                         decoration: BoxDecoration(
-                                          color: (currentSignedInStreak == 1 ? Color(0xff6081E2) : Colors.white ),
-                                          borderRadius: BorderRadius.all(Radius.circular(45.0)),
-                                          border: Border.all(width: 2, color: Colors.blue),
+                                          color: (currentSignedInStreak == 1
+                                              ? Color(0xff6081E2)
+                                              : Colors.white),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(45.0)),
+                                          border: Border.all(
+                                              width: 2, color: Colors.blue),
                                         )
                                     ),
-                                    SizedBox(height: SizeConfig.blockSizeVertical * 1),
+                                    SizedBox(
+                                        height: SizeConfig.blockSizeVertical *
+                                            1),
                                     Material(
-                                      color: Colors.white,
-                                      child: Text(
-                                        AppLocalizations.of(context)
-                                            .translate(
-                                            'day')
-                                            .toUpperCase() + ' 1',
-                                        maxLines: 2,
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 14,
-                                            color: Color(0xff6081E2)))),
+                                        color: Colors.white,
+                                        child: Text(
+                                            AppLocalizations.of(context)
+                                                .translate(
+                                                'day')
+                                                .toUpperCase() + ' 1',
+                                            maxLines: 2,
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 14,
+                                                color: Color(0xff6081E2)))),
                                     Container(
-                                      height: 30,
-                                      child:  Visibility(
-                                        child: ImageIcon(AssetImage('assets/img/Owl.png'),
-                                            color: Color(0xff6081E2), size: 48),
-                                        visible: false,
-                                      )
+                                        height: 30,
+                                        child: Visibility(
+                                          child: ImageIcon(
+                                              AssetImage('assets/img/Owl.png'),
+                                              color: Color(0xff6081E2),
+                                              size: 48),
+                                          visible: false,
+                                        )
                                     ),
                                   ],
                                 ),
-                                SizedBox(width: SizeConfig.blockSizeHorizontal * 1.5),
+                                SizedBox(width: SizeConfig.blockSizeHorizontal *
+                                    1.5),
 
                                 Column(
                                   children: <Widget>[
@@ -870,12 +1062,18 @@ randonauticaStreakDialog(BuildContext context, int currentSignedInStreak) {
                                         height: 15,
                                         width: 15,
                                         decoration: BoxDecoration(
-                                          color: (currentSignedInStreak == 2 ? Color(0xff6081E2) : Colors.white ),
-                                          borderRadius: BorderRadius.all(Radius.circular(45.0)),
-                                          border: Border.all(width: 2, color: Colors.blue),
+                                          color: (currentSignedInStreak == 2
+                                              ? Color(0xff6081E2)
+                                              : Colors.white),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(45.0)),
+                                          border: Border.all(
+                                              width: 2, color: Colors.blue),
                                         )
                                     ),
-                                    SizedBox(height: SizeConfig.blockSizeVertical * 1),
+                                    SizedBox(
+                                        height: SizeConfig.blockSizeVertical *
+                                            1),
                                     Material(
                                         color: Colors.white,
                                         child: Text(
@@ -891,15 +1089,18 @@ randonauticaStreakDialog(BuildContext context, int currentSignedInStreak) {
                                                 color: Color(0xff6081E2)))),
                                     Container(
                                         height: 30,
-                                        child:  Visibility(
-                                          child: ImageIcon(AssetImage('assets/img/Owl.png'),
-                                              color: Color(0xff6081E2), size: 48),
+                                        child: Visibility(
+                                          child: ImageIcon(
+                                              AssetImage('assets/img/Owl.png'),
+                                              color: Color(0xff6081E2),
+                                              size: 48),
                                           visible: false,
                                         )
                                     ),
                                   ],
                                 ),
-                                SizedBox(width: SizeConfig.blockSizeHorizontal * 1.5),
+                                SizedBox(width: SizeConfig.blockSizeHorizontal *
+                                    1.5),
 
                                 Column(
                                   children: <Widget>[
@@ -907,12 +1108,18 @@ randonauticaStreakDialog(BuildContext context, int currentSignedInStreak) {
                                         height: 15,
                                         width: 15,
                                         decoration: BoxDecoration(
-                                          color: (currentSignedInStreak == 3 ? Color(0xff6081E2) : Colors.white ),
-                                          borderRadius: BorderRadius.all(Radius.circular(45.0)),
-                                          border: Border.all(width: 2, color: Colors.blue),
+                                          color: (currentSignedInStreak == 3
+                                              ? Color(0xff6081E2)
+                                              : Colors.white),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(45.0)),
+                                          border: Border.all(
+                                              width: 2, color: Colors.blue),
                                         )
                                     ),
-                                    SizedBox(height: SizeConfig.blockSizeVertical * 1),
+                                    SizedBox(
+                                        height: SizeConfig.blockSizeVertical *
+                                            1),
                                     Material(
                                         color: Colors.white,
                                         child: Text(
@@ -928,27 +1135,36 @@ randonauticaStreakDialog(BuildContext context, int currentSignedInStreak) {
                                                 color: Color(0xff6081E2)))),
                                     Container(
                                         height: 30,
-                                        child:  Visibility(
-                                          child: ImageIcon(AssetImage('assets/img/Owl.png'),
-                                              color: Color(0xff6081E2), size: 48),
+                                        child: Visibility(
+                                          child: ImageIcon(
+                                              AssetImage('assets/img/Owl.png'),
+                                              color: Color(0xff6081E2),
+                                              size: 48),
                                           visible: false,
                                         )
                                     ),
                                   ],
                                 ),
-                                SizedBox(width: SizeConfig.blockSizeHorizontal * 1.5),
+                                SizedBox(width: SizeConfig.blockSizeHorizontal *
+                                    1.5),
                                 Column(
                                   children: <Widget>[
                                     Container(
                                         height: 15,
                                         width: 15,
                                         decoration: BoxDecoration(
-                                          color: (currentSignedInStreak == 4 ? Color(0xff6081E2) : Colors.white ),
-                                          borderRadius: BorderRadius.all(Radius.circular(45.0)),
-                                          border: Border.all(width: 2, color: Colors.blue),
+                                          color: (currentSignedInStreak == 4
+                                              ? Color(0xff6081E2)
+                                              : Colors.white),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(45.0)),
+                                          border: Border.all(
+                                              width: 2, color: Colors.blue),
                                         )
                                     ),
-                                    SizedBox(height: SizeConfig.blockSizeVertical * 1),
+                                    SizedBox(
+                                        height: SizeConfig.blockSizeVertical *
+                                            1),
                                     Material(
                                         color: Colors.white,
                                         child: Text(
@@ -964,27 +1180,36 @@ randonauticaStreakDialog(BuildContext context, int currentSignedInStreak) {
                                                 color: Color(0xff6081E2)))),
                                     Container(
                                         height: 30,
-                                        child:  Visibility(
-                                          child: ImageIcon(AssetImage('assets/img/Owl.png'),
-                                              color: Color(0xff6081E2), size: 48),
+                                        child: Visibility(
+                                          child: ImageIcon(
+                                              AssetImage('assets/img/Owl.png'),
+                                              color: Color(0xff6081E2),
+                                              size: 48),
                                           visible: false,
                                         )
                                     ),
                                   ],
                                 ),
-                                SizedBox(width: SizeConfig.blockSizeHorizontal * 1.5),
+                                SizedBox(width: SizeConfig.blockSizeHorizontal *
+                                    1.5),
                                 Column(
                                   children: <Widget>[
                                     Container(
                                         height: 15,
                                         width: 15,
                                         decoration: BoxDecoration(
-                                          color: (currentSignedInStreak == 7 ? Color(0xff6081E2) : Colors.white ),
-                                          borderRadius: BorderRadius.all(Radius.circular(45.0)),
-                                          border: Border.all(width: 2, color: Colors.blue),
+                                          color: (currentSignedInStreak == 7
+                                              ? Color(0xff6081E2)
+                                              : Colors.white),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(45.0)),
+                                          border: Border.all(
+                                              width: 2, color: Colors.blue),
                                         )
                                     ),
-                                    SizedBox(height: SizeConfig.blockSizeVertical * 1),
+                                    SizedBox(
+                                        height: SizeConfig.blockSizeVertical *
+                                            1),
                                     Material(
                                         color: Colors.white,
                                         child: Text(
@@ -1000,9 +1225,11 @@ randonauticaStreakDialog(BuildContext context, int currentSignedInStreak) {
                                                 color: Color(0xff6081E2)))),
                                     Container(
                                         height: 30,
-                                        child:  Visibility(
-                                          child: ImageIcon(AssetImage('assets/img/Owl.png'),
-                                              color: Color(0xff6081E2), size: 48),
+                                        child: Visibility(
+                                          child: ImageIcon(
+                                              AssetImage('assets/img/Owl.png'),
+                                              color: Color(0xff6081E2),
+                                              size: 48),
                                           visible: false,
                                         )
                                     ),
@@ -1010,8 +1237,10 @@ randonauticaStreakDialog(BuildContext context, int currentSignedInStreak) {
                                 ),
                               ],
                             ),
-                            SizedBox(height: SizeConfig.blockSizeVertical * 1.5),
-                            DialogButton(dialogCancelCallback, "not_enough_tokens_description_no"),
+                            SizedBox(height: SizeConfig.blockSizeVertical *
+                                1.5),
+                            DialogButton(dialogCancelCallback,
+                                "not_enough_tokens_description_no"),
                           ],
                         ),
                       )),
@@ -1044,6 +1273,7 @@ noInternetConnectionDialog(BuildContext context, Function tryAgainCallback) {
                   Container(
                       height: SizeConfig.blockSizeVertical * 35,
                       width: SizeConfig.blockSizeHorizontal * 80,
+
                       ///This is 70% of the Vertical / Height for this container in this class
                       decoration: BoxDecoration(
                         color: Colors.white,
@@ -1069,7 +1299,8 @@ noInternetConnectionDialog(BuildContext context, Function tryAgainCallback) {
                               child: ImageIcon(AssetImage('assets/img/Owl.png'),
                                   color: Color(0xff6081E2), size: 96),
                             ),
-                            SizedBox(height: SizeConfig.blockSizeVertical * 0.5),
+                            SizedBox(height: SizeConfig.blockSizeVertical *
+                                0.5),
                             SizedBox(height: SizeConfig.blockSizeVertical * 1),
                             Container(
                               height: SizeConfig.blockSizeVertical * 5,
@@ -1089,8 +1320,10 @@ noInternetConnectionDialog(BuildContext context, Function tryAgainCallback) {
                                           color: Color(0xff6081E2)))),
                             ),
                             SizedBox(height: SizeConfig.blockSizeVertical * 2),
-                            DialogButton(dialogRetrievePointCallback, "no_internet_connection_try_again"),
-                            SizedBox(height: SizeConfig.blockSizeVertical * 1.5),
+                            DialogButton(dialogRetrievePointCallback,
+                                "no_internet_connection_try_again"),
+                            SizedBox(height: SizeConfig.blockSizeVertical *
+                                1.5),
                           ],
                         ),
                       )),
@@ -1123,6 +1356,7 @@ loginFailedDailog(BuildContext context, Function isSigningInCallback) {
                   Container(
                       height: SizeConfig.blockSizeVertical * 35,
                       width: SizeConfig.blockSizeHorizontal * 80,
+
                       ///This is 70% of the Vertical / Height for this container in this class
                       decoration: BoxDecoration(
                         color: Colors.white,
@@ -1145,10 +1379,12 @@ loginFailedDailog(BuildContext context, Function isSigningInCallback) {
                             SizedBox(height: SizeConfig.blockSizeVertical * 1),
                             Container(
                               height: SizeConfig.blockSizeVertical * 10.5,
-                              child: ImageIcon(AssetImage('assets/img/Dialogs/LoginFailed.png'),
+                              child: ImageIcon(AssetImage(
+                                  'assets/img/Dialogs/LoginFailed.png'),
                                   color: Color(0xff6081E2), size: 96),
                             ),
-                            SizedBox(height: SizeConfig.blockSizeVertical * 0.5),
+                            SizedBox(height: SizeConfig.blockSizeVertical *
+                                0.5),
                             Container(
                               height: SizeConfig.blockSizeVertical * 2,
                               width: SizeConfig.blockSizeHorizontal * 50,
@@ -1166,7 +1402,8 @@ loginFailedDailog(BuildContext context, Function isSigningInCallback) {
                                           fontSize: 15,
                                           color: Color(0xff6081E2)))),
                             ),
-                            SizedBox(height: SizeConfig.blockSizeVertical * 0.5),
+                            SizedBox(height: SizeConfig.blockSizeVertical *
+                                0.5),
                             Container(
                               height: SizeConfig.blockSizeVertical * 5,
                               width: SizeConfig.blockSizeHorizontal * 50,
@@ -1185,8 +1422,10 @@ loginFailedDailog(BuildContext context, Function isSigningInCallback) {
                                           color: Color(0xff6081E2)))),
                             ),
                             SizedBox(height: SizeConfig.blockSizeVertical * 2),
-                            DialogButton(dialogTryAgain, "no_internet_connection_try_again"),
-                            SizedBox(height: SizeConfig.blockSizeVertical * 1.5),
+                            DialogButton(dialogTryAgain,
+                                "no_internet_connection_try_again"),
+                            SizedBox(height: SizeConfig.blockSizeVertical *
+                                1.5),
                           ],
                         ),
                       )),
@@ -1222,6 +1461,7 @@ pointReached(BuildContext context) {
                   Container(
                       height: SizeConfig.blockSizeVertical * 40,
                       width: SizeConfig.blockSizeHorizontal * 80,
+
                       ///This is 70% of the Vertical / Height for this container in this class
                       decoration: BoxDecoration(
                         color: Colors.white,
@@ -1244,10 +1484,12 @@ pointReached(BuildContext context) {
                             SizedBox(height: SizeConfig.blockSizeVertical * 1),
                             Container(
                               height: SizeConfig.blockSizeVertical * 12.5,
-                              child: ImageIcon(AssetImage('assets/img/Dialogs/TokensFailed.png'),
+                              child: ImageIcon(AssetImage(
+                                  'assets/img/Dialogs/TokensFailed.png'),
                                   color: Color(0xff6081E2), size: 96),
                             ),
-                            SizedBox(height: SizeConfig.blockSizeVertical * 0.5),
+                            SizedBox(height: SizeConfig.blockSizeVertical *
+                                0.5),
                             Container(
                               height: SizeConfig.blockSizeVertical * 3,
                               width: SizeConfig.blockSizeHorizontal * 80,
@@ -1265,10 +1507,14 @@ pointReached(BuildContext context) {
                                           fontSize: 15,
                                           color: Color(0xff6081E2)))),
                             ),
-                            SizedBox(height: SizeConfig.blockSizeVertical * 0.5),
-                            DialogButton(dialogOkButtonCallback, "not_enough_tokens_description_yes"),
-                            SizedBox(height: SizeConfig.blockSizeVertical * 1.5),
-                            DialogButton(dialogCancelCallback, "not_enough_tokens_description_no"),
+                            SizedBox(height: SizeConfig.blockSizeVertical *
+                                0.5),
+                            DialogButton(dialogOkButtonCallback,
+                                "not_enough_tokens_description_yes"),
+                            SizedBox(height: SizeConfig.blockSizeVertical *
+                                1.5),
+                            DialogButton(dialogCancelCallback,
+                                "not_enough_tokens_description_no"),
                           ],
                         ),
                       )),
@@ -1322,9 +1568,7 @@ setTitleDialog(BuildContext context, callback) {
 }
 
 giveEverything(BuildContext context) {
-
   dialogRetrievePointCallback() async {
-
     //Set SharedPreferences
     Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
@@ -1335,11 +1579,9 @@ giveEverything(BuildContext context) {
     prefs.setBool("everything", true);
 
     Navigator.pop(context);
-
   }
 
   dialogCancelCallback() async {
-
     //Set SharedPreferences
     Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
@@ -1367,6 +1609,7 @@ giveEverything(BuildContext context) {
                   Container(
                       height: SizeConfig.blockSizeVertical * 75,
                       width: SizeConfig.blockSizeHorizontal * 80,
+
                       ///This is 70% of the Vertical / Height for this container in this class
                       decoration: BoxDecoration(
                         color: Colors.white,
@@ -1391,18 +1634,19 @@ giveEverything(BuildContext context) {
                               height: SizeConfig.blockSizeVertical * 12.5,
                               child: Material(
                                 color: Colors.white,
-                                child:  AutoSizeText(
-                                  '∞',
-                                  maxLines: 1,
-                                  minFontSize: 12,
-                                  maxFontSize: 256,
-                                  style: TextStyle(
-                                      fontSize: 256,
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold,
-                                      fontFamily: '')),),
+                                child: AutoSizeText(
+                                    '∞',
+                                    maxLines: 1,
+                                    minFontSize: 12,
+                                    maxFontSize: 256,
+                                    style: TextStyle(
+                                        fontSize: 256,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: '')),),
                             ),
-                            SizedBox(height: SizeConfig.blockSizeVertical * 0.5),
+                            SizedBox(height: SizeConfig.blockSizeVertical *
+                                0.5),
                             Container(
                               height: SizeConfig.blockSizeVertical * 20,
                               width: SizeConfig.blockSizeHorizontal * 75,
@@ -1412,7 +1656,7 @@ giveEverything(BuildContext context) {
                                       AppLocalizations.of(context)
                                           .translate(
                                           'give_everything'),
-                                          //.toUpperCase(),
+                                      //.toUpperCase(),
                                       maxLines: 20,
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
@@ -1454,10 +1698,12 @@ giveEverything(BuildContext context) {
                                           fontSize: 15,
                                           color: Color(0xff6081E2)))),
                             ),
-                            SizedBox(height: SizeConfig.blockSizeVertical * 6.5),
-                            DialogButton(dialogRetrievePointCallback, "understood"),
-                          //  SizedBox(height: SizeConfig.blockSizeVertical * 1.5),
-                        //    DialogButton(dialogCancelCallback, "understood_and_save"),
+                            SizedBox(height: SizeConfig.blockSizeVertical *
+                                6.5),
+                            DialogButton(
+                                dialogRetrievePointCallback, "understood"),
+                            //  SizedBox(height: SizeConfig.blockSizeVertical * 1.5),
+                            //    DialogButton(dialogCancelCallback, "understood_and_save"),
                           ],
                         ),
                       )),

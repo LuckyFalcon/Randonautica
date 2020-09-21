@@ -3,14 +3,7 @@ import 'dart:math';
 
 import 'package:fatumbot/components/Randonaut/ButtonGoMainPage.dart';
 import 'package:fatumbot/components/Randonaut/FinishTripButton.dart';
-import 'package:fatumbot/components/Randonaut/HelpButton.dart';
 import 'package:fatumbot/components/Randonaut/OpenMapsButton.dart';
-import 'package:fatumbot/components/Randonaut/PointsButtons.dart';
-import 'package:fatumbot/components/Randonaut/SaveLocationButton.dart';
-import 'package:fatumbot/components/Randonaut/SetRadius.dart';
-import 'package:fatumbot/components/Randonaut/SetRandomness.dart';
-import 'package:fatumbot/components/Randonaut/SetWaterPoints.dart';
-import 'package:fatumbot/components/Randonaut/ShareLocationButton.dart';
 import 'package:fatumbot/helpers/AppLocalizations.dart';
 import 'package:fatumbot/helpers/Dialogs.dart';
 import 'package:fatumbot/helpers/FadeRoute.dart';
@@ -21,20 +14,17 @@ import 'package:fatumbot/models/pin_pill_info.dart';
 import 'package:fatumbot/pages/Profile/Settings.dart';
 import 'package:fatumbot/utils/MapStyles.dart' as Utils;
 import 'package:fatumbot/utils/size_config.dart';
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:share/share.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tutorial_coach_mark/animated_focus_light.dart';
 import 'package:tutorial_coach_mark/target_position.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 
 import 'Loading/LoadingPoints.dart';
-import 'Loading/WarningScreens.dart';
 
 const double CAMERA_TILT = 0;
 const double CAMERA_BEARING = 0;
@@ -209,35 +199,20 @@ class RandonautState extends State<Randonaut> {
 
     return Column(
       children: <Widget>[
-        SizedBox(height: SizeConfig.blockSizeVertical * 5),
         Container(
           ///This is 60% of the Vertical / Height for this container in this class
           height: (pointsSucesfullyGenerated
-              ? SizeConfig.blockSizeVertical * 70
-              : SizeConfig.blockSizeVertical * 80),
+              ? SizeConfig.blockSizeVertical * 100
+              : SizeConfig.blockSizeVertical * 100),
 
           ///This is 80% of the Horizontal / Width for this container in this class
-          width: SizeConfig.blockSizeHorizontal * 80,
+          width: SizeConfig.blockSizeHorizontal * 100,
           child: Stack(
             children: <Widget>[
               Container(
                 height: (pointsSucesfullyGenerated
-                    ? SizeConfig.blockSizeVertical * 69
-                    : SizeConfig.blockSizeVertical * 76),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(0.0)),
-                  border: Border.all(
-                      width: SizeConfig.blockSizeHorizontal * 1.5,
-                      color: Colors.white),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.2),
-                      spreadRadius: 4,
-                      blurRadius: 10,
-                      offset: Offset(0, 6), // changes position of shadow
-                    ),
-                  ],
-                ),
+                    ? SizeConfig.blockSizeVertical * 100
+                    : SizeConfig.blockSizeVertical * 100),
                 child: ClipRRect(
                   borderRadius: BorderRadius.all(Radius.circular(0.0)),
                   child: Stack(
@@ -259,111 +234,127 @@ class RandonautState extends State<Randonaut> {
                             controller.setMapStyle(Utils.MapStyles.NightSTyle);
                             _controller.complete(controller);
                           }),
+                      new Positioned(
+                          bottom: 20,
+                          left: 0,
+                          right: 0,
+                          child: Container(
+                              child: Column(
+                            children: [
+                              (pointsSucesfullyGenerated
+                                  ? OpenMapsButton(this.callbackOpenMaps,
+                                      pressOpenMapsButton)
+                                  : SizedBox(height: 0)),
+                              SizedBox(
+                                  height: SizeConfig.blockSizeVertical * 1),
+                              (pointsSucesfullyGenerated
+                                  ? FinishTripButton(
+                                this.callbackFinishTrip, pressStartOverButton)
+                                  : ButtonGoMainPage(this.callbackGoButtonMainPage,
+                                  pointsSucesfullyGenerated)),
+                              SizedBox(
+                                  height: SizeConfig.blockSizeVertical * 1),
+                            ],
+                          ))),
                     ],
                   ),
                 ),
               ),
-              Align(
-                  alignment: Alignment.bottomCenter,
-                  child: (pointsSucesfullyGenerated
-                      ? SizedBox(height: 0)
-                      : ButtonGoMainPage(this.callbackGoButtonMainPage,
-                          pointsSucesfullyGenerated)))
             ],
           ),
         ),
-        SizedBox(height: SizeConfig.blockSizeVertical * 2),
-        Container(
-          height: (pointsSucesfullyGenerated
-              ? SizeConfig.blockSizeVertical * 18.5
-              : SizeConfig.blockSizeVertical * 0.0),
-          width: SizeConfig.blockSizeHorizontal * 100,
-          child: (pointsSucesfullyGenerated
-              ? Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Row(
-                      children: <Widget>[
-                        Align(
-                            alignment: Alignment.topRight,
-                            child: Material(
-                                elevation: 10,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(90.0),
-                                    topRight: Radius.circular(90.0),
-                                    bottomLeft: Radius.circular(90.0),
-                                    bottomRight: Radius.circular(90.0),
-                                  ),
-                                ),
-                                child: Container(
-                                    height: 64,
-                                    width: 64,
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(90.0)),
-                                      ),
-                                      child: Image(
-                                        height: 128,
-                                        width: 128,
-                                        image: new AssetImage(
-                                            'assets/img/navigate.png'),
-                                        alignment: Alignment.topCenter,
-                                      ),
-                                    )))),
-                        SizedBox(width: SizeConfig.blockSizeHorizontal * 3),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Container(
-                              width: SizeConfig.blockSizeHorizontal * 40,
-                              height: SizeConfig.blockSizeHorizontal * 5,
-                              child: AutoSizeText(
-                                retrievedPointType,
-                                textAlign: TextAlign.left,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                    fontSize: 19,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white),
-                              ),
-                            ),
-                            SizedBox(height: SizeConfig.blockSizeVertical * 1),
-                            Row(
-                              children: [
-                                OpenMapsButton(
-                                    this.callbackOpenMaps, pressOpenMapsButton),
-                                SizedBox(
-                                    width: SizeConfig.blockSizeHorizontal * 2),
-                                (savingPoint
-                                    ? ShareLocationButton(
-                                        this.callbackShareLocation, false)
-                                    : ShareLocationButton(
-                                        this.callbackShareLocation, false)),
-                                SizedBox(
-                                    width: SizeConfig.blockSizeHorizontal * 5),
-                              ],
-                            ),
-                            SizedBox(height: SizeConfig.blockSizeVertical * 2),
-                            FinishTripButton(
-                                this.callbackFinishTrip, pressStartOverButton),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ],
-                )
-              : Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-
-                  ],
-                )),
-        ),
-        SizedBox(height: SizeConfig.blockSizeVertical * 2),
+//        SizedBox(height: SizeConfig.blockSizeVertical * 2),
+//        Container(
+//          height: (pointsSucesfullyGenerated
+//              ? SizeConfig.blockSizeVertical * 18.5
+//              : SizeConfig.blockSizeVertical * 0.0),
+//          width: SizeConfig.blockSizeHorizontal * 100,
+//          child: (pointsSucesfullyGenerated
+//              ? Row(
+//                  mainAxisAlignment: MainAxisAlignment.center,
+//                  children: [
+//                    Row(
+//                      children: <Widget>[
+//                        Align(
+//                            alignment: Alignment.topRight,
+//                            child: Material(
+//                                elevation: 10,
+//                                shape: RoundedRectangleBorder(
+//                                  borderRadius: BorderRadius.only(
+//                                    topLeft: Radius.circular(90.0),
+//                                    topRight: Radius.circular(90.0),
+//                                    bottomLeft: Radius.circular(90.0),
+//                                    bottomRight: Radius.circular(90.0),
+//                                  ),
+//                                ),
+//                                child: Container(
+//                                    height: 64,
+//                                    width: 64,
+//                                    child: Container(
+//                                      decoration: BoxDecoration(
+//                                        color: Colors.white,
+//                                        borderRadius: BorderRadius.all(
+//                                            Radius.circular(90.0)),
+//                                      ),
+//                                      child: Image(
+//                                        height: 128,
+//                                        width: 128,
+//                                        image: new AssetImage(
+//                                            'assets/img/navigate.png'),
+//                                        alignment: Alignment.topCenter,
+//                                      ),
+//                                    )))),
+//                        SizedBox(width: SizeConfig.blockSizeHorizontal * 3),
+//                        Column(
+//                          crossAxisAlignment: CrossAxisAlignment.start,
+//                          children: <Widget>[
+//                            Container(
+//                              width: SizeConfig.blockSizeHorizontal * 40,
+//                              height: SizeConfig.blockSizeHorizontal * 5,
+//                              child: AutoSizeText(
+//                                retrievedPointType,
+//                                textAlign: TextAlign.left,
+//                                overflow: TextOverflow.ellipsis,
+//                                style: TextStyle(
+//                                    fontSize: 19,
+//                                    fontWeight: FontWeight.bold,
+//                                    color: Colors.white),
+//                              ),
+//                            ),
+//                            SizedBox(height: SizeConfig.blockSizeVertical * 1),
+//                            Row(
+//                              children: [
+//                                OpenMapsButton(
+//                                    this.callbackOpenMaps, pressOpenMapsButton),
+//                                SizedBox(
+//                                    width: SizeConfig.blockSizeHorizontal * 2),
+//                                (savingPoint
+//                                    ? ShareLocationButton(
+//                                        this.callbackShareLocation, false)
+//                                    : ShareLocationButton(
+//                                        this.callbackShareLocation, false)),
+//                                SizedBox(
+//                                    width: SizeConfig.blockSizeHorizontal * 5),
+//                              ],
+//                            ),
+//                            SizedBox(height: SizeConfig.blockSizeVertical * 2),
+//                            FinishTripButton(
+//                                this.callbackFinishTrip, pressStartOverButton),
+//                          ],
+//                        ),
+//                      ],
+//                    ),
+//                  ],
+//                )
+//              : Row(
+//                  crossAxisAlignment: CrossAxisAlignment.center,
+//                  mainAxisAlignment: MainAxisAlignment.center,
+//                  children: [
+//
+//                  ],
+//                )),
+//        ),
+//        SizedBox(height: SizeConfig.blockSizeVertical * 2),
       ],
     );
   }
@@ -375,9 +366,7 @@ class RandonautState extends State<Randonaut> {
       return await gpsDisabledDialog(context, enableGPS);
     }
 
-
     onAddMarkerButtonPressed();
-
   }
 
   void callbackHelp() {
@@ -463,8 +452,7 @@ class RandonautState extends State<Randonaut> {
         center: currentAttractors.gID.toString(),
         latitude: currentAttractors.gID.toString(),
         longitude: currentAttractors.gID.toString(),
-        location:
-        (geoLocatorlocation[0].administrativeArea.toString() != ''
+        location: (geoLocatorlocation[0].administrativeArea.toString() != ''
             ? geoLocatorlocation[0].administrativeArea
             : geoLocatorlocation[0].country.toString()),
         gid: currentAttractors.gID.toString(),
@@ -493,7 +481,7 @@ class RandonautState extends State<Randonaut> {
       );
 
       //Insert trip into db
-     // await insertUnloggedTrip(unloggedTrip);
+      // await insertUnloggedTrip(unloggedTrip);
     }
   }
 
@@ -546,17 +534,17 @@ class RandonautState extends State<Randonaut> {
     if (currentLocation.latitude != null && currentLocation.longitude != null) {
       //Choose randomly between loading screens
 
-        Navigator.push(
-            context,
-            FadeRoute(
-                page: LoadingPoints(
-                    callbackLoadingPoints,
-                    radius,
-                    currentLocation,
-                    selectedPoint,
-                    selectedRandomness,
-                    checkWater)));
-
+      Navigator.push(
+          context,
+          FadeRoute(
+              page: loadingpoint(
+                  context,
+                  callbackLoadingPoints,
+                  radius,
+                  currentLocation,
+                  selectedPoint,
+                  selectedRandomness,
+                  checkWater)));
     } else {
       //Otherwise re-enable location
       setInitialLocation();
@@ -639,7 +627,14 @@ class RandonautState extends State<Randonaut> {
         position: attractorCoordinates,
         infoWindow: InfoWindow(
           title: (attractors.type == 1 ? "Attractor" : "Void"),
-          snippet: "Radius: " + attractors.zScore.toStringAsFixed(0) + ", " + "Power: " + attractors.power.toStringAsFixed(2) + ", " + "z-Score: " + attractors.zScore.toStringAsFixed(2),
+          snippet: "Radius: " +
+              attractors.zScore.toStringAsFixed(0) +
+              ", " +
+              "Power: " +
+              attractors.power.toStringAsFixed(2) +
+              ", " +
+              "z-Score: " +
+              attractors.zScore.toStringAsFixed(2),
         ),
       ));
 
@@ -701,13 +696,9 @@ class RandonautState extends State<Randonaut> {
 
       controller = await _controller.future;
       controller.animateCamera(CameraUpdate.newCameraPosition(cPosition));
-
     } else {
       await gpsDisabledDialog(context, enableGPS);
     }
-
-
-
   }
 
   void updatePinOnMap() async {
@@ -730,7 +721,7 @@ class RandonautState extends State<Randonaut> {
             reachedPoint = true;
             pointReached(context);
             //update trip on backend and set to visited
-           // await visitTrip(currentAttractors.gID.toString());
+            // await visitTrip(currentAttractors.gID.toString());
           }
         }
       } catch (error) {

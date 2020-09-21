@@ -37,10 +37,10 @@
 
   "point_type": "point_type",
   "see_route": "see route",
-  "open_maps": "open maps",
+  "open_maps": "navigate",
   "share_location": "share",
   "save_point": "save point",
-  "finish_trip": "finish trip",
+  "finish_trip": "reset",
 
   "radius_initial_text": "Radius",
   "ok_button": "Ok",
