@@ -1,4 +1,4 @@
-# app
+# Randonautica
 
 This was a version of Randonautica that was in the making in 2020 when the app went viral.
 
